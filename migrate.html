@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Migrate Products to Firebase</title>
+</head>
+<body style="font-family:sans-serif; padding: 2rem;">
+  <h1>Migrate local data to Firebase</h1>
+  <p>This script reads your local <code>data/products.json</code> and uploads it to your new Firebase Firestore database.</p>
+  <button id="migrate-btn" style="padding:10px 20px;font-size:16px;cursor:pointer;">Start Migration</button>
+  <p id="status"></p>
+
+  <script type="module">
+    import { db } from './js/firebase-config.js';
+    import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+    document.getElementById('migrate-btn').addEventListener('click', async (e) => {
+      e.target.disabled = true;
+      const status = document.getElementById('status');
+      status.innerHTML = "Fetching local JSON...";
+      
+      try {
+        const res = await fetch('./data/products.json');
+        const data = await res.json();
+        const products = data.products;
+
+        status.innerHTML = `Found ${products.length} products. Uploading to Firestore...`;
+        
+        let count = 0;
+        const colRef = collection(db, "products");
+        for (const p of products) {
+          await addDoc(colRef, p);
+          count++;
+          status.innerHTML = `Uploaded ${count} of ${products.length}...`;
+        }
+
+        status.innerHTML = `<span style="color:green;font-weight:bold">Migration complete! ${count} products added to Firestore.</span> <br> You can now safely delete data/products.json and this file (migrate.html).`;
+      } catch (err) {
+        status.innerHTML = `<span style="color:red">Error during migration: ${err.message}</span>`;
+      }
+    });
+  </script>
+</body>
+</html>

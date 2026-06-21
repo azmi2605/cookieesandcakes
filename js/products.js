@@ -1,6 +1,8 @@
 // ============================================================
 // cookieesandcakes — Products Renderer
 // ============================================================
+import { db } from './firebase-config.js';
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const BADGE_MAP = {
   bestseller: { label: 'Bestseller', cls: 'badge--bestseller' },
@@ -9,9 +11,24 @@ const BADGE_MAP = {
 };
 
 export async function loadProducts() {
-  const res = await fetch('/data/products.json');
-  const { products } = await res.json();
-  return products;
+  try {
+    const querySnapshot = await getDocs(collection(db, "products"));
+    const products = [];
+    querySnapshot.forEach((doc) => {
+      products.push({ id: doc.id, ...doc.data() });
+    });
+    
+    if (products.length > 0) {
+      return products;
+    } else {
+      throw new Error("No products in Firebase yet");
+    }
+  } catch (error) {
+    console.warn("Falling back to local JSON:", error.message);
+    const res = await fetch('/data/products.json');
+    const { products } = await res.json();
+    return products;
+  }
 }
 
 export function renderProductCard(product) {

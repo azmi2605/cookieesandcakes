@@ -3,10 +3,7 @@ import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https:/
 import { collection, getDocs, doc, setDoc, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 // DOM Elements
-const loginView = document.getElementById('login-view');
 const dashboardView = document.getElementById('dashboard-view');
-const loginForm = document.getElementById('login-form');
-const loginError = document.getElementById('login-error');
 const btnLogout = document.getElementById('btn-logout');
 const productList = document.getElementById('product-list');
 
@@ -22,41 +19,20 @@ let currentProducts = [];
 // Authentication
 // ==========================================
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
-    loginView.style.display = 'none';
+    // User is authenticated, show dashboard
     dashboardView.style.display = 'block';
     btnLogout.style.display = 'block';
     fetchAndRenderProducts();
   } else {
-    loginView.style.display = 'flex';
-    dashboardView.style.display = 'none';
-    btnLogout.style.display = 'none';
+    // Redirect unauthenticated visitor to admin login
+    window.location.replace('admin-login.html');
   }
 });
 
-loginForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  loginError.style.display = 'none';
-  const btn = document.getElementById('btn-login');
-  btn.textContent = 'Logging in...';
-  btn.disabled = true;
-
-  try {
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    await signInWithEmailAndPassword(auth, email, password);
-  } catch (error) {
-    loginError.style.display = 'block';
-    loginError.textContent = error.message;
-  } finally {
-    btn.textContent = 'Login';
-    btn.disabled = false;
-  }
-});
-
-btnLogout.addEventListener('click', () => {
-  signOut(auth);
+btnLogout.addEventListener('click', async () => {
+  await signOut(auth);
 });
 
 // ==========================================

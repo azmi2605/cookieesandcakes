@@ -12,6 +12,8 @@ export default defineConfig({
         order: resolve('order.html'),
         admin: resolve('admin.html'),
         migrate: resolve('migrate.html'),
+        login: resolve('login.html'),
+        adminLogin: resolve('admin-login.html'),
         "404": resolve('404.html')
       }
     }

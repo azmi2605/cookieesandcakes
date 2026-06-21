@@ -16,16 +16,10 @@
     .admin-header { background: var(--color-chocolate); color: var(--color-cream); padding: var(--space-4) var(--space-6); display: flex; justify-content: space-between; align-items: center; }
     .admin-logo { font-family: var(--font-heading); font-weight: bold; font-size: 1.2rem; }
     
-    /* Login Container */
-    #login-view { display: flex; flex: 1; align-items: center; justify-content: center; padding: var(--space-6); }
-    .login-card { background: #fff; padding: var(--space-8); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); width: 100%; max-width: 400px; text-align: center; }
-    .login-card h1 { margin-bottom: var(--space-6); color: var(--color-chocolate); }
-    
     .form-group { text-align: left; margin-bottom: var(--space-4); }
     .form-group label { display: block; font-weight: 600; margin-bottom: var(--space-2); font-size: 0.9rem; }
     .form-control { width: 100%; padding: 0.75rem; border: 1px solid var(--color-mauve-light); border-radius: var(--radius-sm); font-family: inherit; font-size: 1rem; }
     .btn-full { width: 100%; margin-top: var(--space-2); }
-    .error-msg { color: var(--color-error); font-size: 0.85rem; margin-top: var(--space-2); display: none; }
     
     /* Dashboard Container */
     #dashboard-view { display: none; flex: 1; padding: var(--space-8) var(--space-6); max-width: 1200px; margin: 0 auto; width: 100%; }
@@ -57,25 +51,6 @@
     <div class="admin-logo">cookieesandcakes admin</div>
     <button id="btn-logout" class="btn btn--sm" style="display:none;background:rgba(255,255,255,0.2);color:white;border:none;">Logout</button>
   </header>
-
-  <!-- Login View -->
-  <main id="login-view">
-    <div class="login-card">
-      <h1>Admin Login</h1>
-      <form id="login-form">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" class="form-control" placeholder="ayesha@example.com" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
-        </div>
-        <p id="login-error" class="error-msg">Invalid email or password.</p>
-        <button type="submit" class="btn btn--primary btn-full" id="btn-login">Login</button>
-      </form>
-    </div>
-  </main>
 
   <!-- Dashboard View -->
   <main id="dashboard-view">

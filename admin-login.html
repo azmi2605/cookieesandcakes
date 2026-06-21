@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | cookieesandcakes</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/forms.css">
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, #2C1810 0%, #3D2418 50%, #5C3A21 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+      font-family: var(--font-body);
+      color: var(--color-cream-light);
+    }
+    
+    .admin-login-card {
+      background: rgba(44, 24, 16, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(243, 227, 204, 0.15);
+      border-radius: var(--radius-xl);
+      padding: var(--space-10);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      transition: transform var(--transition-base);
+    }
+    
+    .admin-login-card:hover {
+      transform: translateY(-2px);
+    }
+    
+    .admin-shield {
+      width: 80px;
+      height: 80px;
+      background: rgba(201, 139, 125, 0.15);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-6);
+      border: 2px solid var(--color-mauve-light);
+    }
+    
+    .admin-shield svg {
+      fill: var(--color-mauve-light);
+    }
+    
+    .admin-login-card h1 {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      color: var(--color-cream);
+      font-weight: var(--weight-bold);
+      margin-bottom: var(--space-2);
+      letter-spacing: var(--tracking-wide);
+    }
+    
+    .admin-login-card p.subtitle {
+      font-size: var(--text-sm);
+      color: var(--color-cream-dark);
+      margin-bottom: var(--space-8);
+      opacity: 0.8;
+    }
+    
+    .admin-form-field {
+      margin-bottom: var(--space-5);
+      text-align: left;
+    }
+    
+    .admin-form-field label {
+      color: var(--color-cream-dark);
+      font-family: var(--font-heading);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-semibold);
+      display: block;
+      margin-bottom: var(--space-2);
+    }
+    
+    .admin-input {
+      background-color: rgba(61, 36, 24, 0.6);
+      border: 1px solid rgba(243, 227, 204, 0.25);
+      color: var(--color-white);
+      padding: var(--space-3) var(--space-4);
+      width: 100%;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    
+    .admin-input:focus {
+      border-color: var(--color-mauve);
+      box-shadow: 0 0 0 3px rgba(201, 139, 125, 0.25);
+      background-color: rgba(61, 36, 24, 0.8);
+    }
+    
+    .admin-input::placeholder {
+      color: var(--color-cream-dark);
+      opacity: 0.4;
+    }
+    
+    .admin-submit {
+      background-color: var(--color-mauve);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--radius-full);
+      padding: var(--space-4);
+      font-family: var(--font-heading);
+      font-size: var(--text-md);
+      font-weight: var(--weight-bold);
+      width: 100%;
+      cursor: pointer;
+      margin-top: var(--space-4);
+      transition: all var(--transition-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+    }
+    
+    .admin-submit:hover {
+      background-color: var(--color-mauve-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201, 139, 125, 0.3);
+    }
+    
+    .admin-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .warning-disclaimer {
+      font-size: var(--text-xs);
+      color: var(--color-mauve-light);
+      margin-top: var(--space-8);
+      border-top: 1px solid rgba(243, 227, 204, 0.1);
+      padding-top: var(--space-4);
+      line-height: var(--leading-snug);
+      opacity: 0.7;
+    }
+    
+    .back-link {
+      display: inline-block;
+      margin-top: var(--space-6);
+      font-size: var(--text-sm);
+      color: var(--color-cream-dark);
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    .back-link:hover {
+      color: var(--color-mauve-light);
+      text-decoration: underline;
+    }
+    
+    .error-banner {
+      background-color: rgba(192, 57, 43, 0.2);
+      border: 1px solid var(--color-error);
+      color: #ff9999;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font-size: var(--text-sm);
+      margin-top: var(--space-5);
+      display: none;
+      text-align: center;
+    }
+    
+    .error-banner.show {
+      display: block;
+    }
+    
+    .spinner-white {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+    
+    .admin-submit.loading .spinner-white {
+      display: block;
+    }
+    
+    .admin-submit.loading .btn-text {
+      display: none;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-login-card reveal">
+    <div class="admin-shield">
+      <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+      </svg>
+    </div>
+    
+    <h1>Admin Control Panel</h1>
+    <p class="subtitle">Enter credentials to access the admin dashboard.</p>
+    
+    <form id="admin-login-form" novalidate>
+      <div class="admin-form-field">
+        <label for="admin-email">Email Address</label>
+        <input type="email" id="admin-email" class="admin-input" placeholder="admin@cookieesandcakes.com" required autocomplete="email">
+      </div>
+      
+      <div class="admin-form-field">
+        <label for="admin-password">Password</label>
+        <input type="password" id="admin-password" class="admin-input" placeholder="••••••••" required autocomplete="current-password">
+      </div>
+      
+      <button type="submit" class="admin-submit" id="admin-submit-btn">
+        <span class="btn-text">Log In to Dashboard 🔒</span>
+        <span class="spinner-white" aria-hidden="true"></span>
+      </button>
+      
+      <div class="error-banner" id="admin-login-error"></div>
+    </form>
+    
+    <div class="warning-disclaimer">
+      ⚠️ <strong>WARNING:</strong> This is a secure system. Authorized access only. Any unauthorized attempts to access or modify database records will be logged.
+    </div>
+    
+    <a href="index.html" class="back-link">← Back to Storefront</a>
+  </div>
+
+  <script type="module" src="js/admin-login.js"></script>
+</body>
+</html>

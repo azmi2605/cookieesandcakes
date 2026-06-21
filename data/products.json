@@ -1,0 +1,136 @@
+{
+  "products": [
+    {
+      "id": "choc-chip-classic",
+      "name": "Classic Chocolate Chip",
+      "category": "cookies",
+      "price": 3.50,
+      "unit": "per piece",
+      "description": "Our signature buttery cookie loaded with premium dark chocolate chips. Crispy edges, gooey center — perfection in every bite.",
+      "tags": ["bestseller"],
+      "image": "assets/images/products/cookies.png",
+      "available": true
+    },
+    {
+      "id": "brown-butter-hazelnut",
+      "name": "Brown Butter Hazelnut",
+      "category": "cookies",
+      "price": 4.00,
+      "unit": "per piece",
+      "description": "Nutty brown butter cookie studded with toasted hazelnuts and a sprinkle of sea salt. A sophisticated twist on a classic.",
+      "tags": ["new"],
+      "image": "assets/images/products/cookies.png",
+      "available": true
+    },
+    {
+      "id": "snickerdoodle",
+      "name": "Snickerdoodle Swirl",
+      "category": "cookies",
+      "price": 3.00,
+      "unit": "per piece",
+      "description": "Soft, pillowy cookies rolled in cinnamon sugar with a caramelized, crinkled top. Warm and cozy in every bite.",
+      "tags": [],
+      "image": "assets/images/products/cookies.png",
+      "available": true
+    },
+    {
+      "id": "triple-layer-rose",
+      "name": "Triple Layer Rose Cake",
+      "category": "cakes",
+      "price": 42.00,
+      "unit": "per 6-inch",
+      "description": "Three layers of fluffy vanilla sponge with rosy buttercream and fresh raspberry compote. Stunning for any celebration.",
+      "tags": ["bestseller"],
+      "image": "assets/images/products/cake.png",
+      "available": true
+    },
+    {
+      "id": "chocolate-truffle-cake",
+      "name": "Dark Chocolate Truffle",
+      "category": "cakes",
+      "price": 48.00,
+      "unit": "per 6-inch",
+      "description": "Deeply rich cocoa cake with silky ganache frosting and handcrafted chocolate truffles on top.",
+      "tags": [],
+      "image": "assets/images/products/cake.png",
+      "available": true
+    },
+    {
+      "id": "custom-birthday-cake",
+      "name": "Custom Birthday Cake",
+      "category": "cakes",
+      "price": 65.00,
+      "unit": "starting price",
+      "description": "Personalized to your vision — choose your flavors, colors, and design. Every detail crafted with love just for you.",
+      "tags": ["new"],
+      "image": "assets/images/products/cake.png",
+      "available": true
+    },
+    {
+      "id": "fudge-brownie",
+      "name": "Dark Fudge Brownie",
+      "category": "brownies",
+      "price": 4.50,
+      "unit": "per piece",
+      "description": "Intensely chocolatey with a crinkled top and fudgy center. Made with 70% dark cocoa for the ultimate brownie experience.",
+      "tags": ["bestseller"],
+      "image": "assets/images/products/brownies.png",
+      "available": true
+    },
+    {
+      "id": "walnut-brownie",
+      "name": "Walnut Crunch Brownie",
+      "category": "brownies",
+      "price": 5.00,
+      "unit": "per piece",
+      "description": "Classic fudge brownie loaded with toasted walnut pieces for the perfect crunch in every bite.",
+      "tags": [],
+      "image": "assets/images/products/brownies.png",
+      "available": true
+    },
+    {
+      "id": "cookie-gift-box",
+      "name": "Cookie Assortment Box",
+      "category": "gift-boxes",
+      "price": 28.00,
+      "unit": "per box (12 pcs)",
+      "description": "A curated selection of our bestselling cookies in a beautiful gift box. Perfect for gifting someone special or treating yourself.",
+      "tags": ["bestseller"],
+      "image": "assets/images/products/giftbox.png",
+      "available": true
+    },
+    {
+      "id": "deluxe-gift-box",
+      "name": "Deluxe Celebration Box",
+      "category": "gift-boxes",
+      "price": 55.00,
+      "unit": "per box",
+      "description": "Our premium box featuring 6 cookies, 4 brownies, and 2 mini cakes — wrapped in our signature cream and rose packaging.",
+      "tags": ["new"],
+      "image": "assets/images/products/giftbox.png",
+      "available": true
+    },
+    {
+      "id": "holiday-box",
+      "name": "Seasonal Holiday Box",
+      "category": "seasonal",
+      "price": 35.00,
+      "unit": "per box",
+      "description": "Limited edition seasonal treats with festive decorations and flavors inspired by the time of year. Ask us what's available!",
+      "tags": ["seasonal"],
+      "image": "assets/images/products/giftbox.png",
+      "available": true
+    },
+    {
+      "id": "strawberry-cake",
+      "name": "Strawberry Dream Cake",
+      "category": "cakes",
+      "price": 45.00,
+      "unit": "per 6-inch",
+      "description": "Light chiffon cake layered with fresh strawberry cream and real strawberry slices. A summer favourite, available year-round.",
+      "tags": ["seasonal"],
+      "image": "assets/images/products/cake.png",
+      "available": true
+    }
+  ]
+}

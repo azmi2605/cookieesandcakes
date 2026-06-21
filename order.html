@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Now — Custom Cakes & Cookies | cookieesandcakes</title>
+  <meta name="description" content="Place a custom order for cookies, cakes, brownies, or gift boxes. Reach out via our order form and we'll be in touch within 24 hours.">
+  <meta property="og:title"       content="Order Now | cookieesandcakes">
+  <meta property="og:description" content="Custom cookies, cakes, and gift boxes made to order. Let's create something delicious together.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/navbar.css">
+  <link rel="stylesheet" href="styles/forms.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="navbar" class="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="78" rx="38" ry="26" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
+          <circle cx="48" cy="76" r="4" fill="#5C3A21"/><circle cx="62" cy="82" r="4" fill="#5C3A21"/>
+          <circle cx="74" cy="74" r="4" fill="#5C3A21"/><circle cx="54" cy="88" r="3" fill="#3D2418"/>
+          <circle cx="70" cy="86" r="3" fill="#3D2418"/>
+          <rect x="32" y="52" width="56" height="16" rx="8" fill="#E8CEAC" stroke="#5C3A21" stroke-width="4"/>
+          <rect x="36" y="36" width="48" height="18" rx="8" fill="#C98B7D" stroke="#5C3A21" stroke-width="4"/>
+          <rect x="42" y="24" width="36" height="14" rx="7" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
+          <circle cx="60" cy="18" r="6" fill="#C98B7D" stroke="#5C3A21" stroke-width="3"/>
+        </svg>
+      </a>
+      <nav class="navbar__links">
+        <a href="index.html"   class="navbar__link">Home</a>
+        <a href="menu.html"    class="navbar__link">Menu</a>
+        <a href="about.html"   class="navbar__link">About</a>
+        <a href="gallery.html" class="navbar__link">Gallery</a>
+      </nav>
+      <div class="navbar__actions">
+        <a href="order.html" class="btn btn--primary navbar__cta">Order Now</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="navbar__mobile" id="mobile-nav">
+    <div class="navbar__mobile-links">
+      <a href="index.html"   class="navbar__mobile-link">Home</a>
+      <a href="menu.html"    class="navbar__mobile-link">Menu</a>
+      <a href="about.html"   class="navbar__mobile-link">About</a>
+      <a href="gallery.html" class="navbar__mobile-link">Gallery</a>
+    </div>
+    <a href="order.html" class="btn btn--primary navbar__mobile-cta">Order Now →</a>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <p class="section-label">Get in touch</p>
+      <h1>Place Your Order 🎂</h1>
+      <p>Fill in the form below and we'll get back to you within 24 hours to confirm your order details.</p>
+    </div>
+
+    <section class="section" aria-labelledby="order-heading">
+      <div class="container">
+        <h2 class="sr-only" id="order-heading">Order inquiry form</h2>
+        <div class="form-section">
+
+          <!-- ── Order Form ──────────────────────────────────── -->
+          <div class="form-card reveal--left">
+            <h3 class="form-card__title">Order Inquiry</h3>
+            <p class="form-card__subtitle">Tell us what you'd love and we'll make it happen. Custom orders welcome!</p>
+
+            <!-- Replace YOUR_FORM_ID with your Formspree ID at https://formspree.io -->
+            <form id="order-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+              <!-- Honeypot (spam protection) -->
+              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+              <input type="hidden" name="_subject" value="New Order Inquiry — cookieesandcakes">
+
+              <div class="form-grid form-grid--2">
+
+                <div class="form-field">
+                  <label for="name">Full Name <span style="color:var(--color-error)">*</span></label>
+                  <input type="text" id="name" name="name" class="form-input" placeholder="Your full name" required minlength="2" autocomplete="name">
+                  <span class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-field">
+                  <label for="email">Email Address <span style="color:var(--color-error)">*</span></label>
+                  <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required autocomplete="email">
+                  <span class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-field">
+                  <label for="phone">Phone Number</label>
+                  <input type="tel" id="phone" name="phone" class="form-input" placeholder="+1 (555) 000-0000" autocomplete="tel">
+                  <span class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-field">
+                  <label for="product">I'm interested in <span style="color:var(--color-error)">*</span></label>
+                  <select id="product" name="product" class="form-select" required>
+                    <option value="" disabled selected>Choose a category…</option>
+                    <option value="cookies">🍪 Cookies</option>
+                    <option value="cakes">🎂 Custom Cake</option>
+                    <option value="brownies">🍫 Brownies</option>
+                    <option value="gift-box">🎁 Gift Box</option>
+                    <option value="seasonal">🌸 Seasonal Item</option>
+                    <option value="custom">✨ Something Custom</option>
+                  </select>
+                  <span class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-field">
+                  <label for="quantity">Quantity / Servings <span style="color:var(--color-error)">*</span></label>
+                  <input type="number" id="quantity" name="quantity" class="form-input" placeholder="e.g. 12 cookies, 1 cake (6-inch)" required min="1">
+                  <span class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-field">
+                  <label for="event-date">Event / Delivery Date</label>
+                  <input type="date" id="event-date" name="event_date" class="form-input">
+                  <span class="field-error" role="alert"></span>
+                </div>
+
+                <div class="form-field form-field--full">
+                  <label for="message">Special Instructions</label>
+                  <textarea id="message" name="message" class="form-textarea" placeholder="Allergies, flavour preferences, design inspiration, occasion details… the more you tell us, the better!" maxlength="500"></textarea>
+                  <span class="field-error" role="alert"></span>
+                </div>
+
+              </div>
+
+              <button type="submit" class="form-submit" id="form-submit-btn">
+                <span class="btn-text">Send My Order Inquiry 🍪</span>
+                <span class="spinner" aria-hidden="true"></span>
+              </button>
+
+              <div class="form-message form-message--success" id="form-success" role="status">
+                🎉 Thank you! We've received your inquiry and will be in touch within 24 hours.
+              </div>
+              <div class="form-message form-message--error" id="form-error" role="alert">
+                😔 Something went wrong. Please try again or email us directly at hello@cookieesandcakes.com
+              </div>
+            </form>
+          </div>
+
+          <!-- ── Contact Info ────────────────────────────────── -->
+          <div class="reveal--right">
+            <div class="contact-card">
+              <h3 class="contact-card__title">Get in touch</h3>
+              <div class="contact-item">
+                <div class="contact-item__icon" aria-hidden="true">📧</div>
+                <div>
+                  <p class="contact-item__label">Email</p>
+                  <a href="mailto:hello@cookieesandcakes.com" class="contact-item__value" style="text-decoration:underline;">hello@cookieesandcakes.com</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item__icon" aria-hidden="true">📞</div>
+                <div>
+                  <p class="contact-item__label">Phone</p>
+                  <a href="tel:+15550001234" class="contact-item__value">+1 (555) 000-1234</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item__icon" aria-hidden="true">🕐</div>
+                <div>
+                  <p class="contact-item__label">Hours</p>
+                  <p class="contact-item__value">Tuesday – Saturday<br>9:00 am – 6:00 pm</p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item__icon" aria-hidden="true">📦</div>
+                <div>
+                  <p class="contact-item__label">Delivery & Pickup</p>
+                  <p class="contact-item__value">Local pickup available<br>Delivery within 15 km</p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item__icon" aria-hidden="true">📅</div>
+                <div>
+                  <p class="contact-item__label">Lead Time</p>
+                  <p class="contact-item__value">Minimum 48 hours notice<br>Custom cakes: 5–7 days</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social links -->
+            <div style="margin-top:var(--space-6);padding:var(--space-6);background:var(--color-cream);border-radius:var(--radius-xl);text-align:center;">
+              <p style="font-family:var(--font-heading);font-weight:600;color:var(--color-chocolate);margin-bottom:var(--space-4);">Follow our bakes 🍰</p>
+              <div style="display:flex;gap:var(--space-3);justify-content:center;">
+                <a href="#" class="btn btn--secondary btn--sm" style="border-radius:var(--radius-full);">📷 Instagram</a>
+                <a href="#" class="btn btn--secondary btn--sm" style="border-radius:var(--radius-full);">📌 Pinterest</a>
+                <a href="#" class="btn btn--secondary btn--sm" style="border-radius:var(--radius-full);">📘 Facebook</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── FAQ ──────────────────────────────────────────── -->
+        <div class="faq" id="faq">
+          <h2 class="faq__title section-heading reveal">Frequently Asked Questions</h2>
+          <div style="max-width:800px;margin:0 auto;">
+
+            <div class="accordion-item reveal reveal--delay-1">
+              <div class="accordion-header" role="button" tabindex="0" aria-expanded="false">
+                <span class="accordion-question">What is the minimum order?</span>
+                <span class="accordion-icon" aria-hidden="true">+</span>
+              </div>
+              <div class="accordion-body">
+                <p class="accordion-answer">There's no minimum for cookies and brownies — you can order as few as 1! For custom cakes, our minimum order is a 6-inch cake. Gift boxes start at 12 pieces.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item reveal reveal--delay-2">
+              <div class="accordion-header" role="button" tabindex="0" aria-expanded="false">
+                <span class="accordion-question">How much notice do you need for an order?</span>
+                <span class="accordion-icon" aria-hidden="true">+</span>
+              </div>
+              <div class="accordion-body">
+                <p class="accordion-answer">We require at least 48 hours' notice for cookies and brownies, and 5–7 days for custom cakes. For large orders or event catering, please reach out at least 2 weeks in advance.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item reveal reveal--delay-3">
+              <div class="accordion-header" role="button" tabindex="0" aria-expanded="false">
+                <span class="accordion-question">Do you offer delivery?</span>
+                <span class="accordion-icon" aria-hidden="true">+</span>
+              </div>
+              <div class="accordion-body">
+                <p class="accordion-answer">Yes! We offer local delivery within a 15 km radius for a flat fee. Local pickup is always free. Delivery details and fees will be confirmed when we respond to your inquiry.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item reveal reveal--delay-4">
+              <div class="accordion-header" role="button" tabindex="0" aria-expanded="false">
+                <span class="accordion-question">Can you accommodate dietary restrictions?</span>
+                <span class="accordion-icon" aria-hidden="true">+</span>
+              </div>
+              <div class="accordion-body">
+                <p class="accordion-answer">We can accommodate many dietary needs including gluten-free and nut-free options for select items. Please mention your requirements in the order form and we'll do our best to help. Note: our kitchen does handle common allergens.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item reveal reveal--delay-5">
+              <div class="accordion-header" role="button" tabindex="0" aria-expanded="false">
+                <span class="accordion-question">How do I pay for my order?</span>
+                <span class="accordion-icon" aria-hidden="true">+</span>
+              </div>
+              <div class="accordion-body">
+                <p class="accordion-answer">We currently accept payment via bank transfer, PayPal, or cash on pickup. A 50% deposit is required to confirm custom cake orders. Full payment details will be provided when we confirm your order.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__grid">
+      <div>
+        <p style="color:rgba(243,227,204,0.9);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">cookieesandcakes</p>
+        <p class="footer__brand-desc">Artisanal baked goods made with love, fresh to order.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Instagram">📷</a>
+          <a href="#" class="footer__social" aria-label="Facebook">📘</a>
+          <a href="#" class="footer__social" aria-label="Pinterest">📌</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer__col-title">Pages</p>
+        <ul class="footer__links">
+          <li><a href="index.html"   class="footer__link">Home</a></li>
+          <li><a href="menu.html"    class="footer__link">Menu</a></li>
+          <li><a href="about.html"   class="footer__link">About</a></li>
+          <li><a href="gallery.html" class="footer__link">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__col-title">Contact</p>
+        <ul class="footer__links">
+          <li><a href="mailto:hello@cookieesandcakes.com" class="footer__link">hello@cookieesandcakes.com</a></li>
+          <li><a href="tel:+15550001234" class="footer__link">+1 (555) 000-1234</a></li>
+          <li><span class="footer__link">Tue–Sat: 9am – 6pm</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2024 <a href="index.html">cookieesandcakes</a>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initForm, initAccordion } from './js/form.js';
+    import './js/animations.js';
+    import './js/navbar.js';
+    document.addEventListener('DOMContentLoaded', () => {
+      initForm('order-form');
+      initAccordion();
+    });
+  </script>
+  <style>.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}</style>
+</body>
+</html>

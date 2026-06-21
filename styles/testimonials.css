@@ -1,0 +1,135 @@
+/* ============================================================
+   cookieesandcakes — Testimonials
+   ============================================================ */
+
+.testimonials {
+  overflow: hidden;
+}
+
+.testimonials__track-wrap {
+  overflow: hidden;
+  margin: 0 calc(-1 * var(--space-6));
+  padding: var(--space-4) 0;
+}
+
+.testimonials__track {
+  display: flex;
+  gap: var(--space-6);
+  transition: transform var(--transition-slow);
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.testimonial-card {
+  min-width: min(320px, 80vw);
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  border: 1px solid var(--color-cream-dark);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.testimonial-card__stars {
+  display: flex;
+  gap: 3px;
+  color: var(--color-mauve);
+  font-size: var(--text-lg);
+}
+
+.testimonial-card__quote {
+  font-size: var(--text-base);
+  color: var(--color-text-dark);
+  line-height: var(--leading-loose);
+  font-style: italic;
+}
+
+.testimonial-card__quote::before { content: '"'; }
+.testimonial-card__quote::after  { content: '"'; }
+
+.testimonial-card__author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-cream-dark);
+}
+
+.testimonial-card__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-mauve-light), var(--color-cream-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-md);
+  color: var(--color-chocolate);
+  flex-shrink: 0;
+}
+
+.testimonial-card__name {
+  font-family: var(--font-heading);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-base);
+  color: var(--color-chocolate);
+}
+
+.testimonial-card__handle {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* ── Controls ────────────────────────────────────────────── */
+.testimonials__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.testimonials__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-cream-dark);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.testimonials__dot.active {
+  background-color: var(--color-mauve);
+  width: 24px;
+}
+
+.testimonials__btn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-cream-dark);
+  background: var(--color-white);
+  color: var(--color-chocolate);
+  font-size: var(--text-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.testimonials__btn:hover {
+  border-color: var(--color-mauve);
+  color: var(--color-mauve);
+  background: var(--color-cream-light);
+}

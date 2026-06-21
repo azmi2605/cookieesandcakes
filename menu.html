@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu — Cookies, Cakes & Brownies | cookieesandcakes</title>
+  <meta name="description" content="Browse our full menu of handcrafted cookies, layered cakes, fudgy brownies, and curated gift boxes. All made fresh to order.">
+  <meta property="og:title"       content="Menu | cookieesandcakes">
+  <meta property="og:description" content="Fresh-baked cookies, cakes, brownies, and gift boxes — made to order.">
+  <meta property="og:image"       content="assets/images/products/cookies.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/navbar.css">
+  <link rel="stylesheet" href="styles/product-card.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body>
+
+  <!-- ── Navbar ──────────────────────────────────────────────── -->
+  <header id="navbar" class="navbar" role="banner">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo" aria-label="cookieesandcakes home">
+        <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="78" rx="38" ry="26" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
+          <circle cx="48" cy="76" r="4" fill="#5C3A21"/><circle cx="62" cy="82" r="4" fill="#5C3A21"/>
+          <circle cx="74" cy="74" r="4" fill="#5C3A21"/><circle cx="54" cy="88" r="3" fill="#3D2418"/>
+          <circle cx="70" cy="86" r="3" fill="#3D2418"/>
+          <rect x="32" y="52" width="56" height="16" rx="8" fill="#E8CEAC" stroke="#5C3A21" stroke-width="4"/>
+          <rect x="36" y="36" width="48" height="18" rx="8" fill="#C98B7D" stroke="#5C3A21" stroke-width="4"/>
+          <rect x="42" y="24" width="36" height="14" rx="7" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
+          <circle cx="60" cy="18" r="6" fill="#C98B7D" stroke="#5C3A21" stroke-width="3"/>
+        </svg>
+      </a>
+      <nav class="navbar__links">
+        <a href="index.html"   class="navbar__link">Home</a>
+        <a href="menu.html"    class="navbar__link">Menu</a>
+        <a href="about.html"   class="navbar__link">About</a>
+        <a href="gallery.html" class="navbar__link">Gallery</a>
+      </nav>
+      <div class="navbar__actions">
+        <a href="order.html" class="btn btn--primary navbar__cta">Order Now</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="navbar__mobile" id="mobile-nav">
+    <div class="navbar__mobile-links">
+      <a href="index.html"   class="navbar__mobile-link">Home</a>
+      <a href="menu.html"    class="navbar__mobile-link">Menu</a>
+      <a href="about.html"   class="navbar__mobile-link">About</a>
+      <a href="gallery.html" class="navbar__mobile-link">Gallery</a>
+    </div>
+    <a href="order.html" class="btn btn--primary navbar__mobile-cta">Order Now →</a>
+  </nav>
+
+  <main>
+    <!-- ── Page Header ──────────────────────────────────────── -->
+    <div class="page-header">
+      <p class="section-label">Our Menu</p>
+      <h1>Everything Baked with Love 🍪</h1>
+      <p>Every item made fresh to order in small batches. Browse by category and reach out to place your order.</p>
+    </div>
+
+    <!-- ── Filter + Grid ────────────────────────────────────── -->
+    <section class="section" aria-labelledby="menu-heading">
+      <div class="container">
+        <h2 class="sr-only" id="menu-heading">Product catalogue</h2>
+        <div class="filter-bar" role="group" aria-label="Filter by category">
+          <button class="filter-btn active" data-filter="all"        id="filter-all">All Items</button>
+          <button class="filter-btn"        data-filter="cookies"    id="filter-cookies">🍪 Cookies</button>
+          <button class="filter-btn"        data-filter="cakes"      id="filter-cakes">🎂 Cakes</button>
+          <button class="filter-btn"        data-filter="brownies"   id="filter-brownies">🍫 Brownies</button>
+          <button class="filter-btn"        data-filter="gift-boxes" id="filter-gift">🎁 Gift Boxes</button>
+          <button class="filter-btn"        data-filter="seasonal"   id="filter-seasonal">🌸 Seasonal</button>
+        </div>
+        <div class="products-grid" id="menu-grid"></div>
+
+        <!-- Custom Order CTA -->
+        <div style="margin-top:var(--space-16);padding:var(--space-12);background:var(--color-cream);border-radius:var(--radius-xl);text-align:center;" class="reveal">
+          <p class="section-label">Don't see what you want?</p>
+          <h3 style="font-size:var(--text-xl);margin-bottom:var(--space-3);">We do custom orders!</h3>
+          <p style="color:var(--color-text-muted);margin-bottom:var(--space-6);max-width:50ch;margin-left:auto;margin-right:auto;">
+            Have a specific vision in mind? We love creating custom cakes and cookie boxes tailored to your occasion, theme, or dietary needs.
+          </p>
+          <a href="order.html" class="btn btn--primary btn--lg" id="menu-custom-order">Request a Custom Order</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer__grid">
+      <div>
+        <p class="footer__brand-desc" style="color:rgba(243,227,204,0.8);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">cookieesandcakes</p>
+        <p class="footer__brand-desc">Artisanal baked goods made with love, fresh to order.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Instagram">📷</a>
+          <a href="#" class="footer__social" aria-label="Facebook">📘</a>
+          <a href="#" class="footer__social" aria-label="Pinterest">📌</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer__col-title">Menu</p>
+        <ul class="footer__links">
+          <li><a href="#" class="footer__link" onclick="document.querySelector('[data-filter=cookies]').click();return false;">Cookies</a></li>
+          <li><a href="#" class="footer__link" onclick="document.querySelector('[data-filter=cakes]').click();return false;">Cakes</a></li>
+          <li><a href="#" class="footer__link" onclick="document.querySelector('[data-filter=brownies]').click();return false;">Brownies</a></li>
+          <li><a href="#" class="footer__link" onclick="document.querySelector('[data-filter=gift-boxes]').click();return false;">Gift Boxes</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__col-title">Company</p>
+        <ul class="footer__links">
+          <li><a href="about.html"   class="footer__link">Our Story</a></li>
+          <li><a href="gallery.html" class="footer__link">Gallery</a></li>
+          <li><a href="order.html"   class="footer__link">Order</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__col-title">Contact</p>
+        <ul class="footer__links">
+          <li><a href="mailto:hello@cookieesandcakes.com" class="footer__link">hello@cookieesandcakes.com</a></li>
+          <li><span class="footer__link">Tue–Sat: 9am – 6pm</span></li>
+          <li><a href="order.html" class="btn btn--primary btn--sm" style="margin-top:var(--space-3);">Order Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2024 <a href="index.html">cookieesandcakes</a>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { renderProductGrid, renderProductCard, loadProducts } from './js/products.js';
+    import { initFilter  } from './js/filter.js';
+    import './js/animations.js';
+    import './js/navbar.js';
+
+    // Expose renderProductCard for filter.js
+    window.__cookieProducts = { renderProductCard };
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const products = await renderProductGrid('menu-grid');
+      initFilter(products, 'menu-grid');
+    });
+  </script>
+
+  <style>
+    .sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0); }
+  </style>
+</body>
+</html>

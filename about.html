@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story — cookieesandcakes | Handmade Artisanal Baked Goods</title>
+  <meta name="description" content="Learn the story behind cookieesandcakes — a passion for baking turned into an artisanal small business. Meet the baker and discover our values.">
+  <meta property="og:title"       content="Our Story | cookieesandcakes">
+  <meta property="og:description" content="A passion for baking turned into an artisanal small business. Handcrafted with love.">
+  <meta property="og:image"       content="assets/images/about/baker.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/navbar.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="navbar" class="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="78" rx="38" ry="26" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
+          <circle cx="48" cy="76" r="4" fill="#5C3A21"/><circle cx="62" cy="82" r="4" fill="#5C3A21"/>
+          <circle cx="74" cy="74" r="4" fill="#5C3A21"/><circle cx="54" cy="88" r="3" fill="#3D2418"/>
+          <circle cx="70" cy="86" r="3" fill="#3D2418"/>
+          <rect x="32" y="52" width="56" height="16" rx="8" fill="#E8CEAC" stroke="#5C3A21" stroke-width="4"/>
+          <rect x="36" y="36" width="48" height="18" rx="8" fill="#C98B7D" stroke="#5C3A21" stroke-width="4"/>
+          <rect x="42" y="24" width="36" height="14" rx="7" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
+          <circle cx="60" cy="18" r="6" fill="#C98B7D" stroke="#5C3A21" stroke-width="3"/>
+        </svg>
+      </a>
+      <nav class="navbar__links">
+        <a href="index.html"   class="navbar__link">Home</a>
+        <a href="menu.html"    class="navbar__link">Menu</a>
+        <a href="about.html"   class="navbar__link">About</a>
+        <a href="gallery.html" class="navbar__link">Gallery</a>
+      </nav>
+      <div class="navbar__actions">
+        <a href="order.html" class="btn btn--primary navbar__cta">Order Now</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="navbar__mobile" id="mobile-nav">
+    <div class="navbar__mobile-links">
+      <a href="index.html"   class="navbar__mobile-link">Home</a>
+      <a href="menu.html"    class="navbar__mobile-link">Menu</a>
+      <a href="about.html"   class="navbar__mobile-link">About</a>
+      <a href="gallery.html" class="navbar__mobile-link">Gallery</a>
+    </div>
+    <a href="order.html" class="btn btn--primary navbar__mobile-cta">Order Now →</a>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <p class="section-label">Our Story</p>
+      <h1>Baked with heart, shared with love 🤎</h1>
+      <p>A small kitchen, a big passion, and the belief that every bite should feel like a warm hug.</p>
+    </div>
+
+    <!-- Story Section -->
+    <section class="section" aria-labelledby="story-heading">
+      <div class="container">
+        <div class="about-story">
+          <div class="reveal--left">
+            <img
+              src="assets/images/about/baker.png"
+              alt="Baker decorating a cake in a warm kitchen"
+              class="about-story__image"
+              width="540" height="680"
+            >
+          </div>
+          <div class="reveal--right">
+            <p class="section-label">How it started</p>
+            <h2 class="section-heading" id="story-heading">From weekend bakes to a brand</h2>
+            <div class="divider"></div>
+            <p style="line-height:var(--leading-loose);margin-bottom:var(--space-5);color:var(--color-text-muted);">
+              It started with a simple idea: what if every cookie was made with the same care you'd give to baking for someone you love? cookieesandcakes was born out of weekend experiments, a dog-eared recipe notebook, and an oven that never seemed to stop.
+            </p>
+            <p style="line-height:var(--leading-loose);margin-bottom:var(--space-5);color:var(--color-text-muted);">
+              What began as gifts for friends and family quickly grew into something bigger — a community of people who believe that the best things in life are homemade, unhurried, and shared. Today, every order is still baked by hand in small batches, with the same love and attention as the very first one.
+            </p>
+            <p style="line-height:var(--leading-loose);margin-bottom:var(--space-8);color:var(--color-text-muted);">
+              We source real, quality ingredients. We never freeze our bakes. We care deeply about how your order looks, tastes, and arrives. Because to us, baking isn't just a business — it's a form of love made edible.
+            </p>
+            <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;">
+              <a href="menu.html"  class="btn btn--primary btn--lg">Explore Menu</a>
+              <a href="order.html" class="btn btn--secondary btn--lg">Place an Order</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section section--cream" aria-label="Brand statistics">
+      <div class="container">
+        <div class="text-center reveal" style="margin-bottom:var(--space-10);">
+          <p class="section-label">By the numbers</p>
+          <h2 class="section-heading">A little about what we've baked</h2>
+        </div>
+        <div class="stats-row">
+          <div class="stat-item reveal reveal--delay-1">
+            <p class="stat-item__number">500+</p>
+            <p class="stat-item__label">Happy customers</p>
+          </div>
+          <div class="stat-item reveal reveal--delay-2">
+            <p class="stat-item__number">12k+</p>
+            <p class="stat-item__label">Cookies baked</p>
+          </div>
+          <div class="stat-item reveal reveal--delay-3">
+            <p class="stat-item__number">350+</p>
+            <p class="stat-item__label">Custom cakes</p>
+          </div>
+          <div class="stat-item reveal reveal--delay-4">
+            <p class="stat-item__number">5 ★</p>
+            <p class="stat-item__label">Average rating</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values -->
+    <section class="section" aria-labelledby="values-heading">
+      <div class="container">
+        <div class="text-center reveal">
+          <p class="section-label">What we believe</p>
+          <h2 class="section-heading" id="values-heading">Our values guide every bake</h2>
+        </div>
+        <div class="about-values" style="margin-top:var(--space-10);">
+          <div class="value-item reveal reveal--delay-1">
+            <span class="value-item__icon">🌾</span>
+            <div>
+              <p class="value-item__title">Quality ingredients</p>
+              <p class="value-item__desc">No shortcuts. We use premium flour, real butter, and the finest chocolate — always.</p>
+            </div>
+          </div>
+          <div class="value-item reveal reveal--delay-2">
+            <span class="value-item__icon">🤲</span>
+            <div>
+              <p class="value-item__title">Made by hand</p>
+              <p class="value-item__desc">Every item is mixed, shaped, and finished by hand. Machines don't make cookies taste like love.</p>
+            </div>
+          </div>
+          <div class="value-item reveal reveal--delay-3">
+            <span class="value-item__icon">♻️</span>
+            <div>
+              <p class="value-item__title">Sustainable packaging</p>
+              <p class="value-item__desc">Our boxes and wrapping are eco-friendly without compromising the beautiful unboxing experience.</p>
+            </div>
+          </div>
+          <div class="value-item reveal reveal--delay-4">
+            <span class="value-item__icon">💛</span>
+            <div>
+              <p class="value-item__title">Community first</p>
+              <p class="value-item__desc">We source locally, hire locally, and give back to the community that made us what we are.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <div class="cta-banner__inner reveal">
+        <p class="section-label" style="color:var(--color-mauve-light);">Let's bake something together</p>
+        <h2 class="cta-banner__title">Ready to experience the difference?</h2>
+        <p class="cta-banner__subtitle">Place a custom order, browse our menu, or simply get in touch — we'd love to hear from you.</p>
+        <div class="cta-banner__actions">
+          <a href="order.html"  class="btn btn--primary btn--lg">Place an Order</a>
+          <a href="gallery.html" class="btn btn--lg" style="background:rgba(255,255,255,0.12);color:var(--color-cream);border:2px solid rgba(255,255,255,0.3);border-radius:var(--radius-full);padding:var(--space-4) var(--space-10);font-family:var(--font-heading);font-weight:600;">View Gallery</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__grid">
+      <div>
+        <p style="color:rgba(243,227,204,0.9);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">cookieesandcakes</p>
+        <p class="footer__brand-desc">Artisanal baked goods made with love, fresh to order.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Instagram">📷</a>
+          <a href="#" class="footer__social" aria-label="Facebook">📘</a>
+          <a href="#" class="footer__social" aria-label="Pinterest">📌</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer__col-title">Pages</p>
+        <ul class="footer__links">
+          <li><a href="index.html"   class="footer__link">Home</a></li>
+          <li><a href="menu.html"    class="footer__link">Menu</a></li>
+          <li><a href="about.html"   class="footer__link">About</a></li>
+          <li><a href="gallery.html" class="footer__link">Gallery</a></li>
+          <li><a href="order.html"   class="footer__link">Order</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__col-title">Contact</p>
+        <ul class="footer__links">
+          <li><a href="mailto:hello@cookieesandcakes.com" class="footer__link">hello@cookieesandcakes.com</a></li>
+          <li><span class="footer__link">Tue–Sat: 9am – 6pm</span></li>
+          <li><a href="order.html" class="btn btn--primary btn--sm" style="margin-top:var(--space-3);">Order Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2024 <a href="index.html">cookieesandcakes</a>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import './js/animations.js';
+    import './js/navbar.js';
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+/* ============================================================
+   cookieesandcakes — Design Tokens
+   Derived from brand logo & identity
+   ============================================================ */
+
+:root {
+  /* ── Brand Colors ─────────────────────────────────────── */
+  --color-chocolate:    #5C3A21;
+  --color-cocoa-dark:   #3D2418;
+  --color-mauve:        #C98B7D;
+  --color-cream:        #F3E3CC;
+
+  /* ── Extended Palette ─────────────────────────────────── */
+  --color-cream-light:  #FDF6EC;
+  --color-cream-dark:   #E8CEAC;
+  --color-mauve-light:  #E8B5A8;
+  --color-mauve-dark:   #A96E62;
+  --color-text-dark:    #2C1810;
+  --color-text-muted:   #7A5C50;
+  --color-white:        #FFFFFF;
+  --color-success:      #6B9E6B;
+  --color-error:        #C0392B;
+
+  /* ── Gradients ────────────────────────────────────────── */
+  --gradient-hero:      linear-gradient(135deg, #FDF6EC 0%, #F3E3CC 50%, #E8CEAC 100%);
+  --gradient-cta:       linear-gradient(135deg, #5C3A21 0%, #3D2418 100%);
+  --gradient-card:      linear-gradient(180deg, rgba(253,246,236,0) 60%, rgba(92,58,33,0.08) 100%);
+
+  /* ── Typography ───────────────────────────────────────── */
+  --font-heading: 'Quicksand', 'Trebuchet MS', sans-serif;
+  --font-body:    'Poppins', 'Segoe UI', sans-serif;
+
+  /* Type Scale — Major Third (1.25x) */
+  --text-xs:    0.64rem;
+  --text-sm:    0.8rem;
+  --text-base:  1rem;
+  --text-md:    1.25rem;
+  --text-lg:    1.563rem;
+  --text-xl:    1.953rem;
+  --text-2xl:   2.441rem;
+  --text-3xl:   3.052rem;
+  --text-4xl:   3.815rem;
+
+  /* Font Weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Line Heights */
+  --leading-tight:  1.2;
+  --leading-snug:   1.4;
+  --leading-normal: 1.6;
+  --leading-loose:  1.8;
+
+  /* Letter Spacing */
+  --tracking-tight:  -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;
+  --tracking-wider:   0.08em;
+
+  /* ── Spacing ──────────────────────────────────────────── */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ── Border Radius ────────────────────────────────────── */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ──────────────────────────────────────────── */
+  --shadow-sm:   0 1px 3px rgba(92,58,33,0.10);
+  --shadow-md:   0 4px 12px rgba(92,58,33,0.15);
+  --shadow-lg:   0 8px 30px rgba(92,58,33,0.18);
+  --shadow-card: 0 2px 16px rgba(92,58,33,0.12);
+  --shadow-hero: 0 20px 60px rgba(61,36,24,0.25);
+
+  /* ── Transitions ──────────────────────────────────────── */
+  --transition-fast:   0.15s ease;
+  --transition-base:   0.25s ease;
+  --transition-slow:   0.4s ease;
+  --transition-spring: 0.3s cubic-bezier(0.34,1.56,0.64,1);
+
+  /* ── Z-Index ──────────────────────────────────────────── */
+  --z-base:    1;
+  --z-card:    10;
+  --z-nav:     100;
+  --z-modal:   200;
+  --z-overlay: 300;
+
+  /* ── Layout ───────────────────────────────────────────── */
+  --max-width:       1280px;
+  --section-padding: var(--space-20) var(--space-6);
+  --nav-height:      72px;
+}

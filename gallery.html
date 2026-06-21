@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Beautiful Bakes | cookieesandcakes</title>
+  <meta name="description" content="Browse our gallery of handcrafted cookies, cakes, brownies, and gift boxes. See the artistry behind every cookieesandcakes creation.">
+  <meta property="og:title"       content="Gallery | cookieesandcakes">
+  <meta property="og:description" content="Handcrafted baked goods that are as beautiful as they are delicious.">
+  <meta property="og:image"       content="assets/images/hero/hero.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/reset.css">
+  <link rel="stylesheet" href="styles/global.css">
+  <link rel="stylesheet" href="styles/navbar.css">
+  <link rel="stylesheet" href="styles/gallery.css">
+  <link rel="stylesheet" href="styles/animations.css">
+  <link rel="stylesheet" href="styles/footer.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header id="navbar" class="navbar">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">
+        <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="78" rx="38" ry="26" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
+          <circle cx="48" cy="76" r="4" fill="#5C3A21"/><circle cx="62" cy="82" r="4" fill="#5C3A21"/>
+          <circle cx="74" cy="74" r="4" fill="#5C3A21"/><circle cx="54" cy="88" r="3" fill="#3D2418"/>
+          <circle cx="70" cy="86" r="3" fill="#3D2418"/>
+          <rect x="32" y="52" width="56" height="16" rx="8" fill="#E8CEAC" stroke="#5C3A21" stroke-width="4"/>
+          <rect x="36" y="36" width="48" height="18" rx="8" fill="#C98B7D" stroke="#5C3A21" stroke-width="4"/>
+          <rect x="42" y="24" width="36" height="14" rx="7" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
+          <circle cx="60" cy="18" r="6" fill="#C98B7D" stroke="#5C3A21" stroke-width="3"/>
+        </svg>
+      </a>
+      <nav class="navbar__links">
+        <a href="index.html"   class="navbar__link">Home</a>
+        <a href="menu.html"    class="navbar__link">Menu</a>
+        <a href="about.html"   class="navbar__link">About</a>
+        <a href="gallery.html" class="navbar__link">Gallery</a>
+      </nav>
+      <div class="navbar__actions">
+        <a href="order.html" class="btn btn--primary navbar__cta">Order Now</a>
+        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <nav class="navbar__mobile" id="mobile-nav">
+    <div class="navbar__mobile-links">
+      <a href="index.html"   class="navbar__mobile-link">Home</a>
+      <a href="menu.html"    class="navbar__mobile-link">Menu</a>
+      <a href="about.html"   class="navbar__mobile-link">About</a>
+      <a href="gallery.html" class="navbar__mobile-link">Gallery</a>
+    </div>
+    <a href="order.html" class="btn btn--primary navbar__mobile-cta">Order Now →</a>
+  </nav>
+
+  <main>
+    <div class="page-header">
+      <p class="section-label">Our Work</p>
+      <h1>A Feast for the Eyes 📸</h1>
+      <p>Every creation is baked and styled with care. Click any image to take a closer look.</p>
+    </div>
+
+    <section class="section" aria-labelledby="gallery-heading">
+      <div class="container">
+        <h2 class="sr-only" id="gallery-heading">Photo gallery</h2>
+        <div class="gallery-grid" id="gallery-grid" role="list" aria-label="Gallery of baked goods"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <div class="cta-banner__inner reveal">
+        <p class="section-label" style="color:var(--color-mauve-light);">Inspired by what you see?</p>
+        <h2 class="cta-banner__title">Let's create something beautiful for you</h2>
+        <p class="cta-banner__subtitle">Every item can be customised. Colours, flavours, themes — tell us your vision and we'll bake it to life.</p>
+        <div class="cta-banner__actions">
+          <a href="order.html" class="btn btn--primary btn--lg">Place a Custom Order</a>
+          <a href="menu.html"  class="btn btn--lg" style="background:rgba(255,255,255,0.12);color:var(--color-cream);border:2px solid rgba(255,255,255,0.3);border-radius:var(--radius-full);padding:var(--space-4) var(--space-10);font-family:var(--font-heading);font-weight:600;">Browse Menu</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+    <div class="lightbox__backdrop" id="lb-backdrop"></div>
+    <div class="lightbox__content">
+      <img id="lb-img" src="" alt="" class="lightbox__img">
+    </div>
+    <button class="lightbox__close" id="lb-close" aria-label="Close lightbox">✕</button>
+    <button class="lightbox__prev"  id="lb-prev"  aria-label="Previous image">&#8592;</button>
+    <button class="lightbox__next"  id="lb-next"  aria-label="Next image">&#8594;</button>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__grid">
+      <div>
+        <p style="color:rgba(243,227,204,0.9);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">cookieesandcakes</p>
+        <p class="footer__brand-desc">Artisanal baked goods made with love, fresh to order.</p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Instagram">📷</a>
+          <a href="#" class="footer__social" aria-label="Facebook">📘</a>
+          <a href="#" class="footer__social" aria-label="Pinterest">📌</a>
+        </div>
+      </div>
+      <div>
+        <p class="footer__col-title">Pages</p>
+        <ul class="footer__links">
+          <li><a href="index.html"   class="footer__link">Home</a></li>
+          <li><a href="menu.html"    class="footer__link">Menu</a></li>
+          <li><a href="about.html"   class="footer__link">About</a></li>
+          <li><a href="gallery.html" class="footer__link">Gallery</a></li>
+          <li><a href="order.html"   class="footer__link">Order</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer__col-title">Contact</p>
+        <ul class="footer__links">
+          <li><a href="mailto:hello@cookieesandcakes.com" class="footer__link">hello@cookieesandcakes.com</a></li>
+          <li><span class="footer__link">Tue–Sat: 9am – 6pm</span></li>
+          <li><a href="order.html" class="btn btn--primary btn--sm" style="margin-top:var(--space-3);">Order Now</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2024 <a href="index.html">cookieesandcakes</a>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initGallery } from './js/gallery.js';
+    import './js/animations.js';
+    import './js/navbar.js';
+    document.addEventListener('DOMContentLoaded', () => initGallery('gallery-grid'));
+  </script>
+  <style>.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}</style>
+</body>
+</html>

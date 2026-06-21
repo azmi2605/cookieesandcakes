@@ -96,7 +96,6 @@ This project is configured specifically for 1-click deployment to [Vercel](https
 
 Before sharing your new site with customers, make sure you complete these steps:
 
-- [ ] **Form Setup**: Go to [Formspree](https://formspree.io), create a new form, and paste your new `YOUR_FORM_ID` into `order.html` (line 74).
 - [ ] **Update Logo**: Replace the inline SVG logo in all HTML files with an `<img>` tag pointing to your real logo.
 - [ ] **Swap Images**: Replace the placeholder images in `assets/images/` with actual photos of your beautiful bakes. Keep the filenames or update `data/products.json` and the HTML files.
 - [ ] **Update Links**: Add your real Instagram, Facebook, email, and phone number to the footer and `order.html` page.

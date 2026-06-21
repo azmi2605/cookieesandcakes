@@ -49,15 +49,13 @@
 .footer__social {
   width: 40px;
   height: 40px;
-  background-color: rgba(201,139,125,0.2);
-  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--text-lg);
-  color: var(--color-mauve-light);
+  font-size: 1.5rem;
   transition: all var(--transition-base);
   text-decoration: none;
+
 }
 
 .footer__social:hover {

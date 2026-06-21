@@ -4,13 +4,13 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDS36QKFwTP_sg38tZW7RyiQZNfcUnwrOs",
-  authDomain: "cookieesandcakes.firebaseapp.com",
-  projectId: "cookieesandcakes",
-  storageBucket: "cookieesandcakes.firebasestorage.app",
-  messagingSenderId: "104755675311",
-  appId: "1:104755675311:web:f9d4c23925b32d46b1d45a",
-  measurementId: "G-J596MMLGCG"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);

@@ -148,7 +148,10 @@ function renderOrders(orders) {
         <td>${date}</td>
         <td>
           <div style="font-weight:600">${o.customerName}</div>
-          <div style="font-size:0.8rem;color:var(--color-text-muted)">${o.customerEmail}</div>
+          <div style="font-size:0.8rem;color:var(--color-text-muted)">
+            <a href="mailto:${o.customerEmail}" style="color:inherit;text-decoration:none;">${o.customerEmail}</a>
+          </div>
+          ${o.customerPhone ? `<div style="font-size:0.8rem;color:var(--color-text-muted)"><a href="tel:${o.customerPhone}" style="color:inherit;text-decoration:none;">${o.customerPhone}</a></div>` : ''}
         </td>
         <td>${o.product}</td>
         <td>${o.quantity}</td>

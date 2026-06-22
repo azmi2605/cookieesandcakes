@@ -10,9 +10,13 @@ export function initFilter(products, gridId) {
   let active = 'all';
 
   function render(category) {
+    const targetCat = category.toLowerCase().replace(/s$/, ''); // e.g. "cakes" -> "cake"
     const filtered = category === 'all'
       ? products
-      : products.filter(p => p.category === category);
+      : products.filter(p => {
+          const pCat = (p.category || '').toLowerCase();
+          return pCat === category || pCat === targetCat || pCat + 's' === category;
+        });
 
     // Fade out
     grid.style.opacity = '0';

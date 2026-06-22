@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Account — cookieesandcakes</title>
-  <meta name="description" content="Log in or register to manage your cookieesandcakes account, track your custom cake and cookie orders, and update your profile.">
-  
+  <meta name="description"
+    content="Log in or register to manage your cookieesandcakes account, track your custom cake and cookie orders, and update your profile.">
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
   <!-- Styles -->
   <link rel="stylesheet" href="styles/tokens.css">
   <link rel="stylesheet" href="styles/reset.css">
@@ -21,6 +25,7 @@
   <link rel="stylesheet" href="styles/animations.css">
   <link rel="stylesheet" href="styles/footer.css">
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -28,26 +33,29 @@
     <div class="navbar__inner">
       <a href="index.html" class="navbar__logo">
         <svg width="48" height="48" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="60" cy="78" rx="38" ry="26" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
-          <circle cx="48" cy="76" r="4" fill="#5C3A21"/><circle cx="62" cy="82" r="4" fill="#5C3A21"/>
-          <circle cx="74" cy="74" r="4" fill="#5C3A21"/><circle cx="54" cy="88" r="3" fill="#3D2418"/>
-          <circle cx="70" cy="86" r="3" fill="#3D2418"/>
-          <rect x="32" y="52" width="56" height="16" rx="8" fill="#E8CEAC" stroke="#5C3A21" stroke-width="4"/>
-          <rect x="36" y="36" width="48" height="18" rx="8" fill="#C98B7D" stroke="#5C3A21" stroke-width="4"/>
-          <rect x="42" y="24" width="36" height="14" rx="7" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4"/>
-          <circle cx="60" cy="18" r="6" fill="#C98B7D" stroke="#5C3A21" stroke-width="3"/>
+          <ellipse cx="60" cy="78" rx="38" ry="26" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4" />
+          <circle cx="48" cy="76" r="4" fill="#5C3A21" />
+          <circle cx="62" cy="82" r="4" fill="#5C3A21" />
+          <circle cx="74" cy="74" r="4" fill="#5C3A21" />
+          <circle cx="54" cy="88" r="3" fill="#3D2418" />
+          <circle cx="70" cy="86" r="3" fill="#3D2418" />
+          <rect x="32" y="52" width="56" height="16" rx="8" fill="#E8CEAC" stroke="#5C3A21" stroke-width="4" />
+          <rect x="36" y="36" width="48" height="18" rx="8" fill="#C98B7D" stroke="#5C3A21" stroke-width="4" />
+          <rect x="42" y="24" width="36" height="14" rx="7" fill="#F3E3CC" stroke="#5C3A21" stroke-width="4" />
+          <circle cx="60" cy="18" r="6" fill="#C98B7D" stroke="#5C3A21" stroke-width="3" />
         </svg>
       </a>
       <nav class="navbar__links">
-        <a href="index.html"   class="navbar__link">Home</a>
-        <a href="menu.html"    class="navbar__link">Menu</a>
-        <a href="about.html"   class="navbar__link">About</a>
+        <a href="index.html" class="navbar__link">Home</a>
+        <a href="menu.html" class="navbar__link">Menu</a>
+        <a href="about.html" class="navbar__link">About</a>
         <a href="gallery.html" class="navbar__link">Gallery</a>
-        <a href="login.html"   class="navbar__link nav-login">Login</a>
+        <a href="login.html" class="navbar__link nav-login">Login</a>
       </nav>
       <div class="navbar__actions">
         <a href="order.html" class="btn btn--primary navbar__cta">Order Now</a>
-        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"
+          aria-controls="mobile-nav">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -55,11 +63,11 @@
   </header>
   <nav class="navbar__mobile" id="mobile-nav">
     <div class="navbar__mobile-links">
-      <a href="index.html"   class="navbar__mobile-link">Home</a>
-      <a href="menu.html"    class="navbar__mobile-link">Menu</a>
-      <a href="about.html"   class="navbar__mobile-link">About</a>
+      <a href="index.html" class="navbar__mobile-link">Home</a>
+      <a href="menu.html" class="navbar__mobile-link">Menu</a>
+      <a href="about.html" class="navbar__mobile-link">About</a>
       <a href="gallery.html" class="navbar__mobile-link">Gallery</a>
-      <a href="login.html"   class="navbar__mobile-link nav-login">Login</a>
+      <a href="login.html" class="navbar__mobile-link nav-login">Login</a>
     </div>
     <a href="order.html" class="btn btn--primary navbar__mobile-cta">Order Now →</a>
   </nav>
@@ -67,122 +75,132 @@
   <main>
     <!-- ── Auth View ── -->
     <div id="auth-view" class="auth-container container section">
-      
+
       <!-- Card 1: Sign In -->
       <div id="signin-card" class="form-card auth-card reveal">
         <h3 class="form-card__title">Welcome Back 🍪</h3>
         <p class="form-card__subtitle">Log in to track your orders and manage your profile.</p>
-        
+
         <form id="signin-form" novalidate>
           <div class="form-grid">
             <div class="form-field">
               <label for="signin-email">Email Address <span style="color:var(--color-error)">*</span></label>
-              <input type="email" id="signin-email" class="form-input" placeholder="you@example.com" required autocomplete="email">
-              <span class="field-error" role="alert"></span>
-            </div>
-            
-            <div class="form-field">
-              <label for="signin-password">Password <span style="color:var(--color-error)">*</span></label>
-              <input type="password" id="signin-password" class="form-input" placeholder="••••••••" required autocomplete="current-password">
-              <span class="field-error" role="alert"></span>
-            </div>
-          </div>
-          
-          <div class="auth-card__forgot">
-            <a id="link-show-reset">Forgot Password?</a>
-          </div>
-          
-          <button type="submit" class="form-submit" id="signin-submit-btn">
-            <span class="btn-text">Sign In 🤎</span>
-            <span class="spinner" aria-hidden="true"></span>
-          </button>
-          
-          <div class="form-message form-message--error" id="signin-error" role="alert"></div>
-        </form>
-        
-        <p class="auth-card__toggle">
-          New to cookieesandcakes? <a id="link-show-signup">Create an account</a>
-        </p>
-      </div>
-      
-      <!-- Card 2: Sign Up -->
-      <div id="signup-card" class="form-card auth-card hidden reveal">
-        <h3 class="form-card__title">Create Account ✨</h3>
-        <p class="form-card__subtitle">Join us to save details and track your custom orders.</p>
-        
-        <form id="signup-form" novalidate>
-          <div class="form-grid">
-            <div class="form-field">
-              <label for="signup-name">Full Name <span style="color:var(--color-error)">*</span></label>
-              <input type="text" id="signup-name" class="form-input" placeholder="Your Name" required autocomplete="name">
-              <span class="field-error" role="alert"></span>
-            </div>
-            
-            <div class="form-field">
-              <label for="signup-email">Email Address <span style="color:var(--color-error)">*</span></label>
-              <input type="email" id="signup-email" class="form-input" placeholder="you@example.com" required autocomplete="email">
-              <span class="field-error" role="alert"></span>
-            </div>
-            
-            <div class="form-field">
-              <label for="signup-password">Password <span style="color:var(--color-error)">*</span></label>
-              <input type="password" id="signup-password" class="form-input" placeholder="Min. 6 characters" required autocomplete="new-password" minlength="6">
+              <input type="email" id="signin-email" class="form-input" placeholder="you@example.com" required
+                autocomplete="email">
               <span class="field-error" role="alert"></span>
             </div>
 
             <div class="form-field">
-              <label for="signup-confirm">Confirm Password <span style="color:var(--color-error)">*</span></label>
-              <input type="password" id="signup-confirm" class="form-input" placeholder="Re-enter password" required autocomplete="new-password">
+              <label for="signin-password">Password <span style="color:var(--color-error)">*</span></label>
+              <input type="password" id="signin-password" class="form-input" placeholder="••••••••" required
+                autocomplete="current-password">
               <span class="field-error" role="alert"></span>
             </div>
+            <div class="form-field admin-toggle" style="margin-top: var(--space-4);">
+              <label style="display:flex; align-items:center;">
+                <input type="checkbox" id="admin-login-checkbox" style="margin-right: var(--space-2);">
+                Log in as Administrator
+              </label>
+            </div>
           </div>
-          
-          <button type="submit" class="form-submit" id="signup-submit-btn" style="margin-top: var(--space-6);">
-            <span class="btn-text">Register Account 🎉</span>
+
+          <div class="auth-card__forgot">
+            <a id="link-show-reset">Forgot Password?</a>
+          </div>
+
+          <button type="submit" class="form-submit" id="signin-submit-btn">
+            <span class="btn-text">Sign In 🤎</span>
             <span class="spinner" aria-hidden="true"></span>
           </button>
-          
-          <div class="form-message form-message--error" id="signup-error" role="alert"></div>
+
+          <div class="form-message form-message--error" id="signin-error" role="alert"></div>
         </form>
-        
+
+        <p class="auth-card__toggle">
+          New to cookieesandcakes? <a id="link-show-signup">Create an account</a>
+        </p>
+      </div>
+
+      <!-- Card 2: Sign Up -->
+      <div id="signup-card" class="form-card auth-card hidden reveal">
+        <h3 class="form-card__title">Create Account ✨</h3>
+        <p class="form-card__subtitle">Join us to save details and track your custom orders.</p>
+
+        <form id="signup-form" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="signup-name">Full Name <span style="color:var(--color-error)">*</span></label>
+              <input type="text" id="signup-name" class="form-input" placeholder="Your Name" required
+                autocomplete="name">
+              <span class="field-error" role="alert"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="signup-email">Email Address <span style="color:var(--color-error)">*</span></label>
+              <input type="email" id="signup-email" class="form-input" placeholder="you@example.com" required
+                autocomplete="email">
+              <span class="field-error" role="alert"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="signup-password">Password <span style="color:var(--color-error)">*</span></label>
+              <input type="password" id="signup-password" class="form-input" placeholder="Min. 6 characters" required
+                autocomplete="new-password" minlength="6">
+              <span class="field-error" role="alert"></span>
+            </div>
+
+            <div class="form-field">
+              <label for="signup-password">Password <span style="color:var(--color-error)">*</span></label>
+              <input type="password" id="signup-password" class="form-input" placeholder="••••••••" required
+                autocomplete="current-password">
+              <span class="field-error" role="alert"></span>
+            </div>
+            <button type="submit" class="form-submit" id="signup-submit-btn">
+              <span class="btn-text">Register 🎉</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+            <div class="form-message form-message--error" id="signup-error" role="alert"></div>
+        </form>
+
         <p class="auth-card__toggle">
           Already have an account? <a id="link-show-signin">Sign in</a>
         </p>
       </div>
-      
+
       <!-- Card 3: Password Reset -->
       <div id="reset-card" class="form-card auth-card hidden reveal">
         <h3 class="form-card__title">Reset Password 🔑</h3>
         <p class="form-card__subtitle">Enter your email and we'll send you a link to reset your password.</p>
-        
+
         <form id="reset-form" novalidate>
           <div class="form-grid">
             <div class="form-field">
               <label for="reset-email">Email Address <span style="color:var(--color-error)">*</span></label>
-              <input type="email" id="reset-email" class="form-input" placeholder="you@example.com" required autocomplete="email">
+              <input type="email" id="reset-email" class="form-input" placeholder="you@example.com" required
+                autocomplete="email">
               <span class="field-error" role="alert"></span>
             </div>
           </div>
-          
+
           <button type="submit" class="form-submit" id="reset-submit-btn" style="margin-top: var(--space-6);">
             <span class="btn-text">Send Reset Link 📧</span>
             <span class="spinner" aria-hidden="true"></span>
           </button>
-          
+
           <div class="form-message form-message--success" id="reset-success" role="status"></div>
           <div class="form-message form-message--error" id="reset-error" role="alert"></div>
         </form>
-        
+
         <p class="auth-card__toggle">
           Remember your password? <a id="link-back-to-signin">Back to sign in</a>
         </p>
       </div>
-      
+
     </div>
-    
+
     <!-- ── Dashboard View ── -->
     <div id="dashboard-view" class="dashboard-container container section hidden">
-      
+
       <div class="dashboard-header reveal">
         <div class="user-avatar" id="user-avatar">-</div>
         <div>
@@ -190,9 +208,9 @@
           <p>Here's your cookieesandcakes profile dashboard.</p>
         </div>
       </div>
-      
+
       <div class="dashboard-grid reveal">
-        
+
         <!-- Left: Profile details -->
         <div class="form-card profile-card">
           <h3 class="form-card__title">Profile Info</h3>
@@ -210,14 +228,15 @@
               <span class="detail-val" id="profile-joined">-</span>
             </div>
           </div>
-          <button id="btn-logout-user" class="btn btn--secondary btn-full" style="margin-top: var(--space-8);">Sign Out 🚪</button>
+          <button id="btn-logout-user" class="btn btn--secondary btn-full" style="margin-top: var(--space-8);">Sign Out
+            🚪</button>
         </div>
-        
+
         <!-- Right: Order history list -->
         <div class="form-card orders-card">
           <h3 class="form-card__title">Order History</h3>
           <p class="form-card__subtitle">Track your recent orders and custom cakes.</p>
-          
+
           <div id="orders-list-container">
             <!-- Loading state -->
             <div id="orders-loading" class="orders-status">
@@ -228,15 +247,16 @@
             <div id="orders-empty" class="orders-status hidden">
               <span style="font-size: 3rem;">📦</span>
               <p>You haven't placed any orders yet.</p>
-              <a href="order.html" class="btn btn--primary" style="margin-top: var(--space-4);">Place Your First Order</a>
+              <a href="order.html" class="btn btn--primary" style="margin-top: var(--space-4);">Place Your First
+                Order</a>
             </div>
             <!-- Orders List -->
             <div id="orders-list" class="orders-list hidden"></div>
           </div>
         </div>
-        
+
       </div>
-      
+
     </div>
   </main>
 
@@ -244,7 +264,9 @@
   <footer class="footer">
     <div class="footer__grid">
       <div>
-        <p style="color:rgba(243,227,204,0.9);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">cookieesandcakes</p>
+        <p
+          style="color:rgba(243,227,204,0.9);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">
+          cookieesandcakes</p>
         <p class="footer__brand-desc">Artisanal baked goods made with love, fresh to order.</p>
         <div class="footer__socials">
           <a href="#" class="footer__social" aria-label="Instagram">📷</a>
@@ -255,9 +277,9 @@
       <div>
         <p class="footer__col-title">Pages</p>
         <ul class="footer__links">
-          <li><a href="index.html"   class="footer__link">Home</a></li>
-          <li><a href="menu.html"    class="footer__link">Menu</a></li>
-          <li><a href="about.html"   class="footer__link">About</a></li>
+          <li><a href="index.html" class="footer__link">Home</a></li>
+          <li><a href="menu.html" class="footer__link">Menu</a></li>
+          <li><a href="about.html" class="footer__link">About</a></li>
           <li><a href="gallery.html" class="footer__link">Gallery</a></li>
         </ul>
       </div>
@@ -281,4 +303,5 @@
   </script>
   <script type="module" src="js/login.js"></script>
 </body>
+
 </html>

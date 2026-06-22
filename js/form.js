@@ -3,7 +3,7 @@
 // ============================================================
 
 import { auth, db } from './firebase-config.js';
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { ref, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
 export function initForm(formId) {
   const form    = document.getElementById(formId);
@@ -69,51 +69,38 @@ export function initForm(formId) {
     msgErr?.classList.remove('show');
 
     try {
-      if (auth.currentUser) {
-        try {
-          const name = form.querySelector('#name')?.value || '';
-          const email = form.querySelector('#email')?.value || '';
-          const phone = form.querySelector('#phone')?.value || '';
-          const product = form.querySelector('#product')?.value || '';
-          const quantity = form.querySelector('#quantity')?.value || '';
-          const eventDate = form.querySelector('#event-date')?.value || '';
-          const specialInstructions = form.querySelector('#message')?.value || '';
+      const name = form.querySelector('#name')?.value || '';
+      const email = form.querySelector('#email')?.value || '';
+      const phone = form.querySelector('#phone')?.value || '';
+      const product = form.querySelector('#product')?.value || '';
+      const quantity = form.querySelector('#quantity')?.value || '';
+      const eventDate = form.querySelector('#event-date')?.value || '';
+      const specialInstructions = form.querySelector('#message')?.value || '';
 
-          await addDoc(collection(db, "orders"), {
-            userId: auth.currentUser.uid,
-            customerName: name,
-            customerEmail: email,
-            customerPhone: phone,
-            product: product,
-            quantity: quantity,
-            eventDate: eventDate,
-            specialInstructions: specialInstructions,
-            createdAt: Date.now(),
-            status: 'Pending'
-          });
-        } catch (fsErr) {
-          console.error("Error saving order to Firestore:", fsErr);
-        }
-      }
+      const orderData = {
+        userId: auth.currentUser ? auth.currentUser.uid : 'guest',
+        customerName: name,
+        customerEmail: email,
+        customerPhone: phone,
+        product: product,
+        quantity: quantity,
+        eventDate: eventDate,
+        specialInstructions: specialInstructions,
+        createdAt: Date.now(),
+        status: 'Pending'
+      };
 
-      const data = new FormData(form);
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
+      // Save directly to Firebase Realtime Database
+      await push(ref(db, 'orders'), orderData);
+
+      form.reset();
+      form.querySelectorAll('input, select, textarea').forEach(f => {
+        f.classList.remove('valid', 'invalid');
       });
-
-      if (res.ok) {
-        form.reset();
-        form.querySelectorAll('input, select, textarea').forEach(f => {
-          f.classList.remove('valid', 'invalid');
-        });
-        msgOk?.classList.add('show');
-        msgOk?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      } else {
-        throw new Error('Server error');
-      }
-    } catch {
+      msgOk?.classList.add('show');
+      msgOk?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (error) {
+      console.error("Order submission error:", error);
       msgErr?.classList.add('show');
     } finally {
       submit.classList.remove('loading');
@@ -127,11 +114,22 @@ export function initForm(formId) {
   if (item) {
     const sel = form.querySelector('[name="product"]');
     if (sel) {
+      // Check if it already matches a broad category just in case
+      let matched = false;
       [...sel.options].forEach(opt => {
-        if (opt.value.toLowerCase().includes(item.toLowerCase().split(' ')[0])) {
+        if (opt.value.toLowerCase() === item.toLowerCase()) {
           opt.selected = true;
+          matched = true;
         }
       });
+      // If it's a specific product from the menu, add it as a new option
+      if (!matched) {
+        const newOption = document.createElement('option');
+        newOption.value = item;
+        newOption.textContent = '✨ ' + item;
+        newOption.selected = true;
+        sel.appendChild(newOption);
+      }
     }
   }
 }

@@ -14,3 +14,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal, .reveal--left, .reveal--right').forEach(el => {
   revealObserver.observe(el);
 });
+
+// Expose globally for dynamically injected content (like products)
+window.revealObserver = revealObserver;

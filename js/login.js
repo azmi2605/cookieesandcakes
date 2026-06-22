@@ -164,6 +164,15 @@ signinForm.addEventListener('submit', async (e) => {
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
+    // Determine if admin login
+    const isAdmin = document.getElementById('admin-login-checkbox')?.checked;
+    if (isAdmin) {
+      // Redirect to admin dashboard
+      window.location.replace('admin.html');
+    } else {
+      // Redirect to user dashboard
+      window.location.replace('user-dashboard.html');
+    }
     signinForm.reset();
   } catch (error) {
     signinError.classList.add('show');

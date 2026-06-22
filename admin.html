@@ -54,6 +54,31 @@
 
   <!-- Dashboard View -->
   <main id="dashboard-view">
+    
+    <!-- Orders Section -->
+    <div class="dashboard-header">
+      <h2>Recent Orders <span id="new-order-badge" style="display:none; background:var(--color-error); color:white; padding:2px 8px; border-radius:12px; font-size:0.8rem; vertical-align:middle; margin-left:10px;">New!</span></h2>
+    </div>
+
+    <div class="table-container" style="margin-bottom: 3rem;">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="order-list">
+          <tr><td colspan="6" style="text-align:center;padding:2rem;">Loading orders...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Products Section -->
     <div class="dashboard-header">
       <h2>Products</h2>
       <button id="btn-add-product" class="btn btn--primary">+ Add Product</button>

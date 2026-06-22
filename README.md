@@ -103,3 +103,5 @@ Before sharing your new site with customers, make sure you complete these steps:
 ---
 
 *Baked with 🤎 using HTML, CSS, and JS.*
+
+Made by [Azmiya Aayat](https://github.com/azmi2605)

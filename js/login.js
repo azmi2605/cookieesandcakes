@@ -1,4 +1,4 @@
-import { auth, db } from './firebase-config.js';
+import { auth, db, firestore } from './firebase-config.js';
 import { 
   onAuthStateChanged, 
   signInWithEmailAndPassword, 
@@ -323,7 +323,7 @@ async function fetchUserOrders(userId) {
 
   try {
     const q = query(
-      collection(db, "orders"), 
+      collection(firestore, "orders"), 
       where("userId", "==", userId)
     );
     const querySnapshot = await getDocs(q);

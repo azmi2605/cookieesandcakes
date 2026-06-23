@@ -192,3 +192,11 @@
 }
 
 .navbar__mobile-cta { width: 100%; }
+
+.navbar__logo-text {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-chocolate);
+  letter-spacing: -0.02em;
+}

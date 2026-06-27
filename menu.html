@@ -1,151 +1,157 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Menu — Cookies, Cakes & Brownies | cookieesandcakes</title>
+  <title>Menu — Treats | cookieesandcakes</title>
   <meta name="description" content="Browse our full menu of handcrafted cookies, layered cakes, fudgy brownies, and curated gift boxes. All made fresh to order.">
-  <meta property="og:title"       content="Menu | cookieesandcakes">
-  <meta property="og:description" content="Fresh-baked cookies, cakes, brownies, and gift boxes — made to order.">
-  <meta property="og:image"       content="assets/images/products/cookies.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/tokens.css">
-  <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="styles/global.css">
-  <link rel="stylesheet" href="styles/navbar.css">
-  <link rel="stylesheet" href="styles/product-card.css">
-  <link rel="stylesheet" href="styles/animations.css">
-  <link rel="stylesheet" href="styles/footer.css">
-</head>
-<body>
-
-  <!-- ── Navbar ──────────────────────────────────────────────── -->
-  <header id="navbar" class="navbar" role="banner">
-    <div class="navbar__inner">
-      <a href="index.html" class="navbar__logo" aria-label="cookieesandcakes home">
-        <img src="assets/images/logo/logo.svg" alt="cookieesandcakes logo" class="navbar__logo-img" width="48" height="48">
-      </a>
-      <nav class="navbar__links">
-        <a href="index.html"   class="navbar__link">Home</a>
-        <a href="menu.html"    class="navbar__link">Menu</a>
-        <a href="about.html"   class="navbar__link">About</a>
-        <a href="login.html"   class="navbar__link nav-login">Login</a>
-      </nav>
-      <div class="navbar__actions">
-        <a href="order.html" class="btn btn--primary navbar__cta">Order Now</a>
-        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <nav class="navbar__mobile" id="mobile-nav">
-    <div class="navbar__mobile-links">
-      <a href="index.html"   class="navbar__mobile-link">Home</a>
-      <a href="menu.html"    class="navbar__mobile-link">Menu</a>
-      <a href="about.html"   class="navbar__mobile-link">About</a>
-      <a href="login.html"   class="navbar__mobile-link nav-login">Login</a>
-    </div>
-    <a href="order.html" class="btn btn--primary navbar__mobile-cta">Order Now →</a>
-  </nav>
-
-  <main>
-    <!-- ── Page Header ──────────────────────────────────────── -->
-    <div class="page-header">
-      <p class="section-label">Our Menu</p>
-      <h1>Everything Baked with Love 🍪</h1>
-      <p>Every item made fresh to order in small batches. Browse by category and reach out to place your order.</p>
-    </div>
-
-    <!-- ── Filter + Grid ────────────────────────────────────── -->
-    <section class="section" aria-labelledby="menu-heading">
-      <div class="container">
-        <h2 class="sr-only" id="menu-heading">Product catalogue</h2>
-        <div class="filter-bar" role="group" aria-label="Filter by category">
-          <button class="filter-btn active" data-filter="all"        id="filter-all">All Items</button>
-          <button class="filter-btn"        data-filter="cookies"    id="filter-cookies">🍪 Cookies</button>
-          <button class="filter-btn"        data-filter="cakes"      id="filter-cakes">🎂 Cakes</button>
-          <button class="filter-btn"        data-filter="brownies"   id="filter-brownies">🍫 Brownies</button>
-          <button class="filter-btn"        data-filter="gift-boxes" id="filter-gift">🎁 Gift Boxes</button>
-          <button class="filter-btn"        data-filter="seasonal"   id="filter-seasonal">🌸 Seasonal</button>
-        </div>
-        <div class="products-grid" id="menu-grid"></div>
-
-        <!-- Custom Order CTA -->
-        <div style="margin-top:var(--space-16);padding:var(--space-12);background:var(--color-cream);border-radius:var(--radius-xl);text-align:center;" class="reveal">
-          <p class="section-label">Don't see what you want?</p>
-          <h3 style="font-size:var(--text-xl);margin-bottom:var(--space-3);">We do custom orders!</h3>
-          <p style="color:var(--color-text-muted);margin-bottom:var(--space-6);max-width:50ch;margin-left:auto;margin-right:auto;">
-            Have a specific vision in mind? We love creating custom cakes and cookie boxes tailored to your occasion, theme, or dietary needs.
-          </p>
-          <a href="order.html" class="btn btn--primary btn--lg" id="menu-custom-order">Request a Custom Order</a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- ── Footer ─────────────────────────────────────────────── -->
-  <footer class="footer">
-    <div class="footer__grid">
-      <div>
-        <p class="footer__brand-desc" style="color:rgba(243,227,204,0.8);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">cookieesandcakes</p>
-        <p class="footer__brand-desc">Artisanal baked goods made with love, fresh to order.</p>
-        <div class="footer__socials">
-          <a href="#" class="footer__social" aria-label="Instagram">📷</a>
-          <a href="#" class="footer__social" aria-label="Facebook">📘</a>
-          <a href="#" class="footer__social" aria-label="Pinterest">📌</a>
-        </div>
-      </div>
-      <div>
-        <p class="footer__col-title">Menu</p>
-        <ul class="footer__links">
-          <li><a href="#" class="footer__link" onclick="document.querySelector('[data-filter=cookies]').click();return false;">Cookies</a></li>
-          <li><a href="#" class="footer__link" onclick="document.querySelector('[data-filter=cakes]').click();return false;">Cakes</a></li>
-          <li><a href="#" class="footer__link" onclick="document.querySelector('[data-filter=brownies]').click();return false;">Brownies</a></li>
-          <li><a href="#" class="footer__link" onclick="document.querySelector('[data-filter=gift-boxes]').click();return false;">Gift Boxes</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer__col-title">Company</p>
-        <ul class="footer__links">
-          <li><a href="about.html"   class="footer__link">Our Story</a></li>
-          <li><a href="order.html"   class="footer__link">Order</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer__col-title">Contact</p>
-        <ul class="footer__links">
-          <li><a href="mailto:hello@cookieesandcakes.com" class="footer__link">hello@cookieesandcakes.com</a></li>
-          <li><span class="footer__link">Tue–Sat: 9am – 6pm</span></li>
-          <li><a href="order.html" class="btn btn--primary btn--sm" style="margin-top:var(--space-3);">Order Now</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <p class="footer__copy">© 2024 <a href="index.html">cookieesandcakes</a>. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script type="module">
-    import { renderProductGrid, renderProductCard, loadProducts } from './js/products.js';
-    import { initFilter  } from './js/filter.js';
-    import './js/animations.js';
-    import './js/navbar.js';
-
-    // Expose renderProductCard for filter.js
-    window.__cookieProducts = { renderProductCard };
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      const products = await renderProductGrid('menu-grid');
-      initFilter(products, 'menu-grid');
-    });
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "background":"#fff8f6","surface":"#fff8f6","surface-container-low":"#fff1ec",
+            "surface-container":"#ffe9e2","surface-container-high":"#ffe2d8","surface-container-highest":"#fbdcd1",
+            "on-surface":"#281811","on-surface-variant":"#504440","primary":"#44281e","on-primary":"#ffffff",
+            "secondary":"#91494d","on-secondary":"#ffffff","secondary-container":"#fea3a6","on-secondary-container":"#79363b",
+            "outline":"#827470","outline-variant":"#d4c3bd","error":"#ba1a1a","inverse-surface":"#3f2c25"
+          }
+        }
+      }
+    }
   </script>
-
   <style>
-    .sr-only { position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0); }
+    body { font-family: "Be Vietnam Pro", sans-serif; }
+    .font-caslon { font-family: "Libre Caslon Text", serif; }
+    .material-symbols-outlined { font-family: "Material Symbols Outlined"; font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .butter-shadow { box-shadow: 0 20px 40px rgba(93,62,51,0.08); }
+    .filter-btn.active { background-color: #44281e; color: #fff; }
+    .hide-scrollbar::-webkit-scrollbar { display:none; }
+    .hide-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
   </style>
+</head>
+<body class="bg-[#fff8f6] text-[#281811]">
+
+<!-- Navbar -->
+<header class="fixed top-0 w-full z-50 bg-[#fff8f6]/80 backdrop-blur-md shadow-[0_4px_20px_rgba(68,40,30,0.06)]">
+  <div class="flex justify-between items-center h-20 px-4 md:px-16 max-w-[1200px] mx-auto">
+    <a class="flex items-center gap-3" href="index.html">
+      <img alt="logo" class="h-10 w-auto" src="assets/images/logo/logo.svg" onerror="this.style.display='none'">
+      <span class="font-caslon text-2xl text-[#44281e] font-bold">cookieesandcakes</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-10">
+      <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e] transition-colors" href="index.html">Home</a>
+      <a class="text-sm font-semibold tracking-wide text-[#91494d] border-b-2 border-[#91494d] pb-1" href="menu.html">Treats</a>
+      <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e] transition-colors" href="about.html">Our Story</a>
+      <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e] transition-colors" href="order.html">Order</a>
+    </nav>
+    <div class="flex items-center gap-4">
+      <a href="wishlist.html" class="relative p-2 hover:opacity-70 transition-opacity">
+        <span class="material-symbols-outlined text-[#44281e]">favorite</span>
+        <span id="wishlist-badge" class="hidden absolute -top-1 -right-1 bg-[#91494d] text-white text-[10px] w-4 h-4 items-center justify-center rounded-full">0</span>
+      </a>
+      <a href="login.html" class="p-2 hover:opacity-70 transition-opacity">
+        <span class="material-symbols-outlined text-[#44281e]">account_circle</span>
+      </a>
+      <button id="hamburger" class="md:hidden p-2">
+        <span class="material-symbols-outlined text-[#44281e]">menu</span>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-[#fff8f6] border-t border-[#d4c3bd]/30 py-4 px-4">
+    <nav class="flex flex-col gap-4">
+      <a href="index.html" class="text-sm font-semibold text-[#504440]">Home</a>
+      <a href="menu.html" class="text-sm font-semibold text-[#91494d]">Treats</a>
+      <a href="about.html" class="text-sm font-semibold text-[#504440]">Our Story</a>
+      <a href="order.html" class="text-sm font-semibold text-[#504440]">Order</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pt-20">
+  <!-- Page Header -->
+  <section class="bg-[#fff1ec] py-16 px-4 md:px-16">
+    <div class="max-w-[1200px] mx-auto">
+      <span class="inline-block px-4 py-1.5 rounded-full bg-[#fea3a6] text-[#79363b] text-xs font-bold tracking-widest uppercase mb-4">Our Menu</span>
+      <h1 class="font-caslon text-4xl md:text-5xl text-[#44281e] font-bold mb-4">Everything Baked with Love 🍪</h1>
+      <p class="text-[#504440] text-lg max-w-2xl">Every item made fresh to order in small batches. Browse by category and reach out to place your order.</p>
+    </div>
+  </section>
+
+  <!-- Filter + Grid -->
+  <section class="py-12 px-4 md:px-16">
+    <div class="max-w-[1200px] mx-auto">
+      <!-- Filter Bar -->
+      <div class="flex flex-wrap gap-3 mb-10" role="group" aria-label="Filter by category">
+        <button class="filter-btn active px-5 py-2.5 rounded-full border border-[#44281e] text-sm font-semibold transition-all" data-filter="all" id="filter-all">All Items</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full border border-[#d4c3bd] text-[#504440] text-sm font-semibold hover:border-[#44281e] hover:text-[#44281e] transition-all" data-filter="cookies" id="filter-cookies">🍪 Cookies</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full border border-[#d4c3bd] text-[#504440] text-sm font-semibold hover:border-[#44281e] hover:text-[#44281e] transition-all" data-filter="cakes" id="filter-cakes">🎂 Cakes</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full border border-[#d4c3bd] text-[#504440] text-sm font-semibold hover:border-[#44281e] hover:text-[#44281e] transition-all" data-filter="brownies" id="filter-brownies">🍫 Brownies</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full border border-[#d4c3bd] text-[#504440] text-sm font-semibold hover:border-[#44281e] hover:text-[#44281e] transition-all" data-filter="gift-boxes" id="filter-gift">🎁 Gift Boxes</button>
+        <button class="filter-btn px-5 py-2.5 rounded-full border border-[#d4c3bd] text-[#504440] text-sm font-semibold hover:border-[#44281e] hover:text-[#44281e] transition-all" data-filter="seasonal" id="filter-seasonal">🌸 Seasonal</button>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="menu-grid">
+        <p class="col-span-full text-center text-[#504440] py-12">Loading our treats...</p>
+      </div>
+
+      <!-- Custom Order CTA -->
+      <div class="mt-20 p-12 bg-[#fff1ec] rounded-2xl text-center">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-[#fea3a6] text-[#79363b] text-xs font-bold tracking-widest uppercase mb-4">Don't see what you want?</span>
+        <h3 class="font-caslon text-2xl text-[#44281e] font-bold mb-3">We do custom orders!</h3>
+        <p class="text-[#504440] mb-8 max-w-lg mx-auto">Have a specific vision in mind? We love creating custom cakes and cookie boxes tailored to your occasion, theme, or dietary needs.</p>
+        <a href="order.html" class="inline-block bg-[#91494d] text-white text-sm font-semibold px-10 py-3 rounded-lg hover:brightness-110 active:scale-[0.98] transition-all butter-shadow" id="menu-custom-order">Request a Custom Order</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#fbdcd1] border-t border-[#44281e]/5 py-12">
+  <div class="max-w-[1200px] mx-auto px-4 md:px-16 flex flex-col md:flex-row justify-between items-center gap-6">
+    <span class="font-caslon text-xl text-[#44281e] font-bold">cookieesandcakes</span>
+    <nav class="flex flex-wrap gap-6 text-xs text-[#504440]">
+      <a href="index.html" class="hover:text-[#91494d]">Home</a>
+      <a href="menu.html" class="hover:text-[#91494d]">Menu</a>
+      <a href="about.html" class="hover:text-[#91494d]">Our Story</a>
+      <a href="order.html" class="hover:text-[#91494d]">Order</a>
+    </nav>
+    <p class="text-xs text-[#504440] opacity-70">© 2026 cookieesandcakes. Handcrafted with love 🤎</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('hamburger')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu')?.classList.toggle('hidden');
+  });
+  // Filter functionality
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active', 'bg-[#44281e]', 'text-white'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      document.querySelectorAll('#menu-grid [data-category]').forEach(card => {
+        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+<script type="module">
+  import { renderProductGrid, updateWishlistBadge } from './js/products.js';
+  document.addEventListener('DOMContentLoaded', async () => {
+    await renderProductGrid('menu-grid');
+    updateWishlistBadge();
+  });
+</script>
 </body>
 </html>

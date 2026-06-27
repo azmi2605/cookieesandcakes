@@ -1,293 +1,227 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Account — cookieesandcakes</title>
-  <meta name="description"
-    content="Log in or register to manage your cookieesandcakes account, track your custom cake and cookie orders, and update your profile.">
-
-  <!-- Fonts -->
+  <meta name="description" content="Log in or register to manage your cookieesandcakes account, track your custom cake and cookie orders.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
-    rel="stylesheet">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles/tokens.css">
-  <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="styles/global.css">
-  <link rel="stylesheet" href="styles/navbar.css">
-  <link rel="stylesheet" href="styles/forms.css">
-  <link rel="stylesheet" href="styles/login.css">
-  <link rel="stylesheet" href="styles/animations.css">
-  <link rel="stylesheet" href="styles/footer.css">
-</head>
-
-<body>
-
-  <!-- Navbar -->
-  <header id="navbar" class="navbar">
-    <div class="navbar__inner">
-      <a href="index.html" class="navbar__logo">
-        <img src="assets/images/logo/logo.svg" alt="cookieesandcakes logo" class="navbar__logo-img" width="48" height="48">
-      </a>
-      <nav class="navbar__links">
-        <a href="index.html" class="navbar__link">Home</a>
-        <a href="menu.html" class="navbar__link">Menu</a>
-        <a href="about.html" class="navbar__link">About</a>
-        <a href="login.html" class="navbar__link nav-login">Login</a>
-      </nav>
-      <div class="navbar__actions">
-        <a href="order.html" class="btn btn--primary navbar__cta">Order Now</a>
-        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"
-          aria-controls="mobile-nav">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </header>
-  <nav class="navbar__mobile" id="mobile-nav">
-    <div class="navbar__mobile-links">
-      <a href="index.html" class="navbar__mobile-link">Home</a>
-      <a href="menu.html" class="navbar__mobile-link">Menu</a>
-      <a href="about.html" class="navbar__mobile-link">About</a>
-      <a href="login.html" class="navbar__mobile-link nav-login">Login</a>
-    </div>
-    <a href="order.html" class="btn btn--primary navbar__mobile-cta">Order Now →</a>
-  </nav>
-
-  <main>
-    <!-- ── Auth View ── -->
-    <div id="auth-view" class="auth-container container section">
-
-      <!-- Card 1: Sign In -->
-      <div id="signin-card" class="form-card auth-card reveal">
-        <h3 class="form-card__title">Welcome Back 🍪</h3>
-        <p class="form-card__subtitle">Log in to track your orders and manage your profile.</p>
-
-        <form id="signin-form" novalidate>
-          <div class="form-grid">
-            <div class="form-field">
-              <label for="signin-email">Email Address <span style="color:var(--color-error)">*</span></label>
-              <input type="email" id="signin-email" class="form-input" placeholder="you@example.com" required
-                autocomplete="email">
-              <span class="field-error" role="alert"></span>
-            </div>
-
-            <div class="form-field">
-              <label for="signin-password">Password <span style="color:var(--color-error)">*</span></label>
-              <input type="password" id="signin-password" class="form-input" placeholder="••••••••" required
-                autocomplete="current-password">
-              <span class="field-error" role="alert"></span>
-            </div>
-            <div class="form-field admin-toggle" style="margin-top: var(--space-4);">
-              <label style="display:flex; align-items:center;">
-                <input type="checkbox" id="admin-login-checkbox" style="margin-right: var(--space-2);">
-                Log in as Administrator
-              </label>
-            </div>
-          </div>
-
-          <div class="auth-card__forgot">
-            <a id="link-show-reset">Forgot Password?</a>
-          </div>
-
-          <button type="submit" class="form-submit" id="signin-submit-btn">
-            <span class="btn-text">Sign In 🤎</span>
-            <span class="spinner" aria-hidden="true"></span>
-          </button>
-
-          <div class="form-message form-message--error" id="signin-error" role="alert"></div>
-        </form>
-
-        <p class="auth-card__toggle">
-          New to cookieesandcakes? <a id="link-show-signup">Create an account</a>
-        </p>
-      </div>
-
-      <!-- Card 2: Sign Up -->
-      <div id="signup-card" class="form-card auth-card hidden reveal">
-        <h3 class="form-card__title">Create Account ✨</h3>
-        <p class="form-card__subtitle">Join us to save details and track your custom orders.</p>
-
-        <form id="signup-form" novalidate>
-          <div class="form-grid">
-            <div class="form-field">
-              <label for="signup-name">Full Name <span style="color:var(--color-error)">*</span></label>
-              <input type="text" id="signup-name" class="form-input" placeholder="Your Name" required
-                autocomplete="name">
-              <span class="field-error" role="alert"></span>
-            </div>
-
-            <div class="form-field">
-              <label for="signup-email">Email Address <span style="color:var(--color-error)">*</span></label>
-              <input type="email" id="signup-email" class="form-input" placeholder="you@example.com" required
-                autocomplete="email">
-              <span class="field-error" role="alert"></span>
-            </div>
-
-            <div class="form-field">
-              <label for="signup-password">Password <span style="color:var(--color-error)">*</span></label>
-              <input type="password" id="signup-password" class="form-input" placeholder="Min. 6 characters" required
-                autocomplete="new-password" minlength="6">
-              <span class="field-error" role="alert"></span>
-            </div>
-
-            <div class="form-field">
-              <label for="signup-password">Password <span style="color:var(--color-error)">*</span></label>
-              <input type="password" id="signup-password" class="form-input" placeholder="••••••••" required
-                autocomplete="current-password">
-              <span class="field-error" role="alert"></span>
-            </div>
-            <button type="submit" class="form-submit" id="signup-submit-btn">
-              <span class="btn-text">Register 🎉</span>
-              <span class="spinner" aria-hidden="true"></span>
-            </button>
-            <div class="form-message form-message--error" id="signup-error" role="alert"></div>
-        </form>
-
-        <p class="auth-card__toggle">
-          Already have an account? <a id="link-show-signin">Sign in</a>
-        </p>
-      </div>
-
-      <!-- Card 3: Password Reset -->
-      <div id="reset-card" class="form-card auth-card hidden reveal">
-        <h3 class="form-card__title">Reset Password 🔑</h3>
-        <p class="form-card__subtitle">Enter your email and we'll send you a link to reset your password.</p>
-
-        <form id="reset-form" novalidate>
-          <div class="form-grid">
-            <div class="form-field">
-              <label for="reset-email">Email Address <span style="color:var(--color-error)">*</span></label>
-              <input type="email" id="reset-email" class="form-input" placeholder="you@example.com" required
-                autocomplete="email">
-              <span class="field-error" role="alert"></span>
-            </div>
-          </div>
-
-          <button type="submit" class="form-submit" id="reset-submit-btn" style="margin-top: var(--space-6);">
-            <span class="btn-text">Send Reset Link 📧</span>
-            <span class="spinner" aria-hidden="true"></span>
-          </button>
-
-          <div class="form-message form-message--success" id="reset-success" role="status"></div>
-          <div class="form-message form-message--error" id="reset-error" role="alert"></div>
-        </form>
-
-        <p class="auth-card__toggle">
-          Remember your password? <a id="link-back-to-signin">Back to sign in</a>
-        </p>
-      </div>
-
-    </div>
-
-    <!-- ── Dashboard View ── -->
-    <div id="dashboard-view" class="dashboard-container container section hidden">
-
-      <div class="dashboard-header reveal">
-        <div class="user-avatar" id="user-avatar">-</div>
-        <div>
-          <h1 id="welcome-title">Welcome back!</h1>
-          <p>Here's your cookieesandcakes profile dashboard.</p>
-        </div>
-      </div>
-
-      <div class="dashboard-grid reveal">
-
-        <!-- Left: Profile details -->
-        <div class="form-card profile-card">
-          <h3 class="form-card__title">Profile Info</h3>
-          <div class="profile-details">
-            <div class="detail-item">
-              <span class="detail-label">Name</span>
-              <span class="detail-val" id="profile-name">-</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">Email</span>
-              <span class="detail-val" id="profile-email">-</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">Joined</span>
-              <span class="detail-val" id="profile-joined">-</span>
-            </div>
-          </div>
-          <button id="btn-logout-user" class="btn btn--secondary btn-full" style="margin-top: var(--space-8);">Sign Out
-            🚪</button>
-        </div>
-
-        <!-- Right: Order history list -->
-        <div class="form-card orders-card">
-          <h3 class="form-card__title">Order History</h3>
-          <p class="form-card__subtitle">Track your recent orders and custom cakes.</p>
-
-          <div id="orders-list-container">
-            <!-- Loading state -->
-            <div id="orders-loading" class="orders-status">
-              <div class="spinner-brown"></div>
-              <p>Fetching your orders...</p>
-            </div>
-            <!-- Empty state -->
-            <div id="orders-empty" class="orders-status hidden">
-              <span style="font-size: 3rem;">📦</span>
-              <p>You haven't placed any orders yet.</p>
-              <a href="order.html" class="btn btn--primary" style="margin-top: var(--space-4);">Place Your First
-                Order</a>
-            </div>
-            <!-- Orders List -->
-            <div id="orders-list" class="orders-list hidden"></div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer__grid">
-      <div>
-        <p
-          style="color:rgba(243,227,204,0.9);font-family:var(--font-heading);font-size:var(--text-lg);font-weight:700;margin-bottom:var(--space-3);">
-          cookieesandcakes</p>
-        <p class="footer__brand-desc">Artisanal baked goods made with love, fresh to order.</p>
-        <div class="footer__socials">
-          <a href="#" class="footer__social" aria-label="Instagram">📷</a>
-          <a href="#" class="footer__social" aria-label="Facebook">📘</a>
-          <a href="#" class="footer__social" aria-label="Pinterest">📌</a>
-        </div>
-      </div>
-      <div>
-        <p class="footer__col-title">Pages</p>
-        <ul class="footer__links">
-          <li><a href="index.html" class="footer__link">Home</a></li>
-          <li><a href="menu.html" class="footer__link">Menu</a></li>
-          <li><a href="about.html" class="footer__link">About</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer__col-title">Contact</p>
-        <ul class="footer__links">
-          <li><a href="mailto:hello@cookieesandcakes.com" class="footer__link">hello@cookieesandcakes.com</a></li>
-          <li><a href="tel:+15550001234" class="footer__link">+1 (555) 000-1234</a></li>
-          <li><span class="footer__link">Tue–Sat: 9am – 6pm</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer__bottom">
-      <p class="footer__copy">© 2024 <a href="index.html">cookieesandcakes</a>. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script type="module">
-    import './js/animations.js';
-    import './js/navbar.js';
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "background":"#fff8f6","surface":"#fff8f6","surface-container-low":"#fff1ec",
+            "surface-container-highest":"#fbdcd1","on-surface":"#281811","on-surface-variant":"#504440",
+            "primary":"#44281e","secondary":"#91494d","secondary-container":"#fea3a6","on-secondary-container":"#79363b",
+            "outline-variant":"#d4c3bd","error":"#ba1a1a"
+          }
+        }
+      }
+    }
   </script>
-  <script type="module" src="js/login.js"></script>
-</body>
+  <style>
+    body { font-family: "Be Vietnam Pro", sans-serif; }
+    .font-caslon { font-family: "Libre Caslon Text", serif; }
+    .material-symbols-outlined { font-family: "Material Symbols Outlined"; font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+    .butter-shadow { box-shadow: 0 20px 40px rgba(93,62,51,0.08); }
+  </style>
+</head>
+<body class="bg-[#fff1ec] text-[#281811] min-h-screen">
 
+<!-- Navbar -->
+<header class="fixed top-0 w-full z-50 bg-[#fff8f6]/80 backdrop-blur-md shadow-[0_4px_20px_rgba(68,40,30,0.06)]">
+  <div class="flex justify-between items-center h-20 px-4 md:px-16 max-w-[1200px] mx-auto">
+    <a class="flex items-center gap-3" href="index.html">
+      <img alt="logo" class="h-10 w-auto" src="assets/images/logo/logo.svg" onerror="this.style.display='none'">
+      <span class="font-caslon text-2xl text-[#44281e] font-bold">cookieesandcakes</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-10">
+      <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e]" href="index.html">Home</a>
+      <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e]" href="menu.html">Treats</a>
+      <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e]" href="about.html">Our Story</a>
+      <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e]" href="order.html">Order</a>
+    </nav>
+    <div class="flex items-center gap-4">
+      <a href="wishlist.html" class="p-2 hover:opacity-70"><span class="material-symbols-outlined text-[#44281e]">favorite</span></a>
+      <a href="login.html" class="p-2 hover:opacity-70"><span class="material-symbols-outlined text-[#91494d]">account_circle</span></a>
+    </div>
+  </div>
+</header>
+
+<main class="pt-28 pb-20 px-4 md:px-16 max-w-[1200px] mx-auto">
+
+  <!-- AUTH VIEW -->
+  <div id="auth-view" class="flex flex-col items-center">
+    <div class="w-full max-w-md">
+
+      <!-- Sign In Card -->
+      <div id="signin-card" class="bg-[#fff8f6] rounded-2xl p-8 butter-shadow mb-6">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-[#fea3a6] rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-[#79363b]" style="font-size:32px">lock</span>
+          </div>
+          <h2 class="font-caslon text-2xl text-[#44281e] font-bold">Welcome Back 🍪</h2>
+          <p class="text-[#504440] text-sm mt-2">Log in to track your orders and manage your profile.</p>
+        </div>
+        <form id="signin-form" novalidate class="space-y-5">
+          <div class="form-field">
+            <label class="block text-sm font-semibold text-[#504440] mb-1.5" for="signin-email">Email Address <span class="text-[#ba1a1a]">*</span></label>
+            <input type="email" id="signin-email" class="w-full border border-[#d4c3bd] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#44281e] bg-[#fff8f6] text-sm" placeholder="you@example.com" required autocomplete="email">
+            <span class="field-error text-xs text-[#ba1a1a] mt-1 block" role="alert"></span>
+          </div>
+          <div class="form-field">
+            <label class="block text-sm font-semibold text-[#504440] mb-1.5" for="signin-password">Password <span class="text-[#ba1a1a]">*</span></label>
+            <input type="password" id="signin-password" class="w-full border border-[#d4c3bd] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#44281e] bg-[#fff8f6] text-sm" placeholder="••••••••" required autocomplete="current-password">
+            <span class="field-error text-xs text-[#ba1a1a] mt-1 block" role="alert"></span>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="checkbox" id="admin-login-checkbox" class="rounded border-[#d4c3bd]">
+            <label for="admin-login-checkbox" class="text-sm text-[#504440]">Log in as Administrator</label>
+          </div>
+          <div class="text-right">
+            <a id="link-show-reset" class="text-xs text-[#91494d] cursor-pointer hover:underline">Forgot Password?</a>
+          </div>
+          <button type="submit" id="signin-submit-btn" class="w-full bg-[#44281e] text-white py-3 rounded-lg text-sm font-semibold hover:brightness-110 active:scale-[0.98] transition-all">
+            <span class="btn-text">Sign In 🤎</span>
+            <span class="spinner hidden" aria-hidden="true"></span>
+          </button>
+          <div class="form-message hidden text-sm text-[#ba1a1a] bg-red-50 border border-red-100 rounded-lg p-3" id="signin-error" role="alert"></div>
+        </form>
+        <p class="text-center text-sm text-[#504440] mt-6">New here? <a id="link-show-signup" class="text-[#91494d] font-semibold cursor-pointer hover:underline">Create an account</a></p>
+      </div>
+
+      <!-- Sign Up Card -->
+      <div id="signup-card" class="hidden bg-[#fff8f6] rounded-2xl p-8 butter-shadow mb-6">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-[#fea3a6] rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-[#79363b]" style="font-size:32px">person_add</span>
+          </div>
+          <h2 class="font-caslon text-2xl text-[#44281e] font-bold">Create Account ✨</h2>
+          <p class="text-[#504440] text-sm mt-2">Join us to save details and track your custom orders.</p>
+        </div>
+        <form id="signup-form" novalidate class="space-y-5">
+          <div class="form-field">
+            <label class="block text-sm font-semibold text-[#504440] mb-1.5" for="signup-name">Full Name <span class="text-[#ba1a1a]">*</span></label>
+            <input type="text" id="signup-name" class="w-full border border-[#d4c3bd] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#44281e] bg-[#fff8f6] text-sm" placeholder="Your Name" required autocomplete="name">
+            <span class="field-error text-xs text-[#ba1a1a] mt-1 block" role="alert"></span>
+          </div>
+          <div class="form-field">
+            <label class="block text-sm font-semibold text-[#504440] mb-1.5" for="signup-email">Email Address <span class="text-[#ba1a1a]">*</span></label>
+            <input type="email" id="signup-email" class="w-full border border-[#d4c3bd] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#44281e] bg-[#fff8f6] text-sm" placeholder="you@example.com" required autocomplete="email">
+            <span class="field-error text-xs text-[#ba1a1a] mt-1 block" role="alert"></span>
+          </div>
+          <div class="form-field">
+            <label class="block text-sm font-semibold text-[#504440] mb-1.5" for="signup-password">Password <span class="text-[#ba1a1a]">*</span></label>
+            <input type="password" id="signup-password" class="w-full border border-[#d4c3bd] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#44281e] bg-[#fff8f6] text-sm" placeholder="Min. 6 characters" required autocomplete="new-password" minlength="6">
+            <span class="field-error text-xs text-[#ba1a1a] mt-1 block" role="alert"></span>
+          </div>
+          <button type="submit" id="signup-submit-btn" class="w-full bg-[#91494d] text-white py-3 rounded-lg text-sm font-semibold hover:brightness-110 active:scale-[0.98] transition-all">
+            <span class="btn-text">Register 🎉</span>
+            <span class="spinner hidden" aria-hidden="true"></span>
+          </button>
+          <div class="form-message hidden text-sm text-[#ba1a1a] bg-red-50 border border-red-100 rounded-lg p-3" id="signup-error" role="alert"></div>
+        </form>
+        <p class="text-center text-sm text-[#504440] mt-6">Already have an account? <a id="link-show-signin" class="text-[#91494d] font-semibold cursor-pointer hover:underline">Sign in</a></p>
+      </div>
+
+      <!-- Reset Card -->
+      <div id="reset-card" class="hidden bg-[#fff8f6] rounded-2xl p-8 butter-shadow mb-6">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-[#fea3a6] rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="material-symbols-outlined text-[#79363b]" style="font-size:32px">key</span>
+          </div>
+          <h2 class="font-caslon text-2xl text-[#44281e] font-bold">Reset Password 🔑</h2>
+          <p class="text-[#504440] text-sm mt-2">Enter your email and we'll send you a reset link.</p>
+        </div>
+        <form id="reset-form" novalidate class="space-y-5">
+          <div class="form-field">
+            <label class="block text-sm font-semibold text-[#504440] mb-1.5" for="reset-email">Email Address <span class="text-[#ba1a1a]">*</span></label>
+            <input type="email" id="reset-email" class="w-full border border-[#d4c3bd] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#44281e] bg-[#fff8f6] text-sm" placeholder="you@example.com" required autocomplete="email">
+            <span class="field-error text-xs text-[#ba1a1a] mt-1 block" role="alert"></span>
+          </div>
+          <button type="submit" id="reset-submit-btn" class="w-full bg-[#44281e] text-white py-3 rounded-lg text-sm font-semibold hover:brightness-110 transition-all">
+            <span class="btn-text">Send Reset Link 📧</span>
+          </button>
+          <div class="form-message hidden text-sm text-green-700 bg-green-50 border border-green-100 rounded-lg p-3" id="reset-success" role="status"></div>
+          <div class="form-message hidden text-sm text-[#ba1a1a] bg-red-50 border border-red-100 rounded-lg p-3" id="reset-error" role="alert"></div>
+        </form>
+        <p class="text-center text-sm text-[#504440] mt-6">Remember it? <a id="link-back-to-signin" class="text-[#91494d] font-semibold cursor-pointer hover:underline">Back to sign in</a></p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DASHBOARD VIEW -->
+  <div id="dashboard-view" class="hidden">
+    <!-- Header -->
+    <div class="flex items-center gap-5 mb-10">
+      <div id="user-avatar" class="w-16 h-16 rounded-full bg-[#91494d] text-white text-2xl font-bold flex items-center justify-center flex-shrink-0">-</div>
+      <div>
+        <h1 id="welcome-title" class="font-caslon text-3xl text-[#44281e] font-bold">Welcome back!</h1>
+        <p class="text-[#504440] text-sm">Here's your cookieesandcakes profile dashboard.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Profile Card -->
+      <div class="lg:col-span-1 bg-[#fff8f6] rounded-2xl p-6 butter-shadow h-fit">
+        <h3 class="font-caslon text-xl text-[#44281e] font-bold mb-5">Profile Info</h3>
+        <div class="space-y-4">
+          <div>
+            <span class="text-xs font-bold text-[#504440]/60 uppercase tracking-widest block mb-1">Name</span>
+            <span id="profile-name" class="text-[#281811] font-medium">-</span>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-[#504440]/60 uppercase tracking-widest block mb-1">Email</span>
+            <span id="profile-email" class="text-[#281811] font-medium">-</span>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-[#504440]/60 uppercase tracking-widest block mb-1">Joined</span>
+            <span id="profile-joined" class="text-[#281811] font-medium">-</span>
+          </div>
+        </div>
+        <div class="mt-8 space-y-3">
+          <a href="wishlist.html" class="flex items-center gap-2 w-full border border-[#44281e]/20 py-2.5 rounded-lg text-sm font-semibold text-[#44281e] hover:bg-[#44281e] hover:text-white transition-colors justify-center">
+            <span class="material-symbols-outlined" style="font-size:18px">favorite</span> My Wishlist
+          </a>
+          <button id="btn-logout-user" class="w-full border border-[#91494d]/30 py-2.5 rounded-lg text-sm font-semibold text-[#91494d] hover:bg-[#91494d] hover:text-white transition-colors">Sign Out 🚪</button>
+        </div>
+      </div>
+
+      <!-- Orders Card -->
+      <div class="lg:col-span-2 bg-[#fff8f6] rounded-2xl p-6 butter-shadow">
+        <h3 class="font-caslon text-xl text-[#44281e] font-bold mb-1">Order History</h3>
+        <p class="text-[#504440] text-sm mb-6">Track your recent orders and custom cakes.</p>
+        <div id="orders-list-container">
+          <div id="orders-loading" class="flex flex-col items-center gap-3 py-12 text-[#504440]">
+            <div class="w-8 h-8 border-4 border-[#44281e]/20 border-t-[#44281e] rounded-full animate-spin"></div>
+            <p class="text-sm">Fetching your orders...</p>
+          </div>
+          <div id="orders-empty" class="hidden flex flex-col items-center gap-3 py-12 text-center">
+            <span class="text-5xl">📦</span>
+            <p class="text-[#504440] text-sm">You haven't placed any orders yet.</p>
+            <a href="order.html" class="mt-2 inline-block bg-[#44281e] text-white text-sm font-semibold px-6 py-2.5 rounded-lg hover:brightness-110 transition-all">Place Your First Order</a>
+          </div>
+          <div id="orders-list" class="hidden space-y-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#fbdcd1] border-t border-[#44281e]/5 py-8">
+  <div class="max-w-[1200px] mx-auto px-4 md:px-16 text-center">
+    <p class="text-xs text-[#504440] opacity-70">© 2026 cookieesandcakes. Handcrafted with love 🤎</p>
+  </div>
+</footer>
+
+<script type="module" src="js/login.js"></script>
+</body>
 </html>

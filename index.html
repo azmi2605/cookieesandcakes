@@ -1,303 +1,413 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>cookieesandcakes — Artisanal Cookies & Cakes, Baked with Love</title>
-  <meta name="description"
-    content="Handcrafted cookies, cakes, and brownies made fresh to order in small batches. Perfect for gifting, celebrations, and everyday indulgence. Browse our menu and place your order today.">
-  <meta name="keywords" content="artisanal cookies, custom cakes, brownies, gift boxes, handmade bakery, baked goods">
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="cookieesandcakes — Artisanal Cookies & Cakes">
-  <meta property="og:description"
-    content="Handcrafted cookies, cakes & brownies baked with love. Perfect for gifting & celebrations.">
-  <meta property="og:image" content="assets/images/hero/hero.png">
-  <meta property="og:url" content="https://cookieesandcakes.vercel.app">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Bakery",
-    "name": "cookieesandcakes",
-    "description": "Artisanal handcrafted cookies, cakes, and brownies baked with love.",
-    "url": "https://cookieesandcakes.vercel.app",
-    "servesCuisine": "Bakery",
-    "priceRange": "$$",
-    "openingHours": "Tu-Sa 09:00-18:00",
-    "telephone": "+1-555-COOKIES",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Your City",
-      "addressRegion": "ST",
-      "addressCountry": "US"
-    }
-  }
-  </script>
-
-  <!-- Fonts -->
+  <title>cookieesandcakes | Artisanal Handcrafted Treats</title>
+  <meta name="description" content="Handcrafted cookies, cakes, and brownies made fresh to order in small batches.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap"
     rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "background": "#fff8f6", "surface": "#fff8f6", "surface-dim": "#f3d3c9",
+            "surface-container-low": "#fff1ec", "surface-container": "#ffe9e2", "surface-container-high": "#ffe2d8",
+            "surface-container-highest": "#fbdcd1", "surface-variant": "#fbdcd1", "surface-bright": "#fff8f6",
+            "on-surface": "#281811", "on-surface-variant": "#504440", "on-background": "#281811",
+            "primary": "#44281e", "on-primary": "#ffffff", "primary-container": "#5d3e33", "on-primary-container": "#d5aa9b",
+            "primary-fixed": "#ffdbcf", "primary-fixed-dim": "#e9bdae", "on-primary-fixed": "#2d150c", "on-primary-fixed-variant": "#5e3f34",
+            "secondary": "#91494d", "on-secondary": "#ffffff", "secondary-container": "#fea3a6", "on-secondary-container": "#79363b",
+            "secondary-fixed": "#ffdada", "secondary-fixed-dim": "#ffb3b5", "on-secondary-fixed": "#3c070e", "on-secondary-fixed-variant": "#743237",
+            "tertiary": "#302f2b", "on-tertiary": "#ffffff", "tertiary-container": "#464541", "on-tertiary-container": "#b6b3ad",
+            "tertiary-fixed": "#e6e2dc", "tertiary-fixed-dim": "#c9c6c1", "on-tertiary-fixed": "#1c1c18", "on-tertiary-fixed-variant": "#484743",
+            "outline": "#827470", "outline-variant": "#d4c3bd",
+            "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "on-error-container": "#93000a",
+            "inverse-surface": "#3f2c25", "inverse-on-surface": "#ffede7", "inverse-primary": "#e9bdae", "surface-tint": "#79564a"
+          },
+          fontFamily: {
+            "caslon": ["Libre Caslon Text", "serif"],
+            "vietnam": ["Be Vietnam Pro", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: "Be Vietnam Pro", sans-serif;
+    }
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles/tokens.css">
-  <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="styles/global.css">
-  <link rel="stylesheet" href="styles/navbar.css">
-  <link rel="stylesheet" href="styles/hero.css">
-  <link rel="stylesheet" href="styles/product-card.css">
-  <link rel="stylesheet" href="styles/testimonials.css">
-  <link rel="stylesheet" href="styles/animations.css">
-  <link rel="stylesheet" href="styles/footer.css">
+    .font-caslon {
+      font-family: "Libre Caslon Text", serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      font-family: "Material Symbols Outlined";
+    }
+
+    .butter-shadow {
+      box-shadow: 0 20px 40px rgba(93, 62, 51, 0.08);
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 </head>
 
-<body>
+<body class="bg-[#fff8f6] text-[#281811]">
 
-  <!-- ── Navbar ─────────────────────────────────────────────── -->
-  <header id="navbar" class="navbar" role="banner">
-    <div class="navbar__inner">
-      <a href="index.html" class="navbar__logo" aria-label="cookieesandcakes home">
-        <img src="assets/images/logo/logo.svg" alt="cookieesandcakes logo" class="navbar__logo-img" width="48"
-          height="48">
+  <!-- Navbar -->
+  <header class="fixed top-0 w-full z-50 bg-[#fff8f6]/80 backdrop-blur-md shadow-[0_4px_20px_rgba(68,40,30,0.06)]">
+    <div class="flex justify-between items-center h-20 px-4 md:px-16 max-w-[1200px] mx-auto">
+      <a class="flex items-center gap-3" href="index.html">
+        <img alt="cookieesandcakes logo" class="h-10 w-auto" src="assets/images/logo/logo.svg"
+          onerror="this.style.display='none'">
+        <span class="font-caslon text-2xl text-[#44281e] font-bold tracking-tight">cookieesandcakes</span>
       </a>
-
-      <nav class="navbar__links" aria-label="Main navigation">
-        <a href="index.html" class="navbar__link" id="nav-home">Home</a>
-        <a href="menu.html" class="navbar__link" id="nav-menu">Menu</a>
-        <a href="about.html" class="navbar__link" id="nav-about">About</a>
-        <a href="login.html" class="navbar__link nav-login" id="nav-login">Login</a>
+      <nav class="hidden md:flex items-center gap-10">
+        <a class="text-sm font-semibold tracking-wide text-[#91494d] border-b-2 border-[#91494d] pb-1"
+          href="index.html">Home</a>
+        <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e] transition-colors"
+          href="menu.html">Treats</a>
+        <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e] transition-colors"
+          href="about.html">Our Story</a>
+        <a class="text-sm font-semibold tracking-wide text-[#504440] hover:text-[#44281e] transition-colors"
+          href="order.html">Order</a>
       </nav>
-
-      <div class="navbar__actions">
-        <a href="order.html" class="btn btn--primary navbar__cta" id="nav-cta">Order Now</a>
-        <button class="navbar__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"
-          aria-controls="mobile-nav">
-          <span></span><span></span><span></span>
+      <div class="flex items-center gap-4">
+        <a href="wishlist.html" class="relative p-2 hover:opacity-70 transition-opacity">
+          <span class="material-symbols-outlined text-[#44281e]">favorite</span>
+          <span id="wishlist-badge"
+            class="hidden absolute -top-1 -right-1 bg-[#91494d] text-white text-[10px] w-4 h-4 items-center justify-center rounded-full">0</span>
+        </a>
+        <a href="login.html" class="p-2 hover:opacity-70 transition-opacity">
+          <span class="material-symbols-outlined text-[#44281e]">account_circle</span>
+        </a>
+        <button id="hamburger" class="md:hidden p-2">
+          <span class="material-symbols-outlined text-[#44281e]">menu</span>
         </button>
       </div>
     </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-[#fff8f6] border-t border-[#d4c3bd]/30 py-4 px-4">
+      <nav class="flex flex-col gap-4">
+        <a href="index.html" class="text-sm font-semibold text-[#91494d]">Home</a>
+        <a href="menu.html" class="text-sm font-semibold text-[#504440]">Treats</a>
+        <a href="about.html" class="text-sm font-semibold text-[#504440]">Our Story</a>
+        <a href="order.html" class="text-sm font-semibold text-[#504440]">Order</a>
+        <a href="login.html" class="text-sm font-semibold text-[#504440]">My Account</a>
+      </nav>
+      <a href="order.html"
+        class="mt-4 block text-center bg-[#91494d] text-white text-sm font-semibold px-8 py-3 rounded-lg">Order Now</a>
+    </div>
   </header>
 
-  <!-- ── Mobile Nav ─────────────────────────────────────────── -->
-  <nav class="navbar__mobile" id="mobile-nav" aria-label="Mobile navigation">
-    <div class="navbar__mobile-links">
-      <a href="index.html" class="navbar__mobile-link">Home</a>
-      <a href="menu.html" class="navbar__mobile-link">Menu</a>
-      <a href="about.html" class="navbar__mobile-link">About</a>
-    </div>
-    <a href="order.html" class="btn btn--primary navbar__mobile-cta">Order Now →</a>
-  </nav>
+  <main class="pt-20">
 
-  <main id="main-content">
-
-    <!-- ── Hero ───────────────────────────────────────────────── -->
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="hero__bg-pattern" aria-hidden="true"></div>
-      <div class="hero__content">
-
-        <div class="hero__text">
-          <span class="hero__eyebrow">
-            <span class="hero__eyebrow-dot" aria-hidden="true"></span>
-            Handcrafted with love
-          </span>
-          <h1 class="hero__heading" id="hero-heading">
-            Baked goods that<br>
-            taste like <span>home</span>
+    <!-- Hero -->
+    <section class="relative min-h-[85vh] flex items-center overflow-hidden">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-20">
+        <div class="z-10 order-2 md:order-1">
+          <span
+            class="inline-block px-4 py-1.5 rounded-full bg-[#fea3a6] text-[#79363b] text-xs font-bold tracking-widest uppercase mb-6">New
+            Batch Out Now ✨</span>
+          <h1 class="font-caslon text-5xl md:text-6xl text-[#44281e] mb-6 leading-tight">Baked with
+            <em>Love</em>,<br>Served with Joy.
           </h1>
-          <p class="hero__subheading">
-            Small-batch artisanal cookies, cakes, and brownies made fresh to order.
-            Every bite is a warm hug — crafted with the finest ingredients and a whole lot of heart.
-          </p>
-          <div class="hero__actions">
-            <a href="order.html" class="btn btn--primary btn--lg" id="hero-order-cta">Order Now</a>
-            <a href="menu.html" class="btn btn--secondary btn--lg" id="hero-menu-link">View Menu</a>
-          </div>
-          <div class="hero__trust">
-            <div class="hero__trust-stars" aria-label="5 stars">★★★★★</div>
-            <p class="hero__trust-text">
-              <strong>500+ happy customers</strong> and counting
-            </p>
+          <p class="text-lg text-[#504440] mb-8 max-w-md leading-relaxed">Experience the warmth of our artisanal
+            boutique bakery. From golden-crusted pastries to decadent double-chocolate cookies, every bite is
+            handcrafted with heart.</p>
+          <div class="flex flex-wrap gap-4">
+            <a href="menu.html"
+              class="bg-[#91494d] text-white text-sm font-semibold px-8 py-3 rounded-lg hover:brightness-110 active:scale-[0.98] transition-all butter-shadow">Shop
+              Now</a>
+            <a href="order.html"
+              class="border-2 border-[#44281e] text-[#44281e] text-sm font-semibold px-8 py-3 rounded-lg hover:bg-[#44281e] hover:text-white active:scale-[0.98] transition-all">Place
+              Order</a>
           </div>
         </div>
+        <div class="relative order-1 md:order-2">
+          <div class="absolute -inset-10 bg-[#ffe2d8] rounded-full blur-3xl opacity-50 -z-10"></div>
+          <img
+            class="w-full h-auto object-cover rounded-2xl butter-shadow md:rotate-2 hover:rotate-0 transition-transform duration-700"
+            src="assets/images/hero/hero.png" alt="Freshly baked artisanal cookies"
+            onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuC0JN-vz_KLFXHfxv82bGtun9rvygSNWYXnjideJogNUnYhQKj1Ua6DWy3KJwPQINoxgNeGmZNRUL5l9b_b_3u1oBlOpAjKfBsdwXXAs1aDK0dj7ZF1kl7TcqgAWKCt1w8MdOnZ0SyH8Md8-RmwfRGzc2FRCJ9Ss3fvs81dnwqrMbDie4p3tHIBjuMo5qEQ-gRNU-2lnARNXkl6D5JIvw_3YiGT_j0TfADlFZJqeerxvGGZlf8PnK969iyCxz_U1w5K5mh1b3wXTzM'">
+        </div>
+      </div>
+    </section>
 
-        <div class="hero__image-wrap">
-          <img src="assets/images/hero/hero.png" alt="A beautiful spread of artisanal cookies, cake, and brownies"
-            class="hero__image" width="600" height="600">
-          <div class="hero__badge" aria-label="Fresh baked daily">
-            <span class="hero__badge-icon" aria-hidden="true">🍪</span>
-            <div>
-              <p class="hero__badge-label">Baked</p>
-              <p class="hero__badge-value">Fresh Daily</p>
+    <!-- Today's Specials -->
+    <section class="py-20 bg-[#fff1ec] overflow-hidden">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-16 mb-10 flex justify-between items-end">
+        <div>
+          <h2 class="font-caslon text-3xl text-[#44281e] font-bold">Today's Specials</h2>
+          <p class="text-[#504440] mt-1">Handpicked favorites from our morning bake.</p>
+        </div>
+        <a href="menu.html" class="flex items-center gap-1 text-sm font-semibold text-[#91494d] hover:underline">View
+          All <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+      </div>
+      <div class="flex gap-6 overflow-x-auto px-4 md:px-16 pb-10 hide-scrollbar snap-x">
+        <div class="flex-none w-[300px] snap-start">
+          <div class="bg-[#fff8f6] rounded-xl overflow-hidden butter-shadow group">
+            <div class="h-56 overflow-hidden">
+              <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUDnL_n4I27DQFrMK0svYIc_jS6-3fQYLIbXN0G3v_MMfo99z5-y40eI89w-cT43fErPmi0cU3vE9QWXPzvp2XlmDxEmmg6UCPEcv8hTeolVbOlyt8zjxGUDmzdsyEGFMQbe9sfvlHVuxoEI6t-bgXbIPjiO1k1zIlLwXa29Sd02Mq8ckhwf77AyZ-c_kI4UvTj_h1lgM2WUsDhNsSp1PMWDYcBdiod53sD-_zPK2nOXYkUFhIN8vzTdChe3TUM7lnJIo2o7ghhLs"
+                alt="Salted Dark Chocolate Cookie">
+            </div>
+            <div class="p-5">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-caslon text-lg text-[#44281e] font-bold">Salted Dark Chocolate</h3>
+                <span class="text-sm font-bold text-[#91494d]">$4.50</span>
+              </div>
+              <div class="flex gap-1 mb-4">
+                <span
+                  class="bg-[#fbdcd1] text-[#484743] px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Vegan</span>
+                <span
+                  class="bg-[#fbdcd1] text-[#484743] px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Organic</span>
+              </div>
+              <a href="order.html"
+                class="block text-center py-2 border border-[#44281e]/20 rounded-lg text-sm font-semibold text-[#44281e] hover:bg-[#44281e] hover:text-white transition-colors">Order
+                Now</a>
             </div>
           </div>
         </div>
-
-      </div>
-      <div class="hero__scroll" aria-hidden="true">
-        <span>Scroll</span>
-        <div class="hero__scroll-line"></div>
-      </div>
-    </section>
-
-    <!-- ── Featured Products ──────────────────────────────────── -->
-    <section class="section" aria-labelledby="featured-heading">
-      <div class="container">
-        <div class="text-center reveal">
-          <p class="section-label">Our Menu</p>
-          <h2 class="section-heading" id="featured-heading">Bestselling Treats 🍰</h2>
-          <p class="section-subheading" style="margin: 0 auto var(--space-10);">
-            Fresh, made-to-order goodies that our customers can't stop coming back for. Browse our full menu for even
-            more.
-          </p>
-        </div>
-        <div class="products-grid" id="featured-grid"></div>
-        <div class="text-center" style="margin-top: var(--space-10);">
-          <a href="menu.html" class="btn btn--secondary btn--lg" id="view-full-menu">View Full Menu →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Why Us ─────────────────────────────────────────────── -->
-    <section class="section section--cream" aria-labelledby="why-heading">
-      <div class="container">
-        <div class="text-center reveal">
-          <p class="section-label">Why choose us</p>
-          <h2 class="section-heading" id="why-heading">Baked the right way</h2>
-        </div>
-        <div class="grid-3" style="margin-top: var(--space-10);">
-          <div class="why-card reveal reveal--delay-1">
-            <div class="why-card__icon" aria-hidden="true">🌾</div>
-            <h3 class="why-card__title">Real Ingredients</h3>
-            <p class="why-card__desc">No artificial flavours or preservatives. Every ingredient is hand-picked for
-              quality — local where possible.</p>
-          </div>
-          <div class="why-card reveal reveal--delay-2">
-            <div class="why-card__icon" aria-hidden="true">🤝</div>
-            <h3 class="why-card__title">Made to Order</h3>
-            <p class="why-card__desc">Nothing sits on a shelf. Your order is baked fresh when you place it, so it
-              reaches you at peak deliciousness.</p>
-          </div>
-          <div class="why-card reveal reveal--delay-3">
-            <div class="why-card__icon" aria-hidden="true">🎁</div>
-            <h3 class="why-card__title">Gifting Ready</h3>
-            <p class="why-card__desc">Beautiful packaging included. Our gift boxes are designed to delight from the
-              moment the ribbon is untied.</p>
+        <div class="flex-none w-[300px] snap-start">
+          <div class="bg-[#fff8f6] rounded-xl overflow-hidden butter-shadow group">
+            <div class="h-56 overflow-hidden">
+              <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMDOnElAfjVet3hHzX26EDcm-Kuy8sfTOb2icY-p0Aw8c2-OcCXCXjzhYCjtk5OlpBA0P2PDsoyeXhNYpjsdfKupB7xwHLOwGCJhdCT42sT3YF-KpxPDmx1W5ggGDy5ZpFoYYNP7PQVDlAfIP-5yWLG5c8OVx2w6IjHA8ib3gylFz2WPofeHv68r-uV7tidJUxtlNOxprkvOJUPN3HsZLBOWVKdxlBxG5JTVhtUCvZaEnnhzuqQWAeKNK12a3izewhA-Zss-fm1DU"
+                alt="Lemon Lavender Tart">
+            </div>
+            <div class="p-5">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-caslon text-lg text-[#44281e] font-bold">Lemon Lavender Tart</h3>
+                <span class="text-sm font-bold text-[#91494d]">$6.00</span>
+              </div>
+              <div class="flex gap-1 mb-4">
+                <span
+                  class="bg-[#fbdcd1] text-[#484743] px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Seasonal</span>
+              </div>
+              <a href="order.html"
+                class="block text-center py-2 border border-[#44281e]/20 rounded-lg text-sm font-semibold text-[#44281e] hover:bg-[#44281e] hover:text-white transition-colors">Order
+                Now</a>
+            </div>
           </div>
         </div>
+        <div class="flex-none w-[300px] snap-start">
+          <div class="bg-[#fff8f6] rounded-xl overflow-hidden butter-shadow group">
+            <div class="h-56 overflow-hidden">
+              <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxEcRkFsSHYCMae1GYYqOF721YO3ZP4f_lgxKRcavpGUGMRdwN2eiSQlhklu1fxV-7BJptlXXvU7bSPhWtVd_cFjeLAZs7hBQYFmjgZxAsd_zJYZ6haPAjNRNQdQYM3v4hOBxygbECvsQjzw-lDVTSLeGnzDl7uZTfb03gH47UNp6LgGDTCxBetktakgDYYM5P302p1GLVCQzRbDIjzd1OvBVNiCMFP1Bnj8O_o--bfOwHZVlkGZg75w"
+                alt="Honey Layer Cake">
+            </div>
+            <div class="p-5">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-caslon text-lg text-[#44281e] font-bold">Honey Layer Cake</h3>
+                <span class="text-sm font-bold text-[#91494d]">$8.50</span>
+              </div>
+              <div class="flex gap-1 mb-4">
+                <span
+                  class="bg-[#fbdcd1] text-[#484743] px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">House
+                  Special</span>
+              </div>
+              <a href="order.html"
+                class="block text-center py-2 border border-[#44281e]/20 rounded-lg text-sm font-semibold text-[#44281e] hover:bg-[#44281e] hover:text-white transition-colors">Order
+                Now</a>
+            </div>
+          </div>
+        </div>
+        <div class="flex-none w-[300px] snap-start">
+          <div class="bg-[#fff8f6] rounded-xl overflow-hidden butter-shadow group">
+            <div class="h-56 overflow-hidden">
+              <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiJ5DP9UefIRfB13g7Sp6JJooiItBhVKNuz53X6EbBsAarFPPMiXIA1QrT7owSdagydIjM2j3cJHqDhJWDnbhMgU_SDnduwBRZdFcLPj_fr0iIPmtgt0cxGF3FKaBQuNg8lwc7j-HMJUFb5eNSFORWpH3cTb26EV4eE2-w6EhS6lGVNnYqNwd0UsFXkS2Xa-UKkyoI5q38sXk1hgbZpU90geUOMUc_LDAF422uxyuF90BE7xsO_C5xbiXGBjMv0_MCANBRr0VdM-U"
+                alt="Pistachio Croissant">
+            </div>
+            <div class="p-5">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="font-caslon text-lg text-[#44281e] font-bold">Pistachio Croissant</h3>
+                <span class="text-sm font-bold text-[#91494d]">$5.25</span>
+              </div>
+              <div class="flex gap-1 mb-4">
+                <span
+                  class="bg-[#fbdcd1] text-[#484743] px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Flaky</span>
+              </div>
+              <a href="order.html"
+                class="block text-center py-2 border border-[#44281e]/20 rounded-lg text-sm font-semibold text-[#44281e] hover:bg-[#44281e] hover:text-white transition-colors">Order
+                Now</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ── Testimonials ───────────────────────────────────────── -->
-    <section class="section testimonials" aria-labelledby="testimonials-heading">
-      <div class="container">
-        <div class="text-center reveal">
-          <p class="section-label">Customer Love</p>
-          <h2 class="section-heading" id="testimonials-heading">What our customers say ❤️</h2>
+    <!-- Bestsellers (from Firebase) -->
+    <section class="py-20">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-16">
+        <div class="text-center mb-12">
+          <h2 class="font-caslon text-3xl text-[#44281e] font-bold">Our Bestsellers</h2>
+          <p class="text-[#504440] mt-2 max-w-xl mx-auto">Handcrafted in small batches daily. Made with organic
+            ingredients and a whole lot of heart.</p>
         </div>
-        <div class="testimonials__track-wrap" style="margin-top: var(--space-10);">
-          <div class="testimonials__track" id="testimonials-track" role="list" aria-label="Customer testimonials"></div>
+        <div id="featured-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <p class="text-center text-[#504440] py-8 col-span-full">Loading our treats...</p>
         </div>
-        <div class="testimonials__controls" role="group" aria-label="Carousel controls">
-          <button class="testimonials__btn" id="testimonials-prev" aria-label="Previous testimonial">&#8592;</button>
-          <div id="testimonials-dots" style="display:flex;gap:var(--space-2);align-items:center;"></div>
-          <button class="testimonials__btn" id="testimonials-next" aria-label="Next testimonial">&#8594;</button>
+        <div class="text-center mt-12">
+          <a href="menu.html"
+            class="inline-flex items-center gap-2 bg-[#91494d] text-white text-sm font-semibold px-8 py-3 rounded-lg hover:brightness-110 active:scale-[0.98] transition-all butter-shadow">
+            See Full Menu <span class="material-symbols-outlined" style="font-size:18px">arrow_forward</span>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- ── CTA Banner ─────────────────────────────────────────── -->
-    <section class="cta-banner" aria-labelledby="cta-heading">
-      <div class="cta-banner__inner reveal">
-        <p class="section-label" style="color: var(--color-mauve-light);">Ready to order?</p>
-        <h2 class="cta-banner__title" id="cta-heading">Something sweet is just a click away</h2>
-        <p class="cta-banner__subtitle">Custom orders, gift boxes, and everyday treats — we bake it all. Reach out and
-          let's create something delicious together.</p>
-        <div class="cta-banner__actions">
-          <a href="order.html" class="btn btn--primary btn--lg" id="cta-order">Place an Order</a>
+    <!-- Our Story -->
+    <section class="py-20">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-16 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+        <div class="md:col-span-7 relative">
+          <div class="grid grid-cols-2 gap-5">
+            <div class="pt-20">
+              <img class="w-full aspect-[3/4] object-cover rounded-xl butter-shadow" src="assets/images/about/baker.png"
+                alt="Baker crafting dough"
+                onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuCkX_LezzUXlakSRRO1Zw_V2q3HJXO7L3snqN4Qo7S-kAqXxRm-b0FkUjimdGMlSOfsNHfnC18n_g-EXi8DkIa2s_8FQX3ZMvgHapnBJB1RffVF-5jDcNj4Aa_K-hU7vn33JaklQCTlfkWti2yZzJgVQPxJo1TuTLTVixehO2n1Wy8RtP1bp5Cxv_OrkMUlPq_NIz-SaNJ36H8tlrwtGWXQfhbpIqRea5j6hJtkLJb2WfKpKBPIsjYTlO7GfTL83ZS7-TsxVySZEdw'">
+            </div>
+            <div>
+              <img class="w-full aspect-[3/4] object-cover rounded-xl butter-shadow" src="assets/images/hero/hero.png"
+                alt="Boutique bakery"
+                onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuA-B4_CwS5C4NJnWD3OkCOE3vIiNTGJ1FVkyT7SiKYsIa01fvcLAhTNFU5uKk3FZMuhY9DaRmJ2cK9KFSdV2w-yQi1e3TBTvcTIV8EipA7eT1p6cjf63P4zExyiyxt9Xp1tn0qLjVg01Q2Y-hUS9B9EGyNQ4ncbZLHWsZeukFQmkUh41SHTPrP-DP32KWTyOoXWUPej6D7teFqI2KJIc-eEMjsrAMu95gJJiOaYCSgZDLEN3JKC75nMx9c9rgoptNa6q_QgV0e5g9s'">
+            </div>
+          </div>
+          <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-[#fbdcd1] rounded-full -z-10 animate-pulse"></div>
         </div>
+        <div class="md:col-span-5">
+          <h2 class="font-caslon text-3xl text-[#44281e] font-bold mb-6">Handcrafted with <em
+              class="text-[#91494d]">Purpose</em></h2>
+          <div class="space-y-5">
+            <p class="text-[#504440] leading-relaxed">At <strong>cookieesandcakes</strong>, our journey began in a tiny
+              home kitchen with nothing but a sourdough starter and a dream to bring back the sensory joy of slow
+              baking.</p>
+            <p class="text-[#504440] leading-relaxed">We source our flour from local heritage mills and our chocolate
+              from ethical producers. No preservatives, no shortcuts—just pure artisanal passion in every crumb.</p>
+            <ul class="space-y-3 pt-2">
+              <li class="flex items-center gap-3 text-sm font-semibold text-[#44281e]"><span
+                  class="w-2 h-2 rounded-full bg-[#91494d]"></span>100% Organic, Stone-Ground Flour</li>
+              <li class="flex items-center gap-3 text-sm font-semibold text-[#44281e]"><span
+                  class="w-2 h-2 rounded-full bg-[#91494d]"></span>Single-Origin Dark Chocolate</li>
+              <li class="flex items-center gap-3 text-sm font-semibold text-[#44281e]"><span
+                  class="w-2 h-2 rounded-full bg-[#91494d]"></span>Small Batch Daily Production</li>
+            </ul>
+            <a href="about.html"
+              class="inline-flex items-center gap-1 text-sm font-semibold text-[#91494d] hover:underline pt-2">Read Our
+              Full Story <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="py-20 bg-[#44281e] text-white">
+      <div class="max-w-[1200px] mx-auto px-4 md:px-16 text-center">
+        <h2 class="font-caslon text-3xl font-bold mb-4">Join the Cookie Club</h2>
+        <p class="text-white/80 text-lg mb-10 max-w-xl mx-auto">Be the first to know about seasonal flavors, exclusive
+          bakes, and special offers.</p>
+        <form class="flex flex-col md:flex-row gap-4 max-w-md mx-auto"
+          onsubmit="event.preventDefault(); this.querySelector('input').value=''; alert('Welcome to the club! 🍪')">
+          <input
+            class="flex-1 bg-white/10 border border-white/20 rounded-lg px-5 py-3 focus:outline-none focus:ring-2 focus:ring-[#fea3a6] placeholder:text-white/40 text-white"
+            placeholder="Enter your email" type="email" required>
+          <button
+            class="bg-[#fea3a6] text-[#79363b] px-8 py-3 rounded-lg text-sm font-bold hover:brightness-110 transition-all active:scale-95"
+            type="submit">Subscribe</button>
+        </form>
       </div>
     </section>
 
   </main>
 
-  <!-- ── Footer ─────────────────────────────────────────────── -->
-  <footer class="footer" role="contentinfo">
-    <div class="footer__grid">
-      <div>
-        <p
-          style="color:rgba(243,227,204,0.9);font-family:var(--font-heading);font-size:var(--text-xl);font-weight:700;margin-bottom:var(--space-4);">
-          cookieesandcakes</p>
-        <p class="footer__brand-desc">Small-batch artisanal baked goods made with love. Every cookie, cake, and brownie
-          tells a story of craft and care.</p>
-        <div class="footer__socials">
-          <a href="#" class="footer__social" aria-label="Instagram" rel="noopener">📷</a>
-          <a href="#" class="footer__social" aria-label="Facebook" rel="noopener">📘</a>
-          <a href="#" class="footer__social" aria-label="Pinterest" rel="noopener">📌</a>
-          <a href="#" class="footer__social" aria-label="TikTok" rel="noopener">🎵</a>
+  <!-- Footer -->
+  <footer class="bg-[#fbdcd1] border-t border-[#44281e]/5 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-[1200px] mx-auto px-4 md:px-16">
+      <div class="space-y-5">
+        <div class="flex items-center gap-3">
+          <img alt="footer logo" class="h-8 w-auto" src="assets/images/logo/logo.svg"
+            onerror="this.style.display='none'">
+          <span class="font-caslon text-xl text-[#44281e] font-bold">cookieesandcakes</span>
+        </div>
+        <p class="text-[#504440] text-sm leading-relaxed">Traditional techniques meet modern flavors. Every pastry is a
+          testament to the art of artisanal baking.</p>
+        <div class="flex gap-4">
+          <a class="text-[#44281e] hover:text-[#91494d] transition-colors" href="#" aria-label="Instagram"><span
+              class="material-symbols-outlined">photo_camera</span></a>
+          <a class="text-[#44281e] hover:text-[#91494d] transition-colors" href="#" aria-label="Facebook"><span
+              class="material-symbols-outlined">groups</span></a>
+          <a class="text-[#44281e] hover:text-[#91494d] transition-colors" href="#" aria-label="Pinterest"><span
+              class="material-symbols-outlined">interests</span></a>
         </div>
       </div>
-      <div>
-        <p class="footer__col-title">Menu</p>
-        <ul class="footer__links">
-          <li><a href="menu.html#cookies" class="footer__link">Cookies</a></li>
-          <li><a href="menu.html#cakes" class="footer__link">Cakes</a></li>
-          <li><a href="menu.html#brownies" class="footer__link">Brownies</a></li>
-          <li><a href="menu.html#gift-boxes" class="footer__link">Gift Boxes</a></li>
-          <li><a href="menu.html#seasonal" class="footer__link">Seasonal</a></li>
-        </ul>
+      <div class="grid grid-cols-2 gap-8">
+        <div>
+          <h4 class="text-xs font-bold text-[#44281e] uppercase tracking-widest mb-4">Explore</h4>
+          <nav class="flex flex-col gap-3">
+            <a class="text-xs text-[#504440] hover:underline hover:text-[#91494d]" href="menu.html">Shop All</a>
+            <a class="text-xs text-[#504440] hover:underline hover:text-[#91494d]" href="menu.html">Cakes</a>
+            <a class="text-xs text-[#504440] hover:underline hover:text-[#91494d]" href="menu.html">Cookies</a>
+            <a class="text-xs text-[#504440] hover:underline hover:text-[#91494d]" href="about.html">Our Story</a>
+          </nav>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-[#44281e] uppercase tracking-widest mb-4">Service</h4>
+          <nav class="flex flex-col gap-3">
+            <a class="text-xs text-[#504440] hover:underline hover:text-[#91494d]" href="order.html">Custom Order</a>
+            <a class="text-xs text-[#504440] hover:underline hover:text-[#91494d]" href="login.html">My Account</a>
+            <a class="text-xs text-[#504440] hover:underline hover:text-[#91494d]" href="#">Privacy Policy</a>
+            <a class="text-xs text-[#504440] hover:underline hover:text-[#91494d]" href="#">Contact Us</a>
+          </nav>
+        </div>
       </div>
-      <div>
-        <p class="footer__col-title">Company</p>
-        <ul class="footer__links">
-          <li><a href="about.html" class="footer__link">Our Story</a></li>
-          <li><a href="order.html" class="footer__link">Order</a></li>
-          <li><a href="order.html#faq" class="footer__link">FAQ</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer__col-title">Contact</p>
-        <ul class="footer__links">
-          <li><a href="mailto:hello@cookieesandcakes.com" class="footer__link">hello@cookieesandcakes.com</a></li>
-          <li><a href="tel:+15550001234" class="footer__link">+1 (555) 000-1234</a></li>
-          <li><span class="footer__link">Tue–Sat: 9am – 6pm</span></li>
-          <li><a href="order.html" class="btn btn--primary btn--sm" style="margin-top:var(--space-3);"
-              id="footer-order-cta">Order Now</a></li>
-        </ul>
+      <div class="space-y-4">
+        <h4 class="text-xs font-bold text-[#44281e] uppercase tracking-widest mb-4">Visit Us</h4>
+        <div class="flex gap-2 items-start text-[#504440]">
+          <span class="material-symbols-outlined text-[#44281e]" style="font-size:20px">location_on</span>
+          <p class="text-sm">123 Baker St, Flour District<br>New York, NY 10001</p>
+        </div>
+        <div class="flex gap-2 items-start text-[#504440]">
+          <span class="material-symbols-outlined text-[#44281e]" style="font-size:20px">schedule</span>
+          <p class="text-sm">Tue – Sun: 7:00 AM – 4:00 PM<br>Closed on Mondays</p>
+        </div>
       </div>
     </div>
-    <div class="footer__bottom">
-      <p class="footer__copy">© 2026 <a href="index.html">cookieesandcakes</a>. All rights reserved. Baked with 🤎</p>
-      <nav class="footer__legal" aria-label="Legal links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-      </nav>
+    <div class="max-w-[1200px] mx-auto px-4 md:px-16 mt-12 pt-8 border-t border-[#44281e]/10 text-center">
+      <p class="text-xs text-[#504440] opacity-70">© 2026 cookieesandcakes. Handcrafted with love 🤎</p>
     </div>
   </footer>
 
-  <!-- Analytics (replace G-XXXXXXXXXX with your GA4 ID) -->
-  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
-
-  <!-- Scripts -->
-  <script type="module">
-    import { renderProductGrid } from './js/products.js';
-    import { initTestimonials } from './js/testimonials.js';
-    import { initFilter } from './js/filter.js';
-    import './js/animations.js';
-    import './js/navbar.js';
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      await renderProductGrid('featured-grid', 3);
-      initTestimonials('testimonials-track');
+  <script>
+    document.getElementById('hamburger')?.addEventListener('click', () => {
+      document.getElementById('mobile-menu')?.classList.toggle('hidden');
     });
   </script>
-
+  <script type="module">
+    import { renderProductGrid, updateWishlistBadge } from './js/products.js';
+    document.addEventListener('DOMContentLoaded', async () => {
+      await renderProductGrid('featured-grid', 3);
+      updateWishlistBadge();
+    });
+  </script>
 </body>
 
 </html>

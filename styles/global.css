@@ -86,8 +86,8 @@ p {
   justify-content: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-8);
-  border-radius: var(--radius-full);
-  font-family: var(--font-heading);
+  border-radius: var(--radius-md);
+  font-family: var(--font-label);
   font-weight: var(--weight-semibold);
   font-size: var(--text-base);
   transition: all var(--transition-base);
@@ -95,9 +95,12 @@ p {
   white-space: nowrap;
   border: 2px solid transparent;
 }
+.btn:active {
+  transform: scale(0.98);
+}
 
 .btn--primary {
-  background-color: var(--color-mauve);
+  background-color: var(--color-secondary);
   color: var(--color-white);
   box-shadow: var(--shadow-sm);
 }
@@ -106,37 +109,45 @@ p {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
-.btn--primary:active { transform: translateY(0); }
+.btn--primary:active {
+  transform: scale(0.98);
+}
 
 .btn--secondary {
   background-color: transparent;
-  color: var(--color-chocolate);
-  border-color: var(--color-chocolate);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
 }
 .btn--secondary:hover {
-  background-color: var(--color-chocolate);
-  color: var(--color-cream);
+  background-color: var(--color-primary);
+  color: var(--color-white);
   transform: translateY(-2px);
+}
+.btn--secondary:active {
+  transform: scale(0.98);
 }
 
 .btn--dark {
-  background-color: var(--color-chocolate);
-  color: var(--color-cream);
+  background-color: var(--color-primary);
+  color: var(--color-white);
 }
 .btn--dark:hover {
   background-color: var(--color-cocoa-dark);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
+.btn--dark:active {
+  transform: scale(0.98);
+}
 
 .btn--ghost {
   background-color: transparent;
-  color: var(--color-mauve);
+  color: var(--color-secondary);
   padding: var(--space-2) var(--space-4);
 }
 .btn--ghost:hover {
   color: var(--color-mauve-dark);
-  background-color: rgba(201,139,125,0.08);
+  background-color: rgba(145, 73, 77, 0.08);
 }
 
 .btn--lg {

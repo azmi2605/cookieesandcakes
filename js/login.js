@@ -59,10 +59,10 @@ const resetError = document.getElementById('reset-error');
 function showCard(cardToShow) {
   // Hide all
   [signinCard, signupCard, resetCard].forEach(card => {
-    card.classList.add('hidden');
+    if (card) card.classList.add('hidden');
   });
   // Show target
-  cardToShow.classList.remove('hidden');
+  if (cardToShow) cardToShow.classList.remove('hidden');
   
   // Clear messages & fields
   clearMessages();
@@ -72,27 +72,27 @@ function clearMessages() {
   [signinError, signupError, resetError, resetSuccess].forEach(el => {
     if (el) {
       el.textContent = '';
-      el.classList.remove('show');
+      el.classList.add('hidden');
     }
   });
   
   // Clear validation classes
-  document.querySelectorAll('.form-field').forEach(field => {
-    field.classList.remove('has-error');
-    const input = field.querySelector('.form-input');
+  document.querySelectorAll('.form-field').forEach(wrapper => {
+    wrapper.classList.remove('has-error');
+    const input = wrapper.querySelector('input');
     if (input) {
-      input.classList.remove('valid', 'invalid');
+      input.classList.remove('border-red-500', 'border-green-500');
     }
-    const errText = field.querySelector('.field-error');
+    const errText = wrapper.querySelector('.field-error');
     if (errText) errText.textContent = '';
   });
 }
 
 // Attach toggles
-linkShowSignup.addEventListener('click', () => showCard(signupCard));
-linkShowSignin.addEventListener('click', () => showCard(signinCard));
-linkShowReset.addEventListener('click', () => showCard(resetCard));
-linkBackToSignin.addEventListener('click', () => showCard(signinCard));
+if (linkShowSignup) linkShowSignup.addEventListener('click', () => showCard(signupCard));
+if (linkShowSignin) linkShowSignin.addEventListener('click', () => showCard(signinCard));
+if (linkShowReset) linkShowReset.addEventListener('click', () => showCard(resetCard));
+if (linkBackToSignin) linkBackToSignin.addEventListener('click', () => showCard(signinCard));
 
 // ==========================================
 // Form Validation Logic
@@ -116,14 +116,14 @@ function validateField(field) {
   }
 
   if (msg) {
-    field.classList.add('invalid');
-    field.classList.remove('valid');
+    field.classList.add('border-red-500');
+    field.classList.remove('border-green-500');
     if (errorEl) errorEl.textContent = msg;
     wrapper?.classList.add('has-error');
     return false;
   } else {
-    field.classList.remove('invalid');
-    if (field.value.trim()) field.classList.add('valid');
+    field.classList.remove('border-red-500');
+    if (field.value.trim()) field.classList.add('border-green-500');
     if (errorEl) errorEl.textContent = '';
     wrapper?.classList.remove('has-error');
     return true;
@@ -136,7 +136,7 @@ function validateField(field) {
   form.querySelectorAll('input').forEach(input => {
     input.addEventListener('blur', () => validateField(input));
     input.addEventListener('input', () => {
-      if (input.classList.contains('invalid')) validateField(input);
+      if (input.classList.contains('border-red-500')) validateField(input);
     });
   });
 });
@@ -146,111 +146,125 @@ function validateField(field) {
 // ==========================================
 
 // Sign In
-signinForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const inputs = [...signinForm.querySelectorAll('input')];
-  const allValid = inputs.map(validateField).every(Boolean);
-  if (!allValid) return;
-  
-  const submitBtn = document.getElementById('signin-submit-btn');
-  submitBtn.classList.add('loading');
-  submitBtn.disabled = true;
-  signinError.classList.remove('show');
-  signinError.textContent = '';
-
-  const email = document.getElementById('signin-email').value;
-  const password = document.getElementById('signin-password').value;
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    // Determine if admin login
-    const isAdmin = document.getElementById('admin-login-checkbox')?.checked;
-    if (isAdmin) {
-      // Redirect to admin dashboard
-      window.location.replace('admin.html');
-    } else {
-      // Redirect to user dashboard
-      window.location.replace('user-dashboard.html');
+if (signinForm) {
+  signinForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const inputs = [...signinForm.querySelectorAll('input:not([type="checkbox"])')];
+    const allValid = inputs.map(validateField).every(Boolean);
+    if (!allValid) return;
+    
+    const submitBtn = document.getElementById('signin-submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `Signing In...`;
     }
-    signinForm.reset();
-  } catch (error) {
-    signinError.classList.add('show');
-    signinError.textContent = getAuthErrorMessage(error.code);
-  } finally {
-    submitBtn.classList.remove('loading');
-    submitBtn.disabled = false;
-  }
-});
+    signinError.classList.add('hidden');
+    signinError.textContent = '';
+
+    const email = document.getElementById('signin-email').value;
+    const password = document.getElementById('signin-password').value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      const isAdmin = document.getElementById('admin-login-checkbox')?.checked;
+      if (isAdmin) {
+        window.location.replace('admin.html');
+      }
+      signinForm.reset();
+    } catch (error) {
+      signinError.classList.remove('hidden');
+      signinError.textContent = getAuthErrorMessage(error.code);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `Sign In`;
+      }
+    }
+  });
+}
 
 // Sign Up
-signupForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const inputs = [...signupForm.querySelectorAll('input')];
-  const allValid = inputs.map(validateField).every(Boolean);
-  if (!allValid) return;
-  
-  const submitBtn = document.getElementById('signup-submit-btn');
-  submitBtn.classList.add('loading');
-  submitBtn.disabled = true;
-  signupError.classList.remove('show');
-  signupError.textContent = '';
+if (signupForm) {
+  signupForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const inputs = [...signupForm.querySelectorAll('input')];
+    const allValid = inputs.map(validateField).every(Boolean);
+    if (!allValid) return;
+    
+    const submitBtn = document.getElementById('signup-submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `Registering...`;
+    }
+    signupError.classList.add('hidden');
+    signupError.textContent = '';
 
-  const name = document.getElementById('signup-name').value;
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
 
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    // Set display name
-    await updateProfile(userCredential.user, { displayName: name });
-    signupForm.reset();
-  } catch (error) {
-    signupError.classList.add('show');
-    signupError.textContent = getAuthErrorMessage(error.code);
-  } finally {
-    submitBtn.classList.remove('loading');
-    submitBtn.disabled = false;
-  }
-});
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: name });
+      signupForm.reset();
+    } catch (error) {
+      signupError.classList.remove('hidden');
+      signupError.textContent = getAuthErrorMessage(error.code);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `Sign Up`;
+      }
+    }
+  });
+}
 
 // Password Reset
-resetForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const inputs = [...resetForm.querySelectorAll('input')];
-  const allValid = inputs.map(validateField).every(Boolean);
-  if (!allValid) return;
-  
-  const submitBtn = document.getElementById('reset-submit-btn');
-  submitBtn.classList.add('loading');
-  submitBtn.disabled = true;
-  resetError.classList.remove('show');
-  resetSuccess.classList.remove('show');
-  resetError.textContent = '';
-  resetSuccess.textContent = '';
+if (resetForm) {
+  resetForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const inputs = [...resetForm.querySelectorAll('input')];
+    const allValid = inputs.map(validateField).every(Boolean);
+    if (!allValid) return;
+    
+    const submitBtn = document.getElementById('reset-submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `Sending...`;
+    }
+    resetError.classList.add('hidden');
+    resetSuccess.classList.add('hidden');
+    resetError.textContent = '';
+    resetSuccess.textContent = '';
 
-  const email = document.getElementById('reset-email').value;
+    const email = document.getElementById('reset-email').value;
 
-  try {
-    await sendPasswordResetEmail(auth, email);
-    resetSuccess.classList.add('show');
-    resetSuccess.textContent = 'Password reset email sent! Check your inbox.';
-    resetForm.reset();
-  } catch (error) {
-    resetError.classList.add('show');
-    resetError.textContent = getAuthErrorMessage(error.code);
-  } finally {
-    submitBtn.classList.remove('loading');
-    submitBtn.disabled = false;
-  }
-});
+    try {
+      await sendPasswordResetEmail(auth, email);
+      resetSuccess.classList.remove('hidden');
+      resetSuccess.textContent = 'Password reset email sent! Check your inbox.';
+      resetForm.reset();
+    } catch (error) {
+      resetError.classList.remove('hidden');
+      resetError.textContent = getAuthErrorMessage(error.code);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `Send Reset Link`;
+      }
+    }
+  });
+}
 
 // Sign Out
-btnLogoutUser.addEventListener('click', () => {
-  signOut(auth);
-});
+if (btnLogoutUser) {
+  btnLogoutUser.addEventListener('click', () => {
+    signOut(auth);
+  });
+}
 
 // Helper for readable auth error messages
 function getAuthErrorMessage(code) {
@@ -278,36 +292,38 @@ function getAuthErrorMessage(code) {
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     // Show Dashboard, Hide Auth Cards
-    authView.classList.add('hidden');
-    dashboardView.classList.remove('hidden');
+    if (authView) authView.classList.add('hidden');
+    if (dashboardView) dashboardView.classList.remove('hidden');
     
     // Set Profile Info
     const displayName = user.displayName || 'Friend';
-    welcomeTitle.textContent = `Welcome back, ${displayName}! 🎂`;
-    profileName.textContent = displayName;
-    profileEmail.textContent = user.email;
+    if (welcomeTitle) welcomeTitle.textContent = `Welcome back, ${displayName}! 🎂`;
+    if (profileName) profileName.textContent = displayName;
+    if (profileEmail) profileEmail.textContent = user.email;
     
     // Format joining date
-    if (user.metadata.creationTime) {
-      const createdDate = new Date(user.metadata.creationTime);
-      profileJoined.textContent = createdDate.toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-    } else {
-      profileJoined.textContent = 'Recently';
+    if (profileJoined) {
+      if (user.metadata.creationTime) {
+        const createdDate = new Date(user.metadata.creationTime);
+        profileJoined.textContent = createdDate.toLocaleDateString(undefined, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      } else {
+        profileJoined.textContent = 'Recently';
+      }
     }
     
     // Create avatar text
-    userAvatar.textContent = displayName.charAt(0).toUpperCase();
+    if (userAvatar) userAvatar.textContent = displayName.charAt(0).toUpperCase();
     
     // Load Orders
     await fetchUserOrders(user.uid);
   } else {
     // Show Auth Cards, Hide Dashboard
-    authView.classList.remove('hidden');
-    dashboardView.classList.add('hidden');
+    if (authView) authView.classList.remove('hidden');
+    if (dashboardView) dashboardView.classList.add('hidden');
     showCard(signinCard);
   }
 });
@@ -316,10 +332,13 @@ onAuthStateChanged(auth, async (user) => {
 // Firestore Order Fetching & Rendering
 // ==========================================
 async function fetchUserOrders(userId) {
+  if (!ordersLoading) return;
   ordersLoading.classList.remove('hidden');
-  ordersEmpty.classList.add('hidden');
-  ordersList.classList.add('hidden');
-  ordersList.innerHTML = '';
+  if (ordersEmpty) ordersEmpty.classList.add('hidden');
+  if (ordersList) {
+    ordersList.classList.add('hidden');
+    ordersList.innerHTML = '';
+  }
 
   try {
     const q = query(
@@ -339,26 +358,29 @@ async function fetchUserOrders(userId) {
     ordersLoading.classList.add('hidden');
     
     if (orders.length === 0) {
-      ordersEmpty.classList.remove('hidden');
+      if (ordersEmpty) ordersEmpty.classList.remove('hidden');
     } else {
-      ordersList.classList.remove('hidden');
-      renderOrdersList(orders);
+      if (ordersList) {
+        ordersList.classList.remove('hidden');
+        renderOrdersList(orders);
+      }
     }
   } catch (error) {
     console.error("Error loading customer orders:", error);
     ordersLoading.classList.add('hidden');
-    ordersList.classList.remove('hidden');
-    ordersList.innerHTML = `
-      <div style="color:var(--color-error); text-align:center; padding: 2rem;">
-        ⚠️ Error fetching order history: ${error.message}
-      </div>
-    `;
+    if (ordersList) {
+      ordersList.classList.remove('hidden');
+      ordersList.innerHTML = `
+        <div class="text-error text-center py-8">
+          ⚠️ Error fetching order history: ${error.message}
+        </div>
+      `;
+    }
   }
 }
 
 function renderOrdersList(orders) {
   ordersList.innerHTML = orders.map(order => {
-    // Format date
     const orderDateStr = order.createdAt 
       ? new Date(order.createdAt).toLocaleDateString(undefined, {
           year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
@@ -371,9 +393,9 @@ function renderOrdersList(orders) {
     let specialInstrHtml = '';
     if (order.specialInstructions && order.specialInstructions.trim()) {
       specialInstrHtml = `
-        <div class="order-item__instructions">
+        <div class="bg-surface-container-low p-sm rounded-lg text-xs border border-outline-variant/10 mt-md">
           <strong>Special Instructions:</strong><br>
-          ${escapeHtml(order.specialInstructions)}
+          <span class="text-on-surface-variant mt-1 block">${escapeHtml(order.specialInstructions)}</span>
         </div>
       `;
     }
@@ -383,27 +405,33 @@ function renderOrdersList(orders) {
       : 'Artisanal Bakes';
 
     return `
-      <div class="order-item">
-        <div class="order-item__header">
-          <span class="order-item__date">${orderDateStr}</span>
-          <span class="order-item__status order-item__status--${statusClass}">${status}</span>
+      <div class="bg-surface rounded-xl p-md border border-outline-variant/30 shadow-sm mb-4">
+        <div class="flex justify-between items-center border-b border-outline-variant/20 pb-base mb-md">
+          <span class="font-label-md text-label-md text-primary">${orderDateStr}</span>
+          <span class="px-3 py-1 rounded-full text-[12px] font-semibold uppercase tracking-wider ${
+            statusClass === 'completed' 
+              ? 'bg-green-100 text-green-800' 
+              : statusClass === 'cancelled' 
+              ? 'bg-red-100 text-red-800' 
+              : 'bg-yellow-100 text-yellow-800'
+          }">${status}</span>
         </div>
-        <div class="order-item__details">
-          <div class="order-detail-group">
-            <span class="order-detail-label">Item Category</span>
-            <span class="order-detail-val">${escapeHtml(displayProduct)}</span>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-md text-sm">
+          <div>
+            <span class="text-on-surface-variant/60 block text-[11px] uppercase tracking-wider font-bold">Item Category</span>
+            <span class="font-medium text-primary mt-xs block">${escapeHtml(displayProduct)}</span>
           </div>
-          <div class="order-detail-group">
-            <span class="order-detail-label">Quantity / Servings</span>
-            <span class="order-detail-val">${escapeHtml(order.quantity || '1')}</span>
+          <div>
+            <span class="text-on-surface-variant/60 block text-[11px] uppercase tracking-wider font-bold">Quantity</span>
+            <span class="font-medium text-primary mt-xs block">${escapeHtml(order.quantity || '1')}</span>
           </div>
-          <div class="order-detail-group">
-            <span class="order-detail-label">Delivery/Event Date</span>
-            <span class="order-detail-val">${order.eventDate ? escapeHtml(order.eventDate) : 'Not specified'}</span>
+          <div>
+            <span class="text-on-surface-variant/60 block text-[11px] uppercase tracking-wider font-bold">Event Date</span>
+            <span class="font-medium text-primary mt-xs block">${order.eventDate ? escapeHtml(order.eventDate) : 'Not specified'}</span>
           </div>
-          <div class="order-detail-group">
-            <span class="order-detail-label">Contact Details</span>
-            <span class="order-detail-val">${escapeHtml(order.customerName)} (${escapeHtml(order.customerPhone || 'No phone')})</span>
+          <div>
+            <span class="text-on-surface-variant/60 block text-[11px] uppercase tracking-wider font-bold">Phone Number</span>
+            <span class="font-medium text-primary mt-xs block">${escapeHtml(order.customerPhone || 'No phone')}</span>
           </div>
         </div>
         ${specialInstrHtml}
@@ -412,7 +440,6 @@ function renderOrdersList(orders) {
   }).join('');
 }
 
-// Simple HTML escaping helper for security
 function escapeHtml(str) {
   if (!str) return '';
   return String(str)

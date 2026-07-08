@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Personalization Added - cookieesandcakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "secondary-fixed-dim": "#ffb3b5",
+                  "on-tertiary-fixed": "#1c1c18",
+                  "tertiary-container": "#464541",
+                  "error-container": "#ffdad6",
+                  "on-secondary-fixed": "#3c070e",
+                  "on-tertiary-container": "#b6b3ad",
+                  "inverse-surface": "#3f2c25",
+                  "tertiary": "#302f2b",
+                  "on-secondary-fixed-variant": "#743237",
+                  "surface-tint": "#79564a",
+                  "on-background": "#281811",
+                  "secondary": "#91494d",
+                  "surface-dim": "#f3d3c9",
+                  "error": "#ba1a1a",
+                  "outline": "#827470",
+                  "surface-container-high": "#ffe2d8",
+                  "inverse-primary": "#e9bdae",
+                  "surface-bright": "#fff8f6",
+                  "on-surface": "#281811",
+                  "on-tertiary": "#ffffff",
+                  "on-primary-fixed": "#2d150c",
+                  "on-tertiary-fixed-variant": "#484743",
+                  "on-primary-container": "#d5aa9b",
+                  "surface-container": "#ffe9e2",
+                  "primary": "#44281e",
+                  "inverse-on-surface": "#ffede7",
+                  "on-primary": "#ffffff",
+                  "surface-container-low": "#fff1ec",
+                  "outline-variant": "#d4c3bd",
+                  "on-error": "#ffffff",
+                  "on-surface-variant": "#504440",
+                  "secondary-container": "#fea3a6",
+                  "on-primary-fixed-variant": "#5e3f34",
+                  "primary-container": "#5d3e33",
+                  "background": "#fff8f6",
+                  "tertiary-fixed": "#e6e2dc",
+                  "surface-container-lowest": "#ffffff",
+                  "primary-fixed": "#ffdbcf",
+                  "surface-container-highest": "#fbdcd1",
+                  "on-secondary": "#ffffff",
+                  "tertiary-fixed-dim": "#c9c6c1",
+                  "on-secondary-container": "#79363b",
+                  "surface-variant": "#fbdcd1",
+                  "surface": "#fff8f6",
+                  "secondary-fixed": "#ffdada",
+                  "primary-fixed-dim": "#e9bdae",
+                  "on-error-container": "#93000a"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "gutter": "24px",
+                  "xs": "4px",
+                  "base": "8px",
+                  "md": "24px",
+                  "xl": "80px",
+                  "margin-mobile": "16px",
+                  "lg": "48px",
+                  "margin-desktop": "64px",
+                  "sm": "12px"
+          },
+          "fontFamily": {
+                  "label-sm": ["Be Vietnam Pro"],
+                  "headline-md": ["Libre Caslon Text"],
+                  "body-lg": ["Be Vietnam Pro"],
+                  "headline-xl": ["Libre Caslon Text"],
+                  "headline-lg": ["Libre Caslon Text"],
+                  "label-md": ["Be Vietnam Pro"],
+                  "body-md": ["Be Vietnam Pro"],
+                  "headline-lg-mobile": ["Libre Caslon Text"]
+          },
+          "fontSize": {
+                  "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                  "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                  "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                  "headline-xl": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                  "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                  "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                  "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                  "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body { background-color: #fff8f6; }
+    .butter-shadow { box-shadow: 0 20px 40px rgba(68, 40, 30, 0.05); }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky z-50 bg-surface shadow-[0_20px_40px_rgba(68,40,30,0.05)]">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base max-w-[1200px] mx-auto">
+<div class="font-headline-md text-headline-md text-primary">cookieesandcakes</div>
+<nav class="hidden md:flex gap-md items-center">
+<a class="font-label-md text-label-md text-secondary border-b-2 border-secondary font-bold" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Cakes</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Cookies</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Pastries</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">Our Story</a>
+</nav>
+<div class="flex items-center gap-base">
+<button class="p-xs text-primary active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined" data-icon="favorite">favorite</span>
+</button>
+<button class="p-xs text-primary active:scale-95 transition-transform duration-200 relative">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-secondary rounded-full"></span>
+</button>
+</div>
+</div>
+</header>
+<main class="min-h-[calc(100vh-200px)] flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop py-xl overflow-hidden relative">
+<!-- Atmospheric Background Decoration -->
+<div class="absolute top-0 left-0 w-64 h-64 bg-surface-container-high rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl opacity-40"></div>
+<div class="absolute bottom-0 right-0 w-96 h-96 bg-primary-container rounded-full translate-x-1/3 translate-y-1/3 blur-3xl opacity-10"></div>
+<!-- Success Content -->
+<div class="w-full max-w-2xl text-center z-10">
+<div class="mb-lg animate-fade-in-up">
+<div class="inline-flex items-center justify-center w-16 h-16 bg-secondary-container rounded-full mb-md">
+<span class="material-symbols-outlined text-on-secondary-container text-4xl" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-base">Personalization Added!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Your special touch has been carefully saved for your order.</p>
+</div>
+<!-- Summary Card: The Baker's Tray style -->
+<div class="bg-surface-container-low rounded-xl p-md md:p-lg butter-shadow border border-surface-container-high flex flex-col md:flex-row gap-lg items-center text-left mb-xl">
+<div class="w-full md:w-48 h-48 flex-shrink-0 rounded-lg overflow-hidden shadow-sm">
+<img alt="Double Truffle Signature Cake" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsRpg4_H-lSdd4GJuIhh99Pzktqz1Umlj8LC-IqnFxcK3AFDCSZJP_IvqQHyJGCTOWkPm69oxRX4q_iMaKic78N6FEFPh38zYdAQ5bPxs5kER2L0hex8pIVwovH9qqr5M2WvXFzO9iaeG3Ar15TPyYxtKNs0JUt7Y-4KkpJn9S_7zzX2yBPtQyCq1Mmq8EJwXd-WSKxBKbMUwu2WVGnG3DHpLHIZNnhpwgfL-gRS-Xzrrc89wtHGfW52dw"/>
+</div>
+<div class="flex-grow">
+<div class="font-label-md text-label-md text-secondary uppercase tracking-widest mb-xs">Double Truffle Signature Cake</div>
+<div class="bg-white/50 backdrop-blur-sm p-md rounded-lg border border-outline-variant/30 italic font-body-md text-body-md text-on-surface">
+            “Happy Birthday, Amelia! Love, the Bakers”
+          </div>
+<p class="mt-md font-body-md text-body-md text-on-surface-variant">
+            Successfully added to your cake. Our pastry chefs will hand-write this message using fine Belgian chocolate.
+          </p>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex flex-col md:flex-row gap-md justify-center items-center">
+<button class="w-full md:w-auto px-lg py-md bg-secondary text-white font-label-md text-label-md rounded-xl hover:shadow-lg active:scale-95 transition-all duration-300">
+          Proceed to Checkout
+        </button>
+<button class="w-full md:w-auto px-lg py-md border-2 border-primary text-primary font-label-md text-label-md rounded-xl hover:bg-primary/5 active:scale-95 transition-all duration-300">
+          Keep Shopping
+        </button>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full bg-surface-container-low mt-xl border-t border-surface-container">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-lg max-w-[1200px] mx-auto gap-lg">
+<div class="flex flex-col gap-xs items-center md:items-start">
+<div class="font-headline-md text-headline-md text-primary">cookieesandcakes</div>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 cookieesandcakes. Handcrafted with love.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-md">
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Terms of Service</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Shipping Information</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Contact Us</a>
+</div>
+</div>
+</footer>
+<script>
+    // Micro-interactions and subtle effects
+    document.addEventListener('DOMContentLoaded', () => {
+      // Intersection Observer for scroll animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            entry.target.classList.remove('opacity-0', 'translate-y-10');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.animate-fade-in-up').forEach(el => {
+        el.classList.add('transition-all', 'duration-700', 'ease-out', 'opacity-0', 'translate-y-10');
+        observer.observe(el);
+      });
+      
+      // Interactive card tilt effect
+      const card = document.querySelector('.butter-shadow');
+      if(card) {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const rotateX = (y - centerY) / 30;
+          const rotateY = (centerX - x) / 30;
+          
+          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        });
+      }
+    });
+  </script>
+</body></html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rate Your Treats | cookieesandcakes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#b6b3ad",
+                        "surface-container-low": "#fff1ec",
+                        "surface-container": "#ffe9e2",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#d5aa9b",
+                        "on-primary-fixed": "#2d150c",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#484743",
+                        "secondary-fixed": "#ffdada",
+                        "inverse-surface": "#3f2c25",
+                        "on-secondary-fixed-variant": "#743237",
+                        "background": "#fff8f6",
+                        "tertiary-fixed-dim": "#c9c6c1",
+                        "primary-container": "#5d3e33",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#d4c3bd",
+                        "surface-dim": "#f3d3c9",
+                        "secondary": "#91494d",
+                        "on-secondary-container": "#79363b",
+                        "secondary-container": "#fea3a6",
+                        "inverse-primary": "#e9bdae",
+                        "inverse-on-surface": "#ffede7",
+                        "on-primary-fixed-variant": "#5e3f34",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#e9bdae",
+                        "primary-fixed": "#ffdbcf",
+                        "surface": "#fff8f6",
+                        "surface-bright": "#fff8f6",
+                        "primary": "#44281e",
+                        "surface-tint": "#79564a",
+                        "tertiary-fixed": "#e6e2dc",
+                        "tertiary-container": "#464541",
+                        "surface-variant": "#fbdcd1",
+                        "surface-container-high": "#ffe2d8",
+                        "on-background": "#281811",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffb3b5",
+                        "tertiary": "#302f2b",
+                        "on-surface": "#281811",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#fbdcd1",
+                        "on-tertiary-fixed": "#1c1c18",
+                        "on-surface-variant": "#504440",
+                        "error-container": "#ffdad6",
+                        "outline": "#827470",
+                        "on-secondary-fixed": "#3c070e",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "sm": "12px",
+                        "xl": "80px",
+                        "margin-desktop": "64px",
+                        "lg": "48px",
+                        "gutter": "24px",
+                        "md": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Libre Caslon Text"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "headline-xl": ["Libre Caslon Text"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "body-lg": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #fff8f6;
+            color: #281811;
+        }
+        .butter-shadow {
+            box-shadow: 0 20px 40px rgba(93, 62, 51, 0.08);
+        }
+        .star-rating:hover .star-btn { color: #d5aa9b; }
+        .star-btn:hover ~ .star-btn { color: #d4c3bd; }
+        .star-btn.active { color: #91494d; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-star {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<header class="bg-background sticky top-0 z-50 shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
+<nav class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base w-full max-w-[1200px] mx-auto">
+<div class="font-headline-md text-headline-md font-bold text-primary">cookieesandcakes</div>
+<div class="hidden md:flex items-center space-x-gutter">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Cakes</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Cookies</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Pastries</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Our Story</a>
+</div>
+<div class="flex items-center space-x-md">
+<button class="material-symbols-outlined text-primary scale-98 active:scale-95 transition-transform" data-icon="shopping_cart">shopping_cart</button>
+<button class="material-symbols-outlined text-primary scale-98 active:scale-95 transition-transform" data-icon="person">person</button>
+<button class="md:hidden material-symbols-outlined text-primary" data-icon="menu">menu</button>
+</div>
+</nav>
+</header>
+<main class="min-h-screen px-margin-mobile md:px-margin-desktop py-xl flex flex-col items-center">
+<!-- Header Section -->
+<div class="text-center max-w-2xl mb-lg">
+<h1 class="font-headline-xl text-headline-xl text-primary mb-sm">Share the Sweetness</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Your feedback helps our ovens stay warm and our recipes stay sweet.</p>
+</div>
+<!-- Main Rating Container -->
+<div class="w-full max-w-[800px] bg-surface-container-lowest rounded-xl p-md md:p-lg butter-shadow">
+<!-- Overall Experience -->
+<section class="text-center pb-lg border-b border-surface-variant mb-lg">
+<h2 class="font-headline-md text-headline-md text-primary mb-xs">How was your overall experience?</h2>
+<div class="flex justify-center space-x-sm mt-md" id="overall-rating">
+<button class="star-btn material-symbols-outlined text-4xl text-outline cursor-pointer hover:scale-110 transition-transform" onclick="setRating('overall', 1)">star</button>
+<button class="star-btn material-symbols-outlined text-4xl text-outline cursor-pointer hover:scale-110 transition-transform" onclick="setRating('overall', 2)">star</button>
+<button class="star-btn material-symbols-outlined text-4xl text-outline cursor-pointer hover:scale-110 transition-transform" onclick="setRating('overall', 3)">star</button>
+<button class="star-btn material-symbols-outlined text-4xl text-outline cursor-pointer hover:scale-110 transition-transform" onclick="setRating('overall', 4)">star</button>
+<button class="star-btn material-symbols-outlined text-4xl text-outline cursor-pointer hover:scale-110 transition-transform" onclick="setRating('overall', 5)">star</button>
+</div>
+</section>
+<!-- Item-Specific Ratings -->
+<section class="space-y-lg mb-lg">
+<h3 class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest mb-md">Rate individual items</h3>
+<!-- Item 1 -->
+<div class="flex flex-col md:flex-row items-center md:items-start gap-md bg-surface rounded-lg p-sm">
+<div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
+<img alt="Double Truffle Signature Cake" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLsRpg4_H-lSdd4GJuIhh99Pzktqz1Umlj8LC-IqnFxcK3AFDCSZJP_IvqQHyJGCTOWkPm69oxRX4q_iMaKic78N6FEFPh38zYdAQ5bPxs5kER2L0hex8pIVwovH9qqr5M2WvXFzO9iaeG3Ar15TPyYxtKNs0JUt7Y-4KkpJn9S_7zzX2yBPtQyCq1Mmq8EJwXd-WSKxBKbMUwu2WVGnG3DHpLHIZNnhpwgfL-gRS-Xzrrc89wtHGfW52dw"/>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h4 class="font-headline-md text-primary">Double Truffle Signature Cake</h4>
+<div class="flex justify-center md:justify-start space-x-xs mt-xs" id="item-1-rating">
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-1', 1)">star</button>
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-1', 2)">star</button>
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-1', 3)">star</button>
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-1', 4)">star</button>
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-1', 5)">star</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex flex-col md:flex-row items-center md:items-start gap-md bg-surface rounded-lg p-sm">
+<div class="w-24 h-24 rounded-lg overflow-hidden shrink-0">
+<img alt="Salted Dark Chocolate Cookie" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLs-_iRB9P_pDrCkHuKftteSAEWRCjE7bwDS0BYgV1YryAcRaj03_K90Adclgsok27ze0MywdROkQY-WuuLRE1rtgqzM4wKB3J3gUMg09XBXcFWoqF08XmM5sI9jH_SzL0GkQvSA8lUa56gwnwGJ69VbYOjmm-9Ssevz6uzEmDk43PEH5djOi7tosNoDCxsCFFUNoiDmvKH_gOuVxCdNiIRCPR26YJwgytXkjijnK-I6SiCPT53Xy0gxBeE"/>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h4 class="font-headline-md text-primary">Salted Dark Chocolate Cookie</h4>
+<div class="flex justify-center md:justify-start space-x-xs mt-xs" id="item-2-rating">
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-2', 1)">star</button>
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-2', 2)">star</button>
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-2', 3)">star</button>
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-2', 4)">star</button>
+<button class="star-btn material-symbols-outlined text-2xl text-outline cursor-pointer" onclick="setRating('item-2', 5)">star</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Comments Section -->
+<section class="mb-lg">
+<label class="font-label-md text-label-md text-primary mb-base block" for="comments">Tell us more</label>
+<textarea class="w-full bg-surface border border-outline-variant rounded-lg p-md font-body-md focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container transition-all resize-none" id="comments" placeholder="How did it taste? Any special moments?" rows="4"></textarea>
+</section>
+<!-- Actions -->
+<div class="flex flex-col items-center space-y-md">
+<button class="w-full py-md bg-primary-container text-white rounded-lg font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all shadow-md">
+                    Submit My Review
+                </button>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary underline transition-colors" href="#">
+                    Skip for now
+                </a>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low py-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop w-full max-w-[1200px] mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-md text-headline-md text-primary mb-md">cookieesandcakes</div>
+<p class="font-body-md text-on-surface-variant">© 2024 cookieesandcakes. Artisanal Warmth in Every Bite.</p>
+</div>
+<div>
+<h5 class="font-label-md text-primary mb-md">Shop</h5>
+<ul class="space-y-xs">
+<li><a class="text-on-surface-variant hover:text-primary underline" href="#">Cakes</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline" href="#">Cookies</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline" href="#">Pastries</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-md text-primary mb-md">Company</h5>
+<ul class="space-y-xs">
+<li><a class="text-on-surface-variant hover:text-primary underline" href="#">Our Story</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline" href="#">Shipping Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-md text-primary mb-md">Legal</h5>
+<ul class="space-y-xs">
+<li><a class="text-on-surface-variant hover:text-primary underline" href="#">Privacy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary underline" href="#">Terms</a></li>
+</ul>
+</div>
+</div>
+</footer>
+<script>
+        function setRating(containerId, rating) {
+            const container = document.getElementById(containerId + '-rating') || document.getElementById(containerId);
+            const stars = container.querySelectorAll('.star-btn');
+            
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active', 'filled-star');
+                    star.classList.remove('text-outline');
+                    star.classList.add('text-secondary');
+                } else {
+                    star.classList.remove('active', 'filled-star');
+                    star.classList.add('text-outline');
+                    star.classList.remove('text-secondary');
+                }
+            });
+        }
+    </script>
+</body></html>

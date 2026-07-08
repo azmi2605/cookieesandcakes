@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>cookieesandcakes | Artisanal Handcrafted Treats</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .butter-shadow {
+            box-shadow: 0 20px 40px rgba(93, 62, 51, 0.08);
+        }
+        .bakers-tray-gradient {
+            background: linear-gradient(to right, #fff8f6, transparent 15%, transparent 85%, #fff8f6);
+        }
+        .cream-space {
+            letter-spacing: 0.02em;
+        }
+        /* Custom scrollbar for horizontal tray */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#464541",
+                        "surface-bright": "#fff8f6",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#e9bdae",
+                        "background": "#fff8f6",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#5d3e33",
+                        "surface-tint": "#79564a",
+                        "secondary-fixed": "#ffdada",
+                        "surface-container-high": "#ffe2d8",
+                        "on-surface": "#281811",
+                        "surface-container-highest": "#fbdcd1",
+                        "outline-variant": "#d4c3bd",
+                        "secondary": "#91494d",
+                        "primary": "#44281e",
+                        "on-primary-fixed-variant": "#5e3f34",
+                        "on-primary-container": "#d5aa9b",
+                        "on-background": "#281811",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#2d150c",
+                        "on-secondary-fixed": "#3c070e",
+                        "secondary-container": "#fea3a6",
+                        "on-tertiary-container": "#b6b3ad",
+                        "on-secondary-container": "#79363b",
+                        "surface-container": "#ffe9e2",
+                        "inverse-on-surface": "#ffede7",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb3b5",
+                        "on-tertiary-fixed-variant": "#484743",
+                        "outline": "#827470",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdbcf",
+                        "inverse-primary": "#e9bdae",
+                        "surface": "#fff8f6",
+                        "on-surface-variant": "#504440",
+                        "tertiary": "#302f2b",
+                        "inverse-surface": "#3f2c25",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#e6e2dc",
+                        "on-tertiary-fixed": "#1c1c18",
+                        "surface-variant": "#fbdcd1",
+                        "tertiary-fixed-dim": "#c9c6c1",
+                        "on-secondary-fixed-variant": "#743237",
+                        "surface-container-low": "#fff1ec",
+                        "surface-dim": "#f3d3c9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-desktop": "64px",
+                        "sm": "12px",
+                        "xl": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "headline-xl": ["Libre Caslon Text"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "label-sm": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-xl": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-[0_4px_20px_rgba(93,62,51,0.06)]">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+<!-- Brand Identity -->
+<a class="flex items-center gap-3 active:scale-95 duration-200 ease-in-out" href="#">
+<img alt="cookieesandcakes logo" class="h-10 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcBZhe-qc8x2zMtuCpIRLA-L9A5lJQf_MJCE1Jrs1tsCPv_Vmv-499GwtXEfYcQ51ATAa4kTw2HpPDYKb050qilHP39RoqAp9A13jT2uAZGL9OnugcyclR0qamfgrC5AiBoEq1_lLyjEew4KovUYPxs5gsxQr-roQtB4CxtzpI_7hctVgUx9IgcPVhjQdHzihJfpFqdenWbk7HoIlXDAGw7blr2uUx7QaGNmyV31xQDBp_I7YHkIrcJRPjSyx4o-C1Viegf_Tlgw"/>
+<span class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">cookieesandcakes</span>
+</a>
+<!-- Navigation Links -->
+<nav class="hidden md:flex items-center space-x-lg">
+<a class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim border-b-2 border-secondary dark:border-secondary-fixed-dim pb-1" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#">Cakes</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#">Cookies</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#">Pastries</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#our-story">Our Story</a>
+</nav>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-md">
+<button class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">favorite</span>
+</button>
+<button class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">shopping_bag</span>
+</button>
+<button class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</button>
+<button class="md:hidden p-2">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative min-h-[85vh] flex items-center overflow-hidden">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-lg items-center py-xl">
+<div class="z-10 order-2 md:order-1">
+<span class="inline-block px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md mb-md">
+                        New Batch Out Now
+                    </span>
+<h1 class="font-headline-xl text-headline-xl text-primary mb-md leading-tight">
+                        Baked with <span class="italic">Love</span>, <br/>Served with Joy.
+                    </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-lg max-w-md">
+                        Experience the warmth of our artisanal boutique bakery. From golden-crusted pastries to decadent double-chocolate cookies, every bite is a handcrafted masterpiece.
+                    </p>
+<div class="flex flex-wrap gap-md">
+<button class="bg-secondary text-white font-label-md text-label-md px-xl py-md rounded-lg hover:brightness-110 active:scale-[0.98] transition-all butter-shadow">
+                            Shop Now
+                        </button>
+<button class="border-2 border-primary text-primary font-label-md text-label-md px-xl py-md rounded-lg hover:bg-primary hover:text-white active:scale-[0.98] transition-all">
+                            View Menu
+                        </button>
+</div>
+</div>
+<div class="relative order-1 md:order-2">
+<div class="absolute -inset-10 bg-surface-container-high rounded-full blur-3xl opacity-50 -z-10"></div>
+<img class="w-full h-auto object-cover rounded-2xl butter-shadow transform md:rotate-2 hover:rotate-0 transition-transform duration-700" data-alt="A top-down, high-quality photograph of a rustic wooden table covered with a variety of freshly baked artisanal cookies. Some are chocolate chip with large sea salt flakes, others are delicate almond shortbread. Soft, warm morning sunlight filters through a nearby window, casting long, gentle shadows and highlighting the crumbly textures. The aesthetic is cozy, artisanal, and sophisticated with warm brown and cream tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0JN-vz_KLFXHfxv82bGtun9rvygSNWYXnjideJogNUnYhQKj1Ua6DWy3KJwPQINoxgNeGmZNRUL5l9b_b_3u1oBlOpAjKfBsdwXXAs1aDK0dj7ZF1kl7TcqgAWKCt1w8MdOnZ0SyH8Md8-RmwfRGzc2FRCJ9Ss3fvs81dnwqrMbDie4p3tHIBjuMo5qEQ-gRNU-2lnARNXkl6D5JIvw_3YiGT_j0TfADlFZJqeerxvGGZlf8PnK969iyCxz_U1w5K5mh1b3wXTzM"/>
+</div>
+</div>
+</section>
+<!-- Today's Specials - The Baker's Tray -->
+<section class="py-xl bg-surface-container-low overflow-hidden">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop mb-lg flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Today's Specials</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Handpicked favorites from our morning bake.</p>
+</div>
+<button class="flex items-center gap-xs font-label-md text-label-md text-secondary hover:underline">
+                    View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<div class="relative">
+<div class="flex gap-gutter overflow-x-auto px-margin-mobile md:px-margin-desktop pb-lg hide-scrollbar snap-x">
+<!-- Special Item 1 -->
+<div class="flex-none w-[300px] snap-start">
+<div class="bg-surface rounded-xl overflow-hidden butter-shadow group">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close up of a warm, melting chocolate chip cookie with glowing highlights and visible steam. The chocolate chunks are semi-melted and glossy. The background is a soft, out-of-focus bakery interior with warm cocoa brown tones and a cozy, handcrafted atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUDnL_n4I27DQFrMK0svYIc_jS6-3fQYLIbXN0G3v_MMfo99z5-y40eI89w-cT43fErPmi0cU3vE9QWXPzvp2XlmDxEmmg6UCPEcv8hTeolVbOlyt8zjxGUDmzdsyEGFMQbe9sfvlHVuxoEI6t-bgXbIPjiO1k1zIlLwXa29Sd02Mq8ckhwf77AyZ-c_kI4UvTj_h1lgM2WUsDhNsSp1PMWDYcBdiod53sD-_zPK2nOXYkUFhIN8vzTdChe3TUM7lnJIo2o7ghhLs"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-primary">Salted Dark Chocolate</h3>
+<span class="font-label-md text-label-md text-secondary">$4.50</span>
+</div>
+<div class="flex gap-xs mb-md">
+<span class="bg-surface-container-highest text-on-tertiary-fixed-variant px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Vegan</span>
+<span class="bg-surface-container-highest text-on-tertiary-fixed-variant px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Organic</span>
+</div>
+<button class="w-full py-2 border border-primary/20 rounded-lg font-label-md text-label-md text-primary hover:bg-primary hover:text-white transition-colors">
+                                    Add to Tray
+                                </button>
+</div>
+</div>
+</div>
+<!-- Special Item 2 -->
+<div class="flex-none w-[300px] snap-start">
+<div class="bg-surface rounded-xl overflow-hidden butter-shadow group">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A beautiful lemon lavender tart with a perfectly crimped buttery crust. The tart filling is a vibrant lemon yellow, topped with tiny purple dried lavender buds and a light dusting of powdered sugar. Soft, bright lighting gives it a fresh, spring-like feel consistent with the bakery's minimal and tactile aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMDOnElAfjVet3hHzX26EDcm-Kuy8sfTOb2icY-p0Aw8c2-OcCXCXjzhYCjtk5OlpBA0P2PDsoyeXhNYpjsdfKupB7xwHLOwGCJhdCT42sT3YF-KpxPDmx1W5ggGDy5ZpFoYYNP7PQVDlAfIP-5yWLG5c8OVx2w6IjHA8ib3gylFz2WPofeHv68r-uV7tidJUxtlNOxprkvOJUPN3HsZLBOWVKdxlBxG5JTVhtUCvZaEnnhzuqQWAeKNK12a3izewhA-Zss-fm1DU"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-primary">Lemon Lavender Tart</h3>
+<span class="font-label-md text-label-md text-secondary">$6.00</span>
+</div>
+<div class="flex gap-xs mb-md">
+<span class="bg-surface-container-highest text-on-tertiary-fixed-variant px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Seasonal</span>
+</div>
+<button class="w-full py-2 border border-primary/20 rounded-lg font-label-md text-label-md text-primary hover:bg-primary hover:text-white transition-colors">
+                                    Add to Tray
+                                </button>
+</div>
+</div>
+</div>
+<!-- Special Item 3 -->
+<div class="flex-none w-[300px] snap-start">
+<div class="bg-surface rounded-xl overflow-hidden butter-shadow group">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A tall, multi-layered honey cake with thin layers of biscuit and creamy honey-flavored frosting. The outside is coated in fine cake crumbs and drizzled with raw honey. Set against a minimalist cream background with soft shadows, evoking an artisanal and premium pastry shop vibe." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxEcRkFsSHYCMae1GYYqOF721YO3ZP4f_lgxKRcavpGUGMRdwN2eiSQlMRNwzwycRyYcbrRNNKQ6lhklu1fxV-7BJptlXXvU7bSPhWtVd_cFjeLAZs7hBQYFmjgZxAsd_zJYZ6haPAjNRNQdQYM3v4hOBxygbECvsQjzw-lDVTSLeGnzDl7uZTfb03gH47UNp6LgGDTCxBetktakgDYYM5P302p1GLVCQzRbDIjzd1OvBVNiCMFP1Bnj8O_o--bfOwHZVlkGZg75w"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-primary">Honey Layer Cake</h3>
+<span class="font-label-md text-label-md text-secondary">$8.50</span>
+</div>
+<div class="flex gap-xs mb-md">
+<span class="bg-surface-container-highest text-on-tertiary-fixed-variant px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">House Special</span>
+</div>
+<button class="w-full py-2 border border-primary/20 rounded-lg font-label-md text-label-md text-primary hover:bg-primary hover:text-white transition-colors">
+                                    Add to Tray
+                                </button>
+</div>
+</div>
+</div>
+<!-- Special Item 4 -->
+<div class="flex-none w-[300px] snap-start">
+<div class="bg-surface rounded-xl overflow-hidden butter-shadow group">
+<div class="h-64 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Golden-brown pistachio croissants piled elegantly on a ceramic plate. Flaky, buttery layers are visible, with bright green crushed pistachios sprinkled on top. The mood is sophisticated and gourmet, using a color palette of warm gold, soft cream, and deep brown tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiJ5DP9UefIRfB13g7Sp6JJooiItBhVKNuz53X6EbBsAarFPPMiXIA1QrT7owSdagydIjM2j3cJHqDhJWDnbhMgU_SDnduwBRZdFcLPj_fr0iIPmtgt0cxGF3FKaBQuNg8lwc7j-HMJUFb5eNSFORWpH3cTb26EV4eE2-w6EhS6lGVNnYqNwd0UsFXkS2Xa-UKkyoI5q38sXk1hgbZpU90geUOMUc_LDAF422uxyuF90BE7xsO_C5xbiXGBjMv0_MCANBRr0VdM-U"/>
+</div>
+<div class="p-md">
+<div class="flex justify-between items-start mb-xs">
+<h3 class="font-headline-md text-headline-md text-primary">Pistachio Croissant</h3>
+<span class="font-label-md text-label-md text-secondary">$5.25</span>
+</div>
+<div class="flex gap-xs mb-md">
+<span class="bg-surface-container-highest text-on-tertiary-fixed-variant px-2 py-0.5 rounded text-[10px] uppercase font-bold tracking-wider">Flaky</span>
+</div>
+<button class="w-full py-2 border border-primary/20 rounded-lg font-label-md text-label-md text-primary hover:bg-primary hover:text-white transition-colors">
+                                    Add to Tray
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Our Story Section -->
+<section class="py-xl" id="our-story">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-lg items-center">
+<div class="md:col-span-7 relative">
+<div class="grid grid-cols-2 gap-md">
+<div class="pt-xl">
+<img class="w-full aspect-[3/4] object-cover rounded-xl butter-shadow" data-alt="A candid, warm photo of a baker's hands dusted in flour, skillfully kneading soft dough on a flour-covered wooden surface. The lighting is low-key and intimate, focusing on the texture of the dough and the motion of craftsmanship. The aesthetic is nostalgic and warm, using rich cocoa browns and creamy whites." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkX_LezzUXlakSRRO1Zw_V2q3HJXO7L3snqN4Qo7S-kAqXxRm-b0FkUjimdGMlSOfsNHfnC18n_g-EXi8DkIa2s_8FQX3ZMvgHapnBJB1RffVF-5jDcNj4Aa_K-hU7vn33JaklQCTlfkWti2yZzJgVQPxJo1TuTLTVixehO2n1Wy8RtP1bp5Cxv_OrkMUlPq_NIz-SaNJ36H8tlrwtGWXQfhbpIqRea5j6hJtkLJb2WfKpKBPIsjYTlO7GfTL83ZS7-TsxVySZEdw"/>
+</div>
+<div>
+<img class="w-full aspect-[3/4] object-cover rounded-xl butter-shadow" data-alt="A charming boutique bakery window display at dusk. Soft warm yellow light spills out onto the sidewalk. Inside, shelves are stocked with beautifully arranged cakes and cookies on ceramic stands. The atmosphere is inviting, sophisticated, and personal, highlighting the tactile joy of a neighborhood bakery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-B4_CwS5C4NJnWD3OkCOE3vIiNTGJ1FVkyT7SiKYsIa01fvcLAhTNFU5uKk3FZMuhY9DaRmJ2cK9KFSdV2w-yQi1e3TBTvcTIV8EipA7eT1p6cjf63P4zExyiyxt9Xp1tn0qLjVg01Q2Y-hUS9B9EGyNQ4ncbZLHWsZeukFQmkUh41SHTPrP-DP32KWTyOoXWUPej6D7teFqI2KJIc-eEMjsrAMu95gJJiOaYCSgZDLEN3JKC75nMx9c9rgoptNa6q_QgV0e5g9s"/>
+</div>
+</div>
+<!-- Decorative element -->
+<div class="absolute -bottom-6 -right-6 w-32 h-32 bg-surface-container-highest rounded-full -z-10 animate-pulse"></div>
+</div>
+<div class="md:col-span-5">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-md">Handcrafted with <span class="italic text-secondary">Purpose</span></h2>
+<div class="space-y-md">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            At <span class="font-bold">cookieesandcakes</span>, our journey began in a tiny home kitchen with nothing but a sourdough starter and a dream to bring back the sensory joy of slow baking.
+                        </p>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            We believe that every ingredient tells a story. That's why we source our flour from local heritage mills and our chocolate from ethical producers. No preservatives, no shortcuts—just pure, artisanal passion in every crumb.
+                        </p>
+<ul class="space-y-sm pt-md">
+<li class="flex items-center gap-sm font-label-md text-label-md text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> 100% Organic, Stone-Ground Flour
+                            </li>
+<li class="flex items-center gap-sm font-label-md text-label-md text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Single-Origin Dark Chocolate
+                            </li>
+<li class="flex items-center gap-sm font-label-md text-label-md text-primary">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Small Batch Daily Production
+                            </li>
+</ul>
+<div class="pt-lg">
+<img alt="Faded logo decoration" class="h-16 w-auto opacity-30 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcBZhe-qc8x2zMtuCpIRLA-L9A5lJQf_MJCE1Jrs1tsCPv_Vmv-499GwtXEfYcQ51ATAa4kTw2HpPDYKb050qilHP39RoqAp9A13jT2uAZGL9OnugcyclR0qamfgrC5AiBoEq1_lLyjEew4KovUYPxs5gsxQr-roQtB4CxtzpI_7hctVgUx9IgcPVhjQdHzihJfpFqdenWbk7HoIlXDAGw7blr2uUx7QaGNmyV31xQDBp_I7YHkIrcJRPjSyx4o-C1Viegf_Tlgw"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / CTA -->
+<section class="py-xl bg-primary text-on-primary">
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop text-center">
+<h2 class="font-headline-lg text-headline-lg mb-md">Join the Cookie Club</h2>
+<p class="font-body-lg text-body-lg mb-lg opacity-90 max-w-xl mx-auto">
+                    Be the first to know about seasonal flavors, exclusive bakes, and special offers delivered straight to your inbox.
+                </p>
+<form class="flex flex-col md:flex-row gap-md max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Welcome to the club!')">
+<input class="flex-1 bg-white/10 border border-white/20 rounded-lg px-md py-3 focus:outline-none focus:ring-2 focus:ring-secondary-container placeholder:text-white/40 text-white font-body-md" placeholder="Enter your email" type="email"/>
+<button class="bg-secondary-container text-on-secondary-container px-lg py-3 rounded-lg font-label-md text-label-md hover:brightness-110 transition-all active:scale-95">
+                        Subscribe
+                    </button>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-tertiary-container w-full py-xl border-t border-primary/5">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+<!-- Brand & Info -->
+<div class="space-y-md">
+<div class="flex items-center gap-3">
+<img alt="footer logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcBZhe-qc8x2zMtuCpIRLA-L9A5lJQf_MJCE1Jrs1tsCPv_Vmv-499GwtXEfYcQ51ATAa4kTw2HpPDYKb050qilHP39RoqAp9A13jT2uAZGL9OnugcyclR0qamfgrC5AiBoEq1_lLyjEew4KovUYPxs5gsxQr-roQtB4CxtzpI_7hctVgUx9IgcPVhjQdHzihJfpFqdenWbk7HoIlXDAGw7blr2uUx7QaGNmyV31xQDBp_I7YHkIrcJRPjSyx4o-C1Viegf_Tlgw"/>
+<span class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">cookieesandcakes</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container">
+                    Traditional techniques meet modern flavors. Every pastry we make is a testament to the art of artisanal baking.
+                </p>
+<div class="flex gap-md">
+<a class="text-primary hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">face_nod</span></a>
+<a class="text-primary hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">photo_camera</span></a>
+<a class="text-primary hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">video_library</span></a>
+</div>
+</div>
+<!-- Quick Links -->
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-sm">
+<h4 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-md">Explore</h4>
+<nav class="flex flex-col gap-sm">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all" href="#">Shop All</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all" href="#">Cakes</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all" href="#">Cookies</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all" href="#">Pastries</a>
+</nav>
+</div>
+<div class="space-y-sm">
+<h4 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-md">Service</h4>
+<nav class="flex flex-col gap-sm">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all" href="#">Shipping Info</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all" href="#">Wholesale</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all" href="#">Contact Us</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all" href="#">Privacy Policy</a>
+</nav>
+</div>
+</div>
+<!-- Newsletter Alternative / Contact -->
+<div class="space-y-md">
+<h4 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-md">Visit Us</h4>
+<div class="flex gap-sm items-start text-on-surface-variant">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<p class="font-body-md text-body-md">123 Baker St, Flour District<br/>New York, NY 10001</p>
+</div>
+<div class="flex gap-sm items-start text-on-surface-variant">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<p class="font-body-md text-body-md">Tue – Sun: 7:00 AM – 4:00 PM<br/>Closed on Mondays</p>
+</div>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop mt-xl pt-lg border-t border-primary/5 text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">
+                © 2024 cookieesandcakes. Handcrafted with love.
+            </p>
+</div>
+</footer>
+<script>
+        // Simple scroll reveal effect for images
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('transition-all', 'duration-1000', 'opacity-0', 'translate-y-10');
+            observer.observe(section);
+        });
+    </script>
+</body></html>

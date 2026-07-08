@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Track Your Treats | cookieesandcakes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#fea3a6",
+                    "primary": "#44281e",
+                    "outline": "#827470",
+                    "background": "#fff8f6",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#504440",
+                    "inverse-surface": "#3f2c25",
+                    "surface-variant": "#fbdcd1",
+                    "on-primary-container": "#d5aa9b",
+                    "inverse-on-surface": "#ffede7",
+                    "surface-container-low": "#fff1ec",
+                    "tertiary-fixed": "#e6e2dc",
+                    "surface-bright": "#fff8f6",
+                    "inverse-primary": "#e9bdae",
+                    "primary-fixed-dim": "#e9bdae",
+                    "surface-container": "#ffe9e2",
+                    "surface-container-high": "#ffe2d8",
+                    "primary-fixed": "#ffdbcf",
+                    "on-secondary-fixed": "#3c070e",
+                    "on-surface": "#281811",
+                    "secondary": "#91494d",
+                    "on-background": "#281811",
+                    "on-tertiary-container": "#b6b3ad",
+                    "surface-dim": "#f3d3c9",
+                    "on-tertiary-fixed": "#1c1c18",
+                    "secondary-fixed": "#ffdada",
+                    "on-secondary-container": "#79363b",
+                    "secondary-fixed-dim": "#ffb3b5",
+                    "surface-container-highest": "#fbdcd1",
+                    "primary-container": "#5d3e33",
+                    "tertiary-container": "#464541",
+                    "on-primary-fixed": "#2d150c",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#484743",
+                    "on-tertiary": "#ffffff",
+                    "outline-variant": "#d4c3bd",
+                    "tertiary-fixed-dim": "#c9c6c1",
+                    "tertiary": "#302f2b",
+                    "error-container": "#ffdad6",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#79564a",
+                    "on-secondary-fixed-variant": "#743237",
+                    "surface": "#fff8f6",
+                    "on-primary-fixed-variant": "#5e3f34"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px",
+                    "base": "8px",
+                    "xl": "80px",
+                    "sm": "12px",
+                    "lg": "48px",
+                    "md": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Libre Caslon Text"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "headline-xl": ["Libre Caslon Text"],
+                    "headline-lg": ["Libre Caslon Text"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Libre Caslon Text"],
+                    "body-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #fff8f6;
+        color: #281811;
+        -webkit-font-smoothing: antialiased;
+      }
+      .butter-shadow {
+        box-shadow: 0 20px 40px rgba(93, 62, 51, 0.08);
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #d4c3bd;
+        border-radius: 10px;
+      }
+      .map-container {
+        background-image: radial-gradient(#d4c3bd 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+      .animate-pulse-slow {
+        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+    </style>
+</head>
+<body class="font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="w-full top-0 sticky z-50 bg-background/80 backdrop-blur-md shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
+<nav class="max-w-[1200px] mx-auto flex justify-between items-center px-md py-sm">
+<div class="font-headline-md text-headline-md text-primary italic">cookieesandcakes</div>
+<div class="hidden md:flex gap-lg items-center">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Cakes</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Cookies</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Our Story</a>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-105 transition-transform" data-icon="favorite">favorite</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-105 transition-transform" data-icon="account_circle">account_circle</span>
+<div class="relative cursor-pointer hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-primary" data-icon="shopping_bag">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</div>
+</div>
+</nav>
+</header>
+<main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-lg">
+<!-- Header Section -->
+<section class="mb-xl text-center md:text-left">
+<h1 class="font-headline-xl text-headline-xl md:text-headline-xl text-primary mb-xs">Track Your Treats</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant opacity-80">Order #CS-9402 • Placed on Oct 12, 2024</p>
+</section>
+<!-- Main Tracking Content (Bento Style Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-md">
+<!-- Tracking Status Card (Left Column) -->
+<div class="lg:col-span-8 flex flex-col gap-md">
+<!-- Timeline Section -->
+<div class="bg-surface-container-low p-md md:p-lg rounded-xl butter-shadow">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-lg">
+<div>
+<span class="font-label-md text-label-md text-secondary uppercase tracking-widest">Status</span>
+<h2 class="font-headline-md text-headline-md text-primary">Out for Delivery</h2>
+</div>
+<div class="mt-sm md:mt-0 text-left md:text-right">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Estimated Arrival</p>
+<p class="font-headline-md text-headline-md text-primary">Thursday, Oct 17th</p>
+<p class="font-body-md text-body-md text-on-surface-variant">by 4:00 PM</p>
+</div>
+</div>
+<!-- Visual Progress Timeline -->
+<div class="relative py-base">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant -translate-y-1/2 hidden md:block"></div>
+<div class="absolute top-1/2 left-0 w-[80%] h-[3px] bg-secondary -translate-y-1/2 hidden md:block"></div>
+<div class="flex flex-col md:flex-row justify-between relative z-10 gap-md md:gap-0">
+<!-- Step 1: Placed -->
+<div class="flex md:flex-col items-center gap-md md:gap-xs text-center">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="receipt_long">receipt_long</span>
+</div>
+<span class="font-label-md text-label-md text-primary">Order Placed</span>
+</div>
+<!-- Step 2: Prepared -->
+<div class="flex md:flex-col items-center gap-md md:gap-xs text-center">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="skillet">skillet</span>
+</div>
+<span class="font-label-md text-label-md text-primary">Prepared</span>
+</div>
+<!-- Step 3: Shipped -->
+<div class="flex md:flex-col items-center gap-md md:gap-xs text-center">
+<div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="package_2">package_2</span>
+</div>
+<span class="font-label-md text-label-md text-primary">Shipped</span>
+</div>
+<!-- Step 4: Out for Delivery -->
+<div class="flex md:flex-col items-center gap-md md:gap-xs text-center">
+<div class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center ring-4 ring-secondary-container/30 animate-pulse-slow">
+<span class="material-symbols-outlined text-[20px]" data-icon="local_shipping">local_shipping</span>
+</div>
+<span class="font-label-md text-label-md text-secondary font-bold">Out for Delivery</span>
+</div>
+<!-- Step 5: Delivered -->
+<div class="flex md:flex-col items-center gap-md md:gap-xs text-center opacity-40">
+<div class="w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant">Delivered</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Map Section -->
+<div class="bg-surface-container rounded-xl overflow-hidden butter-shadow h-[400px] relative border border-outline-variant/30">
+<div class="absolute inset-0 map-container flex items-center justify-center opacity-40"></div>
+<!-- Stylized Map UI -->
+<div class="absolute inset-0 p-lg pointer-events-none">
+<!-- House Icon (Destination) -->
+<div class="absolute top-[20%] right-[20%] flex flex-col items-center">
+<div class="bg-white p-base rounded-full shadow-lg border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="home">home</span>
+</div>
+<div class="bg-primary text-white px-base py-xs rounded-full text-[10px] mt-xs font-label-md">Home</div>
+</div>
+<!-- Delivery Path (SVG line simulated) -->
+<svg class="absolute inset-0 w-full h-full opacity-30" fill="none" viewbox="0 0 800 400">
+<path d="M100 350 C 200 300, 300 380, 450 250 S 650 150, 640 90" stroke="#5d3e33" stroke-dasharray="10 10" stroke-width="4"></path>
+</svg>
+<!-- Moving Truck -->
+<div class="absolute left-[40%] bottom-[45%] flex flex-col items-center transition-all duration-1000 ease-in-out" id="delivery-truck">
+<div class="bg-secondary p-base rounded-full shadow-xl ring-8 ring-secondary/20">
+<span class="material-symbols-outlined text-white" data-icon="local_shipping">local_shipping</span>
+</div>
+<div class="bg-secondary text-white px-base py-xs rounded-full text-[10px] mt-xs font-label-md uppercase tracking-tight">On the way</div>
+</div>
+</div>
+<div class="absolute bottom-md left-md bg-white/90 backdrop-blur-md p-md rounded-lg butter-shadow max-w-[250px]">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Current Location</p>
+<p class="font-body-md text-body-md text-primary font-bold">Passing through Maple Street Bakery Hub</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-xs italic">3.2 miles away</p>
+</div>
+</div>
+</div>
+<!-- Side Details (Right Column) -->
+<div class="lg:col-span-4 flex flex-col gap-md">
+<!-- Carrier Info Card -->
+<div class="bg-surface-container-low p-md rounded-xl butter-shadow border border-outline-variant/20">
+<h3 class="font-headline-md text-headline-md text-primary mb-md">Delivery Details</h3>
+<div class="space-y-md">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Carrier</p>
+<div class="flex items-center gap-base">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="delivery_dining">delivery_dining</span>
+</div>
+<p class="font-body-md text-body-md text-primary font-medium">Sweet Delivery Express</p>
+</div>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Tracking Number</p>
+<div class="flex items-center justify-between bg-surface-container-lowest p-sm rounded-lg border border-outline-variant">
+<code class="font-mono text-primary text-body-md">SWEET7739210</code>
+<button class="hover:bg-surface-container-high p-xs rounded-full transition-colors group" title="Copy to clipboard">
+<span class="material-symbols-outlined text-on-surface-variant group-active:text-secondary" data-icon="content_copy">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+<button class="w-full mt-lg py-md px-lg bg-primary text-white rounded-lg font-label-md uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all duration-200">
+                        View Detailed Log
+                    </button>
+</div>
+<!-- Order Summary Snippet -->
+<div class="bg-surface-container-low p-md rounded-xl butter-shadow border border-outline-variant/20">
+<h3 class="font-headline-md text-headline-md text-primary mb-md">In This Box</h3>
+<div class="space-y-md">
+<!-- Item 1 -->
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A macro shot of artisanal salted dark chocolate cookies with large sea salt flakes, warm brown lighting, rustic wooden background, boutique bakery style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm3-jmokG5TzT746D74kauHX-_Vh2ps6XCFGNJGqIZhsLXrJJee3n-EGqCzvQXoPobrWaOLwx4iYkU8dueCivhGWIRmTEqbMAjQleetHz-y0tcJ4C3BK25mI_UZt-h_bDTFoBcK0rKLMUwUUZmZMUKBPG4rdfR_sA3aql-L1kYvEkwR7HY45GiBpm2qhs9Owt7uoCOO_COCC-RlmJxz0nl0yK7wihWXn221UOhrk3QSyIcMl6NxzuxxiJA6UHsIojDgcriB1B3lX8"/>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-primary font-medium">Salted Dark Chocolate Cookies</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Box of 12 • Artisanal Batch</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A decadent double truffle cake with smooth cocoa frosting and chocolate shavings, soft focus background of a cozy bakery interior, golden hour lighting, rich textures." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_g6InWkkuFGABVfRn-LN7uY4zOXlvC432CmFFcHq1hmFz4ov_RwUa3avMXTMPSsFjOjX1ISPwvn9Y5T7sgJ8rf7Wnj95I6AXcfCHmAOXcMWYu3pZIYEGrxS9mOjhWGTQrkCJkRaQPITC9qBQ0On9dzpkl8Ce2TLE_pwPBSFkKBBB95s_Kp56ewgUHcoURVh47DWYqBBt3pjAc2FQEjmZE47g7wOeG5PkRfJu1QacgtASjNv6ivImOC0cdrQx87Tz-mVTbSDYJiWI"/>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-primary font-medium">Double Truffle Cake</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Signature 6-inch • Classic</p>
+</div>
+</div>
+</div>
+<div class="mt-md pt-md border-t border-outline-variant/40 flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">2 Items</span>
+<a class="font-label-md text-label-md text-secondary hover:underline underline-offset-4" href="#">Full Order Details</a>
+</div>
+</div>
+<!-- Support Card -->
+<div class="bg-primary text-white p-md rounded-xl butter-shadow">
+<div class="flex gap-md">
+<span class="material-symbols-outlined text-[32px] text-primary-fixed" data-icon="support_agent">support_agent</span>
+<div>
+<h4 class="font-headline-md text-[20px] mb-xs">Need help with your treats?</h4>
+<p class="font-label-sm text-label-sm opacity-80 mb-md">Our bakers are here to help if anything isn't perfectly sweet.</p>
+<button class="text-white border border-white/30 px-md py-xs rounded-full font-label-md hover:bg-white/10 transition-colors">Chat with us</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-xl bg-surface-container-low border-t border-outline-variant">
+<div class="max-w-[1200px] mx-auto px-md py-lg flex flex-col md:flex-row justify-between gap-md">
+<div>
+<div class="font-headline-lg text-headline-lg text-primary mb-sm">cookieesandcakes</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Every crumb tells a story of craftsmanship and love. Thank you for being part of our artisanal journey.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-lg">
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-primary mb-xs">Shop</span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Terms of Service</a>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-primary mb-xs">Support</span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Shipping Info</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Contact Us</a>
+</div>
+<div class="flex flex-col gap-xs">
+<span class="font-label-md text-label-md text-primary mb-xs">Business</span>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors" href="#">Wholesale</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto px-md py-md border-t border-outline-variant/20 text-center md:text-left">
+<span class="font-label-sm text-label-sm text-on-surface-variant">© 2024 cookieesandcakes. Crafted with artisanal love.</span>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the map truck icon
+        document.addEventListener('DOMContentLoaded', () => {
+            const truck = document.getElementById('delivery-truck');
+            let position = 40;
+            let direction = 1;
+
+            setInterval(() => {
+                position += (0.5 * direction);
+                if (position > 55 || position < 35) {
+                    direction *= -1;
+                }
+                truck.style.left = position + '%';
+            }, 3000);
+
+            // Copy to clipboard simulation
+            const copyBtn = document.querySelector('.group');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const icon = copyBtn.querySelector('.material-symbols-outlined');
+                    const originalText = icon.innerText;
+                    icon.innerText = 'check';
+                    setTimeout(() => {
+                        icon.innerText = originalText;
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login | cookieesandcakes</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#464541",
+                        "surface-bright": "#fff8f6",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#e9bdae",
+                        "background": "#fff8f6",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#5d3e33",
+                        "surface-tint": "#79564a",
+                        "secondary-fixed": "#ffdada",
+                        "surface-container-high": "#ffe2d8",
+                        "on-surface": "#281811",
+                        "surface-container-highest": "#fbdcd1",
+                        "outline-variant": "#d4c3bd",
+                        "secondary": "#91494d",
+                        "primary": "#44281e",
+                        "on-primary-fixed-variant": "#5e3f34",
+                        "on-primary-container": "#d5aa9b",
+                        "on-background": "#281811",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#2d150c",
+                        "on-secondary-fixed": "#3c070e",
+                        "secondary-container": "#fea3a6",
+                        "on-tertiary-container": "#b6b3ad",
+                        "on-secondary-container": "#79363b",
+                        "surface-container": "#ffe9e2",
+                        "inverse-on-surface": "#ffede7",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb3b5",
+                        "on-tertiary-fixed-variant": "#484743",
+                        "outline": "#827470",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdbcf",
+                        "inverse-primary": "#e9bdae",
+                        "surface": "#fff8f6",
+                        "on-surface-variant": "#504440",
+                        "tertiary": "#302f2b",
+                        "inverse-surface": "#3f2c25",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#e6e2dc",
+                        "on-tertiary-fixed": "#1c1c18",
+                        "surface-variant": "#fbdcd1",
+                        "tertiary-fixed-dim": "#c9c6c1",
+                        "on-secondary-fixed-variant": "#743237",
+                        "surface-container-low": "#fff1ec",
+                        "surface-dim": "#f3d3c9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-desktop": "64px",
+                        "sm": "12px",
+                        "xl": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "headline-xl": ["Libre Caslon Text"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "label-sm": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .butter-shadow {
+            box-shadow: 0 10px 40px rgba(93, 62, 51, 0.08);
+        }
+
+        .cream-blur {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 248, 246, 0.7);
+        }
+
+        body {
+            background-color: #fff8f6;
+            background-image: radial-gradient(#fbdcd1 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+    </style>
+
+    <script src="/js/app.js" defer></script>
+</head>
+
+<body class="min-h-screen flex flex-col font-body-md text-on-background">
+    <!-- Top Navigation (Shell logic: Supressed for login) -->
+    <main class="flex-grow flex items-center justify-center px-margin-mobile md:px-margin-desktop py-xl">
+        <div class="w-full max-w-[480px]">
+            <!-- Branding & Welcome -->
+            <div class="text-center mb-lg">
+                <div class="flex justify-center mb-md">
+                    <img alt="cookieesandcakes logo"
+                        class="h-24 w-auto drop-shadow-sm transition-transform duration-500 hover:scale-105"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcBZhe-qc8x2zMtuCpIRLA-L9A5lJQf_MJCE1Jrs1tsCPv_Vmv-499GwtXEfYcQ51ATAa4kTw2HpPDYKb050qilHP39RoqAp9A13jT2uAZGL9OnugcyclR0qamfgrC5AiBoEq1_lLyjEew4KovUYPxs5gsxQr-roQtB4CxtzpI_7hctVgUx9IgcPVhjQdHzihJfpFqdenWbk7HoIlXDAGw7blr2uUx7QaGNmyV31xQDBp_I7YHkIrcJRPjSyx4o-C1Viegf_Tlgw" />
+                </div>
+                <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight mb-xs">Welcome Back, Cookie
+                    Lover</h1>
+                <p class="font-body-md text-on-surface-variant">Sign in to access your freshly baked treats.</p>
+            </div>
+            <!-- Login Card -->
+            <div class="bg-surface-container-lowest butter-shadow rounded-xl p-md md:p-lg">
+                <form class="space-y-md" id="loginForm">
+                    <!-- Email Field -->
+                    <div class="space-y-xs">
+                        <label class="font-label-md text-label-md text-primary block" for="email">Email Address</label>
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">mail</span>
+                            <input
+                                class="w-full pl-10 pr-4 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-on-surface focus:ring-0 focus:border-primary transition-all placeholder:text-outline-variant"
+                                id="email" placeholder="baker@cookieesandcakes.com" required="" type="email" />
+                        </div>
+                    </div>
+                    <!-- Password Field -->
+                    <div class="space-y-xs">
+                        <div class="flex justify-between items-center">
+                            <label class="font-label-md text-label-md text-primary block"
+                                for="password">Password</label>
+                            <a class="font-label-sm text-label-sm text-secondary hover:underline transition-all"
+                                href="/reset-password.html">Forgot Password?</a>
+                        </div>
+                        <div class="relative">
+                            <span
+                                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
+                            <input
+                                class="w-full pl-10 pr-12 py-3 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-on-surface focus:ring-0 focus:border-primary transition-all placeholder:text-outline-variant"
+                                id="password" placeholder="••••••••" required="" type="password" />
+                            <button
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-outline-variant hover:text-primary"
+                                onclick="togglePassword()" type="button">
+                                <span class="material-symbols-outlined" id="passwordIcon">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Remember Me -->
+                    <div class="flex items-center space-x-2">
+                        <input
+                            class="w-4 h-4 text-secondary border-outline-variant rounded focus:ring-secondary/20 bg-surface-container-low"
+                            id="remember" type="checkbox" />
+                        <label class="font-label-sm text-label-sm text-on-surface-variant cursor-pointer select-none"
+                            for="remember">Remember my sweet tooth</label>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="pt-2 space-y-md">
+                        <button
+                            class="w-full bg-secondary text-on-secondary py-4 px-6 rounded-lg font-label-md text-label-md shadow-md hover:bg-secondary/90 active:scale-[0.98] transition-all duration-200"
+                            type="submit">
+                            Sign In
+                        </button>
+                        <div class="relative flex items-center py-2">
+                            <div class="flex-grow border-t border-outline-variant/30"></div>
+                            <span class="flex-shrink mx-4 font-label-sm text-label-sm text-outline-variant">OR CONTINUE
+                                WITH</span>
+                            <div class="flex-grow border-t border-outline-variant/30"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-md">
+                            <button
+                                class="flex items-center justify-center space-x-2 py-3 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors active:scale-95 duration-200"
+                                type="button">
+                                <img alt="Google" class="w-5 h-5"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYqJSc_NTui5F0SuG8ZbtQpVS63fBOWOPyFGDQPGWkOPisxGBOxv1LvzzZqp6B0eNpCxumhJYECrxBH7bcd4kYF1u89jkW1Y0H76UC8P8gmTL3vvMqh6r3gczpe4aq4VqyGsjYhcsUxmaI0CiJSyPQS2zeLFP6covCaLkXEqtcvgUczpEu2dAu4J5VGQDJNevDMw5FaQla8yjJDKLD6wfmHrlhfde843Fdoep9YLUCxfJzExUMLezB8D8S9pb14Z2Zx99jQFzezC4" />
+                                <span class="font-label-sm text-label-sm text-primary">Google</span>
+                            </button>
+                            <button
+                                class="flex items-center justify-center space-x-2 py-3 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors active:scale-95 duration-200"
+                                type="button">
+                                <span class="material-symbols-outlined text-primary"
+                                    style="font-variation-settings: 'FILL' 1;">apps</span>
+                                <span class="font-label-sm text-label-sm text-primary">Apple</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!-- Signup Link -->
+                <p class="mt-lg text-center font-body-md text-on-surface-variant">
+                    New to the kitchen?
+                    <a class="text-secondary font-bold hover:underline transition-all" href="/signup.html">Join the club</a>
+                </p>
+            </div>
+        </div>
+    </main>
+    <!-- Decorative Elements (Artisanal Warmth) -->
+    <div class="fixed bottom-0 left-0 -z-10 pointer-events-none opacity-20 hidden lg:block">
+        <div
+            class="relative w-[400px] h-[400px] bg-secondary-container rounded-full blur-[100px] -translate-x-1/2 translate-y-1/2">
+        </div>
+    </div>
+    <div class="fixed top-0 right-0 -z-10 pointer-events-none opacity-20 hidden lg:block">
+        <div
+            class="relative w-[300px] h-[300px] bg-primary-container rounded-full blur-[80px] translate-x-1/3 -translate-y-1/3">
+        </div>
+    </div>
+    <!-- Simple Footer (Identity only, links suppressed for login) -->
+    <footer class="py-md text-center">
+        <p class="font-label-sm text-label-sm text-outline-variant uppercase tracking-widest">© 2026 cookieesandcakes.
+            Handcrafted with love.</p>
+    </footer>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordIcon = document.getElementById('passwordIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordIcon.innerText = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                passwordIcon.innerText = 'visibility';
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span>';
+            btn.disabled = true;
+
+            // Mock login delay
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                alert('Welcome to the bakery! (Mock action)');
+            }, 1500);
+        });
+    </script>
+
+    <script src="/js/auth.js" defer></script>
+</body>
+
+</html>

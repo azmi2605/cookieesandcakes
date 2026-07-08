@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order History | Cookies &amp; Cakes</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Libre+Caslon+Text:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#b6b3ad",
+                    "on-secondary-fixed": "#3c070e",
+                    "surface-variant": "#fbdcd1",
+                    "secondary-container": "#fea3a6",
+                    "primary-fixed": "#ffdbcf",
+                    "tertiary-fixed-dim": "#c9c6c1",
+                    "surface-container": "#ffe9e2",
+                    "secondary-fixed": "#ffdada",
+                    "surface": "#fff8f6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "secondary": "#91494d",
+                    "on-surface-variant": "#504440",
+                    "inverse-primary": "#e9bdae",
+                    "surface-container-low": "#fff1ec",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#743237",
+                    "on-primary-container": "#d5aa9b",
+                    "tertiary-fixed": "#e6e2dc",
+                    "tertiary-container": "#464541",
+                    "background": "#fff8f6",
+                    "tertiary": "#302f2b",
+                    "outline-variant": "#d4c3bd",
+                    "on-background": "#281811",
+                    "on-tertiary-fixed": "#1c1c18",
+                    "surface-container-high": "#ffe2d8",
+                    "on-tertiary-fixed-variant": "#484743",
+                    "inverse-on-surface": "#ffede7",
+                    "on-surface": "#281811",
+                    "primary-fixed-dim": "#e9bdae",
+                    "surface-dim": "#f3d3c9",
+                    "on-secondary": "#ffffff",
+                    "surface-bright": "#fff8f6",
+                    "primary-container": "#5d3e33",
+                    "on-primary-fixed-variant": "#5e3f34",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#ffb3b5",
+                    "on-secondary-container": "#79363b",
+                    "surface-tint": "#79564a",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed": "#2d150c",
+                    "inverse-surface": "#3f2c25",
+                    "surface-container-highest": "#fbdcd1",
+                    "primary": "#44281e",
+                    "outline": "#827470",
+                    "error": "#ba1a1a"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "80px",
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "sm": "12px",
+                    "margin-desktop": "64px",
+                    "md": "24px",
+                    "gutter": "24px",
+                    "lg": "48px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-xl": ["Libre Caslon Text"],
+                    "headline-lg": ["Libre Caslon Text"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-md": ["Libre Caslon Text"],
+                    "headline-lg-mobile": ["Libre Caslon Text"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .butter-shadow {
+            box-shadow: 0 20px 40px rgba(93, 62, 51, 0.06);
+        }
+        .hover-card:active {
+            transform: scale(0.98);
+        }
+        .transition-soft {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-secondary-container">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background/90 backdrop-blur-md shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
+<nav class="flex justify-between items-center px-margin-desktop py-base max-w-[1200px] mx-auto w-full">
+<div class="font-headline-md text-headline-md text-primary">Cookies &amp; Cakes</div>
+<div class="hidden md:flex items-center gap-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Cakes</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Cookies</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Pastries</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Our Story</a>
+</div>
+<div class="flex items-center gap-md text-primary">
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">favorite</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">shopping_bag</span>
+<span class="material-symbols-outlined cursor-pointer text-primary border-b-2 border-secondary transition-colors">account_circle</span>
+</div>
+</nav>
+</header>
+<main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-xl min-h-screen">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-lg font-label-sm text-label-sm text-on-surface-variant">
+<a class="hover:text-primary" href="#">Account</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-bold">Order History</span>
+</nav>
+<!-- Header Section -->
+<header class="mb-xl">
+<h1 class="font-headline-xl text-headline-xl text-primary mb-sm">Your Past Treats</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                A collection of the artisanal delights you've enjoyed. Revisit your favorites and track your latest sweet deliveries.
+            </p>
+</header>
+<!-- Orders List Container -->
+<div class="grid gap-gutter">
+<!-- Order Item 1 -->
+<div class="bg-surface-container-low rounded-xl p-md md:p-lg border border-outline-variant/30 butter-shadow transition-soft hover:bg-surface-container transition-colors cursor-pointer hover-card group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div class="flex-1">
+<div class="flex items-center gap-sm mb-xs">
+<span class="font-headline-md text-headline-md text-primary">#CS-9402</span>
+<span class="px-sm py-xs bg-green-100 text-green-800 font-label-sm text-label-sm rounded-full">Delivered</span>
+</div>
+<div class="flex flex-wrap gap-md font-label-md text-label-md text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Oct 12, 2024</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$48.50</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+<span>4 Items</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-primary font-label-md text-label-md group-hover:gap-sm transition-all">
+<span>View Details</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+<!-- Preview Thumbnails (Bento-lite grid) -->
+<div class="mt-md flex gap-sm">
+<div class="w-16 h-16 rounded-lg bg-surface-container-high overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="A macro photograph of a thick, golden brown chocolate chip cookie with melting chocolate chunks and sea salt flakes on top, warm artisanal bakery lighting, soft shadows, warm tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9d2EDcOT0VppcFFsFuTLMeq8wYbkZhGruJz1Mie0wVsWJ1z7zHvgjntt5q9iek4aHhp8qIoaanoRo4iHjAcO-J1_MFJxyYJmXjnmAHjkiQzw6DujnayPinYg3OCd5QRptk2qLd07v9ssn66StiQJ6sO9l2MtYhRP4G3E_lpzvleKZmSbB_M29J8YoCYOQM0qGtpKAoNdSRXD9jbrRm0lF3M6FbUentKwYgOS8a53uiBcjxtMVAEBI5-J3ewATg-sHiGlC6iKNXYA"/>
+</div>
+<div class="w-16 h-16 rounded-lg bg-surface-container-high overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="A slice of rich dark chocolate truffle cake with visible layers of decadent chocolate sponge and silky ganache, topped with cocoa powder dusted truffles, warm interior lighting, neutral cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrjdYcdNHeq8v9Dw7ebA3eCYDc8Kr47-d-M7A-okcvr2X-StShwyl0_-PFR77Fqs8mvYC4TwyJSOu7SYuSbi0ost8xjC1OBDXqiPziyYl6pudpjEPrtVnLkN4k6SUn1d5AlH141FUhbvfplCSXJUDh5453bgh8t4sgJaAv8pUUa08uYLKCB4ABX828woeGJW-LLpIzMSF3bm0AVkNtF-5C2gf_9anwIejVfHwl1FOoEAyBeyxDi-O4cBTOxPyBOeMfP_SBYO4YJzw"/>
+</div>
+</div>
+</div>
+<!-- Order Item 2 -->
+<div class="bg-surface-container-low rounded-xl p-md md:p-lg border border-outline-variant/30 butter-shadow transition-soft hover:bg-surface-container transition-colors cursor-pointer hover-card group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div class="flex-1">
+<div class="flex items-center gap-sm mb-xs">
+<span class="font-headline-md text-headline-md text-primary">#CS-9388</span>
+<span class="px-sm py-xs bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm rounded-full">Shipped</span>
+</div>
+<div class="flex flex-wrap gap-md font-label-md text-label-md text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Oct 05, 2024</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$32.00</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+<span>2 Items</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-primary font-label-md text-label-md group-hover:gap-sm transition-all">
+<span>View Details</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+<div class="mt-md flex gap-sm">
+<div class="w-16 h-16 rounded-lg bg-surface-container-high overflow-hidden border border-outline-variant/20">
+<img class="w-full h-full object-cover" data-alt="Close up of a buttery croissant with golden flaky layers, sitting on a parchment paper in a rustic bakery setting with warm golden hour light pouring in, high-end food photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeMVdOVpEjyRHHvlCFSF60kOeZSvC7E0po1pp4XUGiwKxS_JMCIt755fbOCOnXBQ4QZTKUHcRMk_Mwxr7lI_Pqgk2K1-Gc_3YpGo8zUMJ3hTcy2lyIXeHoJVB6axxW2u7Jr0297vMR3lcSZRUBtYpjs9QSR1uaVyf6xIwWzVG1czgoa3QTXhFe0PezJzgng38syQcogT6BHW-8okMsI0dwTft6NpStHoLq1Xp_WBi-tS68FbLKUzw0td-2smMeY0c94QLqGk9EmY8"/>
+</div>
+</div>
+</div>
+<!-- Order Item 3 -->
+<div class="bg-surface-container-low rounded-xl p-md md:p-lg border border-outline-variant/30 butter-shadow transition-soft hover:bg-surface-container transition-colors cursor-pointer hover-card group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div class="flex-1">
+<div class="flex items-center gap-sm mb-xs">
+<span class="font-headline-md text-headline-md text-primary">#CS-9210</span>
+<span class="px-sm py-xs bg-green-100 text-green-800 font-label-sm text-label-sm rounded-full">Delivered</span>
+</div>
+<div class="flex flex-wrap gap-md font-label-md text-label-md text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Sept 18, 2024</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$124.00</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+<span>8 Items</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-primary font-label-md text-label-md group-hover:gap-sm transition-all">
+<span>View Details</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Order Item 4 -->
+<div class="bg-surface-container-low rounded-xl p-md md:p-lg border border-outline-variant/30 butter-shadow transition-soft hover:bg-surface-container transition-colors cursor-pointer hover-card group opacity-80 hover:opacity-100">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div class="flex-1">
+<div class="flex items-center gap-sm mb-xs">
+<span class="font-headline-md text-headline-md text-primary">#CS-9105</span>
+<span class="px-sm py-xs bg-green-100 text-green-800 font-label-sm text-label-sm rounded-full">Delivered</span>
+</div>
+<div class="flex flex-wrap gap-md font-label-md text-label-md text-on-surface-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Aug 24, 2024</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>$56.25</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+<span>5 Items</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-xs text-primary font-label-md text-label-md group-hover:gap-sm transition-all">
+<span>View Details</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Call to Action -->
+<div class="mt-xl p-lg bg-surface-container-high rounded-xl text-center border-2 border-dashed border-outline-variant/50">
+<h3 class="font-headline-md text-headline-md text-primary mb-sm">Craving something new?</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Our ovens are always warm. Explore our latest seasonal pastries.</p>
+<button class="bg-secondary text-white px-xl py-base rounded-lg font-label-md text-label-md hover:bg-secondary/90 transition-all active:scale-95 shadow-lg">
+                Back to Shop
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container py-xl px-margin-mobile md:px-margin-desktop">
+<div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-2">
+<div class="font-headline-lg text-headline-lg text-primary mb-base">Cookies &amp; Cakes</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm mb-lg">
+                    Crafting artisanal moments of joy, one batch at a time. Using only the finest, responsibly sourced ingredients for a taste of pure warmth.
+                </p>
+<div class="flex gap-md">
+<span class="material-symbols-outlined cursor-pointer text-primary hover:text-secondary">face_nod</span>
+<span class="material-symbols-outlined cursor-pointer text-primary hover:text-secondary">camera</span>
+<span class="material-symbols-outlined cursor-pointer text-primary hover:text-secondary">mail</span>
+</div>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-primary uppercase tracking-widest">Sitemap</h4>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Shop All</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Shipping Policy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Our Story</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Contact Us</a>
+</div>
+<div class="flex flex-col gap-sm">
+<h4 class="font-label-md text-label-md text-primary uppercase tracking-widest">Legal</h4>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Privacy</a>
+<a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors" href="#">Terms</a>
+<p class="mt-base font-body-md text-body-md text-on-surface-variant opacity-60">
+                    © 2024 Cookies &amp; Cakes. Crafted with Artisanal Warmth.
+                </p>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for list items
+        document.querySelectorAll('.hover-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body></html>

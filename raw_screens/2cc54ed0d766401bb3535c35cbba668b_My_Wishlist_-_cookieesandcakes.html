@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wishlist | cookieesandcakes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#464541",
+                    "surface-bright": "#fff8f6",
+                    "on-error": "#ffffff",
+                    "primary-fixed-dim": "#e9bdae",
+                    "background": "#fff8f6",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "primary-container": "#5d3e33",
+                    "surface-tint": "#79564a",
+                    "secondary-fixed": "#ffdada",
+                    "surface-container-high": "#ffe2d8",
+                    "on-surface": "#281811",
+                    "surface-container-highest": "#fbdcd1",
+                    "outline-variant": "#d4c3bd",
+                    "secondary": "#91494d",
+                    "primary": "#44281e",
+                    "on-primary-fixed-variant": "#5e3f34",
+                    "on-primary-container": "#d5aa9b",
+                    "on-background": "#281811",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#2d150c",
+                    "on-secondary-fixed": "#3c070e",
+                    "secondary-container": "#fea3a6",
+                    "on-tertiary-container": "#b6b3ad",
+                    "on-secondary-container": "#79363b",
+                    "surface-container": "#ffe9e2",
+                    "inverse-on-surface": "#ffede7",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#ffb3b5",
+                    "on-tertiary-fixed-variant": "#484743",
+                    "outline": "#827470",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed": "#ffdbcf",
+                    "inverse-primary": "#e9bdae",
+                    "surface": "#fff8f6",
+                    "on-surface-variant": "#504440",
+                    "tertiary": "#302f2b",
+                    "inverse-surface": "#3f2c25",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#e6e2dc",
+                    "on-tertiary-fixed": "#1c1c18",
+                    "surface-variant": "#fbdcd1",
+                    "tertiary-fixed-dim": "#c9c6c1",
+                    "on-secondary-fixed-variant": "#743237",
+                    "surface-container-low": "#fff1ec",
+                    "surface-dim": "#f3d3c9"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "md": "24px",
+                    "lg": "48px",
+                    "xs": "4px",
+                    "gutter": "24px",
+                    "base": "8px",
+                    "margin-desktop": "64px",
+                    "sm": "12px",
+                    "xl": "80px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "headline-xl": ["Libre Caslon Text"],
+                    "headline-lg": ["Libre Caslon Text"],
+                    "headline-lg-mobile": ["Libre Caslon Text"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "headline-md": ["Libre Caslon Text"],
+                    "label-sm": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .butter-shadow {
+            box-shadow: 0 10px 40px -10px rgba(93, 62, 51, 0.08);
+        }
+        .active-scale:active {
+            transform: scale(0.98);
+        }
+        .bakers-tray-item {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .bakers-tray-item:hover {
+            transform: translateY(-8px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-[0_4px_20px_rgba(93,62,51,0.06)]">
+<div class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">
+                cookieesandcakes
+            </div>
+<nav class="hidden md:flex items-center space-x-lg">
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#">Cakes</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#">Cookies</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#">Pastries</a>
+<a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300" href="#">Our Story</a>
+</nav>
+<div class="flex items-center space-x-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity">favorite</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity">shopping_bag</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:opacity-80 transition-opacity">account_circle</button>
+</div>
+</div>
+</header>
+<main class="pt-xl pb-xl max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop mt-20">
+<!-- Hero Section -->
+<section class="mb-xl text-center">
+<h1 class="font-headline-xl text-headline-xl text-primary mb-sm">Your Sweet Cravings</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                A personal collection of your favorite handcrafted treats. Ready to satisfy that sweet tooth?
+            </p>
+</section>
+<!-- Wishlist Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Item 1: Large Featured Card -->
+<div class="md:col-span-8 group bg-surface-container-low rounded-xl overflow-hidden butter-shadow bakers-tray-item relative">
+<div class="flex flex-col md:flex-row h-full">
+<div class="md:w-1/2 overflow-hidden h-64 md:h-full relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A high-end, editorial close-up of a layered artisanal chocolate cake with smooth chocolate ganache and edible gold leaf accents. The lighting is warm and soft, capturing the rich texture of the cake. The color palette features deep cocoa browns and warm creams, reflecting a luxurious boutique bakery aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADODVrG-z1SIv7F41HPXmZexWLsHJdokm7Ial3sWymJ6COUEkCPv2LFCfSCzGynadRWOwVoLCcKe_xu5AQnDIuGMYXQyzQirSjXlCunUuUIs9RoGlfj-iWOeN4X0apenxaxi9GFKVrk5uPMRHSCFbHx7wnVIL29PGk5cc7DNbjWk5Ymfxfc7AHhgO7hdJdKzGK7lXdQv6Ild0NNpLapSs9fmPmoKsmXwmE8VgSmW3ATE7g5ggEK0L7BbhYNDIG0aA2MRoHBG_rakE"/>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary-container/90 text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-label-sm backdrop-blur-sm">Bestseller</span>
+</div>
+</div>
+<div class="md:w-1/2 p-lg flex flex-col justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary mb-xs">Double Truffle Signature Cake</h3>
+<p class="text-on-surface-variant font-body-md mb-md">Our most requested masterpiece. Layers of Madagascar vanilla and rich 70% dark chocolate ganache.</p>
+<div class="flex items-center gap-xs mb-md">
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-label-sm font-label-sm text-on-surface-variant">Vegetarian</span>
+<span class="bg-surface-container-highest px-3 py-1 rounded-full text-label-sm font-label-sm text-on-surface-variant">Nut Free</span>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-primary">$48.00</span>
+<div class="flex gap-sm">
+<button class="p-3 rounded-full border border-outline hover:bg-surface-container-high transition-colors text-primary active-scale">
+<span class="material-symbols-outlined">delete</span>
+</button>
+<button class="flex items-center gap-2 bg-secondary text-on-secondary px-6 py-3 rounded-xl font-label-md text-label-md hover:bg-secondary/90 transition-all active-scale butter-shadow">
+<span class="material-symbols-outlined">shopping_cart</span>
+                                    Move to Cart
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2: Square Card -->
+<div class="md:col-span-4 bg-surface-container-low rounded-xl overflow-hidden butter-shadow bakers-tray-item">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A beautifully arranged batch of sea salt chocolate chip cookies on a vintage ceramic plate. The cookies are slightly warm with melting chocolate pockets and visible crystals of sea salt. The background is a soft-focus marble countertop in a sunlit artisanal bakery kitchen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8npIK5FjLBIvLzJI2A2UG88RqHUfuWU2qdbW-9ksZ2pEBhiVnB5fXU9yZ4B0YgD_9UFcmZO8S990d4kMSogfalSmKaN2O7X5l1WJ19TJeVVwNhOhVwNvCtpGCGENBHYK1x5uDngHaXQQwzr_wHYy-FU6XVZ1zbgn6xzu5HHzirSxNR4Qqqy-AsMV8OLra_X7cN2zPEBBBEmEtwfLgfbvKhcsoL7S2XLtnhmFem8SJ1yOHECT6S7JL14gzRoHmmIL1QeF_5fAzz3E"/>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md text-primary mb-xs">Sea Salt Cookies</h3>
+<p class="text-on-surface-variant font-body-md mb-md">Box of 12</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-primary">$24.00</span>
+<div class="flex gap-xs">
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+<button class="bg-secondary text-on-secondary p-3 rounded-xl active-scale">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 3: Square Card -->
+<div class="md:col-span-4 bg-surface-container-low rounded-xl overflow-hidden butter-shadow bakers-tray-item">
+<div class="h-48 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Flaky golden croissants displayed in a warm wooden display case. The pastry is perfectly layered with a glossy finish. Soft overhead lighting highlights the delicate texture. The overall mood is artisanal and welcoming, reminiscent of a French boutique bakery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCepgIgMACc7fmyj8qHK6VWkGXmeaWulF7AITlvsgj4BaDpqA2AOxKlYTDdPiF4xLgUBSH0AT7m0xJ4jhvS7Z5rhYgsIozYIDE08BnlMVHv7dN-foiwMCXRwj9rAsTSaQa0ZXjZZJdDfEEoxPz1kxFW1esGr9CEJ7Z3eLgWznviKm7E0gEpUV1Tvbm9rBFzVleOHxv-xLR3znSo7Q_8idlozK4cqqhPm0BozU9CgBngvhEuAu-9wSMHeZjv27AlNlDz_hucZQ2nslI"/>
+</div>
+<div class="p-md">
+<h3 class="font-headline-md text-headline-md text-primary mb-xs">Buttery Croissants</h3>
+<p class="text-on-surface-variant font-body-md mb-md">Pack of 4</p>
+<div class="flex items-center justify-between">
+<span class="font-headline-md text-primary">$18.00</span>
+<div class="flex gap-xs">
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+<button class="bg-secondary text-on-secondary p-3 rounded-xl active-scale">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 4: Wide Card -->
+<div class="md:col-span-8 bg-surface-container-low rounded-xl overflow-hidden butter-shadow bakers-tray-item">
+<div class="flex flex-col sm:flex-row h-full">
+<div class="sm:w-1/3 h-48 sm:h-auto">
+<img class="w-full h-full object-cover" data-alt="An assortment of colorful artisanal macarons in a minimalist pink gift box. Shades of pastel rose, lavender, and pistachio are arranged perfectly. The setting is a clean, bright space with soft 'butter shadows' and a warm, inviting tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzivf_JEG532R9CO5k3igiG1EWeuZ1Z90EWDs4Y8O11IRGv3GGKqYRLlWXEb9EKf-L8Ko7uDYeKEn2C_I_kik6Hst8vxmyE4KvPXpDvZOVZQmsThyIPcu7SCXneRKpuFA4Y2CmxlA-Z02Qf4VjDp3rc_5jiTgOnkXQYHt4SBfPZxungACTwCH5SfEUrDHYlgp9-OA5aGNxbscbVJIINsyEYS9Qz0PfvEek1IH_Z0xveolT7TISS67aS2Su88Z7Ox-_vZtkglJ0J5E"/>
+</div>
+<div class="sm:w-2/3 p-md flex flex-col justify-center">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<h3 class="font-headline-md text-headline-md text-primary">Macaron Gift Box</h3>
+<p class="text-on-surface-variant font-body-md">Chef's Selection of 24</p>
+</div>
+<span class="font-headline-md text-primary">$55.00</span>
+</div>
+<div class="flex gap-sm mt-md">
+<button class="flex-1 border border-outline text-primary py-3 rounded-xl font-label-md text-label-md active-scale hover:bg-surface-container-high transition-colors">Remove Item</button>
+<button class="flex-1 bg-secondary text-on-secondary py-3 rounded-xl font-label-md text-label-md active-scale hover:bg-secondary/90 transition-all">Move to Cart</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Empty State Message (Hidden by default) -->
+<div class="hidden text-center py-xl" id="empty-wishlist">
+<span class="material-symbols-outlined text-[64px] text-primary-container/20 mb-md">cookie</span>
+<h2 class="font-headline-md text-headline-md text-primary mb-sm">Your tray is currently empty</h2>
+<p class="text-on-surface-variant font-body-lg mb-lg">Browse our pastries and save your favorites here!</p>
+<a class="inline-block bg-primary text-on-primary px-xl py-lg rounded-xl font-label-md text-label-md transition-all active-scale" href="#">Start Shopping</a>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-highest dark:bg-tertiary-container w-full py-xl mt-xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="space-y-md">
+<div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">
+                    cookieesandcakes
+                </div>
+<p class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container">
+                    Handcrafting small moments of joy, one bite at a time.
+                </p>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col space-y-sm">
+<h4 class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim uppercase tracking-widest">Shop</h4>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline" href="#">All Products</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline" href="#">Monthly Box</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline" href="#">Gift Cards</a>
+</div>
+<div class="flex flex-col space-y-sm">
+<h4 class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim uppercase tracking-widest">Help</h4>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline" href="#">Shipping Info</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline" href="#">Contact Us</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline" href="#">Wholesale</a>
+</div>
+</div>
+<div class="space-y-md">
+<h4 class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim uppercase tracking-widest">The Bakery Letter</h4>
+<div class="flex gap-2">
+<input class="flex-1 bg-surface-container-low border-outline text-primary font-body-md rounded-xl px-4 py-2 focus:ring-0 focus:border-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-xl font-label-sm text-label-sm active-scale">Join</button>
+</div>
+<p class="text-xs text-on-surface-variant opacity-70">
+                    © 2024 cookieesandcakes. Handcrafted with love.
+                </p>
+</div>
+</div>
+</footer>
+<script>
+        // Simple interactivity for demonstration
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if(this.innerText.includes('delete') || this.innerText.includes('Remove')) {
+                    const card = this.closest('.bakers-tray-item');
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        card.remove();
+                        checkEmpty();
+                    }, 400);
+                }
+            });
+        });
+
+        function checkEmpty() {
+            const items = document.querySelectorAll('.bakers-tray-item');
+            if (items.length === 0) {
+                document.getElementById('empty-wishlist').classList.remove('hidden');
+                document.querySelector('.grid').classList.add('hidden');
+            }
+        }
+    </script>
+</body></html>

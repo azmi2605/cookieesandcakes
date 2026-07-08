@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Account | Cookies &amp; Cakes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#281811",
+                    "on-secondary-fixed-variant": "#743237",
+                    "on-background": "#281811",
+                    "secondary": "#91494d",
+                    "secondary-fixed": "#ffdada",
+                    "secondary-container": "#fea3a6",
+                    "on-secondary-fixed": "#3c070e",
+                    "on-surface-variant": "#504440",
+                    "surface": "#fff8f6",
+                    "surface-tint": "#79564a",
+                    "error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#c9c6c1",
+                    "tertiary-fixed": "#e6e2dc",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#d5aa9b",
+                    "on-primary-fixed-variant": "#5e3f34",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#fff8f6",
+                    "outline": "#827470",
+                    "on-primary-fixed": "#2d150c",
+                    "inverse-surface": "#3f2c25",
+                    "on-tertiary-fixed-variant": "#484743",
+                    "on-secondary-container": "#79363b",
+                    "tertiary": "#302f2b",
+                    "surface-container": "#ffe9e2",
+                    "on-tertiary-fixed": "#1c1c18",
+                    "background": "#fff8f6",
+                    "on-tertiary": "#ffffff",
+                    "surface-variant": "#fbdcd1",
+                    "surface-dim": "#f3d3c9",
+                    "primary": "#44281e",
+                    "on-error-container": "#93000a",
+                    "surface-container-high": "#ffe2d8",
+                    "primary-container": "#5d3e33",
+                    "on-tertiary-container": "#b6b3ad",
+                    "inverse-on-surface": "#ffede7",
+                    "surface-container-low": "#fff1ec",
+                    "outline-variant": "#d4c3bd",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#e9bdae",
+                    "surface-container-highest": "#fbdcd1",
+                    "tertiary-container": "#464541",
+                    "primary-fixed-dim": "#e9bdae",
+                    "secondary-fixed-dim": "#ffb3b5",
+                    "primary-fixed": "#ffdbcf"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "margin-desktop": "64px",
+                    "xl": "80px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px",
+                    "lg": "48px",
+                    "base": "8px",
+                    "xs": "4px",
+                    "md": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Libre Caslon Text"],
+                    "headline-lg": ["Libre Caslon Text"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "headline-xl": ["Libre Caslon Text"],
+                    "headline-lg-mobile": ["Libre Caslon Text"],
+                    "label-sm": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-xl": ["48px", {"lineHeight": "56px", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .butter-shadow {
+            box-shadow: 0 20px 40px rgba(93, 62, 51, 0.08);
+        }
+        .bakers-tray-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .bakers-tray-scroll::-webkit-scrollbar-thumb {
+            background: #91494d;
+            border-radius: 10px;
+        }
+        .micro-interact:active {
+            transform: scale(0.98);
+            transition: transform 0.15s ease;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar -->
+<header class="bg-background sticky top-0 z-50 shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
+<nav class="flex justify-between items-center px-margin-desktop py-base max-w-[1200px] mx-auto w-full">
+<div class="font-headline-md text-headline-md text-primary">Cookies &amp; Cakes</div>
+<div class="hidden md:flex items-center gap-md">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Shop</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Cakes</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Cookies</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Pastries</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200" href="#">Our Story</a>
+</div>
+<div class="flex items-center gap-md text-primary">
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">favorite</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">shopping_bag</span>
+<span class="material-symbols-outlined cursor-pointer text-primary border-b-2 border-secondary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+</nav>
+</header>
+<main class="max-w-[1200px] mx-auto px-margin-desktop py-xl">
+<!-- Welcome Header -->
+<header class="mb-xl">
+<h1 class="font-headline-xl text-headline-xl text-primary mb-xs">Welcome Back, Eleanor</h1>
+<p class="text-on-surface-variant font-body-lg">It's a lovely day for something sweet. Here's what's happening with your account.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- 1. Order History (Bento-style primary card) -->
+<section class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-lg butter-shadow">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-headline-md text-headline-md text-primary">Order History</h2>
+<button class="text-secondary font-label-md hover:underline micro-interact">View All</button>
+</div>
+<div class="space-y-md">
+<!-- Order Item 1 -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-md border border-outline-variant rounded-lg bg-background hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="flex gap-md items-center">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center" data-alt="A macro photograph of a box of assorted artisanal cookies including chocolate chip, pistachio macaron, and lemon shortbread, styled in a warm bakery lighting with soft shadows on a rustic wooden surface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCYjEUGIMtGsAuRhIIgNiQnos5bkWFcM02WBEHBAQu0zgZfQMzNDKU0Ep8brss2h4ygJky0Ls1rtQqwLDnhKRitwOqvIzt6yqLJEuAJO6v5Qgx1ObgBP1KLtcrsY6t06IgGOF4k5OjB7_vyEWqkSm_NQ5ITKJFMl50_D9Vitv5qLfJtzppfrvNtLhmbQgkgM5oD2UsU6uSOjLE-jwea6p6kSUkCik_nvbfLGBzbGf45YAPUMQhSX9djo3YYBiBXZarp7ZhKYERVu9g')">
+</div>
+<div>
+<p class="font-label-md text-primary">Order #CK-8829</p>
+<p class="text-label-sm text-on-surface-variant">Placed on Oct 24, 2023</p>
+<div class="flex items-center gap-xs mt-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-label-sm text-secondary font-semibold">Out for Delivery</span>
+</div>
+</div>
+</div>
+<div class="mt-md md:mt-0 text-right">
+<p class="font-headline-md text-primary">$42.50</p>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+<!-- Order Item 2 -->
+<div class="flex flex-col md:flex-row md:items-center justify-between p-md border border-outline-variant rounded-lg bg-background hover:bg-surface-container-low transition-colors group cursor-pointer">
+<div class="flex gap-md items-center">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center" data-alt="A close-up shot of a beautifully decorated vanilla bean cake with delicate pastel floral frosting, set against a soft cream background in a high-end boutique bakery style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDMu_r33u6wOLI2-C4SKMFB11lZ4gMgIncDC9hahT47j_FgIR2cDVOSkqrB6npL0K5oUrsqreldRwP_nEUR17dOX_SS55PtIj9Q7LVNjfnqf2wkDyrnbraeFIAMx8AAaopQynh3f4PGNX_8ESoLzKADLBohEy-9aQer9ilBT7bCqpdmr2xa4llLGv5TCGnyq1vn99HFycc6C2PjBZ7pSMCJGeJ-93Zi8vCQBQfvimJINWJn-oM6AihaHnhDkqqPV70uv0X-ctcmrTQ')">
+</div>
+<div>
+<p class="font-label-md text-primary">Order #CK-8712</p>
+<p class="text-label-sm text-on-surface-variant">Placed on Sept 12, 2023</p>
+<div class="flex items-center gap-xs mt-xs text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="text-label-sm">Delivered</span>
+</div>
+</div>
+</div>
+<div class="mt-md md:mt-0 text-right">
+<p class="font-headline-md text-primary">$85.00</p>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. Profile Settings (Right side column) -->
+<section class="lg:col-span-4 bg-surface-container rounded-xl p-lg space-y-md">
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center font-headline-md">
+                        E
+                    </div>
+<div>
+<h2 class="font-label-md text-primary">Eleanor Rigby</h2>
+<p class="text-label-sm text-on-surface-variant">eleanor@bakery.com</p>
+</div>
+</div>
+<div class="space-y-sm">
+<h3 class="text-label-sm uppercase tracking-widest text-on-surface-variant opacity-70">Account Settings</h3>
+<a class="flex items-center justify-between p-sm rounded-lg hover:bg-surface-container-high transition-colors group" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">person</span>
+<span class="font-label-md">Personal Information</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary">edit</span>
+</a>
+<a class="flex items-center justify-between p-sm rounded-lg hover:bg-surface-container-high transition-colors group" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span class="font-label-md">Shipping Addresses</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary">arrow_forward</span>
+</a>
+<a class="flex items-center justify-between p-sm rounded-lg hover:bg-surface-container-high transition-colors group" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">lock</span>
+<span class="font-label-md">Password &amp; Security</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary">arrow_forward</span>
+</a>
+<a class="flex items-center justify-between p-sm rounded-lg hover:bg-surface-container-high transition-colors group text-error" href="#">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md">Sign Out</span>
+</div>
+</a>
+</div>
+</section>
+<!-- 3. My Wishlist (The Baker's Tray Specialty Component) -->
+<section class="lg:col-span-12 mt-lg overflow-hidden">
+<div class="flex justify-between items-end mb-md">
+<div>
+<h2 class="font-headline-md text-headline-md text-primary">My Wishlist</h2>
+<p class="text-on-surface-variant">Tempting treats you've saved for later.</p>
+</div>
+<button class="bg-secondary text-white px-md py-sm rounded-lg font-label-md micro-interact">Shop All Saved</button>
+</div>
+<div class="flex gap-gutter overflow-x-auto pb-md bakers-tray-scroll snap-x">
+<!-- Wishlist Item 1 -->
+<div class="min-w-[280px] bg-surface-container-lowest rounded-xl p-sm butter-shadow snap-start group cursor-pointer">
+<div class="relative aspect-square rounded-lg overflow-hidden mb-sm">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A vertical shot of a tall, multi-layered dark chocolate fudge cake with velvet-like frosting and gold leaf accents, presented in a minimalist, artisanal setting with soft, warm morning light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzk0GgLColeEioS0btM3lOpF5D_772BSL5E1j3ZzgmHLTeZYrbBmPIMQ5fe5-f9DlD12zGF6fob3957KJAB02Hj7osHBialTc6upkNPw5ITrcYP1nYu43F45v2edg1WiRph8ZpG-_1qZCvlDcrgh2ADP1Hq1cUI4V02zjWWTp7hwdM7kA537cY9OT7XObf-wpZzvI6aBr8R9zgQTQlayQq1fS6vHEoEhZn71WdIl9Qui2KPsm8Pf4K-aCk84GzetvQSUMlQAiJTJk"/>
+<button class="absolute top-sm right-sm w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-secondary micro-interact">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="px-xs">
+<span class="text-label-sm font-semibold text-secondary-container bg-on-secondary-container px-2 py-0.5 rounded-full">Bestseller</span>
+<h4 class="font-headline-md text-primary mt-xs">Velvet Chocolate Cake</h4>
+<p class="text-on-surface-variant font-label-md mt-xs">$58.00</p>
+<button class="w-full mt-md py-sm border border-primary text-primary rounded-lg font-label-md hover:bg-primary hover:text-white transition-colors micro-interact">Add to Bag</button>
+</div>
+</div>
+<!-- Wishlist Item 2 -->
+<div class="min-w-[280px] bg-surface-container-lowest rounded-xl p-sm butter-shadow snap-start group cursor-pointer">
+<div class="relative aspect-square rounded-lg overflow-hidden mb-sm">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="Close-up of three handcrafted macarons—lavender, honey-lemon, and rose petal—arranged artfully on a marble slab, soft-focus background of a cozy French-style bakery with creamy tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnn3fG9cbfOCj3BkD6za8mABIIumpZZbY61b_rDeiF3AJ4qf4k3_qz_Xp2_AUW01BFKpgKBdK6AULjCO6isnzcVvgddOYyTo2ZlqRmBw1-0cXnVAWq2nlZ9ocU9BARPSrKwR_7O70kRVoXYDR2dut_TFlKvdu8dGmiqohcyEOXjHj2U0auSk6PUjarM1tb3qK13UZy4bkMPvZs6cPlJQrGBDvz51h0L1M-WGVYTIOlDkYGSySr-BMTeS1Ix6pamsODaJMYdTobfQg"/>
+<button class="absolute top-sm right-sm w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-secondary micro-interact">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="px-xs">
+<span class="text-label-sm font-semibold text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded-full">Gluten-Free</span>
+<h4 class="font-headline-md text-primary mt-xs">Spring Macaron Trio</h4>
+<p class="text-on-surface-variant font-label-md mt-xs">$12.50</p>
+<button class="w-full mt-md py-sm border border-primary text-primary rounded-lg font-label-md hover:bg-primary hover:text-white transition-colors micro-interact">Add to Bag</button>
+</div>
+</div>
+<!-- Wishlist Item 3 -->
+<div class="min-w-[280px] bg-surface-container-lowest rounded-xl p-sm butter-shadow snap-start group cursor-pointer">
+<div class="relative aspect-square rounded-lg overflow-hidden mb-sm">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A stack of rustic brown-butter sea salt cookies on a textured linen napkin. The lighting is low-key and moody, highlighting the coarse sea salt crystals and the rich, golden-brown edges of the cookies." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8wt_cVxKjNkjAvBmMIRRS5N0mrbBqB7JovJA2Fk1KnK977EzoZDRkceBqiwuv34dwg2fN4h2pI3eSxZQyNMCulWocQeHU5y_-kpyccM7r9nmcTf3KlyOqVGEiktIPN760bMkgk1SCrbC8zB1KnBE3eodhg7d8Fcl1uA0xoOCCgxOzXqcf1Fgas_gRq47EGrCljjCO0Y9PT-vgDf7lk1HhaVSZgSQi-RxGSRoGHOQkms0tYeq9SxB2KclRzCCE2db8im6JNjFOiOo"/>
+<button class="absolute top-sm right-sm w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-secondary micro-interact">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</button>
+</div>
+<div class="px-xs">
+<h4 class="font-headline-md text-primary mt-xs">Salted Brown Butter Cookies</h4>
+<p class="text-on-surface-variant font-label-md mt-xs">$24.00 / Dozen</p>
+<button class="w-full mt-md py-sm border border-primary text-primary rounded-lg font-label-md hover:bg-primary hover:text-white transition-colors micro-interact">Add to Bag</button>
+</div>
+</div>
+<!-- Wishlist Item 4 (Empty-ish suggestion) -->
+<div class="min-w-[280px] border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center p-lg text-center snap-start">
+<span class="material-symbols-outlined text-outline text-4xl mb-md">add_circle</span>
+<p class="text-label-md text-on-surface-variant mb-md">Discover more treats to fill your wishlist.</p>
+<a class="text-secondary font-label-md hover:underline" href="#">Browse the Shop</a>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container dark:bg-surface-container-high mt-xl">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-xl max-w-[1200px] mx-auto w-full">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-lg text-headline-lg text-primary mb-md">Cookies &amp; Cakes</div>
+<p class="text-on-surface-variant text-body-md pr-md">Bringing the warmth of a boutique bakery right to your doorstep, one artisanal treat at a time.</p>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-md text-primary mb-md uppercase tracking-wider">Shop</h4>
+<ul class="space-y-sm text-on-surface-variant font-body-md">
+<li class="hover:text-secondary cursor-pointer transition-colors">Shop All</li>
+<li class="hover:text-secondary cursor-pointer transition-colors">Cakes</li>
+<li class="hover:text-secondary cursor-pointer transition-colors">Cookies</li>
+<li class="hover:text-secondary cursor-pointer transition-colors">Gift Boxes</li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-md text-primary mb-md uppercase tracking-wider">Company</h4>
+<ul class="space-y-sm text-on-surface-variant font-body-md">
+<li class="hover:text-secondary cursor-pointer transition-colors">Our Story</li>
+<li class="hover:text-secondary cursor-pointer transition-colors">Shipping Policy</li>
+<li class="hover:text-secondary cursor-pointer transition-colors">Contact Us</li>
+</ul>
+</div>
+<div class="col-span-1">
+<h4 class="font-label-md text-primary mb-md uppercase tracking-wider">Connect</h4>
+<p class="text-on-surface-variant text-body-md mb-md">Join our newsletter for fresh batches and sweet news.</p>
+<div class="flex gap-xs">
+<input class="bg-surface-container-lowest border border-outline-variant px-md py-sm rounded-lg text-body-md w-full focus:outline-none focus:border-primary" placeholder="Email" type="email"/>
+<button class="bg-primary text-white p-sm rounded-lg micro-interact">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="border-t border-outline-variant/30 max-w-[1200px] mx-auto px-margin-desktop py-md flex flex-col md:flex-row justify-between items-center text-on-surface-variant text-label-sm">
+<span>© 2024 Cookies &amp; Cakes. Crafted with Artisanal Warmth.</span>
+<div class="flex gap-md mt-base md:mt-0">
+<a class="hover:text-secondary" href="#">Privacy</a>
+<a class="hover:text-secondary" href="#">Terms</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interactions for active state on wishlist items
+        document.querySelectorAll('.material-symbols-outlined').forEach(icon => {
+            icon.addEventListener('click', function() {
+                if (this.innerText === 'favorite') {
+                    const isFilled = this.style.fontVariationSettings.includes("'FILL' 1");
+                    this.style.fontVariationSettings = isFilled ? "'FILL' 0" : "'FILL' 1";
+                }
+            });
+        });
+    </script>
+</body></html>

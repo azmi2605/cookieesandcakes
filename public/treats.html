@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>cookieesandcakes | Product Gallery</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#464541",
+                        "surface-bright": "#fff8f6",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#e9bdae",
+                        "background": "#fff8f6",
+                        "on-error-container": "#93000a",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#5d3e33",
+                        "surface-tint": "#79564a",
+                        "secondary-fixed": "#ffdada",
+                        "surface-container-high": "#ffe2d8",
+                        "on-surface": "#281811",
+                        "surface-container-highest": "#fbdcd1",
+                        "outline-variant": "#d4c3bd",
+                        "secondary": "#91494d",
+                        "primary": "#44281e",
+                        "on-primary-fixed-variant": "#5e3f34",
+                        "on-primary-container": "#d5aa9b",
+                        "on-background": "#281811",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#2d150c",
+                        "on-secondary-fixed": "#3c070e",
+                        "secondary-container": "#fea3a6",
+                        "on-tertiary-container": "#b6b3ad",
+                        "on-secondary-container": "#79363b",
+                        "surface-container": "#ffe9e2",
+                        "inverse-on-surface": "#ffede7",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#ffb3b5",
+                        "on-tertiary-fixed-variant": "#484743",
+                        "outline": "#827470",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#ffdbcf",
+                        "inverse-primary": "#e9bdae",
+                        "surface": "#fff8f6",
+                        "on-surface-variant": "#504440",
+                        "tertiary": "#302f2b",
+                        "inverse-surface": "#3f2c25",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#e6e2dc",
+                        "on-tertiary-fixed": "#1c1c18",
+                        "surface-variant": "#fbdcd1",
+                        "tertiary-fixed-dim": "#c9c6c1",
+                        "on-secondary-fixed-variant": "#743237",
+                        "surface-container-low": "#fff1ec",
+                        "surface-dim": "#f3d3c9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-desktop": "64px",
+                        "sm": "12px",
+                        "xl": "80px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Be Vietnam Pro"],
+                        "label-md": ["Be Vietnam Pro"],
+                        "headline-xl": ["Libre Caslon Text"],
+                        "headline-lg": ["Libre Caslon Text"],
+                        "headline-lg-mobile": ["Libre Caslon Text"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "headline-md": ["Libre Caslon Text"],
+                        "label-sm": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-xl": ["48px", { "lineHeight": "56px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .butter-shadow {
+            box-shadow: 0 10px 40px -10px rgba(93, 62, 51, 0.08);
+        }
+
+        .active-filter {
+            background-color: #5d3e33;
+            color: #ffffff;
+        }
+
+        .nav-item-active {
+            color: #91494d;
+            border-bottom: 2px solid #91494d;
+            padding-bottom: 0.25rem;
+        }
+
+        .baker-tray::-webkit-scrollbar {
+            display: none;
+        }
+
+        .baker-tray {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+
+    <script src="/js/app.js" defer></script>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md selection:bg-secondary-container selection:text-on-secondary-container">
+    <!-- TopNavBar -->
+    <header class="bg-surface/80 backdrop-blur-md fixed top-0 w-full z-50 shadow-[0_4px_20px_rgba(93,62,51,0.06)]">
+        <div
+            class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+            <a class="font-headline-md text-headline-md text-primary tracking-tight" href="#">cookieesandcakes</a>
+            <nav class="hidden md:flex gap-lg">
+                <a class="font-label-md text-label-md text-secondary border-b-2 border-secondary pb-1 transition-colors duration-300"
+                    href="/treats.html">Shop</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/treats.html?category=cakes">Cakes</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/treats.html?category=cookies">Cookies</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="/treats.html?category=pastries">Pastries</a>
+                <a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors duration-300"
+                    href="#">Our Story</a>
+            </nav>
+            <div class="flex items-center gap-md">
+                <button class="hover:opacity-80 transition-opacity active:scale-95 duration-200">
+                    <a href="/wishlist.html" class="flex items-center justify-center"><span
+                            class="material-symbols-outlined text-primary">favorite</span></a>
+                </button>
+                <button class="hover:opacity-80 transition-opacity active:scale-95 duration-200 relative">
+                    <a href="/cart.html" class="flex items-center justify-center relative"><span
+                            class="material-symbols-outlined text-primary">shopping_bag</span><span
+                            id="header-cart-badge"
+                            class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span></a>
+                    <span
+                        class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+                </button>
+                <button class="hover:opacity-80 transition-opacity active:scale-95 duration-200">
+                    <a href="/account.html" class="flex items-center justify-center"><span
+                            class="material-symbols-outlined text-primary">account_circle</span></a>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="pt-32 pb-xl px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+        <div class="flex flex-col md:flex-row gap-xl">
+            <!-- Sidebar Navigation -->
+            <aside class="w-full md:w-64 flex-shrink-0">
+                <div class="sticky top-32">
+                    <h2 class="font-headline-md text-headline-md text-primary mb-md">Collection</h2>
+                    <ul class="space-y-sm">
+                        <li>
+                            <button
+                                class="w-full text-left px-md py-sm rounded-xl font-label-md text-label-md transition-all active-filter">
+                                All Treats
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="w-full text-left px-md py-sm rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-all">
+                                Cookies
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="w-full text-left px-md py-sm rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-all">
+                                Cakes
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="w-full text-left px-md py-sm rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-all">
+                                Pastries
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="w-full text-left px-md py-sm rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-all">
+                                Seasonal
+                            </button>
+                        </li>
+                    </ul>
+                    <div class="mt-xl p-md bg-surface-container-low rounded-xl">
+                        <p class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-sm">Current
+                            Promo</p>
+                        <p class="font-body-md text-body-md text-on-surface-variant mb-md">Free delivery on your first
+                            order of over $40.</p>
+                        <button class="font-label-md text-label-md text-secondary hover:underline transition-all">Claim
+                            Offer</button>
+                    </div>
+                </div>
+            </aside>
+            <!-- Product Grid -->
+            <section class="flex-grow">
+                <div class="flex justify-between items-end mb-lg">
+                    <div>
+                        <h1 class="font-headline-xl text-headline-xl text-primary mb-xs">The Gallery</h1>
+                        <p class="font-body-md text-body-md text-on-surface-variant">Handcrafted with organic
+                            ingredients and a dash of magic.</p>
+                    </div>
+                    <div class="hidden md:flex items-center gap-sm">
+                        <span class="font-label-md text-label-md text-on-surface-variant">Sort by:</span>
+                        <select
+                            class="bg-transparent border-none font-label-md text-label-md text-primary focus:ring-0 cursor-pointer">
+                            <option>Newest First</option>
+                            <option>Price: Low to High</option>
+                            <option>Popularity</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-gutter">
+                    <!-- Product Card 1 -->
+                    <div
+                        class="group relative bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                data-alt="A macro shot of a warm, gooey chocolate chip cookie with melting dark chocolate chunks and a light sprinkle of sea salt. The lighting is warm and soft, accentuating the buttery golden edges. The background is a clean, minimal cream-colored surface, keeping the focus entirely on the rich textures of the cookie."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuMuAVwanZHZJ1rX529XIvBWJ0wxW1XSIQZydxfWEc4yy8blPy0i8L6O_PetyUpJbXOzj5wOV6axDaSwychQFxlMnaRXtXX-wnCKXh9DiFTt5q8pcHvUF9YOvWiKGX6OET37meQMfY_nIbFl2D2TLDkmMjkHMIp8buIUOoT6_JQb1kwCy1qKcpGqy-tyHDTuSLG2-Z3S8slp9vnq05EEP5mmOpGS6bZ6yOwd9BFrBbBQ7LsgRncTS_LoB_JXCDB8Poy4PvmeWDmTk" />
+                            <button
+                                class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-secondary butter-shadow active:scale-95 transition-all">
+                                <span class="material-symbols-outlined">favorite</span>
+                            </button>
+                            <div
+                                class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span
+                                    class="bg-secondary text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Top
+                                    Rated</span>
+                            </div>
+                        </div>
+                        <div class="p-md">
+                            <div class="flex justify-between items-start mb-base">
+                                <h3 class="font-headline-md text-headline-md text-primary">Classic Sea Salt Cookie</h3>
+                                <span
+                                    class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">$4.50</span>
+                            </div>
+                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Our
+                                signature brown butter dough packed with 70% dark Belgian chocolate.</p>
+                            <button
+                                class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-on-secondary-container transition-colors active:scale-[0.98]">
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                                Add to Box
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product Card 2 -->
+                    <div
+                        class="group relative bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                data-alt="A decadent slice of layered velvet cake with thick cream cheese frosting, decorated with edible dried rose petals. The lighting is soft and airy, casting delicate butter shadows on the ceramic plate beneath. The style is boutique and artisanal, using a palette of soft pinks, whites, and rich cocoa browns."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCf8DzJNlglJEmwA5HVCmfJLVkxnWrb0FkxBhFdHxxhlvlMXCI18BeWMv6b2hky6LT1kGa8Tx7_7jv4OaN3TiRZbQojzyhdAt8P4m11CW_V3wHpHlC8uReqsEjyCIqFToAooCgg368NGq445RQLC0iKaNDQx_8FNwUZ82C8KSqnieSvKcHZlRy7ddCrQoVO76LZYlgihxmbp0eD1Mybyp2-W2NePTkEWWKcahNzhq71He2skZWj9zT2AOTIs7eb4KJdy8BrwulnY7s" />
+                            <button
+                                class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-secondary butter-shadow active:scale-95 transition-all">
+                                <span class="material-symbols-outlined">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-md">
+                            <div class="flex justify-between items-start mb-base">
+                                <h3 class="font-headline-md text-headline-md text-primary">Rose Velvet Cake</h3>
+                                <span
+                                    class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">$38.00</span>
+                            </div>
+                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Delicate
+                                rose-infused sponge with velvety cream cheese frosting and botanical hints.</p>
+                            <button
+                                class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-on-secondary-container transition-colors active:scale-[0.98]">
+                                <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+                                Pre-order
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product Card 3 -->
+                    <div
+                        class="group relative bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                data-alt="A golden, flaky almond croissant dusted with powdered sugar, sitting on a wooden baker's tray. Flakes of pastry are scattered around the base, illuminated by warm morning sunlight. The image captures a rustic yet refined bakery aesthetic with high-quality textures and soft, creamy tones."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBvAeh04mY8NS5V2_BZ5E1XL1Pp9h5yRLT79JX7ikyJVZGufdWH71xsP-eqO1EBakT7mkxZ4A10OLBlNR9mYDi9IxOUCuDyi1WwbApCJDtej9KiUxYd7ga_Jc9AgNKgSqlxsxgz65U0Q5UTIuzUCqRP7mfPOxpx5g1wh2YaB-BmJ-7-OPH6O-m_twNH6rdagRk7ov2wwkzhhHPBDWE6m_CnSCSqNGju92Sz_AwhlFuShJ4MQET-RDqegNoSpZD_meZUtw3OIde7Lo" />
+                            <button
+                                class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-secondary butter-shadow active:scale-95 transition-all">
+                                <span class="material-symbols-outlined">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-md">
+                            <div class="flex justify-between items-start mb-base">
+                                <h3 class="font-headline-md text-headline-md text-primary">Almond Croissant</h3>
+                                <span
+                                    class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">$5.75</span>
+                            </div>
+                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Twice-baked
+                                butter croissant filled with homemade almond frangipane.</p>
+                            <button
+                                class="w-full py-sm border border-primary text-primary rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-primary hover:text-white transition-all active:scale-[0.98]">
+                                <span class="material-symbols-outlined text-[20px]">shopping_basket</span>
+                                Add to Bag
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product Card 4 -->
+                    <div
+                        class="group relative bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                data-alt="Assorted colorful French macarons arranged in a minimalist aesthetic. Lavender, pistachio, and raspberry flavors are visible with their smooth shells and creamy fillings. The lighting is diffused and professional, creating an elegant and sophisticated food photography style consistent with a high-end boutique bakery."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT2CkSvHsSQiUcKffe9H5NOpYnXnzQvFsHuEzaUp-KfWwaN6SvpSnOy2VqZrkT3GKQB2Q0HbWxvGMNr3qLSZFAXLgPK6uxO8sbYjpDJCHPWatQnwdAmXxR4PFLS2dFCwcX_e-dHVcY8zRQcJDqhXpSfRVwMpJR_Q9Hx_zqhZgAwHqVqV7jkCJnQcso1JJig4ZaVZ2zFwEWgTWJwlZYmibqDJiFxByR77KhW1vY78fiomTEZ05ZSSqxchNgTHz915r3Rp9f_GkDfPw" />
+                            <button
+                                class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-secondary butter-shadow active:scale-95 transition-all">
+                                <span class="material-symbols-outlined">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-md">
+                            <div class="flex justify-between items-start mb-base">
+                                <h3 class="font-headline-md text-headline-md text-primary">Artisan Macarons</h3>
+                                <span
+                                    class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">$18.00</span>
+                            </div>
+                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Set of 6
+                                seasonal macarons including Lavender Honey and Pistachio Cream.</p>
+                            <button
+                                class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-on-secondary-container transition-colors active:scale-[0.98]">
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                                Add to Box
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product Card 5 -->
+                    <div
+                        class="group relative bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                data-alt="A tall, elegant lemon meringue tart with toasted peaks of meringue. The citrus yellow curd is vibrant against the buttery shortcrust pastry. Photographed in an editorial style with clean lines and soft, natural lighting that emphasizes the tactile peaks of the meringue."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7TknBoPzzRRpjg9zqAuNSqErwJecKb8PwLA_beQ4WhI6lAGFOqOyHzH5DMS_oqmLThJ3GYc5qOLOgIoJCXEefj865V2sYhJ6JH_sDHWaAnpEhxVvp9QA4MH983N4qMSJr2Odol2WL2mysrdqk1bYT4GRhEMH-C8vKizY52Bg9O7roUMvD3gKbu0PaJBOFWA46D_OpTqwO1Mp78GV73-8Jt-jXRV5fwnUvjkq5jPvp6ZJarCgK9y8PZbVQE3qTtz5OP5uhQrCFRWA" />
+                            <button
+                                class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-secondary butter-shadow active:scale-95 transition-all">
+                                <span class="material-symbols-outlined">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-md">
+                            <div class="flex justify-between items-start mb-base">
+                                <h3 class="font-headline-md text-headline-md text-primary">Lemon Cloud Tart</h3>
+                                <span
+                                    class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">$6.50</span>
+                            </div>
+                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">Zesty lemon
+                                curd topped with perfectly toasted Italian meringue peaks.</p>
+                            <button
+                                class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-on-secondary-container transition-colors active:scale-[0.98]">
+                                <span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+                                Add to Box
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Product Card 6 -->
+                    <div
+                        class="group relative bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1">
+                        <div class="aspect-square relative overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                data-alt="A rustic sourdough loaf with a beautifully scored crust, sitting on a linen cloth next to a small bowl of whipped butter. The scene is warm and inviting, evoking the feeling of a cozy morning in a boutique bakery. High-key lighting highlights the golden-brown crust and airy internal texture."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzJ0v6yfbVdLsvZKxxCQonY2DG9JMAw2gXkDqDrIw9ff7t3phxPcpbGyBKvCLO_sTRNihLdfhboQTYp_t72ed1ZbWlDskuwMVK2pR_Hg2cq__b0QyLvndNGyHRypxik27Bi1554anlqQ24BBrIXQjskGC83HTBr3YkWEFaha9QAHSEmP4THjvfOB2xlcef5NZNzp-hmh0G2NPkn8dS4DJd2K5LDmcDi8cdd4Qc2HDDwLrfcb32qFQC75vUUtxyt5xxH0FEGI-707U" />
+                            <button
+                                class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-secondary butter-shadow active:scale-95 transition-all">
+                                <span class="material-symbols-outlined">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-md">
+                            <div class="flex justify-between items-start mb-base">
+                                <h3 class="font-headline-md text-headline-md text-primary">Artisan Sourdough</h3>
+                                <span
+                                    class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">$8.00</span>
+                            </div>
+                            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">
+                                Long-fermented traditional sourdough with a dark, crunchy crust and soft crumb.</p>
+                            <button
+                                class="w-full py-sm border border-primary text-primary rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-primary hover:text-white transition-all active:scale-[0.98]">
+                                <span class="material-symbols-outlined text-[20px]">shopping_basket</span>
+                                Add to Bag
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <div class="mt-xl flex items-center justify-center gap-base">
+                    <button class="p-2 rounded-full hover:bg-surface-container transition-all"><span
+                            class="material-symbols-outlined">chevron_left</span></button>
+                    <button class="w-10 h-10 rounded-full active-filter font-label-md text-label-md">1</button>
+                    <button
+                        class="w-10 h-10 rounded-full hover:bg-surface-container font-label-md text-label-md transition-all">2</button>
+                    <button
+                        class="w-10 h-10 rounded-full hover:bg-surface-container font-label-md text-label-md transition-all">3</button>
+                    <button class="p-2 rounded-full hover:bg-surface-container transition-all"><span
+                            class="material-symbols-outlined">chevron_right</span></button>
+                </div>
+            </section>
+        </div>
+    </main>
+    <!-- Specialty Component - The Baker's Tray (Featured section) -->
+    <section class="bg-surface-container-low py-xl overflow-hidden">
+        <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+            <h2 class="font-headline-lg text-headline-lg text-primary mb-lg">Fresh From The Oven</h2>
+            <div class="baker-tray flex gap-md overflow-x-auto pb-md -mx-4 px-4 snap-x">
+                <!-- Tray Item 1 -->
+                <div class="flex-shrink-0 w-80 bg-surface-container-lowest p-sm rounded-xl butter-shadow snap-start">
+                    <img class="w-full h-48 object-cover rounded-lg mb-sm"
+                        data-alt="A cluster of freshly baked cinnamon rolls with generous cream cheese glaze dripping down the sides. The rolls are warm, soft, and slightly iridescent under soft, ambient kitchen lighting. The style is decadent and artisanal, emphasizing the homemade quality."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwa4wMHw6WZqv54eegy8nyqBADnEfhz3MCy-fVOwYgH-QgFmeFPB1gnFRwFm6nhzILEo68ZAIoeRdSkqZbasXtfCEiMgqLLtS_XZ6Nsi1cRBD-IQZlccD-LsY4c11e-zUuOvVZGZ3Fv1s3Fdl3hIO03xbuuxe6S6aOppkt6jlwrmgt-0-bC64WqYJ_HGVrE2Zm6TngRs_-JQJZB4CxHN297aLoYblwwaD99b5pfGxF-Zkjwvuyw9l8jFno4y5rBXvfzbgaVVWATvQ" />
+                    <h4 class="font-headline-md text-headline-md text-primary mb-xs">Cinnamon Swirls</h4>
+                    <p class="font-body-md text-body-md text-on-surface-variant mb-sm">Limited availability daily.</p>
+                    <span class="font-label-md text-label-md text-secondary">$5.25</span>
+                </div>
+                <!-- Tray Item 2 -->
+                <div class="flex-shrink-0 w-80 bg-surface-container-lowest p-sm rounded-xl butter-shadow snap-start">
+                    <img class="w-full h-48 object-cover rounded-lg mb-sm"
+                        data-alt="A detailed close-up of dark chocolate truffles with a dusting of cocoa powder, arranged on a marble surface. The lighting is low-key and dramatic, highlighting the rich textures and deep chocolate tones. A sophisticated and elegant aesthetic."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMqBDVYWOEeXffcStsDTI003nr1hZoTC6fO9fUHLWOBlg6V3AlArMw3fJAvIgMrK6CKO_8EZtgyy1_84c_sina_BoRjnYeTCilv6KZb3cotvAzqJlJXoEut6Skarsj51HRvqwS25zVAX5zFiu29bROKfWhZLE-9rl0o1heGJtnqZuwz2AyiNwR2t6ziY0VdptT_ywMB0eprLjJG2d9B6FzUHwQP0e--OSR_GOVg3-0alqo7tJC-e_FH1FvbYEhsXVaqNF3gEMZBVc" />
+                    <h4 class="font-headline-md text-headline-md text-primary mb-xs">Midnight Truffles</h4>
+                    <p class="font-body-md text-body-md text-on-surface-variant mb-sm">75% Tanzanian Dark Cocoa.</p>
+                    <span class="font-label-md text-label-md text-secondary">$12.00</span>
+                </div>
+                <!-- Tray Item 3 -->
+                <div class="flex-shrink-0 w-80 bg-surface-container-lowest p-sm rounded-xl butter-shadow snap-start">
+                    <img class="w-full h-48 object-cover rounded-lg mb-sm"
+                        data-alt="A delicate pistachio cake with light green sponge and crushed nuts on top, served with a small dollop of whipped cream. The palette is dominated by soft greens and creamy whites, creating a fresh and inviting bakery scene."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwd03U1w9LQ3wJlsRdXF3ZxZVXFLQ7TETVLKMIuOMNskncKKEhALORreXnIMEz8l4NuPQlZr9sgp1dIq0VfFXrpuz0IoCFFrv5YB1cwD3N3jkMMWhT3UUGIvJF029WwBlvAghSRVlZxPzNf8jwHaFOjs5wl6-NeEsxmk23VPOGJTpxIACfp-Gmi7RBEcSNLPa_RGOMmqctbeHlVdjHnnLTqzXiNegBFdiEeULmAEAMjAKveGfV3OrPz1buxGNOMuUQcFhoIyaExxI" />
+                    <h4 class="font-headline-md text-headline-md text-primary mb-xs">Pistachio Dream</h4>
+                    <p class="font-body-md text-body-md text-on-surface-variant mb-sm">Roasted Persian nut crumble.</p>
+                    <span class="font-label-md text-label-md text-secondary">$6.95</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-surface-container-highest dark:bg-tertiary-container w-full py-xl">
+        <div
+            class="grid grid-cols-1 md:grid-cols-3 gap-lg max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="space-y-md">
+                <h3 class="font-headline-md text-headline-md text-primary">cookieesandcakes</h3>
+                <p class="font-body-md text-body-md text-on-surface-variant max-w-xs">Dedicated to the art of the
+                    perfect bake. We use only organic, locally-sourced ingredients to create moments of joy.</p>
+                <div class="flex gap-md">
+                    <a class="text-on-surface-variant hover:text-secondary transition-all" href="#"><span
+                            class="material-symbols-outlined">public</span></a>
+                    <a class="text-on-surface-variant hover:text-secondary transition-all" href="#"><span
+                            class="material-symbols-outlined">mail</span></a>
+                    <a class="text-on-surface-variant hover:text-secondary transition-all" href="#"><span
+                            class="material-symbols-outlined">location_on</span></a>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 gap-md">
+                <div class="space-y-sm">
+                    <p class="font-label-md text-label-md text-primary font-bold">Quick Links</p>
+                    <ul class="space-y-xs">
+                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary hover:underline transition-all"
+                                href="#">Shop All</a></li>
+                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary hover:underline transition-all"
+                                href="#">Gift Cards</a></li>
+                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary hover:underline transition-all"
+                                href="#">Subscriptions</a></li>
+                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary hover:underline transition-all"
+                                href="#">Wholesale</a></li>
+                    </ul>
+                </div>
+                <div class="space-y-sm">
+                    <p class="font-label-md text-label-md text-primary font-bold">Support</p>
+                    <ul class="space-y-xs">
+                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary hover:underline transition-all"
+                                href="#">Contact Us</a></li>
+                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary hover:underline transition-all"
+                                href="#">Shipping Info</a></li>
+                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary hover:underline transition-all"
+                                href="#">Privacy Policy</a></li>
+                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary hover:underline transition-all"
+                                href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="space-y-md">
+                <p class="font-label-md text-label-md text-primary font-bold">Join the Kitchen Club</p>
+                <p class="font-body-md text-body-md text-on-surface-variant">Stay updated with secret recipes and early
+                    access to new releases.</p>
+                <div class="flex gap-xs">
+                    <input
+                        class="bg-surface-container border border-outline-variant rounded-lg px-md py-sm w-full focus:ring-0 focus:border-primary font-body-md transition-all"
+                        placeholder="Email address" type="email" />
+                    <button
+                        class="bg-primary text-white px-md py-sm rounded-lg hover:opacity-90 transition-all active:scale-95">Join</button>
+                </div>
+            </div>
+        </div>
+        <div
+            class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop mt-xl pt-lg border-t border-outline-variant text-center">
+            <p class="font-label-sm text-label-sm text-on-surface-variant opacity-60">© 2026 cookieesandcakes.
+                Handcrafted with love.</p>
+        </div>
+    </footer>
+    <script>
+        // Micro-interactions and effects
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Subtle lift or secondary effects could go here
+            });
+        });
+
+        // Add to Wishlist Toggle Logic
+        document.querySelectorAll('button:has(.material-symbols-outlined)').forEach(btn => {
+            if (btn.querySelector('span').textContent === 'favorite') {
+                btn.addEventListener('click', function () {
+                    const icon = this.querySelector('span');
+                    const isFilled = icon.classList.contains('fill-icon');
+                    if (isFilled) {
+                        icon.classList.remove('fill-icon');
+                        icon.style.fontVariationSettings = "'FILL' 0";
+                    } else {
+                        icon.classList.add('fill-icon');
+                        icon.style.fontVariationSettings = "'FILL' 1";
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script src="/js/treats.js" defer></script>
+</body>
+
+</html>

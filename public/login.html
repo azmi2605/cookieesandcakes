@@ -260,24 +260,11 @@
                 passwordIcon.innerText = 'visibility';
             }
         }
-
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerText;
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span>';
-            btn.disabled = true;
-
-            // Mock login delay
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-                alert('Welcome to the bakery! (Mock action)');
-            }, 1500);
-        });
     </script>
 
     <script src="/js/auth.js" defer></script>
+
+    <script src="/js/chatbot.js" defer></script>
 </body>
 
 </html>

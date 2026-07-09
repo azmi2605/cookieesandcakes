@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             body: { name, email, password }
           });
-          
-          window.location.href = '/account.html';
+
+          window.location.href = '/signin.html';
         } catch (err) {
           errBox = document.createElement('div');
           errBox.id = 'error-message';

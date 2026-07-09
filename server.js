@@ -761,6 +761,35 @@ app.get('/api/reviews/:productId', async (req, res) => {
   }
 });
 
+// 7. AI Chat Assistant (Single shared agent across all storefront pages)
+const { createChatAgent } = require('./chatAgent');
+const chatAgent = createChatAgent(signatureTreats);
+
+app.post('/api/chat', async (req, res) => {
+  const { message, history } = req.body || {};
+  if (!message || !String(message).trim()) {
+    return res.status(400).json({ error: 'Message is required.' });
+  }
+
+  try {
+    // Maintain conversation context in the session so the agent is continuous.
+    if (!req.session.chatHistory) req.session.chatHistory = [];
+    const safeHistory = Array.isArray(req.session.chatHistory) ? req.session.chatHistory.slice(-10) : [];
+
+    const { reply } = await chatAgent.handle(message, safeHistory);
+
+    req.session.chatHistory.push({ role: 'user', content: String(message) });
+    req.session.chatHistory.push({ role: 'assistant', content: reply });
+    if (req.session.chatHistory.length > 30) {
+      req.session.chatHistory = req.session.chatHistory.slice(-30);
+    }
+
+    res.json({ reply });
+  } catch (err) {
+    res.status(500).json({ error: 'The assistant is busy right now. Please try again.' });
+  }
+});
+
 // Catch-all route to serve the Home page for invalid paths
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

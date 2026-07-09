@@ -213,7 +213,12 @@ All API endpoints reside on the main Express app. Endpoints consume and produce 
     *   *Behavior*: Fetches tracking info and items for a specific order. (Publicly readable).
     *   *Response*: Order details.
 
-### 6. Reviews & Ratings
+### 6. AI Chat Assistant (Baker Bot)
+*   **POST `/api/chat`**
+    *   *Payload*: `{ message, history }` (both optional; `message` is required otherwise `400`).
+    *   *Behavior*: Single shared assistant powering the chat widget on every page. Conversation context is kept in `req.session.chatHistory` (capped at 30 turns) so the agent is continuous. If `CHAT_API_URL` + `CHAT_API_KEY` are set in `.env`, it delegates to that OpenAI-compatible model; otherwise it uses the built-in knowledge engine (product catalog, store hours, shipping, account/order help). The frontend widget (`public/js/chatbot.js`) self-injects on all pages and persists the conversation in `localStorage` so the one agent follows the user across pages.
+
+### 7. Reviews & Ratings
 *   **POST `/api/reviews`**
     *   *Payload*: `{ productId, rating, comment, userName }` (Rating must be 1-5)
     *   *Behavior*: Posts review under `/reviews/${productId}`.

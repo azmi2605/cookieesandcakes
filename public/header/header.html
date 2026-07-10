@@ -1,0 +1,58 @@
+<header id="site-header"
+    class="sticky top-0 z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
+    <div class="flex items-center h-20 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
+        <div class="flex items-center gap-3 shrink-0">
+            <button id="header-back-btn"
+                class="hidden items-center justify-center p-2 rounded-full text-primary hover:bg-surface-container transition-colors active-scale"
+                type="button">
+                <span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+            </button>
+            <a class="flex items-center gap-3 active:scale-95 duration-200 ease-in-out" href="/index.html">
+                <img alt="cookieesandcakes logo" class="h-10 w-auto"
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcBZhe-qc8x2zMtuCpIRLA-L9A5lJQf_MJCE1Jrs1tsCPv_Vmv-499GwtXEfYcQ51ATAa4kTw2HpPDYKb050qilHP39RoqAp9A13jT2uAZGL9OnugcyclR0qamfgrC5AiBoEq1_lLyjEew4KovUYPxs5gsxQr-roQtB4CxtzpI_7hctVgUx9IgcPVhjQdHzihJfpFqdenWbk7HoIlXDAGw7blr2uUx7QaGNmyV31xQDBp_I7YHkIrcJRPjSyx4o-C1Viegf_Tlgw" />
+                <span
+                    class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">cookieesandcakes</span>
+            </a>
+        </div>
+        <nav class="hidden md:flex items-center space-x-lg flex-1 justify-center">
+            <a class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim border-b-2 border-secondary dark:border-secondary-fixed-dim pb-1"
+                href="/treats.html">Shop</a>
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300"
+                href="/treats.html?category=cakes">Cakes</a>
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300"
+                href="/treats.html?category=cookies">Cookies</a>
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300"
+                href="/treats.html?category=pastries">Pastries</a>
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300"
+                href="/index.html#our-story">Our Story</a>
+        </nav>
+        <div class="flex items-center gap-md shrink-0">
+            <div id="header-search-container"
+                class="hidden md:flex bg-surface-container px-4 py-2 rounded-full items-center gap-xs">
+                <span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+                <input
+                    class="bg-transparent border-none focus:ring-0 text-label-sm p-0 w-32 placeholder:text-outline-variant"
+                    placeholder="Find treats..." type="text" />
+            </div>
+            <button id="header-wishlist-btn"
+                class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200" type="button">
+                <a href="/wishlist.html" class="flex items-center justify-center"><span
+                        class="material-symbols-outlined text-primary">favorite</span></a>
+            </button>
+            <button id="header-cart-btn"
+                class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200 relative" type="button">
+                <a href="/cart.html" class="flex items-center justify-center relative"><span
+                        class="material-symbols-outlined text-primary">shopping_bag</span><span id="header-cart-badge"
+                        class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span></a>
+            </button>
+            <button id="header-account-btn" class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200"
+                type="button">
+                <a href="/account.html" class="flex items-center justify-center"><span
+                        class="material-symbols-outlined text-primary">account_circle</span></a>
+            </button>
+            <button id="header-mobile-menu" class="md:hidden p-2" type="button">
+                <span class="material-symbols-outlined text-primary">menu</span>
+            </button>
+        </div>
+    </div>
+</header>

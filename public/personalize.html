@@ -139,32 +139,7 @@
 </head>
 
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">
-    <!-- TopNavBar -->
-    <header class="w-full top-0 sticky z-50 bg-surface/90 backdrop-blur-md shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
-        <div class="flex justify-between items-center max-w-[1200px] mx-auto px-margin-desktop py-md">
-            <div class="font-headline-lg text-headline-lg text-secondary">cookieesandcakes</div>
-            <nav class="hidden md:flex gap-lg items-center">
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="/treats.html">Shop</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="/treats.html?category=cakes">Cakes</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="/treats.html?category=cookies">Cookies</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="/treats.html?category=pastries">Pastries</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="#">Our Story</a>
-            </nav>
-            <div class="flex gap-md items-center">
-                <button
-                    class="material-symbols-outlined text-primary hover:text-secondary transition-colors cursor-pointer"
-                    data-icon="shopping_bag">shopping_bag</button>
-                <button
-                    class="material-symbols-outlined text-primary hover:text-secondary transition-colors cursor-pointer"
-                    data-icon="person">person</button>
-            </div>
-        </div>
-    </header>
+    <div data-include-header="/header/header.html"></div>
     <main class="flex-grow max-w-[1200px] mx-auto px-margin-desktop py-xl w-full">
         <div class="mb-lg">
             <h1 class="font-headline-xl text-headline-xl text-primary mb-xs">Personalize Your Gift</h1>

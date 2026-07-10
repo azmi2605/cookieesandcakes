@@ -136,8 +136,62 @@ window.App = {
     });
   },
 
+  // Include header partial
+  async includeHeaders() {
+    const placeholders = document.querySelectorAll('[data-include-header]');
+    await Promise.all(Array.from(placeholders).map(async (el) => {
+      const src = el.getAttribute('data-include-header');
+      try {
+        const res = await fetch(src);
+        if (!res.ok) throw new Error(`Failed to load header: ${src}`);
+        const html = await res.text();
+        el.outerHTML = html;
+      } catch (err) {
+        console.error(err.message);
+      }
+    }));
+  },
+
+  // Adjust header for specific pages
+  adjustHeaderForPage() {
+    const path = window.location.pathname;
+    const header = document.getElementById('site-header');
+    if (!header) return;
+
+    const searchContainer = document.getElementById('header-search-container');
+    const backBtn = document.getElementById('header-back-btn');
+    const wishlistBtn = document.getElementById('header-wishlist-btn');
+    const cartBadge = document.getElementById('header-cart-badge');
+
+    if (path.includes('specials.html')) {
+      if (searchContainer) searchContainer.classList.remove('hidden');
+      if (backBtn) {
+        backBtn.classList.remove('hidden');
+        backBtn.classList.add('flex');
+      }
+    }
+
+    if (path.includes('rate-treats.html') || path.includes('leave-review.html')) {
+      const cartIcon = header.querySelector('#header-cart-btn span');
+      const accountIcon = header.querySelector('#header-account-btn span');
+      if (cartIcon) cartIcon.textContent = 'shopping_cart';
+      if (accountIcon) accountIcon.textContent = 'person';
+    }
+
+    if (path.includes('personalize.html')) {
+      if (wishlistBtn) wishlistBtn.classList.add('hidden');
+    }
+
+    if (path.includes('order-history.html') || path.includes('track-order.html')) {
+      header.classList.remove('bg-surface/80', 'dark:bg-surface-dim/80', 'backdrop-blur-md', 'shadow-[0_4px_20px_rgba(93,62,51,0.06)]');
+      header.classList.add('bg-background/90', 'backdrop-blur-md', 'shadow-[0_20px_40px_rgba(93,62,51,0.05)]');
+    }
+  },
+
   // Initialize
   async init() {
+    await this.includeHeaders();
+    this.adjustHeaderForPage();
     await this.checkSession();
     await this.updateCartBadge();
     await this.loadWishlist();

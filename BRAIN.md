@@ -164,6 +164,12 @@ All API endpoints reside on the main Express app. Endpoints consume and produce 
 *   **POST `/api/auth/logout`**
     *   *Behavior*: Destroys active session.
     *   *Response*: `200 OK`.
+*   **GET `/api/auth/social-config`**
+    *   *Behavior*: Returns the public frontend OAuth client IDs: `{ googleClientId, appleClientId, appleRedirectUri }`. Used by `social-auth.js` to bootstrap the Google Identity Services and Apple JS SDKs. Empty strings mean the provider is not configured.
+*   **POST `/api/auth/social`**
+    *   *Payload*: `{ provider: "google" | "apple", idToken, user: { email, name } }`
+    *   *Behavior*: Verifies the provider identity token (Google via `oauth2.googleapis.com/tokeninfo`; Apple via decoded-JWT payload validation of `iss`/`exp`). Creates the user in Firebase under the sanitized email if absent (storing `authProvider`), otherwise stamps `authProvider`. Establishes active session. Works for both social sign-in and social sign-up.
+    *   *Response*: `200 OK` with user session object, or `401` if token verification fails.
 
 ### 2. Products API
 *   **GET `/api/products`**
@@ -243,6 +249,10 @@ The frontend is served from `/public` as static HTML and JavaScript assets. It u
     *   Contains logic for signin.html (primary sign-in page), login.html (fallback/legacy), signup.html, reset-password.html, and account.html.
     *   Listens to login/signup form submittals and issues requests to `/api/auth/login` or `/api/auth/signup`.
     *   Updates the `account.html` dashboard (injecting order history, welcome greetings, and wishlists).
+3.  **[social-auth.js](file:///c:/Users/AZMIYA AAYAT/Downloads/candc/public/js/social-auth.js)**:
+    *   Loaded on `signin.html`, `login.html`, and `signup.html` alongside `auth.js`.
+    *   Fetches `/api/auth/social-config`, then initializes Google Identity Services (`google.accounts.id`) and Apple JS (`AppleID.auth`) against the configured client IDs.
+    *   Binds `#google-signin-btn` and `#apple-signin-btn`. On success, sends the provider identity token to `POST /api/auth/social` and redirects to `/account.html`. If a provider is unconfigured, the button alerts the user.
 3.  **[cart.js](file:///c:/Users/AZMIYA AAYAT/Downloads/candc/public/js/cart.js)**:
     *   Loads and renders the shopping bag items.
     *   Attaches event listeners to quantity selectors (`+` / `-`) and deletion buttons.
@@ -336,6 +346,10 @@ The moving truck coordinate system on the SVG map is defined dynamically in `ord
 *   **Status**: Successfully migrated to environment variables using `dotenv`.
 *   **Variables**: `PORT`, `SESSION_SECRET`, and `FIREBASE_URL` are defined in the project `.env` file and loaded dynamically in `server.js`.
 *   *Note*: The `.env` file is untracked via `.gitignore` to prevent secret exposure.
+*   **Social Login (OAuth) Configuration**: Social sign-in (`/api/auth/social`) requires the following `.env` variables. Client IDs are public by design. Apple's `redirectURI` defaults to `${host}/social-callback.html` when unset.
+    *   `GOOGLE_CLIENT_ID`: Google OAuth 2.0 Web client ID (Google Cloud Console). Authorize `http://localhost:3000` as a JavaScript origin.
+    *   `APPLE_CLIENT_ID`: Apple Services ID (e.g., `com.cookieesandcakes.web`). Requires a matching `APPLE_REDIRECT_URI`.
+    *   `APPLE_REDIRECT_URI` (optional): Redirect/callback URI registered in the Apple Developer portal.
 
 ### 2. Public Tracking Exposure (Privacy Risk)
 *   **Route**: `GET /api/orders/:id`

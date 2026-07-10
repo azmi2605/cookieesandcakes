@@ -312,6 +312,103 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+// SOCIAL AUTH CONFIG (public client ids for the frontend SDKs)
+app.get('/api/auth/social-config', (req, res) => {
+  res.json({
+    googleClientId: process.env.GOOGLE_CLIENT_ID || '',
+    appleClientId: process.env.APPLE_CLIENT_ID || '',
+    appleRedirectUri: process.env.APPLE_REDIRECT_URI ||
+      `${req.protocol}://${req.get('host')}/social-callback.html`
+  });
+});
+
+// SOCIAL SIGN IN / SIGN UP (Google & Apple)
+app.post('/api/auth/social', async (req, res) => {
+  const { provider, idToken, user } = req.body;
+  if (!provider || !user || !user.email) {
+    return res.status(400).json({ error: 'Provider and user email are required.' });
+  }
+
+  try {
+    if (provider === 'google') {
+      const payload = await verifyGoogleIdToken(idToken);
+      if (!payload || payload.email.toLowerCase() !== user.email.toLowerCase()) {
+        return res.status(401).json({ error: 'Google sign-in could not be verified.' });
+      }
+    } else if (provider === 'apple') {
+      const payload = decodeAppleIdToken(idToken);
+      if (!payload || payload.email.toLowerCase() !== user.email.toLowerCase()) {
+        return res.status(401).json({ error: 'Apple sign-in could not be verified.' });
+      }
+    } else {
+      return res.status(400).json({ error: 'Unsupported sign-in provider.' });
+    }
+
+    const email = user.email.toLowerCase();
+    const sanitizedEmail = email.replace(/\./g, ',');
+    let existing = await firebaseRequest(`/users/${sanitizedEmail}`);
+
+    if (!existing) {
+      existing = {
+        email,
+        name: user.name || email.split('@')[0],
+        phone: '',
+        authProvider: provider,
+        createdAt: Date.now()
+      };
+      await firebaseRequest(`/users/${sanitizedEmail}`, 'PUT', existing);
+    } else {
+      existing.authProvider = provider;
+      await firebaseRequest(`/users/${sanitizedEmail}`, 'PUT', existing);
+    }
+
+    req.session.user = {
+      email: existing.email,
+      name: existing.name,
+      phone: existing.phone || '',
+      userId: sanitizedEmail,
+      authProvider: provider
+    };
+
+    res.json({ message: 'Signed in successfully', user: req.session.user });
+  } catch (err) {
+    res.status(500).json({ error: 'Social sign-in failed: ' + err.message });
+  }
+});
+
+// Verify a Google ID token via Google's tokeninfo endpoint (no SDK needed)
+function verifyGoogleIdToken(idToken) {
+  return new Promise((resolve) => {
+    if (!idToken) return resolve(null);
+    const url = `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`;
+    https.get(url, (resp) => {
+      let body = '';
+      resp.on('data', (chunk) => { body += chunk; });
+      resp.on('end', () => {
+        try {
+          if (resp.statusCode !== 200) return resolve(null);
+          resolve(JSON.parse(body));
+        } catch (e) {
+          resolve(null);
+        }
+      });
+    }).on('error', () => resolve(null));
+  });
+}
+
+// Decode an Apple identity token (payload validation; add signature check for production)
+function decodeAppleIdToken(idToken) {
+  try {
+    const part = idToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    const payload = JSON.parse(Buffer.from(part, 'base64').toString('utf8'));
+    if (payload.iss !== 'https://appleid.apple.com') return null;
+    if (payload.exp && payload.exp * 1000 < Date.now()) return null;
+    return payload;
+  } catch (e) {
+    return null;
+  }
+}
+
 // GET CURRENT SESSION
 app.get('/api/auth/session', (req, res) => {
   if (req.session.user) {

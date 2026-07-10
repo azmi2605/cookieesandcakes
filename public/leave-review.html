@@ -147,38 +147,7 @@
 
 <body
     class="bg-background text-on-surface min-h-screen flex flex-col font-body-md selection:bg-secondary-fixed-dim selection:text-on-secondary-fixed">
-    <!-- TopNavBar -->
-    <header
-        class="w-full top-0 sticky z-50 bg-surface/90 dark:bg-surface-dim/90 backdrop-blur-md shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
-        <nav class="flex justify-between items-center max-w-[1200px] mx-auto px-margin-desktop py-md">
-            <a class="font-headline-lg text-headline-lg text-secondary dark:text-secondary-fixed tracking-tight"
-                href="/">
-                cookieesandcakes
-            </a>
-            <div class="hidden md:flex items-center gap-lg">
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="/treats.html">Shop</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="/treats.html?category=cakes">Cakes</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="/treats.html?category=cookies">Cookies</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="/treats.html?category=pastries">Pastries</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-300"
-                    href="#">Our Story</a>
-            </div>
-            <div class="flex items-center gap-md">
-                <button
-                    class="text-primary dark:text-primary-fixed hover:text-secondary transition-colors active:scale-95 duration-200">
-                    <span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
-                </button>
-                <button
-                    class="text-primary dark:text-primary-fixed hover:text-secondary transition-colors active:scale-95 duration-200">
-                    <span class="material-symbols-outlined" data-icon="person">person</span>
-                </button>
-            </div>
-        </nav>
-    </header>
+    <div data-include-header="/header/header.html"></div>
     <!-- Main Content Area -->
     <main class="flex-grow max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-xl w-full">
         <div class="max-w-2xl mx-auto">

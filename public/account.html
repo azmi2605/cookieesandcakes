@@ -153,32 +153,7 @@
 </head>
 
 <body class="font-body-md text-on-surface">
-    <!-- TopNavBar Shell -->
-    <header class="w-full top-0 sticky z-50 bg-background/80 backdrop-blur-md shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
-        <nav class="max-w-[1200px] mx-auto flex justify-between items-center px-md py-sm">
-            <div class="flex items-center gap-lg">
-                <a class="font-headline-md text-headline-md text-primary italic" href="/">cookieesandcakes</a>
-                <ul class="hidden md:flex gap-md">
-                    <li><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary hover:scale-105 transition-transform duration-300"
-                            href="/treats.html">Shop</a></li>
-                    <li><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary hover:scale-105 transition-transform duration-300"
-                            href="/treats.html?category=cakes">Cakes</a></li>
-                    <li><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary hover:scale-105 transition-transform duration-300"
-                            href="/treats.html?category=cookies">Cookies</a></li>
-                    <li><a class="font-label-md text-label-md text-on-surface-variant hover:text-primary hover:scale-105 transition-transform duration-300"
-                            href="#">Our Story</a></li>
-                </ul>
-            </div>
-            <div class="flex items-center gap-md">
-                <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-105 transition-transform"
-                    data-icon="favorite">favorite</span>
-                <span class="material-symbols-outlined text-secondary border-b-2 border-secondary pb-1 cursor-pointer"
-                    data-icon="account_circle">account_circle</span>
-                <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-105 transition-transform"
-                    data-icon="shopping_bag">shopping_bag</span>
-            </div>
-        </nav>
-    </header>
+    <div data-include-header="/header/header.html"></div>
     <main class="max-w-[1200px] mx-auto px-md py-xl">
         <!-- Welcome Section -->
         <section class="mb-xl animate-in fade-in slide-in-from-bottom-4 duration-700">

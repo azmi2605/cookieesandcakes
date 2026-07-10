@@ -121,29 +121,7 @@
     <script src="/js/app.js" defer></script>
 </head>
 <body class="bg-background text-on-background font-body-md selection:bg-secondary-container/30">
-<!-- TopNavBar -->
-<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-[0_4px_20px_rgba(93,62,51,0.06)]">
-<nav class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
-<div class="flex items-center gap-base">
-<span class="font-headline-md text-headline-md text-primary tracking-tight">cookieesandcakes</span>
-</div>
-<div class="hidden md:flex items-center gap-lg">
-<a class="text-secondary border-b-2 border-secondary pb-1 font-label-md text-label-md" href="/treats.html">Shop</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="/treats.html?category=pastries">Pastries</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="/treats.html?category=cookies">Cookies</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="/treats.html?category=pastries">Pastries</a>
-<a class="text-on-surface-variant hover:text-primary transition-colors duration-300 font-label-md text-label-md" href="#">Our Story</a>
-</div>
-<div class="flex items-center gap-md">
-<button class="hover:opacity-80 transition-opacity"><a href="/wishlist.html" class="flex items-center justify-center"><span class="material-symbols-outlined text-primary">favorite</span></a></button>
-<button class="hover:opacity-80 transition-opacity relative">
-<a href="/cart.html" class="flex items-center justify-center relative"><span class="material-symbols-outlined text-primary">shopping_bag</span><span id="header-cart-badge" class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span></a>
-<span class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">1</span>
-</button>
-<button class="hover:opacity-80 transition-opacity"><a href="/account.html" class="flex items-center justify-center"><span class="material-symbols-outlined text-primary">account_circle</span></a></button>
-</div>
-</nav>
-</header>
+<div data-include-header="/header/header.html"></div>
 <main class="pt-32 pb-xl w-full">
 <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
 <!-- Breadcrumbs -->

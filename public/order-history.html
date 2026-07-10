@@ -138,32 +138,7 @@
 </head>
 
 <body class="bg-background text-on-surface selection:bg-secondary-container">
-    <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-50 bg-background/90 backdrop-blur-md shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
-        <nav class="flex justify-between items-center px-margin-desktop py-base max-w-[1200px] mx-auto w-full">
-            <div class="font-headline-md text-headline-md text-primary">Cookies &amp; Cakes</div>
-            <div class="hidden md:flex items-center gap-lg">
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                    href="/treats.html">Shop</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                    href="/treats.html?category=cakes">Cakes</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                    href="/treats.html?category=cookies">Cookies</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                    href="/treats.html?category=pastries">Pastries</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                    href="#">Our Story</a>
-            </div>
-            <div class="flex items-center gap-md text-primary">
-                <span
-                    class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">favorite</span>
-                <span
-                    class="material-symbols-outlined cursor-pointer hover:text-secondary transition-colors">shopping_bag</span>
-                <span
-                    class="material-symbols-outlined cursor-pointer text-primary border-b-2 border-secondary transition-colors">account_circle</span>
-            </div>
-        </nav>
-    </header>
+    <div data-include-header="/header/header.html"></div>
     <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-xl min-h-screen">
         <!-- Breadcrumbs -->
         <nav class="flex items-center gap-xs mb-lg font-label-sm text-label-sm text-on-surface-variant">

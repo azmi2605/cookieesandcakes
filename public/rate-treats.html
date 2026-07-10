@@ -146,32 +146,7 @@
 </head>
 
 <body class="font-body-md text-body-md overflow-x-hidden">
-    <!-- TopNavBar -->
-    <header class="bg-background sticky top-0 z-50 shadow-[0_20px_40px_rgba(93,62,51,0.05)]">
-        <nav
-            class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base w-full max-w-[1200px] mx-auto">
-            <div class="font-headline-md text-headline-md font-bold text-primary">cookieesandcakes</div>
-            <div class="hidden md:flex items-center space-x-gutter">
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="/treats.html">Shop</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="/treats.html?category=cakes">Cakes</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="/treats.html?category=cookies">Cookies</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="/treats.html?category=pastries">Pastries</a>
-                <a class="font-label-md text-label-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="#">Our Story</a>
-            </div>
-            <div class="flex items-center space-x-md">
-                <button class="material-symbols-outlined text-primary scale-98 active:scale-95 transition-transform"
-                    data-icon="shopping_cart">shopping_cart</button>
-                <button class="material-symbols-outlined text-primary scale-98 active:scale-95 transition-transform"
-                    data-icon="person">person</button>
-                <button class="md:hidden material-symbols-outlined text-primary" data-icon="menu">menu</button>
-            </div>
-        </nav>
-    </header>
+    <div data-include-header="/header/header.html"></div>
     <main class="min-h-screen px-margin-mobile md:px-margin-desktop py-xl flex flex-col items-center">
         <!-- Header Section -->
         <div class="text-center max-w-2xl mb-lg">

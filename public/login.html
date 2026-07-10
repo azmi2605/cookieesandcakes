@@ -209,14 +209,14 @@
                         <div class="grid grid-cols-2 gap-md">
                             <button
                                 class="flex items-center justify-center space-x-2 py-3 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors active:scale-95 duration-200"
-                                type="button">
+                                id="google-signin-btn" type="button">
                                 <img alt="Google" class="w-5 h-5"
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYqJSc_NTui5F0SuG8ZbtQpVS63fBOWOPyFGDQPGWkOPisxGBOxv1LvzzZqp6B0eNpCxumhJYECrxBH7bcd4kYF1u89jkW1Y0H76UC8P8gmTL3vvMqh6r3gczpe4aq4VqyGsjYhcsUxmaI0CiJSyPQS2zeLFP6covCaLkXEqtcvgUczpEu2dAu4J5VGQDJNevDMw5FaQla8yjJDKLD6wfmHrlhfde843Fdoep9YLUCxfJzExUMLezB8D8S9pb14Z2Zx99jQFzezC4" />
                                 <span class="font-label-sm text-label-sm text-primary">Google</span>
                             </button>
                             <button
                                 class="flex items-center justify-center space-x-2 py-3 border border-outline-variant rounded-lg hover:bg-surface-container transition-colors active:scale-95 duration-200"
-                                type="button">
+                                id="apple-signin-btn" type="button">
                                 <span class="material-symbols-outlined text-primary"
                                     style="font-variation-settings: 'FILL' 1;">apps</span>
                                 <span class="font-label-sm text-label-sm text-primary">Apple</span>
@@ -262,7 +262,12 @@
         }
     </script>
 
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://appleid.cdn-apple.com/appleauth/auth/js/lib/appleid/1/en_US/appleid.auth.js" async defer></script>
+
     <script src="/js/auth.js" defer></script>
+
+    <script src="/js/social-auth.js" defer></script>
 
     <script src="/js/chatbot.js" defer></script>
 </body>

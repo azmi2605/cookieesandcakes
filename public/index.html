@@ -144,53 +144,7 @@
 
 <body
     class="bg-background text-on-surface font-body-md selection:bg-secondary-container selection:text-on-secondary-container">
-    <!-- TopNavBar -->
-    <header
-        class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md shadow-[0_4px_20px_rgba(93,62,51,0.06)]">
-        <div
-            class="flex justify-between items-center h-20 px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto">
-            <!-- Brand Identity -->
-            <a class="flex items-center gap-3 active:scale-95 duration-200 ease-in-out" href="/index.html">
-                <img alt="cookieesandcakes logo" class="h-10 w-auto"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcBZhe-qc8x2zMtuCpIRLA-L9A5lJQf_MJCE1Jrs1tsCPv_Vmv-499GwtXEfYcQ51ATAa4kTw2HpPDYKb050qilHP39RoqAp9A13jT2uAZGL9OnugcyclR0qamfgrC5AiBoEq1_lLyjEew4KovUYPxs5gsxQr-roQtB4CxtzpI_7hctVgUx9IgcPVhjQdHzihJfpFqdenWbk7HoIlXDAGw7blr2uUx7QaGNmyV31xQDBp_I7YHkIrcJRPjSyx4o-C1Viegf_Tlgw" />
-                <span
-                    class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim tracking-tight">cookieesandcakes</span>
-            </a>
-            <!-- Navigation Links -->
-            <nav class="hidden md:flex items-center space-x-lg">
-                <a class="font-label-md text-label-md text-secondary dark:text-secondary-fixed-dim border-b-2 border-secondary dark:border-secondary-fixed-dim pb-1"
-                    href="/treats.html">Shop</a>
-                <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300"
-                    href="/treats.html?category=cakes">Cakes</a>
-                <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300"
-                    href="/treats.html?category=cookies">Cookies</a>
-                <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300"
-                    href="/treats.html?category=pastries">Pastries</a>
-                <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-tertiary-container hover:text-primary dark:hover:text-primary-fixed-dim transition-colors duration-300"
-                    href="/index.html#our-story">Our Story</a>
-            </nav>
-            <!-- Trailing Icons -->
-            <div class="flex items-center gap-md">
-                <button class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200">
-                    <a href="/wishlist.html" class="flex items-center justify-center"><span
-                            class="material-symbols-outlined text-primary">favorite</span></a>
-                </button>
-                <button class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200">
-                    <a href="/cart.html" class="flex items-center justify-center relative"><span
-                            class="material-symbols-outlined text-primary">shopping_bag</span><span
-                            id="header-cart-badge"
-                            class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span></a>
-                </button>
-                <button class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200">
-                    <a href="/account.html" class="flex items-center justify-center"><span
-                            class="material-symbols-outlined text-primary">account_circle</span></a>
-                </button>
-                <button class="md:hidden p-2">
-                    <span class="material-symbols-outlined text-primary">menu</span>
-                </button>
-            </div>
-        </div>
-    </header>
+    <div data-include-header="/header/header.html"></div>
     <main class="pt-20">
         <!-- Hero Section -->
         <section class="relative min-h-[85vh] flex items-center overflow-hidden">

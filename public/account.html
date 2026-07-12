@@ -152,9 +152,9 @@
     <script src="/js/app.js" defer></script>
 </head>
 
-<body class="font-body-md text-on-surface">
+<body class="font-body-md text-on-surface min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
-    <main class="max-w-[1200px] mx-auto px-md py-xl">
+    <main class="max-w-[1200px] mx-auto px-md py-xl flex-grow">
         <!-- Welcome Section -->
         <section class="mb-xl animate-in fade-in slide-in-from-bottom-4 duration-700">
             <h1 class="font-headline-xl text-headline-xl text-primary mb-xs">Welcome Back, Eleanor.</h1>
@@ -387,48 +387,7 @@
         </div>
     </main>
     <!-- Footer Shell -->
-    <footer class="w-full mt-xl bg-surface-container-low border-t border-outline-variant">
-        <div class="max-w-[1200px] mx-auto px-md py-lg flex flex-col md:flex-row justify-between gap-md">
-            <div class="space-y-md">
-                <h2 class="font-headline-lg text-headline-lg text-primary">cookieesandcakes</h2>
-                <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Every bite is a journey through
-                    artisanal craftsmanship and the finest local ingredients.</p>
-            </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-lg">
-                <div class="space-y-sm">
-                    <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest">Support</h4>
-                    <ul class="space-y-xs">
-                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                                href="#">Shipping Info</a></li>
-                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                                href="#">Contact Us</a></li>
-                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                                href="#">Wholesale</a></li>
-                    </ul>
-                </div>
-                <div class="space-y-sm">
-                    <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest">Legal</h4>
-                    <ul class="space-y-xs">
-                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                                href="#">Privacy Policy</a></li>
-                        <li><a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors duration-200"
-                                href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div
-            class="max-w-[1200px] mx-auto px-md py-md border-t border-outline-variant/50 flex flex-col md:flex-row justify-between items-center gap-md">
-            <p class="font-label-sm text-label-sm text-on-surface-variant">© 2026 cookieesandcakes. Crafted with
-                artisanal love.</p>
-            <div class="flex gap-md">
-                <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform"
-                    data-icon="share">share</span>
-                <span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform"
-                    data-icon="rss_feed">rss_feed</span>
-            </div>
-        </div>
-    </footer>
+    <div data-include-footer="/footer/footer.html"></div>
     <script>
         // Micro-interactions and smooth revealing
         document.addEventListener('DOMContentLoaded', () => {

@@ -188,9 +188,26 @@ window.App = {
     }
   },
 
+  // Include footer partial
+  async includeFooters() {
+    const placeholders = document.querySelectorAll('[data-include-footer]');
+    await Promise.all(Array.from(placeholders).map(async (el) => {
+      const src = el.getAttribute('data-include-footer');
+      try {
+        const res = await fetch(src);
+        if (!res.ok) throw new Error(`Failed to load footer: ${src}`);
+        const html = await res.text();
+        el.outerHTML = html;
+      } catch (err) {
+        console.error(err.message);
+      }
+    }));
+  },
+
   // Initialize
   async init() {
     await this.includeHeaders();
+    await this.includeFooters();
     this.adjustHeaderForPage();
     await this.checkSession();
     await this.updateCartBadge();

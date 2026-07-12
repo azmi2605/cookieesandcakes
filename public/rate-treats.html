@@ -145,9 +145,9 @@
     <script src="/js/app.js" defer></script>
 </head>
 
-<body class="font-body-md text-body-md overflow-x-hidden">
+<body class="font-body-md text-body-md overflow-x-hidden min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
-    <main class="min-h-screen px-margin-mobile md:px-margin-desktop py-xl flex flex-col items-center">
+    <main class="min-h-screen px-margin-mobile md:px-margin-desktop py-xl flex flex-col items-center flex-grow">
         <!-- Header Section -->
         <div class="text-center max-w-2xl mb-lg">
             <h1 class="font-headline-xl text-headline-xl text-primary mb-sm">Share the Sweetness</h1>
@@ -248,43 +248,7 @@
         </div>
     </main>
     <!-- Footer -->
-    <footer class="bg-surface-container-low py-xl">
-        <div
-            class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop w-full max-w-[1200px] mx-auto">
-            <div class="col-span-1 md:col-span-1">
-                <div class="font-headline-md text-headline-md text-primary mb-md">cookieesandcakes</div>
-                <p class="font-body-md text-on-surface-variant">© 2026 cookieesandcakes. Artisanal Warmth in Every Bite.
-                </p>
-            </div>
-            <div>
-                <h5 class="font-label-md text-primary mb-md">Shop</h5>
-                <ul class="space-y-xs">
-                    <li><a class="text-on-surface-variant hover:text-primary underline"
-                            href="/treats.html?category=cakes">Cakes</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary underline"
-                            href="/treats.html?category=cookies">Cookies</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary underline"
-                            href="/treats.html?category=pastries">Pastries</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="font-label-md text-primary mb-md">Company</h5>
-                <ul class="space-y-xs">
-                    <li><a class="text-on-surface-variant hover:text-primary underline" href="#">Our Story</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary underline" href="#">Shipping Policy</a>
-                    </li>
-                    <li><a class="text-on-surface-variant hover:text-primary underline" href="#">Contact Us</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 class="font-label-md text-primary mb-md">Legal</h5>
-                <ul class="space-y-xs">
-                    <li><a class="text-on-surface-variant hover:text-primary underline" href="#">Privacy</a></li>
-                    <li><a class="text-on-surface-variant hover:text-primary underline" href="#">Terms</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+    <div data-include-footer="/footer/footer.html"></div>
     <script>
         function setRating(containerId, rating) {
             const container = document.getElementById(containerId + '-rating') || document.getElementById(containerId);

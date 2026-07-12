@@ -137,9 +137,9 @@
     <script src="/js/app.js" defer></script>
 </head>
 
-<body class="bg-background text-on-surface selection:bg-secondary-container">
+<body class="bg-background text-on-surface selection:bg-secondary-container min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
-    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-xl min-h-screen">
+    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-xl min-h-screen flex-grow">
         <!-- Breadcrumbs -->
         <nav class="flex items-center gap-xs mb-lg font-label-sm text-label-sm text-on-surface-variant">
             <a class="hover:text-primary" href="#">Account</a>
@@ -321,45 +321,7 @@
         </div>
     </main>
     <!-- Footer -->
-    <footer class="bg-surface-container py-xl px-margin-mobile md:px-margin-desktop">
-        <div class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-gutter">
-            <div class="col-span-1 md:col-span-2">
-                <div class="font-headline-lg text-headline-lg text-primary mb-base">Cookies &amp; Cakes</div>
-                <p class="font-body-md text-body-md text-on-surface-variant max-w-sm mb-lg">
-                    Crafting artisanal moments of joy, one batch at a time. Using only the finest, responsibly sourced
-                    ingredients for a taste of pure warmth.
-                </p>
-                <div class="flex gap-md">
-                    <span
-                        class="material-symbols-outlined cursor-pointer text-primary hover:text-secondary">face_nod</span>
-                    <span
-                        class="material-symbols-outlined cursor-pointer text-primary hover:text-secondary">camera</span>
-                    <span class="material-symbols-outlined cursor-pointer text-primary hover:text-secondary">mail</span>
-                </div>
-            </div>
-            <div class="flex flex-col gap-sm">
-                <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest">Sitemap</h4>
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="#">Shop All</a>
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="#">Shipping Policy</a>
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="#">Our Story</a>
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="#">Contact Us</a>
-            </div>
-            <div class="flex flex-col gap-sm">
-                <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest">Legal</h4>
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="#">Privacy</a>
-                <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-                    href="#">Terms</a>
-                <p class="mt-base font-body-md text-body-md text-on-surface-variant opacity-60">
-                    © 2026 Cookies &amp; Cakes. Crafted with Artisanal Warmth.
-                </p>
-            </div>
-        </div>
-    </footer>
+    <div data-include-footer="/footer/footer.html"></div>
     <script>
         // Simple micro-interaction for list items
         document.querySelectorAll('.hover-card').forEach(card => {

@@ -143,10 +143,10 @@
     <script src="/js/app.js" defer></script>
 </head>
 
-<body class="font-body-md text-body-md overflow-x-hidden selection:bg-secondary/20">
+<body class="font-body-md text-body-md overflow-x-hidden selection:bg-secondary/20 min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
     <!-- Main Content Area -->
-    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-xl min-h-screen">
+    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-xl min-h-screen flex-grow">
         <!-- Header -->
         <div class="mb-lg">
             <h1 class="font-headline-xl text-headline-xl text-primary mb-xs">Your Shopping Bag</h1>
@@ -327,52 +327,7 @@
         </div>
     </main>
     <!-- Footer -->
-    <footer class="bg-surface-container dark:bg-surface-container-high border-t border-surface-variant mt-xl">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-gutter px-margin-desktop py-xl max-w-[1200px] mx-auto w-full">
-            <div class="md:col-span-1">
-                <div class="font-headline-lg text-headline-lg text-primary dark:text-primary-fixed mb-md">
-                    Cookies &amp; Cakes
-                </div>
-                <p class="font-body-md text-on-surface-variant max-w-xs">
-                    Hand-crafted treats delivered with love from our artisanal kitchen to your doorstep.
-                </p>
-            </div>
-            <div class="flex flex-col space-y-sm">
-                <h4 class="font-label-md text-primary uppercase tracking-widest mb-xs">Explore</h4>
-                <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#">Shop All</a>
-                <a class="text-on-surface-variant hover:text-secondary transition-colors"
-                    href="/treats.html?category=cakes">Cakes</a>
-                <a class="text-on-surface-variant hover:text-secondary transition-colors"
-                    href="/treats.html?category=cookies">Cookies</a>
-            </div>
-            <div class="flex flex-col space-y-sm">
-                <h4 class="font-label-md text-primary uppercase tracking-widest mb-xs">Company</h4>
-                <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#">Our Story</a>
-                <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#">Contact Us</a>
-                <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#">Shipping Policy</a>
-            </div>
-            <div class="flex flex-col space-y-sm">
-                <h4 class="font-label-md text-primary uppercase tracking-widest mb-xs">Newsletter</h4>
-                <p class="text-on-surface-variant text-sm mb-sm">Join our sweet list for early access and seasonal
-                    recipes.</p>
-                <div class="flex flex-col gap-sm">
-                    <input
-                        class="bg-white/50 border border-outline-variant rounded-lg px-sm py-xs text-sm focus:outline-none focus:border-primary transition-colors"
-                        placeholder="Your email" type="email" />
-                    <button
-                        class="bg-primary text-white py-xs px-sm rounded-lg font-label-md transition-soft active:opacity-80">Subscribe</button>
-                </div>
-            </div>
-        </div>
-        <div
-            class="max-w-[1200px] mx-auto px-margin-desktop py-lg border-t border-outline-variant/20 flex flex-col md:flex-row justify-between items-center text-on-surface-variant text-label-sm">
-            <p>© 2026 Cookies &amp; Cakes. Crafted with Artisanal Warmth.</p>
-            <div class="flex space-x-lg mt-md md:mt-0">
-                <a class="hover:text-secondary" href="#">Privacy</a>
-                <a class="hover:text-secondary" href="#">Terms</a>
-            </div>
-        </div>
-    </footer>
+    <div data-include-footer="/footer/footer.html"></div>
     <script>
         // Simple micro-interactions for quantity controls
         document.querySelectorAll('button').forEach(button => {

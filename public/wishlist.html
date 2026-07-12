@@ -132,9 +132,9 @@
     <script src="/js/app.js" defer></script>
 </head>
 
-<body class="bg-background text-on-surface font-body-md">
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
-    <main class="pt-xl pb-xl max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop mt-20">
+    <main class="pt-xl pb-xl max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop mt-20 flex-grow">
         <!-- Hero Section -->
         <section class="mb-xl text-center">
             <h1 class="font-headline-xl text-headline-xl text-primary mb-sm">Your Sweet Cravings</h1>
@@ -275,58 +275,7 @@
         </div>
     </main>
     <!-- Footer -->
-    <footer class="bg-surface-container-highest dark:bg-tertiary-container w-full py-xl mt-xl">
-        <div
-            class="grid grid-cols-1 md:grid-cols-3 gap-lg max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
-            <div class="space-y-md">
-                <div class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">
-                    cookieesandcakes
-                </div>
-                <p class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container">
-                    Handcrafting small moments of joy, one bite at a time.
-                </p>
-            </div>
-            <div class="grid grid-cols-2 gap-md">
-                <div class="flex flex-col space-y-sm">
-                    <h4
-                        class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim uppercase tracking-widest">
-                        Shop</h4>
-                    <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline"
-                        href="#">All Products</a>
-                    <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline"
-                        href="#">Monthly Box</a>
-                    <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline"
-                        href="#">Gift Cards</a>
-                </div>
-                <div class="flex flex-col space-y-sm">
-                    <h4
-                        class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim uppercase tracking-widest">
-                        Help</h4>
-                    <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline"
-                        href="#">Shipping Info</a>
-                    <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline"
-                        href="#">Contact Us</a>
-                    <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline"
-                        href="#">Wholesale</a>
-                </div>
-            </div>
-            <div class="space-y-md">
-                <h4
-                    class="font-label-md text-label-md text-primary dark:text-primary-fixed-dim uppercase tracking-widest">
-                    The Bakery Letter</h4>
-                <div class="flex gap-2">
-                    <input
-                        class="flex-1 bg-surface-container-low border-outline text-primary font-body-md rounded-xl px-4 py-2 focus:ring-0 focus:border-primary"
-                        placeholder="Email address" type="email" />
-                    <button
-                        class="bg-primary text-on-primary px-4 py-2 rounded-xl font-label-sm text-label-sm active-scale">Join</button>
-                </div>
-                <p class="text-xs text-on-surface-variant opacity-70">
-                    © 2026 cookieesandcakes. Handcrafted with love.
-                </p>
-            </div>
-        </div>
-    </footer>
+    <div data-include-footer="/footer/footer.html"></div>
     <script>
         // Simple interactivity for demonstration
         document.querySelectorAll('button').forEach(btn => {

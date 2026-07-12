@@ -236,58 +236,7 @@
         </div>
     </main>
     <!-- Footer Component -->
-    <footer class="w-full bg-surface-container mt-auto">
-        <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg max-w-[1200px] mx-auto px-margin-desktop py-xl">
-            <div class="flex flex-col gap-sm">
-                <div class="font-headline-md text-headline-md text-primary">cookieesandcakes</div>
-                <p class="font-body-md text-body-md text-on-surface-variant">Crafting moments of sweetness since 2014.
-                    Our bakery blends tradition with modern artisanal flair.</p>
-            </div>
-            <div class="flex flex-col gap-sm">
-                <h4 class="font-label-md text-label-md text-primary uppercase tracking-wider">Explore</h4>
-                <ul class="flex flex-col gap-xs">
-                    <li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary underline transition-all"
-                            href="#">About Us</a></li>
-                    <li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary underline transition-all"
-                            href="#">Wholesale</a></li>
-                    <li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary underline transition-all"
-                            href="#">Contact</a></li>
-                </ul>
-            </div>
-            <div class="flex flex-col gap-sm">
-                <h4 class="font-label-md text-label-md text-primary uppercase tracking-wider">Support</h4>
-                <ul class="flex flex-col gap-xs">
-                    <li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary underline transition-all"
-                            href="#">Shipping Info</a></li>
-                    <li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary underline transition-all"
-                            href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
-            <div class="flex flex-col gap-sm">
-                <h4 class="font-label-md text-label-md text-primary uppercase tracking-wider">Stay Sweet</h4>
-                <p class="font-body-md text-body-md text-on-surface-variant">Sign up for secret recipes and first dibs
-                    on seasonal drops.</p>
-                <div class="flex gap-xs mt-xs">
-                    <input
-                        class="bg-surface-container-low border border-outline-variant rounded-lg p-sm flex-grow focus:ring-secondary focus:border-secondary"
-                        placeholder="Email address" type="email" />
-                    <button class="bg-primary text-on-primary p-sm rounded-lg material-symbols-outlined"
-                        data-icon="arrow_forward">arrow_forward</button>
-                </div>
-            </div>
-        </div>
-        <div
-            class="max-w-[1200px] mx-auto px-margin-desktop py-md border-t border-outline-variant/20 flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
-            <span>© 2026 cookieesandcakes. Crafted with artisanal warmth.</span>
-            <div class="flex gap-md">
-                <span class="material-symbols-outlined cursor-pointer hover:text-secondary"
-                    data-icon="share">share</span>
-                <span class="material-symbols-outlined cursor-pointer hover:text-secondary"
-                    data-icon="language">language</span>
-            </div>
-        </div>
-    </footer>
+    <div data-include-footer="/footer/footer.html"></div>
     <script>
         const giftMessage = document.getElementById('giftMessage');
         const livePreview = document.getElementById('livePreview');

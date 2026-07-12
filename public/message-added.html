@@ -128,10 +128,10 @@
   <script src="/js/app.js" defer></script>
 </head>
 
-<body class="font-body-md text-on-surface">
+<body class="font-body-md text-on-surface min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
     <main
-    class="min-h-[calc(100vh-200px)] flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop py-xl overflow-hidden relative">
+    class="min-h-[calc(100vh-200px)] flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop py-xl overflow-hidden relative flex-grow">
     <!-- Atmospheric Background Decoration -->
     <div
       class="absolute top-0 left-0 w-64 h-64 bg-surface-container-high rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl opacity-40">
@@ -183,25 +183,7 @@
     </div>
   </main>
   <!-- Footer -->
-  <footer class="w-full bg-surface-container-low mt-xl border-t border-surface-container">
-    <div
-      class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-lg max-w-[1200px] mx-auto gap-lg">
-      <div class="flex flex-col gap-xs items-center md:items-start">
-        <div class="font-headline-md text-headline-md text-primary">cookieesandcakes</div>
-        <p class="font-body-md text-body-md text-on-surface-variant">© 2026 cookieesandcakes. Handcrafted with love.</p>
-      </div>
-      <div class="flex flex-wrap justify-center gap-md">
-        <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-          href="#">Privacy Policy</a>
-        <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-          href="#">Terms of Service</a>
-        <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-          href="#">Shipping Information</a>
-        <a class="font-body-md text-body-md text-on-surface-variant hover:text-secondary transition-colors"
-          href="#">Contact Us</a>
-      </div>
-    </div>
-  </footer>
+  <div data-include-footer="/footer/footer.html"></div>
   <script>
     // Micro-interactions and subtle effects
     document.addEventListener('DOMContentLoaded', () => {

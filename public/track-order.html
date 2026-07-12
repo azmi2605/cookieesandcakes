@@ -156,9 +156,9 @@
   <script src="/js/app.js" defer></script>
 </head>
 
-<body class="font-body-md overflow-x-hidden">
+<body class="font-body-md overflow-x-hidden min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
-    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-lg">
+    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-lg flex-grow">
     <!-- Header Section -->
     <section class="mb-xl text-center md:text-left">
       <h1 class="font-headline-xl text-headline-xl md:text-headline-xl text-primary mb-xs">Track Your Treats</h1>
@@ -353,40 +353,7 @@
     </div>
   </main>
   <!-- Footer -->
-  <footer class="w-full mt-xl bg-surface-container-low border-t border-outline-variant">
-    <div class="max-w-[1200px] mx-auto px-md py-lg flex flex-col md:flex-row justify-between gap-md">
-      <div>
-        <div class="font-headline-lg text-headline-lg text-primary mb-sm">cookieesandcakes</div>
-        <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Every crumb tells a story of craftsmanship
-          and love. Thank you for being part of our artisanal journey.</p>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-lg">
-        <div class="flex flex-col gap-xs">
-          <span class="font-label-md text-label-md text-primary mb-xs">Shop</span>
-          <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors"
-            href="#">Privacy Policy</a>
-          <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors"
-            href="#">Terms of Service</a>
-        </div>
-        <div class="flex flex-col gap-xs">
-          <span class="font-label-md text-label-md text-primary mb-xs">Support</span>
-          <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors"
-            href="#">Shipping Info</a>
-          <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors"
-            href="#">Contact Us</a>
-        </div>
-        <div class="flex flex-col gap-xs">
-          <span class="font-label-md text-label-md text-primary mb-xs">Business</span>
-          <a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors"
-            href="#">Wholesale</a>
-        </div>
-      </div>
-    </div>
-    <div class="max-w-[1200px] mx-auto px-md py-md border-t border-outline-variant/20 text-center md:text-left">
-      <span class="font-label-sm text-label-sm text-on-surface-variant">© 2026 cookieesandcakes. Crafted with artisanal
-        love.</span>
-    </div>
-  </footer>
+  <div data-include-footer="/footer/footer.html"></div>
   <script>
     // Micro-interaction for the map truck icon
     document.addEventListener('DOMContentLoaded', () => {

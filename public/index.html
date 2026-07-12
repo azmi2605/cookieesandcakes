@@ -143,9 +143,9 @@
 </head>
 
 <body
-    class="bg-background text-on-surface font-body-md selection:bg-secondary-container selection:text-on-secondary-container">
+    class="bg-background text-on-surface font-body-md selection:bg-secondary-container selection:text-on-secondary-container min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
-    <main class="pt-20">
+    <main class="pt-4 flex-grow">
         <!-- Hero Section -->
         <section class="relative min-h-[85vh] flex items-center overflow-hidden">
             <div
@@ -378,79 +378,7 @@
         </section>
     </main>
     <!-- Footer -->
-    <footer class="bg-surface-container-highest dark:bg-tertiary-container w-full py-xl border-t border-primary/5">
-        <div
-            class="grid grid-cols-1 md:grid-cols-3 gap-lg max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
-            <!-- Brand & Info -->
-            <div class="space-y-md">
-                <div class="flex items-center gap-3">
-                    <img alt="footer logo" class="h-8 w-auto"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcBZhe-qc8x2zMtuCpIRLA-L9A5lJQf_MJCE1Jrs1tsCPv_Vmv-499GwtXEfYcQ51ATAa4kTw2HpPDYKb050qilHP39RoqAp9A13jT2uAZGL9OnugcyclR0qamfgrC5AiBoEq1_lLyjEew4KovUYPxs5gsxQr-roQtB4CxtzpI_7hctVgUx9IgcPVhjQdHzihJfpFqdenWbk7HoIlXDAGw7blr2uUx7QaGNmyV31xQDBp_I7YHkIrcJRPjSyx4o-C1Viegf_Tlgw" />
-                    <span
-                        class="font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">cookieesandcakes</span>
-                </div>
-                <p class="font-body-md text-body-md text-on-surface-variant dark:text-on-tertiary-container">
-                    Traditional techniques meet modern flavors. Every pastry we make is a testament to the art of
-                    artisanal baking.
-                </p>
-                <div class="flex gap-md">
-                    <a class="text-primary hover:text-secondary transition-colors" href="#"><span
-                            class="material-symbols-outlined">face_nod</span></a>
-                    <a class="text-primary hover:text-secondary transition-colors" href="#"><span
-                            class="material-symbols-outlined">photo_camera</span></a>
-                    <a class="text-primary hover:text-secondary transition-colors" href="#"><span
-                            class="material-symbols-outlined">video_library</span></a>
-                </div>
-            </div>
-            <!-- Quick Links -->
-            <div class="grid grid-cols-2 gap-md">
-                <div class="space-y-sm">
-                    <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-md">Explore</h4>
-                    <nav class="flex flex-col gap-sm">
-                        <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all"
-                            href="#">Shop All</a>
-                        <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all"
-                            href="/treats.html?category=cakes">Cakes</a>
-                        <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all"
-                            href="/treats.html?category=cookies">Cookies</a>
-                        <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all"
-                            href="/treats.html?category=pastries">Pastries</a>
-                    </nav>
-                </div>
-                <div class="space-y-sm">
-                    <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-md">Service</h4>
-                    <nav class="flex flex-col gap-sm">
-                        <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all"
-                            href="#">Shipping Info</a>
-                        <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all"
-                            href="#">Wholesale</a>
-                        <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all"
-                            href="#">Contact Us</a>
-                        <a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-tertiary-container hover:underline hover:text-secondary transition-all"
-                            href="#">Privacy Policy</a>
-                    </nav>
-                </div>
-            </div>
-            <!-- Newsletter Alternative / Contact -->
-            <div class="space-y-md">
-                <h4 class="font-label-md text-label-md text-primary uppercase tracking-widest mb-md">Visit Us</h4>
-                <div class="flex gap-sm items-start text-on-surface-variant">
-                    <span class="material-symbols-outlined text-primary">location_on</span>
-                    <p class="font-body-md text-body-md">123 Baker St, Flour District<br />New York, NY 10001</p>
-                </div>
-                <div class="flex gap-sm items-start text-on-surface-variant">
-                    <span class="material-symbols-outlined text-primary">schedule</span>
-                    <p class="font-body-md text-body-md">Tue – Sun: 7:00 AM – 4:00 PM<br />Closed on Mondays</p>
-                </div>
-            </div>
-        </div>
-        <div
-            class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop mt-xl pt-lg border-t border-primary/5 text-center">
-            <p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">
-                © 2026 cookieesandcakes. Handcrafted with love.
-            </p>
-        </div>
-    </footer>
+    <div data-include-footer="/footer/footer.html"></div>
     <script>
         // Simple scroll reveal effect for images
         const observerOptions = {

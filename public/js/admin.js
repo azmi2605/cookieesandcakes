@@ -42,42 +42,67 @@ async function adminFetch(path, options = {}) {
         throw new Error('The server returned an unexpected response. Please check the API URL.');
     }
 
-    if (res.status === 401) {
-        clearAdminAuth();
-        window.location.href = '/admin/login';
-        throw new Error('Unauthorized. Please log in again.');
+    if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        if (res.status === 401) {
+            clearAdminAuth();
+            window.location.href = '/admin/login';
+        }
+        throw new Error(errData.error || `Request failed with status ${res.status}`);
     }
 
     return res;
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+async function initAdminPage() {
     const path = window.location.pathname;
+    console.log('[admin] initAdminPage path=', path, 'readyState=', document.readyState);
 
     if (path.includes('admin-login.html')) {
+        console.log('[admin] skipping login page');
         return;
     }
 
     try {
         const res = await adminFetch('/api/admin/session');
         const data = await res.json();
+        console.log('[admin] session check', data);
         if (!data.loggedIn) {
+            console.log('[admin] not logged in, redirecting');
             window.location.href = '/admin/login';
             return;
         }
     } catch (err) {
+        console.log('[admin] session check error', err);
         window.location.href = '/admin/login';
         return;
     }
 
-    if (path.includes('admin-dashboard.html')) {
+    const normalizedPath = path.replace(/\/+$/, '');
+    if (normalizedPath === '/admin/dashboard' || normalizedPath.includes('admin-dashboard')) {
+        console.log('[admin] initializing dashboard');
         initDashboard();
-    } else if (path.includes('admin-add-product.html')) {
+    } else if (normalizedPath === '/admin/orders' || normalizedPath.includes('admin-orders')) {
+        console.log('[admin] initializing orders list');
+        initOrdersList();
+    } else if (normalizedPath === '/admin/add-product' || normalizedPath.includes('admin-add-product')) {
         initAddProduct();
-    } else if (path.includes('admin-order-details.html')) {
+    } else if (normalizedPath.includes('admin-order-details')) {
         initOrderDetails();
+    } else if (normalizedPath.includes('admin-customers')) {
+        initCustomers();
+    } else if (normalizedPath.includes('admin-reviews')) {
+        initReviews();
+    } else {
+        console.log('[admin] no matching page init for path', path, 'normalized', normalizedPath);
     }
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAdminPage);
+} else {
+    initAdminPage();
+}
 
 document.addEventListener('click', async (e) => {
     const logoutLink = e.target.closest('.logout-link');
@@ -113,12 +138,13 @@ async function initDashboard() {
     }
 
     // Recent orders table
+    const tbody = document.getElementById('admin-orders-table');
+    if (tbody) tbody.innerHTML = '';
+
     try {
             const ordersRes = await adminFetch('/api/admin/orders');
         const orders = await ordersRes.json();
-        const tbody = document.getElementById('admin-orders-table');
         if (tbody && orders.length > 0) {
-            tbody.innerHTML = '';
             orders.slice(0, 5).forEach((order, idx) => {
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-surface-container-low transition-colors';
@@ -132,7 +158,7 @@ async function initDashboard() {
                     <td class="px-gutter py-4 font-semibold">$${(order.total || 0).toFixed(2)}</td>
                     <td class="px-gutter py-4">${statusBadge(order.status)}</td>
                     <td class="px-gutter py-4 text-right">
-                        <a href="/admin-order-details.html?id=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">View Details</a>
+                        <a href="/admin-order-details.html?orderId=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">View Details</a>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -271,7 +297,7 @@ async function initOrdersList() {
                 <td class="px-gutter py-4 font-semibold">$${(order.total || 0).toFixed(2)}</td>
                 <td class="px-gutter py-4">${statusBadge(order.status)}</td>
                 <td class="px-gutter py-4 text-right">
-                    <a href="/admin-order-details.html?id=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</a>
+                    <a href="/admin-order-details.html?orderId=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</a>
                 </td>
             `;
             tbody.appendChild(tr);
@@ -308,7 +334,7 @@ async function initOrderDetails() {
     if (errorEl) errorEl.classList.add('hidden');
 
     const params = new URLSearchParams(window.location.search);
-    const orderId = params.get('id');
+    const orderId = params.get('orderId');
     if (!orderId) {
         if (loadingEl) loadingEl.classList.add('hidden');
         if (errorEl) { errorEl.textContent = 'Order ID not found in URL.'; errorEl.classList.remove('hidden'); }
@@ -629,7 +655,7 @@ async function initAddProduct() {
 }
 
 function openEditProduct(productId) {
-    window.location.href = `admin-add-product.html?edit=${productId}`;
+    window.location.href = `/admin-add-product.html?edit=${productId}`;
 }
 
 /* ─────────────────────────────────────────

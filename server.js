@@ -1162,6 +1162,12 @@ app.get('/admin/dashboard', (req, res) => {
 app.get('/admin/orders', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin-orders.html'));
 });
+app.get('/admin/order-details', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin-order-details.html'));
+});
+app.get('/admin-order-details.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin-order-details.html'));
+});
 
 // JSON 404 handler for API routes
 app.use('/api', (req, res) => {

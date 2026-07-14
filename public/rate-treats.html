@@ -143,6 +143,12 @@
     </style>
 
     <script src="/js/app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const allowed = await window.App.requireAuth({ returnUrl: '/rate-treats.html', message: 'Please log in to rate your treats.' });
+            if (!allowed) return;
+        });
+    </script>
 </head>
 
 <body class="font-body-md text-body-md overflow-x-hidden min-h-screen flex flex-col">

@@ -4,6 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 1. LOGIN PAGE LOGIC
   if (path.includes('login.html') || path.includes('signin.html')) {
+    const loginMessage = document.getElementById('login-message');
+    if (loginMessage) {
+      const params = new URLSearchParams(window.location.search);
+      const msg = params.get('message');
+      if (msg) {
+        loginMessage.textContent = msg;
+        loginMessage.classList.remove('hidden');
+      }
+    }
+
     const loginForm = document.querySelector('form') || document.getElementById('loginForm');
     
     if (loginForm) {
@@ -28,8 +38,14 @@ document.addEventListener('DOMContentLoaded', () => {
             body: { email, password }
           });
           
-          // Login successful, redirect to dashboard
-          window.location.href = '/account.html';
+          // Check for return URL after successful login
+          const params = new URLSearchParams(window.location.search);
+          const returnUrl = params.get('returnUrl');
+          if (returnUrl) {
+            window.location.href = returnUrl;
+          } else {
+            window.location.href = '/account.html';
+          }
         } catch (err) {
           // Display error message
           errBox = document.createElement('div');
@@ -129,20 +145,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. ACCOUNT DASHBOARD LOGIC
   if (path.includes('account.html')) {
-    // If not loaded yet, wait for session check
-    const interval = setInterval(() => {
-      if (window.App.user !== undefined) {
-        clearInterval(interval);
-        
-        if (!window.App.user) {
-          // Redirect to login if unauthorized
-          window.location.href = '/signin.html';
-        } else {
-          // Initialize dashboard details
-          updateDashboard();
-        }
-      }
-    }, 100);
+    (async () => {
+      const allowed = await window.App.requireAuth({ returnUrl: '/account.html', message: 'Your session has expired. Please log in again to continue.' });
+      if (!allowed) return;
+      updateDashboard();
+    })();
 
     function updateDashboard() {
       // 1. Update Welcome Heading
@@ -195,16 +202,16 @@ document.addEventListener('DOMContentLoaded', () => {
           let pulseClass = 'bg-outline';
           if (order.status === 'Pending') {
             statusClass = 'bg-surface-container-high text-primary';
-          } else if (order.status === 'Approved' || order.status === 'Preparing') {
+          } else if (order.status === 'Approved' || order.status === 'Confirmed' || order.status === 'Preparing') {
             statusClass = 'bg-primary-container text-on-primary-container';
             pulseClass = 'bg-primary animate-pulse';
           } else if (order.status === 'Out for Delivery') {
             statusClass = 'bg-secondary-fixed text-on-secondary-fixed-variant';
             pulseClass = 'bg-secondary animate-pulse';
-          } else if (order.status === 'Completed') {
+          } else if (order.status === 'Completed' || order.status === 'Delivered') {
             statusClass = 'bg-green-100 text-green-800';
             pulseClass = 'bg-green-500';
-          } else if (order.status === 'Declined') {
+          } else if (order.status === 'Declined' || order.status === 'Cancelled') {
             statusClass = 'bg-error-container text-on-error-container';
             pulseClass = 'bg-error';
           }

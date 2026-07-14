@@ -143,14 +143,15 @@
         <div class="w-full max-w-[480px]">
             <!-- Branding & Welcome -->
             <div class="text-center mb-lg">
-                <div class="flex justify-center mb-md">
+                <a id="admin-logo-link" href="/admin/login" aria-label="Go to Admin Login" class="flex justify-center mb-md cursor-pointer" style="display:inline-flex">
                     <img alt="cookieesandcakes logo"
                         class="h-24 w-auto drop-shadow-sm transition-transform duration-500 hover:scale-105"
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdcBZhe-qc8x2zMtuCpIRLA-L9A5lJQf_MJCE1Jrs1tsCPv_Vmv-499GwtXEfYcQ51ATAa4kTw2HpPDYKb050qilHP39RoqAp9A13jT2uAZGL9OnugcyclR0qamfgrC5AiBoEq1_lLyjEew4KovUYPxs5gsxQr-roQtB4CxtzpI_7hctVgUx9IgcPVhjQdHzihJfpFqdenWbk7HoIlXDAGw7blr2uUx7QaGNmyV31xQDBp_I7YHkIrcJRPjSyx4o-C1Viegf_Tlgw" />
-                </div>
+                </a>
                 <h1 class="font-headline-lg text-headline-lg text-primary tracking-tight mb-xs">Welcome Back</h1>
                 <p class="font-body-md text-on-surface-variant">Sign in to access your freshly baked treats.</p>
             </div>
+            <div id="login-message" class="hidden mb-md p-sm bg-secondary-container text-on-secondary-container rounded-xl text-label-sm font-semibold text-center"></div>
             <!-- Sign In Card -->
             <div class="bg-surface-container-lowest butter-shadow rounded-xl p-md md:p-lg border border-outline-variant/20 relative overflow-hidden">
                 <form class="space-y-md" id="loginForm">
@@ -260,6 +261,27 @@
                 passwordIcon.innerText = 'visibility';
             }
         }
+
+        (function () {
+            const logoLink = document.getElementById('admin-logo-link');
+            if (!logoLink) return;
+
+            const hasAdminToken = (typeof localStorage !== 'undefined' && localStorage.getItem('admin_token')) || '';
+            const target = hasAdminToken ? '/admin/dashboard' : '/admin/login';
+            logoLink.setAttribute('href', target);
+            logoLink.setAttribute('aria-label', hasAdminToken ? 'Go to Admin Dashboard' : 'Go to Admin Login');
+
+            logoLink.addEventListener('click', (e) => {
+                if (hasAdminToken && window.location.pathname === '/admin/dashboard') {
+                    e.preventDefault();
+                    return;
+                }
+                if (!hasAdminToken && window.location.pathname === '/admin/login') {
+                    e.preventDefault();
+                    return;
+                }
+            });
+        })();
     </script>
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>

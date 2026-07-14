@@ -4,13 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- 1. ORDER HISTORY PAGE ---
   if (path.includes('order-history.html')) {
-    const listContainer = document.querySelector('main .space-y-md');
+    const listContainer = document.querySelector('main .grid.gap-gutter');
     if (listContainer) {
       loadOrderHistoryList();
     }
 
     async function loadOrderHistoryList() {
       try {
+        const allowed = await window.App.requireAuth({ returnUrl: '/order-history.html', message: 'Please log in to view your order history.' });
+        if (!allowed) return;
+        
         const orders = await window.App.fetchAPI('/api/orders');
         if (orders.length === 0) {
           listContainer.innerHTML = `
@@ -103,6 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadOrderTracking(id) {
       try {
+        const allowed = await window.App.requireAuth({ returnUrl: `/track-order.html?orderId=${id}`, message: 'Your session has expired. Please log in again to continue.' });
+        if (!allowed) return;
+        
         const order = await window.App.fetchAPI(`/api/orders/${id}`);
         
         // 1. Update Order Header Info
@@ -166,11 +172,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const statusMap = {
         'Pending': 0,
         'Approved': 1,
+        'Confirmed': 1,
         'Preparing': 2,
         'Out for Delivery': 3,
         'Completed': 4,
         'Delivered': 4,
-        'Declined': 0
+        'Cancelled': 0
       };
 
       const activeIndex = statusMap[status] !== undefined ? statusMap[status] : 0;

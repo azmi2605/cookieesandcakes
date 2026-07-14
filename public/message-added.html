@@ -125,7 +125,13 @@
     }
   </style>
 
-  <script src="/js/app.js" defer></script>
+    <script src="/js/app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const allowed = await window.App.requireAuth({ returnUrl: '/message-added.html', message: 'Please log in to continue with your order.' });
+            if (!allowed) return;
+        });
+    </script>
 </head>
 
 <body class="font-body-md text-on-surface min-h-screen flex flex-col">

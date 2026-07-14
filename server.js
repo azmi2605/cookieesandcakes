@@ -5,20 +5,32 @@ const cors = require('cors');
 const https = require('https');
 const path = require('path');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const FIREBASE_URL = process.env.FIREBASE_URL || 'https://cookieesandcakes-default-rtdb.firebaseio.com';
+const JWT_SECRET = process.env.JWT_SECRET || 'cookieesandcakes-jwt-secret-key-12345';
+const JWT_EXPIRY = process.env.JWT_EXPIRY || '7d';
 
 // Express Middleware
-app.use(cors());
+const corsOrigins = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : true;
+app.use(cors({
+  origin: corsOrigins === true ? true : corsOrigins,
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: process.env.SESSION_SECRET || 'cookieesandcakes-secret-key-12345',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 1 day
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production'
+  }
 }));
 
 // Serve static frontend files from 'public'
@@ -418,6 +430,14 @@ app.get('/api/auth/session', (req, res) => {
   }
 });
 
+// Customer auth middleware: require login for order actions
+function requireUser(req, res, next) {
+  if (req.session && req.session.user) {
+    return next();
+  }
+  return res.status(401).json({ error: 'Please log in to place your order.' });
+}
+
 // UPDATE PROFILE
 app.post('/api/auth/profile', async (req, res) => {
   if (!req.session.user) {
@@ -518,25 +538,18 @@ app.get('/api/products/:id', async (req, res) => {
 // 3. Cart Management
 
 // GET CART ITEMS
-app.get('/api/cart', async (req, res) => {
-  if (req.session.user) {
-    // Logged-in user cart
-    const userId = req.session.user.userId;
-    try {
-      const cart = await firebaseRequest(`/carts/${userId}`) || {};
-      res.json(cart);
-    } catch (err) {
-      res.status(500).json({ error: 'Failed to load cart: ' + err.message });
-    }
-  } else {
-    // Guest cart in session
-    if (!req.session.cart) req.session.cart = {};
-    res.json(req.session.cart);
+app.get('/api/cart', requireUser, async (req, res) => {
+  const userId = req.session.user.userId;
+  try {
+    const cart = await firebaseRequest(`/carts/${userId}`) || {};
+    res.json(cart);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to load cart: ' + err.message });
   }
 });
 
 // ADD TO CART
-app.post('/api/cart', async (req, res) => {
+app.post('/api/cart', requireUser, async (req, res) => {
   const { productId, quantity, personalization } = req.body;
   if (!productId) {
     return res.status(400).json({ error: 'Product ID is required.' });
@@ -544,6 +557,7 @@ app.post('/api/cart', async (req, res) => {
 
   const qty = parseInt(quantity) || 1;
   const note = personalization || '';
+  const userId = req.session.user.userId;
 
   try {
     const product = await firebaseRequest(`/products/${productId}`);
@@ -551,116 +565,70 @@ app.post('/api/cart', async (req, res) => {
       return res.status(404).json({ error: 'Product not found.' });
     }
 
-    if (req.session.user) {
-      const userId = req.session.user.userId;
-      const cart = await firebaseRequest(`/carts/${userId}`) || {};
+    const cart = await firebaseRequest(`/carts/${userId}`) || {};
 
-      if (cart[productId]) {
-        cart[productId].quantity += qty;
-        if (note) cart[productId].personalization = note;
-      } else {
-        cart[productId] = {
-          productId,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          unit: product.unit,
-          quantity: qty,
-          personalization: note
-        };
-      }
-
-      await firebaseRequest(`/carts/${userId}`, 'PUT', cart);
-      res.json(cart);
+    if (cart[productId]) {
+      cart[productId].quantity += qty;
+      if (note) cart[productId].personalization = note;
     } else {
-      if (!req.session.cart) req.session.cart = {};
-      const cart = req.session.cart;
-
-      if (cart[productId]) {
-        cart[productId].quantity += qty;
-        if (note) cart[productId].personalization = note;
-      } else {
-        cart[productId] = {
-          productId,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          unit: product.unit,
-          quantity: qty,
-          personalization: note
-        };
-      }
-
-      res.json(cart);
+      cart[productId] = {
+        productId,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        unit: product.unit,
+        quantity: qty,
+        personalization: note
+      };
     }
+
+    await firebaseRequest(`/carts/${userId}`, 'PUT', cart);
+    res.json(cart);
   } catch (err) {
     res.status(500).json({ error: 'Failed to add item to cart: ' + err.message });
   }
 });
 
 // UPDATE CART ITEM QUANTITY/NOTE
-app.post('/api/cart/update', async (req, res) => {
+app.post('/api/cart/update', requireUser, async (req, res) => {
   const { productId, quantity, personalization } = req.body;
   if (!productId) {
     return res.status(400).json({ error: 'Product ID is required.' });
   }
 
   const qty = parseInt(quantity);
+  const userId = req.session.user.userId;
 
   try {
-    if (req.session.user) {
-      const userId = req.session.user.userId;
-      const cart = await firebaseRequest(`/carts/${userId}`) || {};
+    const cart = await firebaseRequest(`/carts/${userId}`) || {};
 
-      if (cart[productId]) {
-        if (qty <= 0) {
-          delete cart[productId];
-        } else {
-          cart[productId].quantity = qty;
-          if (personalization !== undefined) {
-            cart[productId].personalization = personalization;
-          }
-        }
-        await firebaseRequest(`/carts/${userId}`, 'PUT', cart);
-      }
-      res.json(cart);
-    } else {
-      const cart = req.session.cart || {};
-      if (cart[productId]) {
-        if (qty <= 0) {
-          delete cart[productId];
-        } else {
-          cart[productId].quantity = qty;
-          if (personalization !== undefined) {
-            cart[productId].personalization = personalization;
-          }
+    if (cart[productId]) {
+      if (qty <= 0) {
+        delete cart[productId];
+      } else {
+        cart[productId].quantity = qty;
+        if (personalization !== undefined) {
+          cart[productId].personalization = personalization;
         }
       }
-      req.session.cart = cart;
-      res.json(cart);
+      await firebaseRequest(`/carts/${userId}`, 'PUT', cart);
     }
+    res.json(cart);
   } catch (err) {
     res.status(500).json({ error: 'Failed to update cart: ' + err.message });
   }
 });
 
 // DELETE FROM CART
-app.post('/api/cart/delete', async (req, res) => {
+app.post('/api/cart/delete', requireUser, async (req, res) => {
   const { productId } = req.body;
+  const userId = req.session.user.userId;
 
   try {
-    if (req.session.user) {
-      const userId = req.session.user.userId;
-      const cart = await firebaseRequest(`/carts/${userId}`) || {};
-      delete cart[productId];
-      await firebaseRequest(`/carts/${userId}`, 'PUT', cart);
-      res.json(cart);
-    } else {
-      const cart = req.session.cart || {};
-      delete cart[productId];
-      req.session.cart = cart;
-      res.json(cart);
-    }
+    const cart = await firebaseRequest(`/carts/${userId}`) || {};
+    delete cart[productId];
+    await firebaseRequest(`/carts/${userId}`, 'PUT', cart);
+    res.json(cart);
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete cart item: ' + err.message });
   }
@@ -669,18 +637,47 @@ app.post('/api/cart/delete', async (req, res) => {
 // 4. Wishlist Management
 
 // GET WISHLIST
-app.get('/api/wishlist', async (req, res) => {
-  if (req.session.user) {
-    const userId = req.session.user.userId;
-    try {
-      const wishlist = await firebaseRequest(`/wishlists/${userId}`) || {};
-      res.json(wishlist);
-    } catch (err) {
-      res.status(500).json({ error: 'Failed to retrieve wishlist: ' + err.message });
+app.get('/api/wishlist', requireUser, async (req, res) => {
+  const userId = req.session.user.userId;
+  try {
+    const wishlist = await firebaseRequest(`/wishlists/${userId}`) || {};
+    res.json(wishlist);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to load wishlist: ' + err.message });
+  }
+});
+
+// TOGGLE WISHLIST ITEM
+app.post('/api/wishlist/toggle', requireUser, async (req, res) => {
+  const { productId } = req.body;
+  if (!productId) {
+    return res.status(400).json({ error: 'Product ID is required.' });
+  }
+  const userId = req.session.user.userId;
+
+  try {
+    const wishlist = await firebaseRequest(`/wishlists/${userId}`) || {};
+
+    if (wishlist[productId]) {
+      delete wishlist[productId];
+    } else {
+      const product = await firebaseRequest(`/products/${productId}`);
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found.' });
+      }
+      wishlist[productId] = {
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        description: product.description
+      };
     }
-  } else {
-    if (!req.session.wishlist) req.session.wishlist = {};
-    res.json(req.session.wishlist);
+
+    await firebaseRequest(`/wishlists/${userId}`, 'PUT', wishlist);
+    res.json({ wishlist, status: Object.keys(wishlist).includes(productId) ? 'added' : 'removed' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to toggle wishlist item: ' + err.message });
   }
 });
 
@@ -741,11 +738,7 @@ app.post('/api/wishlist/toggle', async (req, res) => {
 // 5. Checkout & Orders API
 
 // PLACE AN ORDER
-app.post('/api/orders', async (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ error: 'You must be logged in to place an order.' });
-  }
-
+app.post('/api/orders', requireUser, async (req, res) => {
   const { customerName, customerEmail, customerPhone, deliveryDate, address, specialInstructions, items, total } = req.body;
 
   if (!customerName || !customerEmail || !items || Object.keys(items).length === 0) {
@@ -783,11 +776,8 @@ app.post('/api/orders', async (req, res) => {
 });
 
 // GET USER ORDER HISTORY
-app.get('/api/orders', async (req, res) => {
-  const userId = req.session.user ? req.session.user.userId : 'guest';
-  if (userId === 'guest') {
-    return res.json([]);
-  }
+app.get('/api/orders', requireUser, async (req, res) => {
+  const userId = req.session.user.userId;
 
   try {
     const allOrders = await firebaseRequest('/orders') || {};
@@ -805,11 +795,23 @@ app.get('/api/orders', async (req, res) => {
 // TRACK AN ORDER
 app.get('/api/orders/:id', async (req, res) => {
   const orderId = req.params.id;
+
+  if (!req.session || (!req.session.user && !req.session.isAdmin)) {
+    return res.status(401).json({ error: 'Please log in to view this order.' });
+  }
+
+  const userId = req.session.user ? req.session.user.userId : null;
+
   try {
     const order = await firebaseRequest(`/orders/${orderId}`);
     if (!order) {
       return res.status(404).json({ error: 'Order not found.' });
     }
+
+    if (order.userId !== userId && !req.session.isAdmin) {
+      return res.status(403).json({ error: 'You are not authorized to view this order.' });
+    }
+
     res.json({ id: orderId, ...order });
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch order tracking status: ' + err.message });
@@ -887,9 +889,299 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+app.get('/api/health', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.json({ status: 'ok', timestamp: Date.now() });
+});
+
+// Admin Authentication & Authorization
+async function ensureDefaultAdmin() {
+  try {
+    const data = await firebaseRequest('/admins') || {};
+    const desiredEmail = (process.env.ADMIN_EMAIL || '').toLowerCase();
+    const desiredPassword = process.env.ADMIN_PASSWORD;
+    const existing = Object.entries(data).find(([, admin]) => admin.email && admin.email.toLowerCase() === desiredEmail);
+
+    if (desiredEmail && desiredPassword) {
+      if (!existing) {
+        const hashed = await bcrypt.hash(desiredPassword, 10);
+        await firebaseRequest('/admins/default', 'PUT', {
+          email: desiredEmail,
+          passwordHash: hashed,
+          name: 'Administrator',
+          role: 'admin',
+          createdAt: Date.now()
+        });
+        console.log('Default admin account seeded from environment variables.');
+      } else {
+        console.log('Default admin account already exists in Firebase.');
+      }
+    }
+  } catch (err) {
+    console.error('Admin initialization error:', err);
+  }
+}
+ensureDefaultAdmin();
+
+function requireAdmin(req, res, next) {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      if (decoded && decoded.isAdmin) {
+        req.session = req.session || {};
+        req.session.isAdmin = true;
+        req.session.admin = decoded.admin;
+        return next();
+      }
+    } catch (err) {
+      // Token invalid or expired, fall through to session check
+    }
+  }
+
+  if (req.session && req.session.isAdmin) {
+    return next();
+  }
+  res.setHeader('Content-Type', 'application/json');
+  return res.status(401).json({ error: 'Unauthorized. Please log in as admin.' });
+}
+
+app.post('/api/admin/login', async (req, res) => {
+  const { email, password, rememberMe } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ success: false, message: 'Email and password are required' });
+  }
+  try {
+    const adminsData = await firebaseRequest('/admins') || {};
+    const adminEntry = Object.entries(adminsData).find(([key, admin]) =>
+      admin.email && admin.email.toLowerCase() === email.toLowerCase()
+    );
+    if (!adminEntry) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+    }
+    const [adminId, admin] = adminEntry;
+    const isValid = await bcrypt.compare(password, admin.passwordHash || '');
+    if (!isValid) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+    }
+    if (rememberMe) {
+      req.session.cookie.maxAge = 7 * 24 * 60 * 60 * 1000; // 7 days
+    } else {
+      req.session.cookie.maxAge = 24 * 60 * 60 * 1000; // 1 day
+    }
+    req.session.isAdmin = true;
+    req.session.admin = { id: adminId, email: admin.email, name: admin.name, role: 'admin' };
+
+    const token = jwt.sign(
+      { isAdmin: true, admin: { id: adminId, email: admin.email, name: admin.name, role: 'admin' } },
+      JWT_SECRET,
+      { expiresIn: rememberMe ? '7d' : '1d' }
+    );
+
+    res.setHeader('Content-Type', 'application/json');
+    res.json({
+      success: true,
+      token,
+      user: {
+        email: admin.email,
+        role: 'admin'
+      }
+    });
+  } catch (err) {
+    console.error('Admin login error:', err);
+    res.setHeader('Content-Type', 'application/json');
+    res.status(500).json({ success: false, message: 'Login service unavailable. Please try again.' });
+  }
+});
+
+app.post('/api/admin/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Logout failed' });
+    }
+    res.clearCookie('connect.sid', { path: '/' });
+    res.json({ message: 'Logged out successfully' });
+  });
+});
+
+app.get('/api/admin/session', (req, res) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      if (decoded && decoded.isAdmin) {
+        return res.json({ loggedIn: true, admin: decoded.admin });
+      }
+    } catch (err) {
+      // Token invalid or expired, fall through to session check
+    }
+  }
+
+  if (req.session && req.session.isAdmin) {
+    res.json({ loggedIn: true, admin: req.session.admin });
+  } else {
+    res.json({ loggedIn: false });
+  }
+});
+
+// 8. Admin APIs
+app.get('/api/admin/stats', requireAdmin, async (req, res) => {
+  try {
+    const ordersData = await firebaseRequest('/orders') || {};
+    const usersData = await firebaseRequest('/users') || {};
+    
+    let totalOrders = 0;
+    let pendingOrders = 0;
+    let totalRevenue = 0;
+    
+    Object.values(ordersData).forEach(order => {
+      totalOrders++;
+      if (order.status === 'Pending') pendingOrders++;
+      totalRevenue += (order.total || 0);
+    });
+    
+    const totalUsers = Object.keys(usersData).length;
+    
+    res.json({
+      totalOrders,
+      pendingOrders,
+      totalUsers,
+      totalRevenue
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch admin stats' });
+  }
+});
+
+app.get('/api/admin/orders', requireAdmin, async (req, res) => {
+  try {
+    const ordersData = await firebaseRequest('/orders') || {};
+    const orders = Object.keys(ordersData).map(key => ({
+      id: key,
+      ...ordersData[key]
+    })).sort((a, b) => b.createdAt - a.createdAt);
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch orders' });
+  }
+});
+
+app.post('/api/admin/orders/:id/status', requireAdmin, async (req, res) => {
+  const { status } = req.body;
+  const orderId = req.params.id;
+  try {
+    const order = await firebaseRequest(`/orders/${orderId}`);
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+    
+    order.status = status;
+    await firebaseRequest(`/orders/${orderId}`, 'PUT', order);
+    res.json({ message: 'Order status updated', order });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update order status' });
+  }
+});
+
+app.get('/api/admin/users', requireAdmin, async (req, res) => {
+  try {
+    const usersData = await firebaseRequest('/users') || {};
+    const users = Object.keys(usersData).map(key => ({
+      id: key,
+      ...usersData[key]
+    })).sort((a, b) => b.createdAt - a.createdAt);
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
+app.put('/api/admin/products/:id', requireAdmin, async (req, res) => {
+  const productId = req.params.id;
+  const { name, category, price, unit, description, image, tags } = req.body;
+  if (!name) return res.status(400).json({ error: 'Name is required' });
+  try {
+    const existing = await firebaseRequest(`/products/${productId}`);
+    if (!existing) return res.status(404).json({ error: 'Product not found' });
+    const updated = { ...existing, name, category, price: parseFloat(price), unit, description, image: image || existing.image, tags: tags || existing.tags || [] };
+    await firebaseRequest(`/products/${productId}`, 'PUT', updated);
+    res.json({ message: 'Product updated', product: updated });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update product' });
+  }
+});
+
+app.delete('/api/admin/products/:id', requireAdmin, async (req, res) => {
+  const productId = req.params.id;
+  try {
+    await firebaseRequest(`/products/${productId}`, 'DELETE');
+    res.json({ message: 'Product deleted' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete product' });
+  }
+});
+
+app.get('/api/admin/reviews', requireAdmin, async (req, res) => {
+  try {
+    const reviewsData = await firebaseRequest('/reviews') || {};
+    const allReviews = [];
+    Object.keys(reviewsData).forEach(productId => {
+      const productReviews = reviewsData[productId];
+      Object.keys(productReviews).forEach(reviewId => {
+        allReviews.push({ id: reviewId, productId, ...productReviews[reviewId] });
+      });
+    });
+    allReviews.sort((a, b) => b.createdAt - a.createdAt);
+    res.json(allReviews);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch reviews' });
+  }
+});
+
+app.post('/api/admin/products', requireAdmin, async (req, res) => {
+  const { id, name, category, price, unit, description, image } = req.body;
+  if (!id || !name) return res.status(400).json({ error: 'ID and Name are required' });
+  try {
+    const product = { id, name, category, price: parseFloat(price), unit, description, image, tags: [] };
+    await firebaseRequest(`/products/${id}`, 'PUT', product);
+    res.status(201).json({ message: 'Product added', product });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to add product' });
+  }
+});
+
+// Admin page aliases for cleaner URLs
+app.get('/admin/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin-login.html'));
+});
+app.get('/admin/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin-dashboard.html'));
+});
+app.get('/admin/orders', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin-orders.html'));
+});
+
+// JSON 404 handler for API routes
+app.use('/api', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.status(404).json({ error: 'API endpoint not found', path: req.originalUrl });
+});
+
 // Catch-all route to serve the Home page for invalid paths
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Global error handler to ensure JSON responses
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.setHeader('Content-Type', 'application/json');
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal server error',
+    ...(process.env.NODE_ENV === 'development' ? { stack: err.stack } : {})
+  });
 });
 
 // Start Server

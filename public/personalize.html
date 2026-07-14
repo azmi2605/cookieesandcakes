@@ -136,6 +136,12 @@
     </style>
 
     <script src="/js/app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const allowed = await window.App.requireAuth({ returnUrl: '/personalize.html', message: 'Please log in to personalize your order.' });
+            if (!allowed) return;
+        });
+    </script>
 </head>
 
 <body class="bg-background text-on-background font-body-md min-h-screen flex flex-col">

@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       addToBagBtn.addEventListener('click', async (e) => {
         e.preventDefault();
         
+        const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to add items to your cart.' });
+        if (!allowed) return;
+        
         const quantity = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
         const message = messageInput ? messageInput.value.trim() : '';
 
@@ -283,6 +286,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Attach event handlers
         itemCard.querySelector('.delete-btn').addEventListener('click', async () => {
           try {
+            const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to manage your wishlist.' });
+            if (!allowed) return;
+            
             await window.App.fetchAPI('/api/wishlist/toggle', {
               method: 'POST',
               body: { productId: id }
@@ -296,6 +302,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         itemCard.querySelector('.add-cart-btn').addEventListener('click', async () => {
           try {
+            const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to add items to your cart.' });
+            if (!allowed) return;
+            
             // Add to Cart
             await window.App.fetchAPI('/api/cart', {
               method: 'POST',

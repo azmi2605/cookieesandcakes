@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Order Details | cookieesandcakes Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;family=Source+Sans+3:ital,wght@0,200..900;1,200..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#f5ded6",
+                        "inverse-primary": "#eabdae",
+                        "on-tertiary-fixed": "#02201c",
+                        "on-secondary-container": "#79363a",
+                        "inverse-surface": "#3b2d28",
+                        "inverse-on-surface": "#ffede7",
+                        "surface-bright": "#fff8f6",
+                        "background": "#fff8f6",
+                        "secondary-fixed": "#ffdada",
+                        "secondary-container": "#fea3a6",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#2d150c",
+                        "surface-variant": "#f5ded6",
+                        "on-tertiary-fixed-variant": "#2f4c48",
+                        "on-background": "#251914",
+                        "on-secondary-fixed": "#3c070e",
+                        "tertiary-container": "#173430",
+                        "on-tertiary": "#ffffff",
+                        "on-surface": "#251914",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "surface-tint": "#79564a",
+                        "on-surface-variant": "#504440",
+                        "tertiary-fixed-dim": "#aecdc7",
+                        "secondary": "#91494d",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#5f3f34",
+                        "outline-variant": "#d4c3be",
+                        "on-secondary-fixed-variant": "#743236",
+                        "outline": "#827470",
+                        "tertiary-fixed": "#c9e9e3",
+                        "primary-fixed-dim": "#eabdae",
+                        "primary-fixed": "#ffdbcf",
+                        "primary-container": "#44281e",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffb3b5",
+                        "on-tertiary-container": "#7f9d97",
+                        "surface-container-high": "#fbe3dc",
+                        "surface-container": "#ffe9e3",
+                        "on-primary": "#ffffff",
+                        "surface": "#fff8f6",
+                        "surface-container-low": "#fff1ec",
+                        "tertiary": "#011f1b",
+                        "surface-dim": "#ecd5ce",
+                        "primary": "#2c140b",
+                        "on-primary-container": "#b68e80"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "24px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "xl": "80px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px",
+                        "gutter": "24px",
+                        "lg": "48px",
+                        "sm": "12px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["\"Source Serif 4\""],
+                        "body-md": ["\"Source Sans 3\""],
+                        "body-lg": ["\"Source Sans 3\""],
+                        "label-sm": ["\"Source Sans 3\""],
+                        "headline-md": ["\"Source Serif 4\""]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        }
+
+        .dotted-border {
+            background-image: linear-gradient(to right, #827470 33%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 6px 1px;
+            background-repeat: repeat-x;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #fff8f6;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d4c3be;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md selection:bg-secondary-container selection:text-on-secondary-container overflow-hidden">
+    <div class="grain-overlay"></div>
+    <!-- SideNavBar (Shared Component) -->
+    <aside class="fixed left-0 top-0 h-full flex flex-col p-sm z-40 bg-surface-container shadow-sm w-64">
+<div class="mb-lg px-4">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">cookieesandcakes</h1>
+<p class="font-label-sm text-label-sm opacity-70">Bakery Management</p>
+</div>
+        <nav class="flex-1 space-y-2">
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
+                href="admin-dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-body-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-[0.98] transition-transform duration-150 shadow-sm"
+                href="admin-orders.html">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <span class="font-body-md">Orders</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
+                href="admin-dashboard.html#products">
+                <span class="material-symbols-outlined">bakery_dining</span>
+                <span class="font-body-md">Products</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
+                href="admin-customers.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-body-md">Customers</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
+                href="admin-reviews.html">
+                <span class="material-symbols-outlined">rate_review</span>
+                <span class="font-body-md">Reviews</span>
+            </a>
+        </nav>
+        <div class="mt-auto border-t border-outline-variant/30 pt-base space-y-1">
+            <a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
+                href="admin-add-product.html">
+                <span class="material-symbols-outlined">add_circle</span>
+                <span class="font-label-sm">New Batch</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors"
+                href="#">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-label-sm">Settings</span>
+            </a>
+            <a class="logout-link flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors text-error"
+                href="#">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-label-sm">Logout</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Main Wrapper -->
+    <div class="ml-64 h-screen flex flex-col relative">
+        <!-- TopNavBar (Shared Component) -->
+        <header
+            class="sticky top-0 right-0 w-full flex justify-between items-center px-gutter py-sm z-30 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+            <div class="flex items-center gap-4">
+                <h2 class="font-headline-md text-headline-md text-primary font-bold">Dashboard</h2>
+                <nav class="hidden md:flex items-center gap-6 ml-8">
+                    <a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md"
+                        href="#">Overview</a>
+                    <a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md"
+                        href="#">Reports</a>
+                    <a class="text-on-surface-variant hover:text-secondary transition-colors font-body-md"
+                        href="#">Inventory</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-gutter">
+                <div class="relative flex items-center">
+                    <input
+                        class="bg-surface-container-low border-none rounded-full px-4 py-2 text-sm w-64 focus:ring-2 focus:ring-secondary/20"
+                        placeholder="Search orders..." type="text" />
+                    <span class="material-symbols-outlined absolute right-3 text-on-surface-variant">search</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="hover:bg-surface-container-low rounded-full p-2 transition-all">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <button class="hover:bg-surface-container-low rounded-full p-2 transition-all">
+                        <span class="material-symbols-outlined">help</span>
+                    </button>
+                    <div
+                        class="w-10 h-10 rounded-full bg-surface-container-highest border border-outline-variant overflow-hidden">
+                        <img class="w-full h-full object-cover"
+                            data-alt="A warm, professional headshot of a boutique bakery manager in a minimalist white apron, captured in soft natural lighting. The background features a blurred artisanal bakery setting with warm wood tones and marble counters, evoking a mood of high-end culinary expertise and attention to detail."
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAF5DOsN-ATW21ebxeenuU7PWYYuBonyJ4eU0ByX60XhTXrYM7DNY7K7bMzmmI2_v4McPxXvE3iU5w9YjFiysnuPxNATwqWFMxlSmWt_NHqJxVCvyKHijjMa-XSn3BrcurvJLNmJ5maCWjXih6WGWAYhxzRonCHsttMozjKGKuU70JCDXVgpEoarCtax60ufjk75AY3RppuWW3pKQrt3SxjcDR3upKnMtG1Zjwjz_fi0rVegvPpbHctkXge1iU1WFwwjggezI2fF3Y" />
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Page Content -->
+        <main class="flex-1 overflow-y-auto p-gutter custom-scrollbar max-w-[1400px] mx-auto w-full relative">
+            <!-- Loading Overlay -->
+            <div id="order-loading" class="absolute inset-0 bg-background/80 backdrop-blur-sm z-40 flex items-center justify-center">
+                <div class="flex flex-col items-center gap-4">
+                    <span class="material-symbols-outlined animate-spin text-5xl text-secondary">autorenew</span>
+                    <p class="font-label-md text-on-surface-variant">Loading order details...</p>
+                </div>
+            </div>
+            <!-- Error Message -->
+            <div id="order-error" class="hidden mb-lg p-md bg-error-container text-on-error-container rounded-xl font-body-md"></div>
+            <!-- Section 1: Header -->
+            <div class="mb-lg flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div class="space-y-2">
+                    <button onclick="window.location.href='/admin/orders'"
+                        class="flex items-center gap-2 text-secondary font-bold hover:translate-x-[-4px] transition-transform">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        Back to Orders
+                    </button>
+                    <h3 class="font-display-lg text-display-lg text-primary" id="order-id-display">Order #CK-1024</h3>
+                    <p class="text-on-surface-variant font-body-md" id="order-date-display">Placed on October 24, 2023
+                        at 02:45 PM</p>
+                </div>
+                <div class="flex gap-3">
+                    <button
+                        class="px-6 py-3 border-2 border-secondary text-secondary rounded-xl font-bold hover:bg-secondary/5 transition-colors">
+                        Download Invoice
+                    </button>
+                    <button
+                        class="px-6 py-3 bg-secondary text-on-secondary rounded-xl font-bold shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all">
+                        Print Label
+                    </button>
+                </div>
+            </div>
+            <!-- Section 2: Status Tracker -->
+            <section
+                class="mb-lg bg-surface-container rounded-xl p-md shadow-sm border border-outline-variant/20 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="flex-1 w-full max-w-4xl">
+                        <div class="flex justify-between items-center relative">
+                            <!-- Line Background -->
+                            <div class="absolute top-1/2 left-0 w-full h-1 bg-outline-variant -translate-y-1/2 z-0"></div>
+                            <!-- Active Line -->
+                            <div id="status-active-line"
+                                class="absolute top-1/2 left-0 w-0 h-1 bg-secondary -translate-y-1/2 z-0 transition-all duration-700"></div>
+                            <!-- Steps -->
+                            <div class="flex flex-col items-center gap-2 z-10" data-step="0">
+                                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-on-surface-variant flex items-center justify-center ring-4 ring-surface">
+                                    <span class="material-symbols-outlined text-sm">schedule</span>
+                                </div>
+                                <span class="step-label font-label-sm text-on-surface-variant">Pending</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 z-10" data-step="1">
+                                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-on-surface-variant flex items-center justify-center ring-4 ring-surface">
+                                    <span class="material-symbols-outlined text-sm">thumb_up</span>
+                                </div>
+                                <span class="step-label font-label-sm text-on-surface-variant">Confirmed</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 z-10" data-step="2">
+                                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-on-surface-variant flex items-center justify-center ring-4 ring-surface">
+                                    <span class="material-symbols-outlined text-sm">chef_hat</span>
+                                </div>
+                                <span class="step-label font-label-sm text-on-surface-variant">Preparing</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 z-10" data-step="3">
+                                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-on-surface-variant flex items-center justify-center ring-4 ring-surface">
+                                    <span class="material-symbols-outlined text-sm">local_shipping</span>
+                                </div>
+                                <span class="step-label font-label-sm text-on-surface-variant">Out for Delivery</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 z-10" data-step="4">
+                                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-on-surface-variant flex items-center justify-center ring-4 ring-surface">
+                                    <span class="material-symbols-outlined text-sm">check_circle</span>
+                                </div>
+                                <span class="step-label font-label-sm text-on-surface-variant">Delivered</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-surface-container-low p-sm rounded-xl border border-secondary/10 flex flex-col items-center gap-3 min-w-[200px]">
+                        <p class="font-label-sm uppercase tracking-widest text-on-surface-variant">Current Status</p>
+                        <span id="current-status"
+                            class="px-4 py-1 bg-secondary-container text-on-secondary-container rounded-full font-bold text-sm">In
+                            Preparation</span>
+                        <div class="w-full space-y-2">
+                            <label class="font-label-sm text-on-surface-variant block text-left" for="status-select">Update Status</label>
+                            <select id="status-select" class="w-full px-3 py-2 bg-surface border border-outline-variant rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20">
+                                <option value="Pending">Pending</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Preparing">Preparing</option>
+                                <option value="Out for Delivery">Out for Delivery</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="flex w-full gap-2">
+                            <button id="cancel-status-btn" class="flex-1 px-3 py-2 rounded-lg border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors text-sm">Cancel</button>
+                            <button id="save-status-btn" class="flex-1 px-3 py-2 rounded-lg bg-secondary text-on-secondary hover:brightness-110 active:scale-95 transition-all shadow-md text-sm flex items-center justify-center gap-2">
+                                <span id="save-status-text">Save</span>
+                                <span id="save-status-spinner" class="spinner hidden" style="border-top-color: #ffffff; width:16px; height:16px; border-width:2px;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Grid Layout for Info Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start mb-lg">
+                <!-- Customer Info -->
+                <div
+                    class="lg:col-span-1 bg-surface-container p-md rounded-xl shadow-sm border border-outline-variant/10 hover:shadow-md transition-shadow h-full">
+                    <div class="flex items-center gap-3 mb-md">
+                        <div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+                            <span class="material-symbols-outlined">person</span>
+                        </div>
+                        <h4 class="font-headline-md text-primary">Customer Info</h4>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-label-sm text-on-surface-variant mb-1">Name</p>
+                            <p class="font-body-lg font-bold text-primary" id="customer-name">Sarah Jenkins</p>
+                        </div>
+                        <div class="dotted-border pb-3">
+                            <p class="font-label-sm text-on-surface-variant mb-1">Email</p>
+                            <p class="font-body-md text-on-surface flex items-center gap-2" id="customer-email">
+                                <span class="material-symbols-outlined text-sm">mail</span>
+                                sarah.j@example.com
+                            </p>
+                        </div>
+                        <div>
+                            <p class="font-label-sm text-on-surface-variant mb-1">Phone</p>
+                            <p class="font-body-md text-on-surface flex items-center gap-2" id="customer-phone">
+                                <span class="material-symbols-outlined text-sm">call</span>
+                                +1 555-0123
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Delivery Details -->
+                <div
+                    class="lg:col-span-1 bg-surface-container p-md rounded-xl shadow-sm border border-outline-variant/10 hover:shadow-md transition-shadow h-full">
+                    <div class="flex items-center gap-3 mb-md">
+                        <div class="p-2 bg-secondary/10 rounded-lg text-secondary">
+                            <span class="material-symbols-outlined">location_on</span>
+                        </div>
+                        <h4 class="font-headline-md text-primary">Delivery Details</h4>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="dotted-border pb-3">
+                            <p class="font-label-sm text-on-surface-variant mb-1">Shipping Address</p>
+                            <p class="font-body-md text-on-surface" id="delivery-address">—</p>
+                        </div>
+                        <div>
+                            <p class="font-label-sm text-on-surface-variant mb-1">Special Instructions</p>
+                            <div
+                                class="p-3 bg-background rounded-lg border border-secondary/10 italic text-on-surface-variant font-body-md" id="delivery-instructions">
+                                None
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Order Summary -->
+                <div
+                    class="lg:col-span-1 bg-primary text-on-primary p-md rounded-xl shadow-xl border border-primary/20 h-full relative overflow-hidden">
+                    <!-- Texture overlay for summary card -->
+                    <div
+                        class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_center,#ffffff,transparent)]">
+                    </div>
+                    <div class="flex items-center gap-3 mb-md relative z-10">
+                        <div class="p-2 bg-on-primary/10 rounded-lg text-on-primary">
+                            <span class="material-symbols-outlined">receipt_long</span>
+                        </div>
+                        <h4 class="font-headline-md">Order Summary</h4>
+                    </div>
+                    <div class="space-y-4 relative z-10">
+                        <div class="flex justify-between font-body-md">
+                            <span class="opacity-80">Subtotal</span>
+                            <span id="order-subtotal">—</span>
+                        </div>
+                        <div class="flex justify-between font-body-md">
+                            <span class="opacity-80">Delivery Fee</span>
+                            <span id="order-delivery">—</span>
+                        </div>
+                        <div class="flex justify-between font-body-md">
+                            <span class="opacity-80">Tax (11%)</span>
+                            <span id="order-tax">—</span>
+                        </div>
+                        <div class="pt-4 border-t border-on-primary/20 flex justify-between items-end">
+                            <span class="font-headline-md font-bold">Total</span>
+                            <span class="text-3xl font-display-lg" id="order-total">$85.00</span>
+                        </div>
+                        <div
+                            class="mt-md p-3 bg-on-primary/5 rounded-lg border border-on-primary/10 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-secondary-container">credit_card</span>
+                            <div>
+                                <p class="text-xs uppercase tracking-widest opacity-60">Payment Method</p>
+                                <p class="font-label-sm">Visa ending in •••• 4242</p>
+                            </div>
+                        </div>
+                        <div class="mt-2 flex items-center justify-between p-3 bg-on-primary/5 rounded-lg border border-on-primary/10">
+                            <span class="text-xs uppercase tracking-widest opacity-60">Payment Status</span>
+                            <span id="payment-status" class="font-label-sm font-bold text-green-300">Paid</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Section 5: Order Items Table -->
+            <div
+                class="bg-surface-container rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden mb-xl">
+                    <div class="p-md border-b border-outline-variant/20 flex justify-between items-center">
+                        <h4 class="font-headline-md text-primary">Order Items</h4>
+                        <span id="order-item-count"
+                            class="font-label-sm px-3 py-1 bg-surface-container-highest rounded-full text-on-surface-variant">— Items Total</span>
+                    </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr
+                                class="bg-surface-container-low text-on-surface-variant font-label-sm uppercase tracking-wider">
+                                <th class="px-md py-4">Product</th>
+                                <th class="px-md py-4">Quantity</th>
+                                <th class="px-md py-4">Price</th>
+                                <th class="px-md py-4">Message / Note</th>
+                                <th class="px-md py-4 text-right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant/10" id="order-items-list">
+                            <!-- Item 1 -->
+                            <tr class="hover:bg-background transition-colors group">
+                                <td class="px-md py-4">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-16 h-16 rounded-lg bg-surface-container-highest overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
+                                            <img class="w-full h-full object-cover"
+                                                data-alt="A close-up photograph of a professional vanilla bean cupcake with tall, swirling buttercream frosting, topped with tiny black vanilla bean specks. The lighting is soft and golden, set against a warm linen background that reflects a high-end, artisan bakery aesthetic."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOSFZOx9OITfvbq0GlRixYlHMheoa0J-G8HlyhzhJXMfK8aPd1NtJzpdPtp_hRCpF4QSmtatceuT1B0G7yx-MCvOU5Ywd0D5bWoQBSm0FdgbpF_P6h8ijrjDRWpsjPHxO1Pi3teNHQy_oMMPrbCY8LojRhj5iEtFTm-tqaTz7LgiXG67R8Dz_3rnmNcJKjqq5S1VErUaIGrF96t6ZvJjzXjKn2K8stOpZV31c4yKOZuRMyacSyioEhFzMMK3vNgsj44HoNfdDx2JE" />
+                                        </div>
+                                        <div>
+                                            <p class="font-body-lg font-bold text-primary">Vanilla Bean Cupcake</p>
+                                            <p class="font-label-sm text-on-surface-variant">Individual Size</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-md py-4">
+                                    <span class="font-body-md text-on-surface">12</span>
+                                </td>
+                                <td class="px-md py-4">
+                                    <span class="font-body-md text-on-surface">$4.50</span>
+                                </td>
+                                <td class="px-md py-4">
+                                    <div class="flex items-center gap-2 text-secondary font-body-md italic">
+                                        <span class="material-symbols-outlined text-sm">edit_note</span>
+                                        "Happy Birthday Liam!"
+                                    </div>
+                                </td>
+                                <td class="px-md py-4 text-right">
+                                    <span class="font-body-lg font-bold text-primary">$54.00</span>
+                                </td>
+                            </tr>
+                            <!-- Item 2 -->
+                            <tr class="hover:bg-background transition-colors group">
+                                <td class="px-md py-4">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-16 h-16 rounded-lg bg-surface-container-highest overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
+                                            <img class="w-full h-full object-cover"
+                                                data-alt="An artisanal sourdough loaf with a beautifully scored crust, showing deep golden browning and rustic flour dusting. The bread sits on a natural linen cloth in a bright, airy kitchen setting with warm wood tones. Minimalist, clean, and high-end commercial food photography style."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAl28LLW2mAW1-CpjrISEr2rgOM9sJT00Fo9PgY5SlNWKvWUzVNcRvmVzMaeUOIuV_WneZOu3g0JSJz_oek8FiqyuquHZyRi5VE-8l_zbahw5vh4j-_0xRq8yucbVqB9uNItabAGK2gaKhw6XXCCeVJsWgLUHpS1zDaNyZxr67F9e40gHQeqFZh8NUd2Ssf_YeHxwZntwasDLGiu6Ti9wRVyvkbX7Oh_JCfBR0_rglBvdmQI0V2he54jEvXurLmPFE1p_NqFOvcIo" />
+                                        </div>
+                                        <div>
+                                            <p class="font-body-lg font-bold text-primary">Sourdough Loaf</p>
+                                            <p class="font-label-sm text-on-surface-variant">Signature Recipe</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-md py-4">
+                                    <span class="font-body-md text-on-surface">2</span>
+                                </td>
+                                <td class="px-md py-4">
+                                    <span class="font-body-md text-on-surface">$8.00</span>
+                                </td>
+                                <td class="px-md py-4">
+                                    <span class="text-on-surface-variant font-body-md opacity-40">None</span>
+                                </td>
+                                <td class="px-md py-4 text-right">
+                                    <span class="font-body-lg font-bold text-primary">$16.00</span>
+                                </td>
+                            </tr>
+                            <!-- Item 3 -->
+                            <tr class="hover:bg-background transition-colors group">
+                                <td class="px-md py-4">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-16 h-16 rounded-lg bg-surface-container-highest overflow-hidden shadow-sm group-hover:scale-105 transition-transform">
+                                            <img class="w-full h-full object-cover"
+                                                data-alt="A delicate box of six lavender macarons with a soft purple shell and creamy white chocolate ganache filling. The macarons are arranged elegantly on a marble surface with a few dried lavender sprigs. The style is soft, luxurious, and gourmet, using the bakery's signature light mode aesthetic."
+                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJzcYy-J_DdTwRczx4uMNtATELcJKqDSR4bgBwoHakg8KZiJBs1K6_G0miBO9oxyN7P24DcR7guWoanINDeD2YSFgaqI743dt_mSmr0YQmkg1eBYy991IjR0N63_9x71_R-JmWmfoPwJSMgfyGFbU7PaJkvZG4aJ5HsooDFG65_yGgOsA8GHRs0ym4ZEKYj85nbpBoeuylRXaG6wDhmAPg4F8E2E9JqwOvo37v089rmp-JCc0PGbbZN-xX3Gg-UDGGH9tYQ1kWwMc" />
+                                        </div>
+                                        <div>
+                                            <p class="font-body-lg font-bold text-primary">Lavender Macarons</p>
+                                            <p class="font-label-sm text-on-surface-variant">6pc Gift Box</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-md py-4">
+                                    <span class="font-body-md text-on-surface">1</span>
+                                </td>
+                                <td class="px-md py-4">
+                                    <span class="font-body-md text-on-surface">$12.00</span>
+                                </td>
+                                <td class="px-md py-4">
+                                    <div class="flex items-center gap-2 text-secondary font-body-md italic">
+                                        <span class="material-symbols-outlined text-sm">edit_note</span>
+                                        "Thank you for the help!"
+                                    </div>
+                                </td>
+                                <td class="px-md py-4 text-right">
+                                    <span class="font-body-lg font-bold text-primary">$12.00</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Mini Footer for items -->
+                <div class="bg-surface-container-low p-sm flex justify-center border-t border-outline-variant/10">
+                    <p class="font-label-sm text-on-surface-variant italic">End of item list</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Micro-interaction Script -->
+    <script>
+        // Simple search focus animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.querySelector('input[type="text"]');
+            if (searchInput) {
+                searchInput.addEventListener('focus', () => {
+                    searchInput.classList.add('w-80');
+                    searchInput.classList.remove('w-64');
+                });
+                searchInput.addEventListener('blur', () => {
+                    searchInput.classList.remove('w-80');
+                    searchInput.classList.add('w-64');
+                });
+            }
+        });
+    </script>
+    <script>
+        window.API_BASE_URL = window.API_BASE_URL || '';
+    </script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

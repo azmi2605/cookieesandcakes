@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>cookieesandcakes Admin Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&amp;family=Source+Sans+3:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .paper-texture {
+            position: relative;
+        }
+        .paper-texture::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png");
+            z-index: 1;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #fff8f6;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d4c3be;
+            border-radius: 10px;
+        }
+        .dotted-line {
+            background-image: radial-gradient(#827470 1px, transparent 1px);
+            background-size: 8px 8px;
+            background-position: center;
+            height: 1px;
+            width: 100%;
+            opacity: 0.2;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#aecdc7",
+                        "on-secondary-fixed": "#3c070e",
+                        "primary-fixed": "#ffdbcf",
+                        "on-primary-fixed": "#2d150c",
+                        "secondary-container": "#fea3a6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#fbe3dc",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#7f9d97",
+                        "primary-container": "#44281e",
+                        "surface-dim": "#ecd5ce",
+                        "inverse-surface": "#3b2d28",
+                        "on-primary-fixed-variant": "#5f3f34",
+                        "on-secondary": "#ffffff",
+                        "on-background": "#251914",
+                        "on-secondary-fixed-variant": "#743236",
+                        "surface-container-low": "#fff1ec",
+                        "error-container": "#ffdad6",
+                        "surface-container": "#ffe9e3",
+                        "surface-bright": "#fff8f6",
+                        "secondary-fixed-dim": "#ffb3b5",
+                        "tertiary-container": "#173430",
+                        "surface": "#fff8f6",
+                        "surface-tint": "#79564a",
+                        "on-surface-variant": "#504440",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#79363a",
+                        "primary": "#2c140b",
+                        "tertiary": "#011f1b",
+                        "on-tertiary-fixed": "#02201c",
+                        "secondary-fixed": "#ffdada",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#f5ded6",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-primary-container": "#b68e80",
+                        "background": "#fff8f6",
+                        "primary-fixed-dim": "#eabdae",
+                        "on-surface": "#251914",
+                        "inverse-on-surface": "#ffede7",
+                        "on-tertiary-fixed-variant": "#2f4c48",
+                        "surface-variant": "#f5ded6",
+                        "tertiary-fixed": "#c9e9e3",
+                        "secondary": "#91494d",
+                        "inverse-primary": "#eabdae",
+                        "outline-variant": "#d4c3be",
+                        "outline": "#827470"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "12px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["\"Source Serif 4\""],
+                        "display-lg": ["\"Source Serif 4\""],
+                        "body-lg": ["\"Source Sans 3\""],
+                        "body-md": ["\"Source Sans 3\""],
+                        "label-sm": ["\"Source Sans 3\""]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background font-body-md text-on-background paper-texture selection:bg-secondary-container">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-sm z-40 w-64 bg-surface-container dark:bg-surface-container-highest shadow-sm">
+<div class="mb-lg px-4">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">cookieesandcakes</h1>
+<p class="font-label-sm text-label-sm opacity-70">Bakery Management</p>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Active Navigation Logic: Dashboard -->
+    <a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-[0.98] transition-transform duration-150" href="admin-dashboard.html">
+        <span class="material-symbols-outlined">dashboard</span>
+        <span>Dashboard</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="admin-orders.html">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span>Orders</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="admin-dashboard.html#products">
+        <span class="material-symbols-outlined">bakery_dining</span>
+        <span>Products</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="admin-customers.html">
+        <span class="material-symbols-outlined">group</span>
+        <span>Customers</span>
+    </a>
+    <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="admin-reviews.html">
+        <span class="material-symbols-outlined">rate_review</span>
+        <span>Reviews</span>
+    </a>
+</nav>
+<div class="mt-auto space-y-2 pt-lg">
+        <a href="admin-add-product.html" class="w-full bg-secondary text-on-secondary py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-md active:scale-95">
+            <span class="material-symbols-outlined">add</span>
+            <span>New Batch</span>
+        </a>
+        <div class="dotted-line my-4"></div>
+        <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+            <span class="material-symbols-outlined">settings</span>
+            <span>Settings</span>
+        </a>
+        <a class="logout-link flex items-center gap-3 px-4 py-3 text-error hover:bg-surface-container-high rounded-lg" href="#">
+            <span class="material-symbols-outlined">logout</span>
+            <span>Logout</span>
+        </a>
+    </div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="sticky top-0 right-0 w-[calc(100%-256px)] ml-64 flex justify-between items-center px-gutter py-sm z-30 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+<div class="flex items-center gap-md">
+<h2 class="font-headline-md text-headline-md text-primary">Dashboard</h2>
+<nav class="hidden md:flex gap-gutter items-center">
+            <a class="text-secondary font-bold border-b-2 border-secondary pb-1 transition-opacity opacity-80" href="admin-dashboard.html">Overview</a>
+            <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#">Reports</a>
+            <a class="text-on-surface-variant hover:text-secondary transition-colors" href="admin-orders.html">Inventory</a>
+        </nav>
+</div>
+<div class="flex items-center gap-sm">
+<div class="relative group">
+<input class="bg-surface border-primary/20 focus:border-primary/50 focus:ring-0 rounded-full px-gutter py-2 text-body-md w-64 transition-all duration-300" placeholder="Search orders..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+</div>
+<button class="hover:bg-surface-container-low rounded-full p-2 text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:bg-surface-container-low rounded-full p-2 text-on-surface-variant">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-high cursor-pointer ml-sm">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait of a professional female pastry chef wearing a clean white coat, smiling warmly in a sun-drenched, high-end commercial bakery kitchen. The lighting is soft and natural, emphasizing textures of flour and stainless steel in the background. The overall aesthetic is clean, professional, and artisanal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1YA3m2SwHSNUNlcBw2Jrziw0F1yefJT2iTvzeLMEYQKRrjm_GFMBN0zKnGcY6TotSgp9E2GuGBFMoggnMv4BgDwX9OXvmBTNKT67bQHPSABdSNBYGeu9ZDyK930rvyQ3eGiAbL9NhC004Qqsar1mzbkiUSisZR-VKhvcQt6r3fwiiz1pKXBkWGzc2RjXyKgMqFmfmc20qLLpu2zRdSZ-x8QCFjdvdMQo9wHRaoDT7ZnDtC5PuSXV2qAg_WpgDKfAxOhJ_TYtlB6U"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="ml-64 p-gutter max-w-[1400px]">
+<!-- 1. Overview Header (Stat Cards) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-lg">
+<div class="bg-surface-container p-gutter rounded-xl shadow-sm border border-primary/5 hover:scale-[1.02] transition-transform duration-300 group">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-secondary font-label-sm uppercase tracking-wider">Total Orders</span>
+<span class="material-symbols-outlined text-secondary opacity-50 group-hover:opacity-100 transition-opacity">shopping_basket</span>
+</div>
+<div class="text-display-lg font-display-lg text-primary" id="stat-total-orders">1,284</div>
+<div class="flex items-center gap-1 text-label-sm text-green-700 mt-xs">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+12.5% vs last month</span>
+</div>
+</div>
+<div class="bg-surface-container p-gutter rounded-xl shadow-sm border border-primary/5 hover:scale-[1.02] transition-transform duration-300 group">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-secondary font-label-sm uppercase tracking-wider">Pending Orders</span>
+<span class="material-symbols-outlined text-secondary opacity-50 group-hover:opacity-100 transition-opacity">pending_actions</span>
+</div>
+<div class="text-display-lg font-display-lg text-primary" id="stat-pending-orders">42</div>
+<div class="flex items-center gap-1 text-label-sm text-secondary mt-xs">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>Requires immediate action</span>
+</div>
+</div>
+<div class="bg-surface-container p-gutter rounded-xl shadow-sm border border-primary/5 hover:scale-[1.02] transition-transform duration-300 group">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-secondary font-label-sm uppercase tracking-wider">Total Users</span>
+<span class="material-symbols-outlined text-secondary opacity-50 group-hover:opacity-100 transition-opacity">person</span>
+</div>
+<div class="text-display-lg font-display-lg text-primary" id="stat-total-users">856</div>
+<div class="flex items-center gap-1 text-label-sm text-green-700 mt-xs">
+<span class="material-symbols-outlined text-[16px]">person_add</span>
+<span>+48 new this week</span>
+</div>
+</div>
+<div class="bg-surface-container p-gutter rounded-xl shadow-sm border border-primary/5 hover:scale-[1.02] transition-transform duration-300 group">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-secondary font-label-sm uppercase tracking-wider">Total Revenue</span>
+<span class="material-symbols-outlined text-secondary opacity-50 group-hover:opacity-100 transition-opacity">payments</span>
+</div>
+<div class="text-display-lg font-display-lg text-primary" id="stat-total-revenue">$24,500</div>
+<div class="flex items-center gap-1 text-label-sm text-green-700 mt-xs">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>+8.2% vs last month</span>
+</div>
+</div>
+</section>
+<!-- 2. Recent Orders Table -->
+<section class="bg-surface-container rounded-xl shadow-sm border border-primary/5 overflow-hidden mb-lg">
+<div class="p-gutter border-b border-outline-variant/30 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-primary">Recent Orders</h3>
+<a href="admin-orders.html" class="text-secondary font-label-sm hover:underline">View All Orders →</a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50 text-label-sm text-outline uppercase tracking-widest">
+<th class="px-gutter py-4 font-semibold">Order ID</th>
+<th class="px-gutter py-4 font-semibold">Customer</th>
+<th class="px-gutter py-4 font-semibold">Delivery Date</th>
+<th class="px-gutter py-4 font-semibold">Total</th>
+<th class="px-gutter py-4 font-semibold">Status</th>
+<th class="px-gutter py-4 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20" id="admin-orders-table">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-gutter py-4 font-bold text-secondary">#CK-1024</td>
+<td class="px-gutter py-4">Sarah Jenkins</td>
+<td class="px-gutter py-4">Oct 15, 2023</td>
+<td class="px-gutter py-4">$45.00</td>
+<td class="px-gutter py-4">
+<span class="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full border border-amber-200">Pending</span>
+</td>
+<td class="px-gutter py-4 text-right">
+<button class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-gutter py-4 font-bold text-secondary">#CK-1023</td>
+<td class="px-gutter py-4">Michael Brown</td>
+<td class="px-gutter py-4">Oct 14, 2023</td>
+<td class="px-gutter py-4">$120.50</td>
+<td class="px-gutter py-4">
+<span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full border border-blue-200">Approved</span>
+</td>
+<td class="px-gutter py-4 text-right">
+<button class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-gutter py-4 font-bold text-secondary">#CK-1022</td>
+<td class="px-gutter py-4">Emily Davis</td>
+<td class="px-gutter py-4">Oct 14, 2023</td>
+<td class="px-gutter py-4">$32.00</td>
+<td class="px-gutter py-4">
+<span class="bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full border border-purple-200">Preparing</span>
+</td>
+<td class="px-gutter py-4 text-right">
+<button class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-gutter py-4 font-bold text-secondary">#CK-1021</td>
+<td class="px-gutter py-4">Thomas Wilson</td>
+<td class="px-gutter py-4">Oct 13, 2023</td>
+<td class="px-gutter py-4">$68.20</td>
+<td class="px-gutter py-4">
+<span class="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full border border-orange-200">Out for Delivery</span>
+</td>
+<td class="px-gutter py-4 text-right">
+<button class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-gutter py-4 font-bold text-secondary">#CK-1020</td>
+<td class="px-gutter py-4">Lisa Ray</td>
+<td class="px-gutter py-4">Oct 13, 2023</td>
+<td class="px-gutter py-4">$85.00</td>
+<td class="px-gutter py-4">
+<span class="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full border border-green-200">Completed</span>
+</td>
+<td class="px-gutter py-4 text-right">
+<button class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 3. Product Management Grid -->
+<section class="mb-lg">
+<div class="flex justify-between items-center mb-md" id="products">
+<h3 class="font-headline-md text-headline-md text-primary">Product Inventory</h3>
+<a href="admin-add-product.html" class="bg-secondary text-on-secondary px-6 py-2 rounded-full font-bold flex items-center gap-2 shadow-sm hover:shadow-md transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>Add New Product</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter" id="admin-products-grid">
+<!-- Product Card 1 -->
+<div class="bg-surface-container rounded-xl shadow-sm overflow-hidden border border-primary/5 flex flex-col hover:shadow-md transition-shadow group">
+<div class="h-48 w-full overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Exquisite artisanal Vanilla Bean Cupcake with a tall, swirling peak of silky white buttercream frosting, topped with real vanilla bean specks. The cupcake is nestled in a textured linen-colored paper liner. The lighting is warm and golden, reminiscent of a high-end French patisserie, set against a clean, light cream background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjDuk9eZTz8uzfFTycDwq1OO6cK9IV1AO4MzBLpCJApdRd5v3bNlF1qokhmCtH7VXXkJ97QI53jEzfd7EXCxuvo5e6ukMJcRpHj4fyFp_7sifZi8hVCPtyQ_rFKob6CNJ9hITQdiaLEGxMoYl0-we_YQBJfalGwfKxZFyI604OrkRWVxyl25YoagxJpYhH_1pStqMG5KyC1f5rwWAxUyNjw7D2iBHcgm039ygUPJS3IvzJb8pdxdlKmQTz_AhD6d-xD-gnai0kemg"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-white/90 backdrop-blur text-secondary text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">Best Seller</span>
+</div>
+</div>
+<div class="p-gutter flex flex-col flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-outline text-label-sm">Cakes</span>
+<h4 class="font-headline-md text-[20px] text-primary">Vanilla Bean Cupcake</h4>
+</div>
+<span class="font-bold text-secondary">$4.50</span>
+</div>
+<div class="flex gap-2 mb-gutter">
+<span class="border border-primary/20 text-primary/70 text-[10px] px-2 py-0.5 rounded-full">Gluten Free Option</span>
+<span class="border border-primary/20 text-primary/70 text-[10px] px-2 py-0.5 rounded-full">Organic</span>
+</div>
+<button class="mt-auto w-full border border-secondary text-secondary font-bold py-2 rounded-lg hover:bg-secondary/5 transition-colors">Edit Product</button>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="bg-surface-container rounded-xl shadow-sm overflow-hidden border border-primary/5 flex flex-col hover:shadow-md transition-shadow group">
+<div class="h-48 w-full overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A rustic, perfectly baked Sourdough Loaf with a deep golden-brown crust and a beautiful artisanal score mark. The loaf is dusted with a light coating of flour, resting on a wooden board. The style is earthy and grounded, with soft morning light filtering through a window, highlighting the texture of the bread's crust. Professional bakery photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6GGcIW4MRqYWdIMzcaFKQebfzKQX5WibT27SdSbdKkbRDoTHjR77Pa-MojXTAUE4qZ_VyxL1K3iAPtq_cLO0zLcb0RlQbfnOvYzPklOCsFxJMBoZ-diLa48D8vYI5FOCNjaSrWJ0M-53JBeddBIUoO4nk47tfTFCYsJ2buLC1KbFS5rCdoeMwGH0sfG5A5fadJsc2mp9eDoD410qEGk6ODnk_biecz0_wjavBgvoUIiP-l34AKExwfb2YJB_Nxnfhsqu-v-1gOsQ"/>
+</div>
+<div class="p-gutter flex flex-col flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-outline text-label-sm">Bread</span>
+<h4 class="font-headline-md text-[20px] text-primary">Sourdough Loaf</h4>
+</div>
+<span class="font-bold text-secondary">$8.00</span>
+</div>
+<div class="flex gap-2 mb-gutter">
+<span class="border border-primary/20 text-primary/70 text-[10px] px-2 py-0.5 rounded-full">Vegan</span>
+<span class="border border-primary/20 text-primary/70 text-[10px] px-2 py-0.5 rounded-full">Natural Leaven</span>
+</div>
+<button class="mt-auto w-full border border-secondary text-secondary font-bold py-2 rounded-lg hover:bg-secondary/5 transition-colors">Edit Product</button>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="bg-surface-container rounded-xl shadow-sm overflow-hidden border border-primary/5 flex flex-col hover:shadow-md transition-shadow group">
+<div class="h-48 w-full overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A beautiful stack of delicate Lavender Macarons in a soft, muted violet color. The macarons have a perfect 'feet' structure and are filled with a creamy vanilla ganache. A few sprigs of dried lavender are scattered around the base. The photography is minimalist and airy, capturing the refined, luxurious feel of the delicate cookies on a textured ceramic plate." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDicWADRVb5uiaHZNUrABI36nvB1V9W5G8a0eCeP66zGzsUNLBRt-3y7MET3iHjiCW7cNO3AdCd7SsHBr1HNDe6VYGjdeBo-Ig_baGS9IRQoJY9HdbCNloJCWzEjjevQWL4FqhQ2ZBxfqVa0zaQrMVqv2pcA_A_hjk25AXCBs2PwaSjQAUMROOZWfFgp_8VqETCP17EHEUIRgvsrnPhEuMtkxMYguLoRqCqwakLtL68vCQMb2UkE0cXb0lx-mjcqdtoDoCgELqxYGA"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-white/90 backdrop-blur text-secondary text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">Limited Edition</span>
+</div>
+</div>
+<div class="p-gutter flex flex-col flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<span class="text-outline text-label-sm">Cookies</span>
+<h4 class="font-headline-md text-[20px] text-primary">Lavender Macarons</h4>
+</div>
+<span class="font-bold text-secondary">$12.00 / 6pc</span>
+</div>
+<div class="flex gap-2 mb-gutter">
+<span class="border border-primary/20 text-primary/70 text-[10px] px-2 py-0.5 rounded-full">Nut Allergy Warning</span>
+</div>
+<button class="mt-auto w-full border border-secondary text-secondary font-bold py-2 rounded-lg hover:bg-secondary/5 transition-colors">Edit Product</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Customers & Reviews (Two-column layout) -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-gutter mb-xl">
+<!-- Left: Recent Signups -->
+<div class="bg-surface-container rounded-xl shadow-sm border border-primary/5 p-gutter">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-primary">New Customers</h3>
+<a href="admin-customers.html" class="text-secondary font-label-sm hover:underline">Manage Users →</a>
+</div>
+<div class="space-y-4" id="admin-customers-list">
+<!-- Dynamically populated by admin.js -->
+<div class="flex items-center justify-center py-8 text-on-surface-variant">
+<span class="material-symbols-outlined animate-spin text-secondary/40">autorenew</span>
+</div>
+</div>
+</div>
+<!-- Right: Recent Reviews -->
+<div class="bg-surface-container rounded-xl shadow-sm border border-primary/5 p-gutter">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-primary">Recent Feedback</h3>
+<a href="admin-reviews.html" class="text-secondary font-label-sm hover:underline">All Reviews →</a>
+</div>
+<div class="space-y-gutter">
+<!-- Review 1 -->
+<div class="bg-white/50 p-4 rounded-xl border border-primary/5 relative">
+<div class="flex justify-between items-start mb-2">
+<div class="flex gap-0.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-[11px] text-outline italic">2 hours ago</span>
+</div>
+<p class="text-body-md italic text-on-surface-variant mb-3">"The Sourdough loaf was still warm when it arrived! Incredible texture and flavor. Best in the city."</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold flex items-center justify-center">LR</div>
+<span class="text-label-sm font-bold">Liam Ross</span>
+</div>
+</div>
+<!-- Review 2 -->
+<div class="bg-white/50 p-4 rounded-xl border border-primary/5 relative">
+<div class="flex justify-between items-start mb-2">
+<div class="flex gap-0.5 text-secondary">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<span class="text-[11px] text-outline italic">Yesterday</span>
+</div>
+<p class="text-body-md italic text-on-surface-variant mb-3">"Lavender macarons were a bit too floral for my taste, but the packaging and delivery were perfect."</p>
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-primary/10 text-primary text-[10px] font-bold flex items-center justify-center">MK</div>
+<span class="text-label-sm font-bold">Maria K.</span>
+</div>
+</div>
+</div>
+<div class="mt-gutter p-4 bg-secondary/5 rounded-xl border border-secondary/10 flex items-center gap-4">
+<div class="text-center">
+<div class="text-headline-md text-secondary leading-none">4.8</div>
+<div class="text-[10px] uppercase font-bold text-outline">Average</div>
+</div>
+<div class="flex-1 h-2 bg-outline-variant/30 rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 92%"></div>
+</div>
+<div class="text-label-sm font-bold text-primary">124 Reviews</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Simple hover effect for stat cards
+            const cards = document.querySelectorAll('.bg-surface-container');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('shadow-md');
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('shadow-md');
+                });
+            });
+
+            // Smooth fade-in for rows
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateY(10px)';
+                row.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                setTimeout(() => {
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+    <script>
+        window.API_BASE_URL = window.API_BASE_URL || '';
+    </script>
+    <script src="js/admin.js"></script>
+</body></html>

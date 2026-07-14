@@ -210,7 +210,7 @@ All API endpoints reside on the main Express app. Endpoints consume and produce 
 ### 5. Checkout & Orders
 *   **POST `/api/orders`** (Requires active session)
     *   *Payload*: `{ customerName, customerEmail, customerPhone, deliveryDate, address, specialInstructions, items, total }`
-    *   *Behavior*: Creates a new order node under `/orders` via `POST`. Clears user's database cart. Returns `401 Unauthorized` if no active session is found.
+    *   **Behavior*: Validates session via `requireUser` middleware. Returns `401` with `"Please log in to place your order."` if no active session.
     *   *Response*: `201 Created` with `{ message, orderId }` or `401 Unauthorized`.
 *   **GET `/api/orders`**
     *   *Behavior*: Returns order history for current logged-in user. Filters by `userId === session.userId`. Returns empty array for guest.
@@ -231,6 +231,68 @@ All API endpoints reside on the main Express app. Endpoints consume and produce 
     *   *Response*: `201 Created` with review object.
 *   **GET `/api/reviews/:productId`**
     *   *Response*: Array of reviews for the product, sorted by `createdAt` descending.
+
+### 7a. Health Check
+*   **GET `/api/health`**
+    *   *Behavior*: Returns a simple JSON health check.
+    *   *Response*: `{ status: 'ok', timestamp: Date.now() }`
+
+### 7b. Global Error Handling
+*   **JSON 404 Handler**: `app.use('/api', ...)` returns `{ error: 'API endpoint not found', path: req.originalUrl }` with `Content-Type: application/json` for any unmatched `/api/*` route.
+*   **Global Error Handler**: `app.use((err, req, res, next) => ...)` ensures all unhandled errors return JSON with `Content-Type: application/json` and do not leak stack traces in production.
+*   **CORS**: `app.use(cors())` allows cross-origin requests from any origin.
+
+### 8. Admin APIs
+*   **POST `/api/admin/login`**
+    *   *Payload*: `{ email, password, rememberMe }`
+    *   *Behavior*: Looks up admin by email in `/admins`, verifies bcrypt password hash. Sets `req.session.isAdmin` and `req.session.admin`.
+    *   *Response*: `200 OK` with `{ message, admin }` or `401` with `"Invalid email or password"`.
+    *   *Default Admin*: Seeded from `.env` (`ADMIN_EMAIL` / `ADMIN_PASSWORD`) on server start if `/admins` is empty or the default email is missing. The seed script is `seed-admin.js`.
+*   **POST `/api/admin/logout`**
+    *   *Behavior*: Destroys session and clears cookie.
+    *   *Response*: `200 OK` with `{ message: 'Logged out successfully' }`.
+*   **GET `/api/admin/session`**
+    *   *Behavior*: Returns `{ loggedIn: true, admin: ... }` if `req.session.isAdmin` is set.
+    *   *Response*: `{ loggedIn: false }` otherwise.
+*   **GET `/api/admin/stats`**
+    *   *Behavior*: Aggregates dashboard metrics by scanning `/orders` and `/users`.
+    *   *Response*: `{ totalOrders, pendingOrders, totalUsers, totalRevenue }`.
+*   **GET `/api/admin/orders`**
+    *   *Behavior*: Returns all orders from `/orders`, sorted by `createdAt` descending.
+    *   *Response*: Array of order objects including `id`.
+*   **POST `/api/admin/orders/:id/status`**
+    *   *Payload*: `{ status }` (Allowed values: `Pending`, `Approved`, `Preparing`, `Out for Delivery`, `Completed`, `Declined`).
+    *   *Behavior*: Updates the order status in Firebase.
+    *   *Response*: `{ message, order }` or `404` if order not found.
+*   **GET `/api/admin/users`**
+    *   *Behavior*: Returns all registered users from `/users`, sorted by `createdAt` descending.
+    *   *Response*: Array of user objects including `id`.
+*   **POST `/api/admin/products`**
+    *   *Payload*: `{ id, name, category, price, unit, description, image }` (`id` and `name` required).
+    *   *Behavior*: Creates a new product node under `/products/${id}` with empty `tags`.
+    *   *Response*: `201 Created` with `{ message, product }`.
+*   **PUT `/api/admin/products/:id`**
+    *   *Payload*: `{ name, category, price, unit, description, image }`
+    *   *Behavior*: Updates an existing product.
+    *   *Response*: `200 OK` with updated product object.
+*   **DELETE `/api/admin/products/:id`**
+    *   *Behavior*: Deletes a product from Firebase.
+    *   *Response*: `200 OK` with `{ message: 'Product deleted' }`.
+*   **GET `/api/admin/reviews`**
+    *   *Behavior*: Returns all reviews across all products, sorted by `createdAt` descending.
+    *   *Response*: Array of review objects.
+
+> **Default Admin Credentials** (seeded via `.env` or `seed-admin.js`):
+> - Email: `ayesha@gmail.com`
+> - Password: `ayesha@123`
+> - Role: `admin`
+> - Session: `httpOnly` cookie, `sameSite: 'lax'`, `secure` in production.
+
+> **Admin Frontend API Configuration**:
+> - Admin pages use `window.API_BASE_URL` to configure the API base URL.
+> - Default is `''` (relative URLs), which works when frontend and backend share the same origin.
+> - If frontend and backend are on different origins, set `window.API_BASE_URL = 'http://localhost:3000'` before loading admin scripts.
+> - All admin API calls go through `adminFetch()` in `public/js/admin.js` and `apiRequest()` in `public/js/admin-auth.js`, which validate `Content-Type: application/json` before parsing.
 
 ---
 
@@ -265,11 +327,23 @@ The frontend is served from `/public` as static HTML and JavaScript assets. It u
     *   Manages detail views (`treat-salted-dark-chocolate.html` and `treat-double-truffle-signature-cake.html`).
     *   Pulls and averages review ratings, displaying them as filled stars.
     *   Updates bento layout cells in `wishlist.html`.
-6.  **[treats.js](file:///c:/Users/AZMIYA AAYAT/Downloads/candc/public/js/treats.js)**:
-    *   Loads catalog listing dynamically from `/api/products`.
-    *   Toggles active categories (Cookies, Cakes, Pastries).
-    *   Dynamically injects a search bar into the page header.
-    *   Controls catalog sorting selector parameters.
+ 6.  **[treats.js](file:///c:/Users/AZMIYA AAYAT/Downloads/candc/public/js/treats.js)**:
+     *   Loads catalog listing dynamically from `/api/products`.
+     *   Toggles active categories (Cookies, Cakes, Pastries).
+     *   Dynamically injects a search bar into the page header.
+     *   Controls catalog sorting selector parameters.
+  7.  **[admin.js](file:///c:/Users/AZMIYA AAYAT/Downloads/candc/public/js/admin.js)**:
+      *   Shared controller for the bakery management dashboard. Dispatches logic based on `window.location.pathname`.
+      *   Uses `ADMIN_API_BASE` (from `window.API_BASE_URL`) and `adminFetch()` for all API calls to ensure JSON content-type validation.
+      *   `admin-dashboard.html`: Loads stats from `/api/admin/stats`, renders recent orders table from `/api/admin/orders`, and displays product grid from `/api/products`.
+      *   `admin-add-product.html`: Handles the product creation form. Generates a URL-safe `id` from the product name, supports optional image upload via FileReader, and POSTs to `/api/admin/products`.
+      *   `admin-order-details.html`: Fetches a single order via `/api/orders/:id`, renders customer info, delivery details, items table, and order summary. The **Update Status** button cycles the order through the fulfillment state machine (`Pending` → `Approved` → `Preparing` → `Out for Delivery` → `Completed`) by POSTing to `/api/admin/orders/:id/status`.
+  8.  **[admin-auth.js](file:///c:/Users/AZMIYA AAYAT/Downloads/candc/public/js/admin-auth.js)**:
+      *   Handles admin login page (`admin-login.html`) logic.
+      *   Uses `API_BASE_URL` (from `window.API_BASE_URL`) and `apiRequest()` for all API calls.
+      *   Validates `Content-Type: application/json` before parsing responses.
+      *   Shows user-friendly error messages for network failures, HTML responses, and invalid credentials.
+      *   Performs a health check (`/api/health`) on page load and disables the login button if the backend is unreachable.
 
 ### UI Styling & Custom Tailwind Rules
 Styling is configured inside the `<script id="tailwind-config">` block in HTML headers. Extended design tokens include:
@@ -311,6 +385,8 @@ sequenceDiagram
 Orders transition through a clear status state machine:
 `Pending` $\rightarrow$ `Approved` $\rightarrow$ `Preparing` $\rightarrow$ `Out for Delivery` $\rightarrow$ `Completed` (or `Declined`).
 
+**Authentication Enforcement**: All checkout and order-related actions require the user to be logged in. If a guest attempts to add to cart, checkout, or view order history, they are redirected to the login page with a friendly message. After successful login, they are redirected back to the exact page they left off.
+
 ```mermaid
 sequenceDiagram
     participant Client as Browser
@@ -318,6 +394,7 @@ sequenceDiagram
     participant Firebase as Firebase RTDB
     
     Client->>Server: POST /api/orders { customerName, address, items, total }
+    Note over Server: Validates session via requireUser middleware
     Note over Server: Captures userId (sanitized user email)
     Note over Server: Creates order payload with status = "Pending"
     Server->>Firebase: POST /orders.json { orderPayload }
@@ -351,17 +428,37 @@ The moving truck coordinate system on the SVG map is defined dynamically in `ord
     *   `APPLE_CLIENT_ID`: Apple Services ID (e.g., `com.cookieesandcakes.web`). Requires a matching `APPLE_REDIRECT_URI`.
     *   `APPLE_REDIRECT_URI` (optional): Redirect/callback URI registered in the Apple Developer portal.
 
-### 2. Public Tracking Exposure (Privacy Risk)
+### 2. Default Admin Account Seeding
+*   **File**: `.env` + `seed-admin.js` + `server.js` (`ensureDefaultAdmin()`)
+*   **Variables**: `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `.env`.
+*   **Behavior**: On server startup, if `/admins` in Firebase is empty or the default email is missing, the server seeds a default admin with a bcrypt-hashed password (10 salt rounds). The standalone script `seed-admin.js` can also be run manually.
+*   **Security**: Password is stored as a bcrypt hash, never in plain text. Default credentials are documented only in `.env` and `BRAIN.md` for initial setup.
+*   **Default Credentials**:
+    *   Email: `ayesha@gmail.com`
+    *   Password: `ayesha@123`
+    *   Role: `admin`
+*   **Login Endpoint**: `POST /api/admin/login` — validates email + bcrypt password, sets `req.session.isAdmin` and `req.session.admin`. Returns `{ message, admin }` on success, `401` with `"Invalid email or password"` on failure.
+*   **Session Security**: Admin sessions use `httpOnly` cookies with `sameSite: 'lax'` and `secure` in production.
+
+### 3. Customer Order Authentication Enforcement
+*   **Requirement**: All order-related actions (add to cart, checkout, view order history, track order, rate treats, personalize message) require the user to be logged in.
+*   **Server-side**: `requireUser` middleware protects `/api/cart`, `/api/wishlist`, `/api/orders`, and `/api/orders/:id`. Returns `401` with `"Please log in to place your order."` if no active session.
+*   **Client-side**: `window.App.requireAuth(options)` checks `/api/auth/session`, stores `returnUrl` and `message` in `sessionStorage`, and redirects to `/login.html?returnUrl=...&message=...`.
+*   **Post-login redirect**: After successful login, `auth.js` reads `returnUrl` and redirects the user back to the exact page they left off.
+*   **Session expiration**: If the session has expired, the user is redirected to login with the message: `"Your session has expired. Please log in again to continue."`
+*   **Affected pages**: `cart.html`, `order-history.html`, `track-order.html`, `rate-treats.html`, `personalize.html`, `message-added.html`, `wishlist.html`, and all "Add to Cart/Tray/Bag" buttons in `treats.html`, `index.html`, `specials.html`, `account.html`, and product detail pages.
+
+### 4. Public Tracking Exposure (Privacy Risk)
 *   **Route**: `GET /api/orders/:id`
 *   *Vulnerability*: This endpoint fetches and returns the full details of any order (including `customerName`, `customerEmail`, `customerPhone`, `address`, `items`, and `total`) to any client that queries it. There is **no authorization check** matching the order's `userId` with the active session user.
 *   *Fix*: Validate that `session.user.userId === order.userId` before returning data, or sanitize guest orders to remove sensitive fields when accessed anonymously.
 
-### 3. Session Store Volatility (Operational Debt)
+### 5. Session Store Volatility (Operational Debt)
 *   **Engine**: `express-session` default memory store (`MemoryStore`).
 *   *Implication*: Because sessions are stored in Express process memory, restarting the Node server kills all active shopping carts (for guests) and logs out all users.
 *   *Fix*: Integrate a persistent session store like `connect-redis` or `connect-mongo`.
 
-### 4. Client-side Product Catalog Mappings (Maintenance Risk)
+### 6. Client-side Product Catalog Mappings (Maintenance Risk)
 *   Only two product details pages exist as static files:
     *   `salted-dark-chocolate` $\rightarrow$ `treat-salted-dark-chocolate.html`
     *   `double-truffle-signature-cake` $\rightarrow$ `treat-double-truffle-signature-cake.html`
@@ -389,3 +486,26 @@ When the server starts, it logs:
 *   `Checking database products...`
 *   `Products already populated in database. Skipping seed.` (If database is populated) OR
 *   `Seeding signature products into Firebase Realtime Database...` $\rightarrow$ `Products successfully seeded!` (If database is empty)
+*   `Default admin account already exists in Firebase.` OR `Default admin account seeded from environment variables.`
+
+### Admin Setup
+To manually seed or verify the default admin account:
+```powershell
+node seed-admin.js
+```
+This will create the admin account in Firebase if it does not already exist.
+
+### Admin Login
+1. Open `http://localhost:3000/admin-login.html`
+2. Log in with:
+   - Email: `ayesha@gmail.com`
+   - Password: `ayesha@123`
+3. On success, you will be redirected to `/admin-dashboard.html`
+
+### Troubleshooting Admin Login
+If you see "The server returned an HTML page instead of a JSON response":
+1. Ensure the backend is running: `node server.js` on port 3000
+2. Check the browser Network tab for the request URL to `/api/admin/login`
+3. Ensure `window.API_BASE_URL` is set correctly (or left empty for same-origin)
+4. Verify the backend returns `Content-Type: application/json` for `/api/admin/login`
+5. Check the server console for errors during admin seeding

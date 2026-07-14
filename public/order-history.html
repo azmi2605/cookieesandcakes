@@ -135,6 +135,12 @@
     </style>
 
     <script src="/js/app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const allowed = await window.App.requireAuth({ returnUrl: '/order-history.html' });
+            if (!allowed) return;
+        });
+    </script>
 </head>
 
 <body class="bg-background text-on-surface selection:bg-secondary-container min-h-screen flex flex-col">

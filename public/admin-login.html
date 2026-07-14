@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Admin Login | cookieesandcakes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#fff8f6',
+                        surface: '#fff8f6',
+                        'surface-container': '#ffe9e3',
+                        'surface-container-low': '#fff1ec',
+                        'surface-container-high': '#fbe3dc',
+                        'surface-container-highest': '#fbdcd1',
+                        primary: '#44281e',
+                        'on-primary': '#ffffff',
+                        'primary-container': '#5d3e33',
+                        'on-primary-container': '#d5aa9b',
+                        'primary-fixed': '#ffdbcf',
+                        'primary-fixed-dim': '#e9bdae',
+                        secondary: '#91494d',
+                        'on-secondary': '#ffffff',
+                        'secondary-container': '#fea3a6',
+                        'on-secondary-container': '#79363b',
+                        'secondary-fixed': '#ffdada',
+                        'secondary-fixed-dim': '#ffb3b5',
+                        'on-background': '#281811',
+                        'on-surface': '#281811',
+                        'on-surface-variant': '#504440',
+                        outline: '#827470',
+                        'outline-variant': '#d4c3bd',
+                        error: '#ba1a1a',
+                        'error-container': '#ffdad6',
+                        'on-error': '#ffffff',
+                        'on-error-container': '#93000a',
+                    },
+                    borderRadius: {
+                        DEFAULT: '0.25rem',
+                        lg: '0.5rem',
+                        xl: '0.75rem',
+                        '2xl': '1rem',
+                        full: '9999px',
+                    },
+                    spacing: {
+                        sm: '12px',
+                        base: '8px',
+                        xs: '4px',
+                        md: '24px',
+                        lg: '48px',
+                        xl: '80px',
+                        gutter: '24px',
+                        'margin-mobile': '16px',
+                        'margin-desktop': '64px',
+                    },
+                    fontFamily: {
+                        'display-lg': ['"Source Serif 4"'],
+                        'headline-md': ['"Source Serif 4"'],
+                        'body-md': ['"Source Sans 3"'],
+                        'body-lg': ['"Source Sans 3"'],
+                        'label-sm': ['"Source Sans 3"'],
+                        'label-md': ['"Source Sans 3"'],
+                    },
+                    fontSize: {
+                        'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+                        'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+                        'body-md': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+                        'body-lg': ['18px', { lineHeight: '28px', fontWeight: '400' }],
+                        'label-sm': ['14px', { lineHeight: '20px', letterSpacing: '0.05em', fontWeight: '600' }],
+                        'label-md': ['14px', { lineHeight: '20px', letterSpacing: '0.05em', fontWeight: '600' }],
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fff8f6;
+            background-image: radial-gradient(#fbdcd1 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .spinner {
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top: 2px solid #ffffff;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center font-body-md text-on-background px-margin-mobile md:px-margin-desktop">
+    <div class="w-full max-w-[420px]">
+        <div class="bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/20 p-6 md:p-8">
+            <div class="text-center mb-8">
+                <h1 class="font-headline-md text-headline-md text-primary mb-2">Admin Login</h1>
+                <p class="font-body-md text-on-surface-variant">Sign in to access the Bakery Management Dashboard</p>
+            </div>
+
+            <form id="adminLoginForm" class="space-y-5" novalidate>
+                <div class="space-y-1.5">
+                    <label class="font-label-md text-label-md text-primary block" for="admin-email">Email Address</label>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant">mail</span>
+                        <input
+                            class="w-full pl-11 pr-4 py-3 bg-surface-container border border-outline-variant rounded-xl font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-outline-variant"
+                            id="admin-email"
+                            placeholder="admin@cookieesandcakes.com"
+                            type="email"
+                            autocomplete="email"
+                        />
+                    </div>
+                    <p class="text-error text-xs hidden" id="email-error">Please enter a valid email address.</p>
+                </div>
+
+                <div class="space-y-1.5">
+                    <div class="flex justify-between items-center">
+                        <label class="font-label-md text-label-md text-primary block" for="admin-password">Password</label>
+                        <a href="#" class="font-label-sm text-label-sm text-secondary hover:underline transition-all">Forgot Password?</a>
+                    </div>
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-outline-variant">lock</span>
+                        <input
+                            class="w-full pl-11 pr-12 py-3 bg-surface-container border border-outline-variant rounded-xl font-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-outline-variant"
+                            id="admin-password"
+                            placeholder="Enter your password"
+                            type="password"
+                            autocomplete="current-password"
+                        />
+                        <button
+                            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-outline-variant hover:text-primary transition-colors"
+                            type="button"
+                            id="togglePassword"
+                            aria-label="Toggle password visibility"
+                        >
+                            <span class="material-symbols-outlined" id="passwordIcon">visibility</span>
+                        </button>
+                    </div>
+                    <p class="text-error text-xs hidden" id="password-error">Password must be at least 6 characters.</p>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <input
+                        class="w-4 h-4 text-secondary border-outline-variant rounded focus:ring-secondary/20 bg-surface-container"
+                        id="remember-me"
+                        type="checkbox"
+                    />
+                    <label class="font-label-sm text-label-sm text-on-surface-variant cursor-pointer select-none" for="remember-me">Remember Me</label>
+                </div>
+
+                <div class="hidden bg-error-container text-on-error-container rounded-xl px-4 py-3 text-sm font-body-md" id="login-error"></div>
+
+                <button
+                    type="submit"
+                    id="login-btn"
+                    class="w-full bg-secondary text-on-secondary py-3.5 px-6 rounded-xl font-label-md text-label-md shadow-md hover:bg-secondary/90 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2"
+                >
+                    <span id="btn-text">Login</span>
+                    <span id="btn-spinner" class="spinner hidden"></span>
+                </button>
+            </form>
+        </div>
+
+        <p class="text-center mt-6 font-body-md text-on-surface-variant">
+            &copy; cookieesandcakes Bakery Management
+        </p>
+    </div>
+
+    <script>
+        // Configure the API base URL here if the frontend is served from a different origin than the backend.
+        // Example: window.API_BASE_URL = 'http://localhost:3000';
+        // Leave empty to use relative URLs (works when frontend and backend share the same origin).
+        window.API_BASE_URL = window.API_BASE_URL || '';
+        
+        // Debug helper: log the actual request URL to the console
+        if (window.API_BASE_URL) {
+            console.log('[Admin] API Base URL:', window.API_BASE_URL);
+        } else {
+            console.log('[Admin] Using relative API URLs (same origin as this page)');
+            console.log('[Admin] Current page origin:', window.location.origin);
+        }
+    </script>
+    <script src="/js/admin-auth.js"></script>
+</body>
+</html>

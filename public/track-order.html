@@ -153,7 +153,16 @@
     }
   </style>
 
-  <script src="/js/app.js" defer></script>
+    <script src="/js/app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const orderId = params.get('orderId');
+            const returnUrl = orderId ? `/track-order.html?orderId=${orderId}` : '/track-order.html';
+            const allowed = await window.App.requireAuth({ returnUrl, message: 'Your session has expired. Please log in again to continue.' });
+            if (!allowed) return;
+        });
+    </script>
 </head>
 
 <body class="font-body-md overflow-x-hidden min-h-screen flex flex-col">

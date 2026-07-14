@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Load and render cart
   async function loadCart() {
     try {
+      const allowed = await window.App.requireAuth({ returnUrl: '/cart.html' });
+      if (!allowed) return;
+      
       await window.App.checkSession();
       cartData = await window.App.fetchAPI('/api/cart');
       renderCart();
@@ -200,7 +203,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Bind Checkout Form transition
     const checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn && sub > 0) {
-      checkoutBtn.addEventListener('click', () => {
+      checkoutBtn.addEventListener('click', async () => {
+        const allowed = await window.App.requireAuth({ returnUrl: '/cart.html', message: 'Please log in to complete your checkout.' });
+        if (!allowed) return;
         showCheckoutForm(total);
       });
     }

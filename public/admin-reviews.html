@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reviews | cookieesandcakes Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "tertiary-fixed-dim": "#aecdc7","on-secondary-fixed": "#3c070e","primary-fixed": "#ffdbcf","on-primary-fixed": "#2d150c","secondary-container": "#fea3a6","surface-container-lowest": "#ffffff","surface-container-high": "#fbe3dc","on-primary": "#ffffff","on-tertiary-container": "#7f9d97","primary-container": "#44281e","surface-dim": "#ecd5ce","inverse-surface": "#3b2d28","on-primary-fixed-variant": "#5f3f34","on-secondary": "#ffffff","on-background": "#251914","on-secondary-fixed-variant": "#743236","surface-container-low": "#fff1ec","error-container": "#ffdad6","surface-container": "#ffe9e3","surface-bright": "#fff8f6","secondary-fixed-dim": "#ffb3b5","tertiary-container": "#173430","surface": "#fff8f6","surface-tint": "#79564a","on-surface-variant": "#504440","error": "#ba1a1a","on-secondary-container": "#79363a","primary": "#2c140b","tertiary": "#011f1b","on-tertiary-fixed": "#02201c","secondary-fixed": "#ffdada","on-error-container": "#93000a","surface-container-highest": "#f5ded6","on-tertiary": "#ffffff","on-error": "#ffffff","on-primary-container": "#b68e80","background": "#fff8f6","primary-fixed-dim": "#eabdae","on-surface": "#251914","inverse-on-surface": "#ffede7","on-tertiary-fixed-variant": "#2f4c48","surface-variant": "#f5ded6","tertiary-fixed": "#c9e9e3","secondary": "#91494d","inverse-primary": "#eabdae","outline-variant": "#d4c3be","outline": "#827470"
+                },
+                "borderRadius": { "DEFAULT": "0.25rem","lg": "0.5rem","xl": "0.75rem","full": "9999px" },
+                "spacing": { "sm": "12px","gutter": "24px","xl": "80px","base": "8px","xs": "4px","md": "24px","lg": "48px","margin-mobile": "16px","margin-desktop": "64px" },
+                "fontFamily": { "headline-md": ["\"Source Serif 4\""],"display-lg": ["\"Source Serif 4\""],"body-lg": ["\"Source Sans 3\""],"body-md": ["\"Source Sans 3\""],"label-sm": ["\"Source Sans 3\""] },
+                "fontSize": { "headline-md": ["24px",{"lineHeight":"32px","fontWeight":"600"}],"display-lg": ["48px",{"lineHeight":"56px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg": ["18px",{"lineHeight":"28px","fontWeight":"400"}],"body-md": ["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-sm": ["14px",{"lineHeight":"20px","letterSpacing":"0.05em","fontWeight":"600"}] }
+            }
+        }
+    }
+</script>
+<style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #d4c3be; border-radius: 10px; }
+    .dotted-line { background-image: radial-gradient(#827470 1px, transparent 1px); background-size: 8px 8px; height: 1px; width: 100%; opacity: 0.2; }
+</style>
+</head>
+<body class="bg-background font-body-md text-on-background">
+<!-- Sidebar -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-sm z-40 w-64 bg-surface-container shadow-sm">
+<div class="mb-lg px-4">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">cookieesandcakes</h1>
+<p class="font-label-sm text-label-sm opacity-70">Bakery Management</p>
+</div>
+    <nav class="flex-1 space-y-2">
+        <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="admin-dashboard.html">
+            <span class="material-symbols-outlined">dashboard</span><span>Dashboard</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="admin-orders.html">
+            <span class="material-symbols-outlined">shopping_cart</span><span>Orders</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="admin-dashboard.html">
+            <span class="material-symbols-outlined">bakery_dining</span><span>Products</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors" href="admin-customers.html">
+            <span class="material-symbols-outlined">group</span><span>Customers</span>
+        </a>
+        <a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg font-bold scale-[0.98] transition-transform duration-150" href="admin-reviews.html">
+            <span class="material-symbols-outlined">rate_review</span><span>Reviews</span>
+        </a>
+    </nav>
+    <div class="mt-auto space-y-2 pt-lg">
+        <a href="admin-add-product.html" class="w-full bg-secondary text-on-secondary py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-md active:scale-95">
+            <span class="material-symbols-outlined">add</span><span>New Batch</span>
+        </a>
+        <div class="dotted-line my-4"></div>
+        <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg" href="#">
+            <span class="material-symbols-outlined">settings</span><span>Settings</span>
+        </a>
+        <a class="logout-link flex items-center gap-3 px-4 py-3 text-error hover:bg-surface-container-high rounded-lg" href="#">
+            <span class="material-symbols-outlined">logout</span><span>Logout</span>
+        </a>
+    </div>
+</aside>
+
+<!-- Header -->
+<header class="sticky top-0 right-0 w-[calc(100%-256px)] ml-64 flex justify-between items-center px-gutter py-sm z-30 bg-background/80 backdrop-blur-md border-b border-outline-variant/30">
+    <div class="flex items-center gap-md">
+        <h2 class="font-headline-md text-headline-md text-primary">Dashboard</h2>
+        <nav class="hidden md:flex gap-gutter items-center">
+            <a class="text-on-surface-variant hover:text-secondary transition-colors" href="admin-dashboard.html">Overview</a>
+            <a class="text-on-surface-variant hover:text-secondary transition-colors" href="#">Reports</a>
+            <a class="text-secondary font-bold border-b-2 border-secondary pb-1" href="admin-reviews.html">Reviews</a>
+        </nav>
+    </div>
+    <div class="flex items-center gap-sm">
+        <button class="hover:bg-surface-container-low rounded-full p-2 text-on-surface-variant"><span class="material-symbols-outlined">notifications</span></button>
+        <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-high cursor-pointer ml-sm">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1YA3m2SwHSNUNlcBw2Jrziw0F1yefJT2iTvzeLMEYQKRrjm_GFMBN0zKnGcY6TotSgp9E2GuGBFMoggnMv4BgDwX9OXvmBTNKT67bQHPSABdSNBYGeu9ZDyK930rvyQ3eGiAbL9NhC004Qqsar1mzbkiUSisZR-VKhvcQt6r3fwiiz1pKXBkWGzc2RjXyKgMqFmfmc20qLLpu2zRdSZ-x8QCFjdvdMQo9wHRaoDT7ZnDtC5PuSXV2qAg_WpgDKfAxOhJ_TYtlB6U" alt="Admin"/>
+        </div>
+    </div>
+</header>
+
+<!-- Main -->
+<main class="ml-64 p-gutter max-w-[1400px]">
+    <!-- Page Header -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-lg">
+        <div>
+            <h3 class="font-display-lg text-[32px] font-bold text-primary leading-tight">Customer Reviews</h3>
+            <p class="text-on-surface-variant mt-1"><span id="reviews-total" class="font-semibold text-secondary">—</span> reviews · Avg. rating <span id="reviews-avg" class="font-semibold text-secondary">—</span> ⭐</p>
+        </div>
+        <a href="admin-dashboard.html" class="flex items-center gap-2 text-secondary font-bold hover:opacity-80 transition-opacity">
+            <span class="material-symbols-outlined">arrow_back</span> Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Rating filter -->
+    <div class="flex flex-wrap gap-2 mb-gutter">
+        <button data-rating-filter="all" class="px-4 py-2 rounded-full text-label-sm font-bold transition-all bg-secondary text-white">All Ratings</button>
+        <button data-rating-filter="5" class="px-4 py-2 rounded-full text-label-sm font-bold transition-all bg-surface-container text-on-surface-variant hover:bg-secondary hover:text-white">★★★★★  5 Stars</button>
+        <button data-rating-filter="4" class="px-4 py-2 rounded-full text-label-sm font-bold transition-all bg-surface-container text-on-surface-variant hover:bg-secondary hover:text-white">★★★★☆  4 Stars</button>
+        <button data-rating-filter="3" class="px-4 py-2 rounded-full text-label-sm font-bold transition-all bg-surface-container text-on-surface-variant hover:bg-secondary hover:text-white">★★★☆☆  3 Stars</button>
+        <button data-rating-filter="2" class="px-4 py-2 rounded-full text-label-sm font-bold transition-all bg-surface-container text-on-surface-variant hover:bg-secondary hover:text-white">★★☆☆☆  2 Stars</button>
+        <button data-rating-filter="1" class="px-4 py-2 rounded-full text-label-sm font-bold transition-all bg-surface-container text-on-surface-variant hover:bg-secondary hover:text-white">★☆☆☆☆  1 Star</button>
+    </div>
+
+    <!-- Reviews Grid -->
+    <section>
+        <div id="reviews-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+            <div class="col-span-full flex justify-center py-12 text-on-surface-variant">
+                <span class="material-symbols-outlined animate-spin text-4xl text-secondary/40">autorenew</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+    <script>
+        window.API_BASE_URL = window.API_BASE_URL || '';
+    </script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

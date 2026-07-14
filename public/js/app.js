@@ -15,11 +15,39 @@ window.App = {
 
     try {
       const res = await fetch(url, options);
-      const data = await res.json();
+      const contentType = res.headers.get('content-type') || '';
+      const isJson = contentType.includes('application/json');
+
       if (!res.ok) {
-        throw new Error(data.error || 'Request failed');
+        let message = `Server returned status ${res.status}.`;
+        if (isJson) {
+          try {
+            const data = await res.json();
+            message = data.error || data.message || message;
+          } catch (_) {
+            const text = await res.text();
+            if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+              message = 'The server returned an HTML page instead of a JSON response. Please check the API URL.';
+            }
+          }
+        } else {
+          const text = await res.text();
+          if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+            message = 'The server returned an HTML page instead of a JSON response. Please check the API URL.';
+          }
+        }
+        throw new Error(message);
       }
-      return data;
+
+      if (!isJson) {
+        const text = await res.text();
+        if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+          throw new Error('The server returned an HTML page instead of a JSON response. Please check the API URL.');
+        }
+        throw new Error('Server returned a non-JSON response.');
+      }
+
+      return await res.json();
     } catch (err) {
       console.error(`API Error (${url}):`, err.message);
       throw err;
@@ -41,6 +69,27 @@ window.App = {
       this.user = null;
       this.updateHeaderAuthUI(false);
     }
+  },
+
+  // Require authentication for order-related actions.
+  // Stores returnUrl and optional message, then redirects to login.
+  async requireAuth(options = {}) {
+    const { returnUrl, message = 'Please log in to place your order.' } = options;
+    try {
+      const data = await this.fetchAPI('/api/auth/session');
+      if (data.loggedIn) {
+        this.user = data.user;
+        return true;
+      }
+    } catch (err) {
+      // fall through to redirect
+    }
+
+    const target = returnUrl || window.location.pathname + window.location.search;
+    sessionStorage.setItem('authReturnUrl', target);
+    sessionStorage.setItem('authMessage', message);
+    window.location.href = `/login.html?returnUrl=${encodeURIComponent(target)}&message=${encodeURIComponent(message)}`;
+    return false;
   },
 
   // Update header icons for login state

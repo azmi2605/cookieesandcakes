@@ -141,6 +141,12 @@
     </style>
 
     <script src="/js/app.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const allowed = await window.App.requireAuth({ returnUrl: '/cart.html' });
+            if (!allowed) return;
+        });
+    </script>
 </head>
 
 <body class="font-body-md text-body-md overflow-x-hidden selection:bg-secondary/20 min-h-screen flex flex-col">

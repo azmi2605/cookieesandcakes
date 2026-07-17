@@ -137,6 +137,19 @@
     <div data-include-header="/header/header.html"></div>
     <main class="pt-6 pb-xl w-full flex-grow">
         <div class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop">
+            <!-- Product Not Found Message (hidden by default) -->
+            <div id="product-not-found" class="hidden py-xl text-center">
+                <div class="max-w-md mx-auto space-y-md">
+                    <span class="material-symbols-outlined text-6xl text-outline-variant">search_off</span>
+                    <h2 class="font-headline-md text-headline-md text-primary">Product Not Found</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant">Sorry, we couldn't find the product you're looking for. It may have been removed or the link might be incorrect.</p>
+                    <a href="/treats.html" class="inline-block bg-secondary text-white font-label-md px-lg py-md rounded-xl hover:opacity-90 active:scale-95 transition-all">
+                        Browse All Treats
+                    </a>
+                </div>
+            </div>
+            <!-- Product Content -->
+            <div id="product-content">
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-xs text-on-surface-variant mb-md font-label-sm text-label-sm">
                 <a class="hover:text-primary" href="/treats.html">Shop</a>
@@ -251,7 +264,7 @@
                 </div>
                 <div class="flex overflow-x-auto gap-md bakers-tray-scroll pb-md">
                     <!-- Pair 1 -->
-                    <div class="flex-none w-[280px] group">
+                    <div class="flex-none w-[280px] group cursor-pointer">
                         <div class="aspect-[4/5] rounded-xl overflow-hidden mb-sm butter-shadow">
                             <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 data-alt="A cold glass of fresh whole milk with condensation on the outside of the glass, standing on a rustic wooden table with a soft focus bakery background. The scene is bright and airy with warm morning light filtering through a window. Natural colors, artisanal feel."
@@ -261,7 +274,7 @@
                         <p class="text-secondary font-label-sm text-label-sm">$3.00</p>
                     </div>
                     <!-- Pair 2 -->
-                    <div class="flex-none w-[280px] group">
+                    <div class="flex-none w-[280px] group cursor-pointer">
                         <div class="aspect-[4/5] rounded-xl overflow-hidden mb-sm butter-shadow">
                             <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 data-alt="A steaming cup of dark roast coffee in a matte ceramic brown mug, with a swirl of light crema on top. The mug sits on a simple cream saucer against a soft, textured background. Minimalist, artisanal aesthetic with warm, cozy lighting."
@@ -271,7 +284,7 @@
                         <p class="text-secondary font-label-sm text-label-sm">$4.25</p>
                     </div>
                     <!-- Pair 3 -->
-                    <div class="flex-none w-[280px] group">
+                    <div class="flex-none w-[280px] group cursor-pointer">
                         <div class="aspect-[4/5] rounded-xl overflow-hidden mb-sm butter-shadow">
                             <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 data-alt="A small plate of hand-whipped vanilla bean cream, showing tiny black specks of real vanilla. The cream is fluffy and elegant, served in a small boutique pottery dish. Soft, cream-toned palette with gentle highlights."
@@ -284,6 +297,7 @@
             </section>
             <!-- Reviews Section: dynamically injected by product.js -->
 
+        </div>
         </div>
     </main>
     <script src="/js/product.js" defer></script>

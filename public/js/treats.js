@@ -173,12 +173,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.status === 'added') {
               span.classList.add('fill-icon');
               span.style.fontVariationSettings = "'FILL' 1";
+              window.App.toastSuccess('Added to Wishlist ❤️');
             } else {
               span.classList.remove('fill-icon');
               span.style.fontVariationSettings = "'FILL' 0";
+              window.App.toastSuccess('Removed from Wishlist 💔');
             }
           } catch (err) {
-            alert(err.message);
+            window.App.toastError('Failed to update wishlist. Please try again.');
           }
         });
 
@@ -195,9 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
               body: { productId: product.id, quantity: 1 }
             });
             await window.App.updateCartBadge();
-            alert(`${product.name} added to cart!`);
+            window.App.toastSuccess(`${product.name} added to cart!`);
           } catch (err) {
-            alert(err.message);
+            window.App.toastError(err.message);
           }
         });
 
@@ -209,6 +211,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initial load
-  // Wait a small delay for App to finish loading its wishlist
-  setTimeout(loadProducts, 200);
+  // Wait for the shared wishlist to finish loading before rendering products
+  (async () => {
+    await window.App.loadWishlist().catch(() => {});
+    loadProducts();
+  })();
 });

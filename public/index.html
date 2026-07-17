@@ -168,6 +168,7 @@
                             Shop Now
                         </button>
                         <button
+                            id="view-menu-btn"
                             class="border-2 border-primary text-primary font-label-md text-label-md px-xl py-md rounded-lg hover:bg-primary hover:text-white active:scale-[0.98] transition-all">
                             View Menu
                         </button>
@@ -365,7 +366,7 @@
                     to your inbox.
                 </p>
                 <form class="flex flex-col md:flex-row gap-md max-w-md mx-auto"
-                    onsubmit="event.preventDefault(); alert('Welcome to the club!')">
+                    onsubmit="event.preventDefault(); window.App && window.App.toastSuccess('Welcome to the club!')">
                     <input
                         class="flex-1 bg-white/10 border border-white/20 rounded-lg px-md py-3 focus:outline-none focus:ring-2 focus:ring-secondary-container placeholder:text-white/40 text-white font-body-md"
                         placeholder="Enter your email" type="email" />
@@ -379,6 +380,104 @@
     </main>
     <!-- Footer -->
     <div data-include-footer="/footer/footer.html"></div>
+    <script>
+        // Client-side navigation for View Menu button
+        async function navigateToTreats(event) {
+            event.preventDefault();
+            
+            const btn = document.getElementById('view-menu-btn');
+            if (!btn || btn.disabled) return;
+            
+            btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.textContent = 'Loading...';
+            btn.style.opacity = '0.7';
+            
+            try {
+                const response = await fetch('/treats.html');
+                if (!response.ok) throw new Error('Failed to load treats page');
+                
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                const newMain = doc.querySelector('main');
+                const newTitle = doc.title;
+                
+                if (newMain) {
+                    const currentMain = document.querySelector('main');
+                    currentMain.style.opacity = '0';
+                    currentMain.style.transform = 'translateY(8px)';
+                    currentMain.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+                    
+                    setTimeout(async () => {
+                        currentMain.outerHTML = newMain.outerHTML;
+                        document.title = newTitle || 'cookieesandcakes | Product Gallery';
+                        
+                        history.pushState({ route: '/treats.html' }, '', '/treats.html');
+                        
+                        // Reinitialize shared app logic (header/footer/session/cart/wishlist)
+                        if (window.App && typeof window.App.init === 'function') {
+                            await window.App.init();
+                        }
+                        
+                        // Load treats page scripts dynamically if not already present
+                        if (!document.getElementById('treats-script')) {
+                            const script = document.createElement('script');
+                            script.id = 'treats-script';
+                            script.src = '/js/treats.js';
+                            script.onload = () => {
+                                document.dispatchEvent(new Event('DOMContentLoaded'));
+                            };
+                            document.head.appendChild(script);
+                        } else {
+                            document.dispatchEvent(new Event('DOMContentLoaded'));
+                        }
+                        
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        
+                        const newMainEl = document.querySelector('main');
+                        if (newMainEl) {
+                            newMainEl.style.opacity = '1';
+                            newMainEl.style.transform = 'translateY(0)';
+                        }
+                    }, 200);
+                }
+            } catch (error) {
+                console.error('Navigation to treats failed:', error);
+                window.location.href = '/treats.html';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+                btn.style.opacity = '1';
+            }
+        }
+        
+        function setupViewMenuButton() {
+            const btn = document.getElementById('view-menu-btn');
+            if (btn && !btn.dataset.routerAttached) {
+                btn.dataset.routerAttached = 'true';
+                btn.addEventListener('click', navigateToTreats);
+            }
+        }
+        
+        // Handle browser back/forward
+        window.addEventListener('popstate', () => {
+            window.location.reload();
+        });
+        
+        document.addEventListener('DOMContentLoaded', setupViewMenuButton);
+        
+        // Also run immediately in case DOM is already loaded
+        if (document.readyState === 'interactive' || document.readyState === 'complete') {
+            setupViewMenuButton();
+        }
+    </script>
+
+    <script src="/js/home.js" defer></script>
+
+    <script src="/js/chatbot.js" defer></script>
+
     <script>
         // Simple scroll reveal effect for images
         const observerOptions = {
@@ -399,10 +498,6 @@
             observer.observe(section);
         });
     </script>
-
-    <script src="/js/home.js" defer></script>
-
-    <script src="/js/chatbot.js" defer></script>
 </body>
 
 </html>

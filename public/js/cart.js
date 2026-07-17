@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
           await window.App.updateCartBadge();
           loadCart();
         } catch (err) {
-          alert(err.message);
+          window.App.toastError(err.message);
         }
       });
 
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
           await window.App.updateCartBadge();
           loadCart();
         } catch (err) {
-          alert(err.message);
+          window.App.toastError(err.message);
         }
       });
 
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
           await window.App.updateCartBadge();
           loadCart();
         } catch (err) {
-          alert(err.message);
+          window.App.toastError(err.message);
         }
       });
     });
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Redirect to tracking page
         window.location.href = `/track-order.html?orderId=${orderResult.orderId}`;
       } catch (err) {
-        alert('Failed to place order: ' + err.message);
+        window.App.toastError('Failed to place order: ' + err.message);
       }
     });
   }

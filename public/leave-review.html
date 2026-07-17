@@ -284,7 +284,7 @@
 
             // Artificial delay for tactile feel
             setTimeout(() => {
-                alert('Thank you for your warm words! Your review has been submitted.');
+                window.App && window.App.toastSuccess('Thank you for your warm words! Your review has been submitted.');
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Submit Your Review';
                 form.reset();

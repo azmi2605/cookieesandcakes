@@ -2,31 +2,9 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const path = window.location.pathname;
 
-  // Helper to determine product ID from URL on product details pages
-  const productPageMap = {
-    'treat-salted-dark-chocolate.html': 'salted-dark-chocolate',
-    'treat-double-truffle-signature-cake.html': 'double-truffle-signature-cake',
-    'treat-classic-sea-salt-cookie.html': 'classic-sea-salt-cookie',
-    'treat-rose-velvet-cake.html': 'rose-velvet-cake',
-    'treat-almond-croissant.html': 'almond-croissant',
-    'treat-artisan-macarons.html': 'artisan-macarons',
-    'treat-lemon-cloud-tart.html': 'lemon-cloud-tart',
-    'treat-artisan-sourdough.html': 'artisan-sourdough',
-    'treat-lemon-lavender-tart.html': 'lemon-lavender-tart',
-    'treat-honey-layer-cake.html': 'honey-layer-cake',
-    'treat-pistachio-croissant.html': 'pistachio-croissant',
-    'treat-cinnamon-swirls.html': 'cinnamon-swirls',
-    'treat-midnight-truffles.html': 'midnight-truffles',
-    'treat-pistachio-dream.html': 'pistachio-dream'
-  };
-
-  let productId = '';
-  for (const [fileName, id] of Object.entries(productPageMap)) {
-    if (path.includes(fileName)) {
-      productId = id;
-      break;
-    }
-  }
+  // Extract product ID from URL using regex for flexible routing
+  const productSlugMatch = path.match(/\/treat-([^\/]+)\.html/);
+  let productId = productSlugMatch ? productSlugMatch[1] : '';
 
   // --- 1. PRODUCT DETAILS PAGE FLOW ---
   if (productId) {
@@ -45,8 +23,27 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (qty) qty.value = Math.max(+(qty.min || 1), parseInt(qty.value || 1) - 1);
     };
 
-    // Load and render product reviews dynamically at the bottom
-    loadProductReviews(productId);
+    // Product navigation with History API support
+    window.navigateToProduct = function(targetProductId) {
+      if (!targetProductId || targetProductId === productId) return;
+      const targetUrl = `/treat-${targetProductId}.html`;
+      if (window.location.pathname !== targetUrl) {
+        history.pushState({ productId: targetProductId }, '', targetUrl);
+      }
+      loadProduct(targetProductId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Handle browser back/forward
+    window.addEventListener('popstate', async (e) => {
+      if (e.state && e.state.productId) {
+        await loadProduct(e.state.productId);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // Load product data dynamically from API and enrich the static page
+    await loadProduct(productId);
 
     // Bind Add to Cart / Tray Button
     if (addToBagBtn) {
@@ -71,12 +68,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Redirect to message-added page to show confirmation
             window.location.href = `/message-added.html?productId=${productId}&message=${encodeURIComponent(message)}`;
           } else {
-            alert('Added to cart!');
+            window.App.toastSuccess('Added to cart!');
           }
         } catch (err) {
-          alert('Failed to add item to cart: ' + err.message);
+          window.App.toastError('Failed to add item to cart: ' + err.message);
         }
       });
+    }
+
+    async function loadProduct(prodId) {
+      productId = prodId;
+      
+      // Update URL if needed
+      const expectedUrl = `/treat-${prodId}.html`;
+      if (window.location.pathname !== expectedUrl && !history.state?.productId) {
+        history.replaceState({ productId: prodId }, '', expectedUrl);
+      }
+
+      // Clear existing dynamic sections
+      const existingBadge = document.querySelector('.product-badge');
+      if (existingBadge) existingBadge.remove();
+      
+      const existingReviews = document.getElementById('product-reviews-section');
+      if (existingReviews) existingReviews.remove();
+      
+      const existingStockInfo = document.querySelector('.stock-info');
+      if (existingStockInfo) existingStockInfo.remove();
+
+      // Load product data
+      await loadProductData(prodId);
+      
+      // Load and render product reviews
+      await loadProductReviews(prodId);
     }
 
     async function loadProductReviews(prodId) {
@@ -84,8 +107,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       const mainContainer = document.querySelector('main');
       if (!mainContainer) return;
 
+      // Remove existing reviews section if present
+      const existingReviews = document.getElementById('product-reviews-section');
+      if (existingReviews) existingReviews.remove();
+
       // Create a nice review section
       const reviewsSection = document.createElement('section');
+      reviewsSection.id = 'product-reviews-section';
       reviewsSection.className = 'mt-xl border-t border-outline-variant/30 pt-xl';
       reviewsSection.innerHTML = `
         <div class="max-w-[1200px] mx-auto">
@@ -183,14 +211,165 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('Failed to load reviews:', err.message);
       }
     }
+
+    // Dynamically enrich product detail page with data from the API
+    async function loadProductData(prodId) {
+      try {
+        const product = await window.App.fetchAPI(`/api/products/${prodId}`);
+        
+        // Handle product not found
+        if (!product) {
+          showProductNotFound();
+          return;
+        }
+
+        // Hide not found message if visible
+        const notFoundEl = document.getElementById('product-not-found');
+        if (notFoundEl) notFoundEl.classList.add('hidden');
+        const productContent = document.getElementById('product-content');
+        if (productContent) productContent.classList.remove('hidden');
+
+        // Update page title
+        if (product.name) {
+          document.title = `${product.name} | cookieesandcakes`;
+        }
+
+        // Update hero image
+        if (product.image) {
+          const heroImg = document.querySelector('main .grid > div:first-child img');
+          if (heroImg) {
+            heroImg.src = product.image;
+            heroImg.alt = product.name;
+          }
+        }
+
+        // Update product name
+        if (product.name) {
+          const nameEl = document.querySelector('main h1');
+          if (nameEl) nameEl.textContent = product.name;
+        }
+
+        // Update product price
+        if (product.price !== undefined) {
+          const priceEl = document.querySelector('main .font-headline-md.text-secondary');
+          if (priceEl) priceEl.textContent = `$${parseFloat(product.price).toFixed(2)}`;
+        }
+
+        // Update product description
+        if (product.description) {
+          const descEl = document.querySelector('main .grid > div:last-child .font-body-lg');
+          if (descEl) descEl.textContent = product.description;
+        }
+
+        // Update badge if present
+        if (product.badge) {
+            const heroSection = document.querySelector('main .grid > div:first-child');
+            if (heroSection && !heroSection.querySelector('.product-badge')) {
+                const badgeEl = document.createElement('div');
+                badgeEl.className = 'product-badge absolute top-4 left-4 bg-surface/90 backdrop-blur-sm px-md py-xs rounded-full border border-primary/10 flex items-center gap-xs z-10';
+                badgeEl.innerHTML = `<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: \'FILL\' 1;">star</span><span class="font-label-md text-label-md text-primary">${product.badge}</span>`;
+                heroSection.appendChild(badgeEl);
+            }
+        }
+
+        // Update tags if present
+        if (product.tags && product.tags.length) {
+            const tagsContainer = document.querySelector('main .grid > div:last-child .flex.flex-wrap.gap-sm');
+            if (tagsContainer) {
+                tagsContainer.innerHTML = product.tags.map(tag => {
+                    const icon = tag.includes('Special') ? 'emoji_nature' : tag.includes('Same-day') ? 'bolt' : tag.includes('Seasonal') ? 'wb_sunny' : tag.includes('Chef') ? 'restaurant' : 'label';
+                    return `<span class="px-md py-xs bg-surface-container-low text-primary border border-outline-variant rounded-full font-label-md text-label-md flex items-center gap-xs"><span class="material-symbols-outlined text-sm">${icon}</span> ${tag}</span>`;
+                }).join('');
+            }
+        }
+
+        // Update ingredients accordion if present
+        if (product.ingredients && product.ingredients.length) {
+            const ingredientsDetails = document.querySelector('details:has(summary:contains("Ingredients"))');
+            if (ingredientsDetails) {
+                const contentP = ingredientsDetails.querySelector('p');
+                if (contentP) contentP.textContent = product.ingredients.join(', ');
+            }
+        }
+
+        // Update flavor profile accordion if present
+        if (product.flavorProfile && product.flavorProfile.length) {
+            const flavorDetails = document.querySelector('details:has(summary:contains("Flavor Profile"))');
+            if (flavorDetails) {
+                const contentP = flavorDetails.querySelector('p');
+                if (contentP) contentP.textContent = product.flavorProfile.join(', ');
+            }
+        }
+
+        // Update Pairs Well With section if present
+        if (product.pairsWith && product.pairsWith.length) {
+            const pairsSection = document.querySelector('section.mt-xl');
+            if (pairsSection && pairsSection.querySelector('h2')?.textContent.includes('Pairs Well With')) {
+                const trayContainer = pairsSection.querySelector('.flex.overflow-x-auto');
+                if (trayContainer) {
+                    trayContainer.innerHTML = '';
+                    const pairPromises = product.pairsWith.map(async pairId => {
+                        try {
+                            const pairProduct = await window.App.fetchAPI(`/api/products/${pairId}`);
+                            if (!pairProduct) return;
+                            const pairCard = document.createElement('div');
+                            pairCard.className = 'flex-none w-[280px] group cursor-pointer';
+                            pairCard.innerHTML = `
+                                <div class="aspect-[4/5] rounded-xl overflow-hidden mb-sm butter-shadow">
+                                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${pairProduct.image}" alt="${pairProduct.name}"/>
+                                </div>
+                                <h3 class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">${pairProduct.name}</h3>
+                                <p class="text-secondary font-label-sm text-label-sm">$${parseFloat(pairProduct.price || 0).toFixed(2)}</p>
+                            `;
+                            pairCard.addEventListener('click', () => {
+                              window.navigateToProduct(pairId);
+                            });
+                            trayContainer.appendChild(pairCard);
+                        } catch (_) {}
+                    });
+                    await Promise.all(pairPromises);
+                }
+            }
+        }
+
+        // Add availability/stock info if present
+        if (product.availability || product.stock !== undefined) {
+            const selectorsSection = document.querySelector('.bg-surface-container-lowest');
+            if (selectorsSection) {
+                // Remove existing stock info
+                const existingStock = selectorsSection.querySelector('.stock-info');
+                if (existingStock) existingStock.remove();
+                
+                const stockInfo = document.createElement('div');
+                stockInfo.className = 'stock-info flex items-center justify-between mt-2 text-sm';
+                const stockText = product.availability === 'In Stock' ? `In Stock (${product.stock || 0} available)` : product.availability === 'Out of Stock' ? 'Out of Stock' : `Pre-order (${product.stock || 0} available)`;
+                const stockColor = product.availability === 'In Stock' ? 'text-green-700' : product.availability === 'Out of Stock' ? 'text-red-600' : 'text-amber-600';
+                stockInfo.innerHTML = `<span class="font-label-md text-label-md ${stockColor}">${stockText}</span>`;
+                if (product.sku) {
+                    stockInfo.innerHTML += `<span class="font-label-sm text-label-sm text-on-surface-variant">SKU: ${product.sku}</span>`;
+                }
+                selectorsSection.appendChild(stockInfo);
+            }
+        }
+      } catch (err) {
+        console.error('Failed to load product data:', err.message);
+        showProductNotFound();
+      }
+    }
+
+    function showProductNotFound() {
+      const productContent = document.getElementById('product-content');
+      const notFoundEl = document.getElementById('product-not-found');
+      if (productContent) productContent.classList.add('hidden');
+      if (notFoundEl) notFoundEl.classList.remove('hidden');
+      document.title = 'Product Not Found | cookieesandcakes';
+    }
   }
 
   // --- 2. WISHLIST PAGE FLOW ---
   if (path.includes('wishlist.html')) {
     const listContainer = document.querySelector('div.grid.grid-cols-1.md\\:grid-cols-12');
-    
-    // Wait for App to load wishlist
-    setTimeout(renderWishlistPage, 200);
+    if (!listContainer) return;
 
     async function renderWishlistPage() {
       if (!listContainer) return;
@@ -219,8 +398,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       ids.forEach((id, index) => {
         const item = wishlist[id];
         
-        // Bento layout formatting: alternating between wide (col-span-8) and square (col-span-4)
-        // Check index: index 0 -> span 8, index 1 -> span 4, index 2 -> span 4, index 3 -> span 8, etc.
         let colSpan = 'md:col-span-4';
         if (index % 3 === 0) {
           colSpan = 'md:col-span-8';
@@ -231,7 +408,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         let cardHtml = '';
         if (colSpan === 'md:col-span-8') {
-          // Wide card format
           cardHtml = `
             <div class="flex flex-col md:flex-row h-full">
               <div class="md:w-1/2 overflow-hidden h-64 md:h-full relative">
@@ -258,7 +434,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
           `;
         } else {
-          // Square card format
           cardHtml = `
             <div class="h-48 overflow-hidden">
               <img class="w-full h-full object-cover" src="${item.image}" alt="${item.name}"/>
@@ -283,20 +458,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         itemCard.innerHTML = cardHtml;
 
-        // Attach event handlers
         itemCard.querySelector('.delete-btn').addEventListener('click', async () => {
           try {
             const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to manage your wishlist.' });
             if (!allowed) return;
             
-            await window.App.fetchAPI('/api/wishlist/toggle', {
+            const data = await window.App.fetchAPI('/api/wishlist/toggle', {
               method: 'POST',
               body: { productId: id }
             });
             await window.App.loadWishlist();
-            renderWishlistPage();
+            if (data.status === 'removed') {
+              window.App.toastSuccess('Removed from Wishlist 💔');
+            }
           } catch (err) {
-            alert('Failed to remove: ' + err.message);
+            window.App.toastError('Failed to update wishlist. Please try again.');
           }
         });
 
@@ -305,12 +481,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to add items to your cart.' });
             if (!allowed) return;
             
-            // Add to Cart
             await window.App.fetchAPI('/api/cart', {
               method: 'POST',
               body: { productId: id, quantity: 1 }
             });
-            // Remove from Wishlist
             await window.App.fetchAPI('/api/wishlist/toggle', {
               method: 'POST',
               body: { productId: id }
@@ -318,16 +492,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             await window.App.updateCartBadge();
             await window.App.loadWishlist();
-            renderWishlistPage();
-            alert(`${item.name} moved to cart!`);
+            window.App.toastSuccess(`${item.name} moved to cart!`);
           } catch (err) {
-            alert(err.message);
+            window.App.toastError(err.message);
           }
         });
 
         listContainer.appendChild(itemCard);
       });
     }
+
+    // Wait for the shared wishlist to load, then render
+    await window.App.loadWishlist().catch(() => {});
+    renderWishlistPage();
+
+    // Re-render whenever the shared wishlist changes
+    window.App.onWishlistChange(() => renderWishlistPage());
   }
 
   // --- 3. PERSONALIZATION CONFIRMATION FLOW ---

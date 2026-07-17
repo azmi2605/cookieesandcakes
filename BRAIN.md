@@ -344,6 +344,14 @@ The frontend is served from `/public` as static HTML and JavaScript assets. It u
       *   Validates `Content-Type: application/json` before parsing responses.
       *   Shows user-friendly error messages for network failures, HTML responses, and invalid credentials.
       *   Performs a health check (`/api/health`) on page load and disables the login button if the backend is unreachable.
+  9.  **[toast.js](file:///c:/Users/AZMIYA AAYAT/Downloads/candc/public/js/toast.js)**:
+      *   Global toast notification system used across the storefront and admin pages.
+      *   Exposes `window.Toast` with methods: `success(message, options)`, `error(message, options)`, `warning(message, options)`, `info(message, options)`, and `dismiss(id)`.
+      *   Automatically creates a fixed `#toast-container` in the top-right corner if one does not exist.
+      *   Supports customizable `title`, `duration`, and type-based theming (`success`, `error`, `warning`, `info`).
+      *   Limits concurrent toasts to `maxToasts` (default 4); oldest toast is dismissed when limit is exceeded.
+      *   Pauses auto-dismiss on hover and resumes on mouse leave.
+      *   Respects `window.App.__suppressToasts` to suppress notifications during sensitive flows (e.g., admin login).
 
 ### UI Styling & Custom Tailwind Rules
 Styling is configured inside the `<script id="tailwind-config">` block in HTML headers. Extended design tokens include:

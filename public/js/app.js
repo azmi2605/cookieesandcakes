@@ -3,6 +3,89 @@ window.App = {
   user: null,
   cart: {},
   wishlist: {},
+  _wishlistListeners: [],
+  _wishlistLoaded: false,
+
+  _wishlistPromise: null,
+
+  // Subscribe to wishlist changes
+  onWishlistChange(callback) {
+    this._wishlistListeners.push(callback);
+  },
+
+  // Notify all listeners that wishlist has changed
+  _emitWishlistChange() {
+    this._wishlistListeners.forEach(cb => {
+      try { cb(this.wishlist); } catch (_) {}
+    });
+  },
+
+  // Persist wishlist to localStorage
+  _persistWishlist() {
+    try {
+      localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+    } catch (_) {}
+  },
+
+  // Restore wishlist from localStorage
+  _restoreWishlist() {
+    try {
+      const saved = localStorage.getItem('wishlist');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          this.wishlist = parsed;
+        }
+      }
+    } catch (_) {}
+  },
+
+  // Ensure toast system is loaded
+  _toastLoaded: false,
+  _toastQueue: [],
+  _toastFailed: false,
+  async _ensureToasts() {
+    if (this._toastLoaded || this._toastFailed) return;
+    this._toastLoaded = true;
+    try {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = '/js/toast.js';
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+      this._flushToastQueue();
+    } catch (e) {
+      this._toastFailed = true;
+      this._toastLoaded = false;
+      console.warn('Toast system failed to load:', e);
+    }
+  },
+
+  _flushToastQueue() {
+    if (!window.Toast) return;
+    const queue = this._toastQueue;
+    this._toastQueue = [];
+    queue.forEach(({ type, message, opts }) => {
+      window.Toast[type](message, opts);
+    });
+  },
+
+  _queueToast(type, message, opts) {
+    if (window.Toast) {
+      window.Toast[type](message, opts);
+    } else {
+      this._toastQueue.push({ type, message, opts });
+      this._ensureToasts();
+    }
+  },
+
+  // Toast helpers
+  toastSuccess(message, opts) { this._queueToast('success', message, opts); },
+  toastError(message, opts)   { this._queueToast('error', message, opts); },
+  toastWarning(message, opts) { this._queueToast('warning', message, opts); },
+  toastInfo(message, opts)    { this._queueToast('info', message, opts); },
 
   // Helper for HTTP requests
   async fetchAPI(url, options = {}) {
@@ -147,19 +230,29 @@ window.App = {
       this.user = null;
       window.location.href = '/signin.html';
     } catch (err) {
-      alert('Logout failed: ' + err.message);
+      this.toastError('Logout failed: ' + err.message);
     }
   },
 
   // Sync wishlist
   async loadWishlist() {
-    try {
-      const data = await this.fetchAPI('/api/wishlist');
-      this.wishlist = data;
-      this.updateWishlistIcons();
-    } catch (err) {
-      console.error('Failed to load wishlist:', err.message);
-    }
+    if (this._wishlistPromise) return this._wishlistPromise;
+    
+    this._wishlistPromise = (async () => {
+      try {
+        const data = await this.fetchAPI('/api/wishlist');
+        this.wishlist = data;
+        this._persistWishlist();
+        this.updateWishlistIcons();
+        this._wishlistLoaded = true;
+        this._emitWishlistChange();
+        this.updateWishlistBadge();
+      } catch (err) {
+        console.error('Failed to load wishlist:', err.message);
+      }
+    })();
+    
+    return this._wishlistPromise;
   },
 
   // Update wishlist heart fill status across page elements
@@ -185,6 +278,21 @@ window.App = {
     });
   },
 
+  // Update wishlist count badge in header
+  async updateWishlistBadge() {
+    try {
+      const badge = document.getElementById('header-wishlist-badge');
+      if (!badge) return;
+      const count = Object.keys(this.wishlist).length;
+      badge.textContent = count;
+      if (count > 0) {
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    } catch (_) {}
+  },
+
   // Include header partial
   async includeHeaders() {
     const placeholders = document.querySelectorAll('[data-include-header]');
@@ -207,18 +315,9 @@ window.App = {
     const header = document.getElementById('site-header');
     if (!header) return;
 
-    const searchContainer = document.getElementById('header-search-container');
     const backBtn = document.getElementById('header-back-btn');
     const wishlistBtn = document.getElementById('header-wishlist-btn');
     const cartBadge = document.getElementById('header-cart-badge');
-
-    if (path.includes('specials.html')) {
-      if (searchContainer) searchContainer.classList.remove('hidden');
-      if (backBtn) {
-        backBtn.classList.remove('hidden');
-        backBtn.classList.add('flex');
-      }
-    }
 
     if (path.includes('rate-treats.html') || path.includes('leave-review.html')) {
       const cartIcon = header.querySelector('#header-cart-btn span');
@@ -260,6 +359,8 @@ window.App = {
     this.adjustHeaderForPage();
     await this.checkSession();
     await this.updateCartBadge();
+    this._restoreWishlist();
+    this.updateWishlistBadge();
     await this.loadWishlist();
   }
 };

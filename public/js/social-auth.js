@@ -80,7 +80,7 @@ window.SocialAuth = {
         name
       });
     } catch (e) {
-      alert('Apple sign-in was cancelled or failed.');
+      window.App.toastError('Apple sign-in was cancelled or failed.');
     }
   },
 
@@ -94,7 +94,7 @@ window.SocialAuth = {
       });
       window.location.href = '/account.html';
     } catch (err) {
-      alert(err.message || `${provider} sign-in failed.`);
+      window.App.toastError(err.message || `${provider} sign-in failed.`);
       if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
     }
   },
@@ -112,7 +112,7 @@ window.SocialAuth = {
   },
 
   notConfigured(provider) {
-    alert(`${provider} sign-in is not configured yet. Add the OAuth client ID in the server .env file.`);
+    window.App.toastWarning(`${provider} sign-in is not configured yet. Add the OAuth client ID in the server .env file.`);
   }
 };
 

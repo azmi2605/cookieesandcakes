@@ -321,12 +321,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const commentInput = document.getElementById('review_text');
 
         if (!ratingInput) {
-          alert('Please select a star rating.');
+          window.App.toastWarning('Please select a star rating.');
           return;
         }
 
         if (!commentInput || !commentInput.value.trim()) {
-          alert('Please write a short review.');
+          window.App.toastWarning('Please write a short review.');
           return;
         }
 
@@ -344,11 +344,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           });
 
-          alert('Review submitted successfully!');
+          window.App.toastSuccess('Review submitted successfully!');
           // Redirect back to product details
           window.location.href = `/treat-${productId}.html`;
         } catch (err) {
-          alert('Failed to submit review: ' + err.message);
+          window.App.toastError('Failed to submit review: ' + err.message);
         }
       });
     }
@@ -487,10 +487,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           }
 
-          alert(submitted > 0 ? 'Thank you for your feedback! Your reviews have been saved.' : 'Thank you for your rating!');
+          window.App.toastSuccess(submitted > 0 ? 'Thank you for your feedback! Your reviews have been saved.' : 'Thank you for your rating!');
           window.location.href = '/index.html';
         } catch (err) {
-          alert('Failed to submit: ' + err.message);
+          window.App.toastError('Failed to submit: ' + err.message);
         }
       });
     }

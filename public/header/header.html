@@ -27,17 +27,11 @@
                 href="/index.html#our-story">Our Story</a>
         </nav>
         <div class="flex items-center gap-md shrink-0">
-            <div id="header-search-container"
-                class="hidden md:flex bg-surface-container px-4 py-2 rounded-full items-center gap-xs">
-                <span class="material-symbols-outlined text-outline" data-icon="search">search</span>
-                <input
-                    class="bg-transparent border-none focus:ring-0 text-label-sm p-0 w-32 placeholder:text-outline-variant"
-                    placeholder="Find treats..." type="text" />
-            </div>
             <button id="header-wishlist-btn"
-                class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200" type="button">
+                class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200 relative" type="button">
                 <a href="/wishlist.html" class="flex items-center justify-center"><span
-                        class="material-symbols-outlined text-primary">favorite</span></a>
+                        class="material-symbols-outlined text-primary">favorite</span><span id="header-wishlist-badge"
+                        class="absolute -top-1 -right-1 bg-secondary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full hidden">0</span></a>
             </button>
             <button id="header-cart-btn"
                 class="hover:opacity-80 transition-opacity p-2 active:scale-95 duration-200 relative" type="button">

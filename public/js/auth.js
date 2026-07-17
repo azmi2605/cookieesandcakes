@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!nameInput || !emailInput || !passwordInput) return;
 
         if (termsInput && !termsInput.checked) {
-          alert('You must agree to the Terms of Service and Privacy Policy.');
+          window.App.toastWarning('You must agree to the Terms of Service and Privacy Policy.');
           return;
         }
 
@@ -263,8 +263,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const wishlistContainer = document.querySelector('main section:nth-of-type(2) div.flex.overflow-x-auto');
       if (!wishlistContainer) return;
 
-      try {
-        const wishlist = await window.App.fetchAPI('/api/wishlist');
+      function renderDashboardWishlist() {
+        const wishlist = window.App.wishlist;
         const itemIds = Object.keys(wishlist);
 
         if (itemIds.length === 0) {
@@ -310,14 +310,16 @@ document.addEventListener('DOMContentLoaded', () => {
           card.querySelector('.wishlist-toggle-btn').addEventListener('click', async (e) => {
             e.stopPropagation();
             try {
-              await window.App.fetchAPI('/api/wishlist/toggle', {
+              const data = await window.App.fetchAPI('/api/wishlist/toggle', {
                 method: 'POST',
                 body: { productId: id }
               });
               await window.App.loadWishlist();
-              loadWishlistItems(); // reload dashboard list
+              if (data.status === 'removed') {
+                window.App.toastSuccess('Removed from Wishlist 💔');
+              }
             } catch (err) {
-              alert(err.message);
+              window.App.toastError('Failed to update wishlist. Please try again.');
             }
           });
 
@@ -330,17 +332,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: { productId: id, quantity: 1 }
               });
               await window.App.updateCartBadge();
-              alert(`${item.name} added to cart!`);
+              window.App.toastSuccess(`${item.name} added to cart!`);
             } catch (err) {
-              alert(err.message);
+              window.App.toastError(err.message);
             }
           });
 
           wishlistContainer.appendChild(card);
         });
-      } catch (err) {
-        console.error('Failed to load dashboard wishlist:', err.message);
       }
+
+      // Use the shared wishlist state directly
+      renderDashboardWishlist();
+
+      // Re-render whenever the shared wishlist changes
+      window.App.onWishlistChange(() => renderDashboardWishlist());
     }
   }
 });

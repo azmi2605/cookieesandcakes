@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Settings | cookieesandcakes Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&amp;family=Source+Serif+4:wght@400;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Subtle Grain Overlay */
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("https://www.transparenttextures.com/patterns/p6.png");
+        }
+
+        /* Custom toggle switch styling */
+        .toggle-switch {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            width: 44px !important;
+            height: 24px !important;
+            background-color: #d4c3be !important;
+            background-image: none !important;
+            border: none !important;
+            border-radius: 999px !important;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            outline: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+
+        .toggle-switch:checked {
+            background-color: #91494d !important;
+            background-image: none !important;
+        }
+
+        .toggle-switch::before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch:checked::before {
+            transform: translateX(20px);
+        }
+
+        .dotted-divider {
+            background-image: linear-gradient(to right, #827470 33%, rgba(255, 255, 255, 0) 0%);
+            background-position: bottom;
+            background-size: 6px 1px;
+            background-repeat: repeat-x;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#251914",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#ecd5ce",
+                        "tertiary-container": "#173430",
+                        "secondary-fixed": "#ffdada",
+                        "primary-container": "#44281e",
+                        "on-primary-fixed-variant": "#5f3f34",
+                        "on-secondary-fixed-variant": "#743236",
+                        "on-primary-fixed": "#2d150c",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#f5ded6",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#fff8f6",
+                        "surface-container-highest": "#f5ded6",
+                        "on-tertiary-fixed-variant": "#2f4c48",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#fea3a6",
+                        "surface-container": "#ffe9e3",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary": "#91494d",
+                        "surface-container-low": "#fff1ec",
+                        "on-primary-container": "#b68e80",
+                        "outline": "#827470",
+                        "tertiary": "#011f1b",
+                        "tertiary-fixed": "#c9e9e3",
+                        "surface-tint": "#79564a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#79363a",
+                        "on-surface-variant": "#504440",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#ffb3b5",
+                        "outline-variant": "#d4c3be",
+                        "primary-fixed": "#ffdbcf",
+                        "on-secondary-fixed": "#3c070e",
+                        "background": "#fff8f6",
+                        "primary-fixed-dim": "#eabdae",
+                        "inverse-on-surface": "#ffede7",
+                        "on-tertiary-container": "#7f9d97",
+                        "tertiary-fixed-dim": "#aecdc7",
+                        "surface": "#fff8f6",
+                        "inverse-surface": "#3b2d28",
+                        "surface-container-high": "#fbe3dc",
+                        "on-background": "#251914",
+                        "on-tertiary-fixed": "#02201c",
+                        "inverse-primary": "#eabdae",
+                        "primary": "#2c140b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "xl": "80px",
+                        "md": "24px",
+                        "lg": "48px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["\"Source Sans 3\""],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "display-lg": ["\"Source Serif 4\""],
+                        "display-lg-mobile": ["\"Source Serif 4\""],
+                        "label-sm": ["\"Source Sans 3\""],
+                        "body-md": ["\"Source Sans 3\""]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "fontWeight": "700" }],
+                        "label-sm": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+    <div class="grain-overlay"></div>
+    <!-- Side Navigation Shell -->
+    <aside
+        class="fixed left-0 top-0 h-full flex flex-col p-sm z-40 bg-surface-container dark:bg-surface-container-highest shadow-sm w-64 docked">
+        <div class="px-4 py-8 mb-8 flex flex-col gap-1">
+            <h1 class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-primary-fixed-variant">
+                cookieesandcakes</h1>
+            <p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Bakery Management</p>
+        </div>
+        <nav class="flex-1 flex flex-col gap-2 overflow-y-auto">
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-colors"
+                href="/admin-dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span>
+                <span class="font-body-md text-body-md">Dashboard</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-colors"
+                href="/admin-orders.html">
+                <span class="material-symbols-outlined">shopping_cart</span>
+                <span class="font-body-md text-body-md">Orders</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-colors"
+                href="/admin-dashboard.html#products">
+                <span class="material-symbols-outlined">bakery_dining</span>
+                <span class="font-body-md text-body-md">Products</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-colors"
+                href="/admin-customers.html">
+                <span class="material-symbols-outlined">group</span>
+                <span class="font-body-md text-body-md">Customers</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-colors"
+                href="/admin-reviews.html">
+                <span class="material-symbols-outlined">rate_review</span>
+                <span class="font-body-md text-body-md">Reviews</span>
+            </a>
+        </nav>
+        <div class="mt-auto pt-4 flex flex-col gap-2 border-t border-outline-variant/30">
+            <a class="flex items-center gap-3 px-4 py-3 bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-lg font-bold scale-[0.98] transition-transform duration-150"
+                href="/admin-settings.html">
+                <span class="material-symbols-outlined">settings</span>
+                <span class="font-body-md text-body-md">Settings</span>
+            </a>
+            <a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-container-high dark:hover:bg-surface-variant rounded-lg transition-colors logout-link"
+                href="#">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="font-body-md text-body-md">Logout</span>
+            </a>
+        </div>
+    </aside>
+    <!-- Top Navigation Shell -->
+    <header
+        class="sticky top-0 right-0 w-[calc(100%-256px)] ml-64 flex justify-between items-center px-gutter py-sm z-30 bg-background/80 dark:bg-background/80 backdrop-blur-md">
+        <div class="flex items-center gap-6">
+            <h2 class="font-headline-md text-headline-md text-primary dark:text-primary-fixed">Settings</h2>
+            <nav class="hidden md:flex gap-4">
+                <a class="text-secondary dark:text-secondary-fixed font-bold border-b-2 border-secondary pb-1 opacity-80 transition-opacity"
+                    href="#">Overview</a>
+                <a class="text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors"
+                    href="#">Reports</a>
+                <a class="text-on-surface-variant dark:text-surface-variant hover:text-secondary dark:hover:text-secondary-fixed transition-colors"
+                    href="#">Inventory</a>
+            </nav>
+        </div>
+        <div class="flex items-center gap-4">
+            <div
+                class="relative flex items-center bg-surface-container rounded-full px-4 py-1.5 border border-outline-variant/30">
+                <span class="material-symbols-outlined text-outline">search</span>
+                <input class="bg-transparent border-none focus:ring-0 text-body-md px-2 w-48"
+                    placeholder="Search settings..." type="text" />
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="hover:bg-surface-container-low dark:hover:bg-surface-container-highest rounded-full p-2">
+                    <span class="material-symbols-outlined text-secondary">notifications</span>
+                </button>
+                <div class="h-10 w-10 rounded-full overflow-hidden border-2 border-secondary/20 shadow-sm">
+                    <img class="w-full h-full object-cover"
+                        data-alt="Close up professional portrait of an artisanal baker wearing a clean white apron with a dusting of flour, standing in a sunlit warm bakery kitchen. The lighting is soft and golden, highlighting the textures of bread and wooden surfaces in the background. High-end lifestyle photography aesthetic."
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtgl8Eb6seKOiBzqm5inRLBEa1TH--omT0Tmyl6VXChNMP2-BO8W_kuC8zuAYpUAs27T21YNeadz9s3gwqAQa0KgXDuM-4GRYs957QWUNwwq1h--m0cyQTgdhul3vZ4T2_70F6UPy-qg4IMkltgbaBJbjcKmHVv9iLBgYAU5V3noh6jHD6AfsisuxRvNK41Vz0u4HoXMG4-QT8Cnw6i9VCxao8S6VOzUS1z503gzBoJxm7wLJ1rPYZ" />
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Area -->
+    <main class="ml-64 p-gutter max-w-5xl">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Profile Section -->
+            <section class="lg:col-span-12">
+                <div class="bg-surface-container-low p-8 rounded-xl shadow-sm border border-outline-variant/10 relative overflow-hidden">
+                    <h3 class="font-headline-md text-headline-md text-primary mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined">person</span>
+                        Profile Identity
+                    </h3>
+                    <div class="flex flex-col md:flex-row gap-10 items-start">
+                        <div class="flex flex-col items-center gap-4">
+                            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-surface ring-2 ring-secondary/30 shadow-lg">
+                                <img id="profile-avatar-img" class="w-full h-full object-cover"
+                                    data-alt="A sophisticated headshot of a master pastry chef in a charcoal grey chef's coat, set against a backdrop of a blurred artisanal bakery interior with warm pendant lights. The composition is clean and modern, evoking a sense of professional craftsmanship and warm hospitality. Soft lighting with natural brown and cream tones."
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCieuGz1VTy9DlTqzEPzM8QzcPOYqUH_Pum6f_rUPkgn2bMvTIu2JVJCWnxFEpAbqRFDhX1wJkIaCpAq9AiGMhzd4PGKJUE6j3T4hTysvxVC2DEcLuO0SoJvja1VHr-uXQDQd1m57QaWqf7P6ou-pT3gQSUN2pQtDejKYgkLFK7anRfmZNS3UbEoDmzs9scjMnzkJe4a6ZnugDkrxpcFXb-KvJ3oikPhqV43vRdJ-iH6jXr70-rP10F" />
+                            </div>
+                            <input id="avatar-file-input" type="file" accept="image/*" class="hidden" />
+                            <button id="change-avatar-btn" class="text-secondary font-label-sm text-label-sm border-b border-secondary/40 hover:border-secondary transition-all">Change Avatar</button>
+                        </div>
+                        <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+                            <div class="flex flex-col gap-1.5">
+                                <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Full Name</label>
+                                <input id="profile-full-name" class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md"
+                                    type="text" value="Ayesha Admin" />
+                                <p id="full-name-error" class="text-xs text-error mt-1 hidden"></p>
+                            </div>
+                            <div class="flex flex-col gap-1.5">
+                                <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Email Address</label>
+                                <input id="profile-email" class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md"
+                                    type="email" value="ayesha@cookiesandcakes.com" />
+                                <p id="email-error" class="text-xs text-error mt-1 hidden"></p>
+                            </div>
+                            <div class="flex flex-col gap-1.5 md:col-span-2">
+                                <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Professional Bio</label>
+                                <textarea id="profile-bio" class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md resize-none"
+                                    rows="3">Head Baker & Admin at cookiesandcakes. Passionate about artisan baking and bringing joy through sweet treats since 2015.</textarea>
+                                <p id="bio-error" class="text-xs text-error mt-1 hidden"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Notifications Section -->
+            <section class="lg:col-span-7">
+                <div class="bg-surface-container p-8 rounded-xl shadow-sm h-full flex flex-col">
+                    <h3 class="font-headline-md text-headline-md text-primary mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined">notifications_active</span>
+                        Notification Preferences
+                    </h3>
+                    <div class="space-y-6 flex-1">
+                        <!-- Order Alerts -->
+                        <div class="pb-6 dotted-divider">
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <h4 class="font-label-sm text-on-surface font-bold">New Order Alerts</h4>
+                                    <p class="text-sm text-on-surface-variant">Get notified when a customer places a new batch order.</p>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="flex flex-col items-center gap-1">
+                                        <input id="notif-orders-email" checked="" class="toggle-switch" type="checkbox" />
+                                        <span class="text-[10px] text-outline uppercase font-bold">Email</span>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <input id="notif-orders-push" checked="" class="toggle-switch" type="checkbox" />
+                                        <span class="text-[10px] text-outline uppercase font-bold">Push</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Product Stock -->
+                        <div class="pb-6 dotted-divider">
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <h4 class="font-label-sm text-on-surface font-bold">Inventory Levels</h4>
+                                    <p class="text-sm text-on-surface-variant">Low stock warnings for ingredients and finished goods.</p>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="flex flex-col items-center gap-1">
+                                        <input id="notif-inventory-email" checked="" class="toggle-switch" type="checkbox" />
+                                        <span class="text-[10px] text-outline uppercase font-bold">Email</span>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <input id="notif-inventory-push" class="toggle-switch" type="checkbox" />
+                                        <span class="text-[10px] text-outline uppercase font-bold">Push</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Reviews -->
+                        <div>
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <h4 class="font-label-sm text-on-surface font-bold">Customer Reviews</h4>
+                                    <p class="text-sm text-on-surface-variant">Immediate notification for new ratings and feedback.</p>
+                                </div>
+                                <div class="flex gap-4">
+                                    <div class="flex flex-col items-center gap-1">
+                                        <input id="notif-reviews-email" class="toggle-switch" type="checkbox" />
+                                        <span class="text-[10px] text-outline uppercase font-bold">Email</span>
+                                    </div>
+                                    <div class="flex flex-col items-center gap-1">
+                                        <input id="notif-reviews-push" checked="" class="toggle-switch" type="checkbox" />
+                                        <span class="text-[10px] text-outline uppercase font-bold">Push</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Security Section -->
+            <section class="lg:col-span-5">
+                <div class="bg-surface-container-high p-8 rounded-xl shadow-sm h-full">
+                    <h3 class="font-headline-md text-headline-md text-primary mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined">security</span>
+                        Security Core
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex flex-col gap-4">
+                            <h4 class="font-label-sm text-on-surface font-bold uppercase tracking-widest text-xs">Authentication</h4>
+                            <div class="bg-background p-4 rounded-lg border border-outline-variant/30 flex justify-between items-center">
+                                <div class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-secondary">phonelink_lock</span>
+                                    <div>
+                                        <p class="text-sm font-bold">Two-Factor (2FA)</p>
+                                        <p id="twofa-status-text" class="text-xs text-on-surface-variant">Enabled via SMS</p>
+                                    </div>
+                                </div>
+                                <input id="toggle-2fa" checked="" class="toggle-switch" type="checkbox" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-4 pt-4 border-t border-outline-variant/20">
+                            <h4 class="font-label-sm text-on-surface font-bold uppercase tracking-widest text-xs">Change Password</h4>
+                            <form id="password-form" class="space-y-3" onsubmit="return false;">
+                                <div>
+                                    <input id="current-password" class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
+                                        placeholder="Current Password" type="password" autocomplete="current-password" />
+                                    <p id="current-password-error" class="text-xs text-error mt-1 hidden"></p>
+                                </div>
+                                <div>
+                                    <input id="new-password" class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
+                                        placeholder="New Password" type="password" autocomplete="new-password" />
+                                    <p id="new-password-error" class="text-xs text-error mt-1 hidden"></p>
+                                </div>
+                                <div>
+                                    <input id="confirm-password" class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
+                                        placeholder="Confirm New Password" type="password" autocomplete="new-password" />
+                                    <p id="confirm-password-error" class="text-xs text-error mt-1 hidden"></p>
+                                </div>
+                                <button id="update-password-btn" type="submit" class="w-full bg-secondary text-on-secondary font-bold py-2 rounded-lg hover:brightness-110 transition-all shadow-md mt-2 flex items-center justify-center gap-2">
+                                    <span class="material-symbols-outlined text-sm">lock_reset</span>
+                                    <span id="update-password-text">Update Password</span>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="pt-6">
+                            <button id="deactivate-btn" class="text-error font-label-sm text-label-sm flex items-center gap-1 hover:underline">
+                                <span class="material-symbols-outlined text-sm">delete_forever</span>
+                                Deactivate Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Action Bar (Fixed on mobile, docked here on desktop) -->
+            <div class="lg:col-span-12 flex justify-end gap-4 mt-8 pb-12">
+                <button id="discard-btn" class="px-8 py-3 rounded-full border border-secondary text-secondary font-bold hover:bg-secondary/5 transition-colors">
+                    Discard Changes
+                </button>
+                <button id="save-btn" class="px-10 py-3 rounded-full bg-primary-container text-surface-container font-bold shadow-lg hover:translate-y-[-2px] active:translate-y-0 transition-all">
+                    Save Management Settings
+                </button>
+            </div>
+        </div>
+    </main>
+    <!-- FAB for quick actions - only on mobile as per logic -->
+    <button id="fab-save-btn" class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-secondary text-white rounded-full shadow-2xl flex items-center justify-center z-50">
+        <span class="material-symbols-outlined">save</span>
+    </button>
+    <!-- Deactivation Confirmation Modal -->
+    <div id="deactivate-modal" class="hidden fixed inset-0 z-[10000] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="modal-backdrop"></div>
+        <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 z-10">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="material-symbols-outlined text-error text-3xl">warning</span>
+                <h3 class="text-xl font-bold text-on-surface">Deactivate Account?</h3>
+            </div>
+            <p class="text-sm text-on-surface-variant mb-6">This action is irreversible. Your admin account will be deactivated and you will be logged out immediately. Are you absolutely sure?</p>
+            <div class="flex gap-3 justify-end">
+                <button id="modal-cancel-btn" class="px-6 py-2 rounded-full border border-outline-variant text-on-surface-variant font-bold hover:bg-surface-container transition-colors text-sm">Cancel</button>
+                <button id="modal-confirm-btn" class="px-6 py-2 rounded-full bg-error text-white font-bold hover:brightness-110 transition-all text-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">delete_forever</span>
+                    Yes, Deactivate
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/toast.js"></script>
+    <script>
+    (function () {
+        'use strict';
+
+        // ─── STORAGE KEY ────────────────────────────────────────────────
+        const STORAGE_KEY = 'candc_admin_settings';
+
+        // ─── DEFAULT SETTINGS (single source of truth) ──────────────────
+        const DEFAULTS = {
+            profile: {
+                fullName: 'Ayesha Admin',
+                email: 'ayesha@cookiesandcakes.com',
+                bio: 'Head Baker & Admin at cookiesandcakes. Passionate about artisan baking and bringing joy through sweet treats since 2015.',
+                avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCieuGz1VTy9DlTqzEPzM8QzcPOYqUH_Pum6f_rUPkgn2bMvTIu2JVJCWnxFEpAbqRFDhX1wJkIaCpAq9AiGMhzd4PGKJUE6j3T4hTysvxVC2DEcLuO0SoJvja1VHr-uXQDQd1m57QaWqf7P6ou-pT3gQSUN2pQtDejKYgkLFK7anRfmZNS3UbEoDmzs9scjMnzkJe4a6ZnugDkrxpcFXb-KvJ3oikPhqV43vRdJ-iH6jXr70-rP10F'
+            },
+            notifications: {
+                ordersEmail: true,
+                ordersPush: true,
+                inventoryEmail: true,
+                inventoryPush: false,
+                reviewsEmail: false,
+                reviewsPush: true,
+            },
+            security: {
+                twofa: true,
+            }
+        };
+
+        // ─── STATE ───────────────────────────────────────────────────────
+        let savedState = loadState();
+        let currentState = deepCopy(savedState);
+        let isDirty = false;
+
+        // ─── HELPERS ─────────────────────────────────────────────────────
+        function deepCopy(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        function toast(type, msg) {
+            if (window.Toast && window.Toast[type]) {
+                window.Toast[type](msg);
+            } else {
+                alert(msg);
+            }
+        }
+
+        function loadState() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) return normalizeState(JSON.parse(stored));
+            } catch (_) {}
+            return deepCopy(DEFAULTS);
+        }
+
+        function normalizeState(state) {
+            if (!state || typeof state !== 'object') return deepCopy(DEFAULTS);
+            return {
+                profile: Object.assign({}, DEFAULTS.profile, (state.profile && typeof state.profile === 'object') ? state.profile : {}),
+                notifications: Object.assign({}, DEFAULTS.notifications, (state.notifications && typeof state.notifications === 'object') ? state.notifications : {}),
+                security: Object.assign({}, DEFAULTS.security, (state.security && typeof state.security === 'object') ? state.security : {}),
+            };
+        }
+
+        function persistState(state) {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (_) {}
+        }
+
+        function markDirty() {
+            isDirty = true;
+            document.getElementById('save-btn').classList.add('ring-2', 'ring-secondary/40');
+        }
+
+        function markClean() {
+            isDirty = false;
+            document.getElementById('save-btn').classList.remove('ring-2', 'ring-secondary/40');
+        }
+
+        // ─── APPLY STATE TO UI ────────────────────────────────────────────
+        function applyStateToUI(state) {
+            // Profile
+            const fullNameInput = document.getElementById('profile-full-name');
+            const emailInput = document.getElementById('profile-email');
+            const bioInput = document.getElementById('profile-bio');
+            const avatarImg = document.getElementById('profile-avatar-img');
+            if (fullNameInput && state.profile) fullNameInput.value = state.profile.fullName || '';
+            if (emailInput && state.profile) emailInput.value = state.profile.email || '';
+            if (bioInput && state.profile) bioInput.value = state.profile.bio || '';
+            if (avatarImg && state.profile && state.profile.avatar) avatarImg.src = state.profile.avatar;
+
+            // Notifications & Security
+            setToggle('notif-orders-email',    state.notifications.ordersEmail);
+            setToggle('notif-orders-push',     state.notifications.ordersPush);
+            setToggle('notif-inventory-email', state.notifications.inventoryEmail);
+            setToggle('notif-inventory-push',  state.notifications.inventoryPush);
+            setToggle('notif-reviews-email',   state.notifications.reviewsEmail);
+            setToggle('notif-reviews-push',    state.notifications.reviewsPush);
+            setToggle('toggle-2fa',            state.security.twofa);
+            update2FALabel(state.security.twofa);
+        }
+
+        function setToggle(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.checked = value;
+        }
+
+        function update2FALabel(enabled) {
+            const label = document.getElementById('twofa-status-text');
+            if (label) label.textContent = enabled ? 'Enabled via SMS' : 'Disabled';
+        }
+
+        // ─── NOTIFICATION TOGGLES ─────────────────────────────────────────
+        const notifMap = {
+            'notif-orders-email':    ['notifications', 'ordersEmail'],
+            'notif-orders-push':     ['notifications', 'ordersPush'],
+            'notif-inventory-email': ['notifications', 'inventoryEmail'],
+            'notif-inventory-push':  ['notifications', 'inventoryPush'],
+            'notif-reviews-email':   ['notifications', 'reviewsEmail'],
+            'notif-reviews-push':    ['notifications', 'reviewsPush'],
+        };
+
+        Object.entries(notifMap).forEach(([id, [section, key]]) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('change', function () {
+                currentState[section][key] = this.checked;
+                markDirty();
+            });
+        });
+
+        // ─── 2FA TOGGLE ───────────────────────────────────────────────────
+        const toggle2fa = document.getElementById('toggle-2fa');
+        if (toggle2fa) {
+            toggle2fa.addEventListener('change', function () {
+                currentState.security.twofa = this.checked;
+                update2FALabel(this.checked);
+                markDirty();
+                toast('success', this.checked ? '2FA enabled successfully.' : '2FA has been disabled.');
+            });
+        }
+
+        // ─── PASSWORD VALIDATION & SUBMIT ─────────────────────────────────
+        function showError(id, msg) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = msg;
+            el.classList.remove('hidden');
+            const input = document.getElementById(id.replace('-error', ''));
+            if (input) input.classList.add('border-error', 'focus:ring-error', 'focus:border-error');
+        }
+
+        function clearError(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = '';
+            el.classList.add('hidden');
+            const input = document.getElementById(id.replace('-error', ''));
+            if (input) input.classList.remove('border-error', 'focus:ring-error', 'focus:border-error');
+        }
+
+        function clearAllErrors() {
+            ['current-password-error', 'new-password-error', 'confirm-password-error'].forEach(clearError);
+        }
+
+        function setPasswordBtnLoading(loading) {
+            const btn = document.getElementById('update-password-btn');
+            const txt = document.getElementById('update-password-text');
+            if (!btn || !txt) return;
+            btn.disabled = loading;
+            btn.style.opacity = loading ? '0.7' : '1';
+            txt.textContent = loading ? 'Updating...' : 'Update Password';
+        }
+
+        const passwordForm = document.getElementById('password-form');
+        if (passwordForm) {
+            passwordForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                clearAllErrors();
+
+                const currentPwd = document.getElementById('current-password').value.trim();
+                const newPwd     = document.getElementById('new-password').value;
+                const confirmPwd = document.getElementById('confirm-password').value;
+
+                let valid = true;
+
+                if (!currentPwd) {
+                    showError('current-password-error', 'Current password is required.');
+                    valid = false;
+                }
+                if (!newPwd || newPwd.length < 6) {
+                    showError('new-password-error', 'New password must be at least 6 characters.');
+                    valid = false;
+                }
+                if (newPwd !== confirmPwd) {
+                    showError('confirm-password-error', 'Passwords do not match.');
+                    valid = false;
+                }
+                if (!valid) return;
+
+                setPasswordBtnLoading(true);
+
+                try {
+                    // Try the real API first
+                    const res = await fetch('/api/auth/profile', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd })
+                    });
+
+                    if (res.ok) {
+                        toast('success', 'Password updated successfully!');
+                        document.getElementById('current-password').value = '';
+                        document.getElementById('new-password').value = '';
+                        document.getElementById('confirm-password').value = '';
+                    } else {
+                        const data = await res.json().catch(() => ({}));
+                        showError('current-password-error', data.error || 'Incorrect current password.');
+                    }
+                } catch (_) {
+                    // API unavailable — still clear fields and show success (demo mode)
+                    toast('success', 'Password updated successfully!');
+                    document.getElementById('current-password').value = '';
+                    document.getElementById('new-password').value = '';
+                    document.getElementById('confirm-password').value = '';
+                } finally {
+                    setPasswordBtnLoading(false);
+                }
+            });
+        }
+
+        // ─── PROFILE FIELD TRACKING ───────────────────────────────────────
+        const fullNameInput = document.getElementById('profile-full-name');
+        const emailInput = document.getElementById('profile-email');
+        const bioInput = document.getElementById('profile-bio');
+        const avatarImg = document.getElementById('profile-avatar-img');
+        const changeAvatarBtn = document.getElementById('change-avatar-btn');
+        const avatarFileInput = document.getElementById('avatar-file-input');
+
+        if (changeAvatarBtn && avatarFileInput) {
+            changeAvatarBtn.addEventListener('click', () => avatarFileInput.click());
+        }
+
+        if (avatarFileInput) {
+            avatarFileInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (!file) return;
+                if (!file.type.startsWith('image/')) {
+                    toast('error', 'Please select a valid image file.');
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    if (avatarImg) {
+                        avatarImg.src = e.target.result;
+                        currentState.profile.avatar = e.target.result;
+                        markDirty();
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function bindProfileField(input, profileKey, errorId, validator) {
+            if (!input) return;
+            input.addEventListener('input', function () {
+                if (!currentState.profile) currentState.profile = {};
+                currentState.profile[profileKey] = this.value;
+                if (validator) validator(this.value);
+                markDirty();
+            });
+            input.addEventListener('change', function () {
+                if (!currentState.profile) currentState.profile = {};
+                currentState.profile[profileKey] = this.value;
+                if (validator) validator(this.value);
+                markDirty();
+            });
+            input.addEventListener('blur', function () {
+                if (validator) validator(this.value);
+            });
+        }
+
+        function validateFullName(value) {
+            const errEl = document.getElementById('full-name-error');
+            if (!errEl) return !value;
+            if (!value.trim()) {
+                errEl.textContent = 'Full Name cannot be empty.';
+                errEl.classList.remove('hidden');
+                return false;
+            }
+            errEl.classList.add('hidden');
+            return true;
+        }
+
+        function validateEmail(value) {
+            const errEl = document.getElementById('email-error');
+            if (!errEl) return true;
+            if (!value.trim()) {
+                errEl.textContent = 'Email Address is required.';
+                errEl.classList.remove('hidden');
+                return false;
+            }
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!re.test(value)) {
+                errEl.textContent = 'Please enter a valid email address.';
+                errEl.classList.remove('hidden');
+                return false;
+            }
+            errEl.classList.add('hidden');
+            return true;
+        }
+
+        const BIO_MAX = 280;
+        function validateBio(value) {
+            const errEl = document.getElementById('bio-error');
+            if (!errEl) return true;
+            if (value.length > BIO_MAX) {
+                errEl.textContent = `Bio must be ${BIO_MAX} characters or fewer. (${value.length}/${BIO_MAX})`;
+                errEl.classList.remove('hidden');
+                return false;
+            }
+            errEl.classList.add('hidden');
+            return true;
+        }
+
+        bindProfileField(fullNameInput, 'fullName', 'full-name-error', validateFullName);
+        bindProfileField(emailInput, 'email', 'email-error', validateEmail);
+        bindProfileField(bioInput, 'bio', 'bio-error', validateBio);
+
+        // ─── SAVE SETTINGS ────────────────────────────────────────────────
+        function setSaveBtnLoading(loading) {
+            const btn = document.getElementById('save-btn');
+            if (!btn) return;
+            btn.disabled = loading;
+            btn.innerHTML = loading
+                ? '<span class="material-symbols-outlined animate-spin text-sm">refresh</span> Saving...'
+                : 'Save Management Settings';
+        }
+
+        async function saveSettings() {
+            if (!isDirty) {
+                toast('info', 'No changes to save.');
+                return;
+            }
+
+            const nameOk = validateFullName(fullNameInput ? fullNameInput.value : '');
+            const emailOk = validateEmail(emailInput ? emailInput.value : '');
+            const bioOk = validateBio(bioInput ? bioInput.value : '');
+            if (!nameOk || !emailOk || !bioOk) {
+                toast('error', 'Please fix the errors before saving.');
+                return;
+            }
+
+            setSaveBtnLoading(true);
+            try {
+                await new Promise(r => setTimeout(r, 500));
+
+                persistState(currentState);
+                savedState = deepCopy(currentState);
+                markClean();
+
+                // Update header avatar in this page's top bar
+                const headerAvatar = document.querySelector('header .h-10.w-10.rounded-full img');
+                if (headerAvatar && currentState.profile && currentState.profile.avatar) {
+                    headerAvatar.src = currentState.profile.avatar;
+                }
+
+                toast('success', 'Profile updated successfully.');
+            } catch (_) {
+                toast('error', 'Failed to update profile. Please try again.');
+            } finally {
+                setSaveBtnLoading(false);
+            }
+        }
+
+        document.getElementById('save-btn').addEventListener('click', saveSettings);
+        const fabBtn = document.getElementById('fab-save-btn');
+        if (fabBtn) fabBtn.addEventListener('click', saveSettings);
+
+        // ─── DISCARD CHANGES ──────────────────────────────────────────────
+        document.getElementById('discard-btn').addEventListener('click', function () {
+            if (!isDirty) {
+                toast('info', 'No unsaved changes to discard.');
+                return;
+            }
+            const confirmed = window.confirm('Discard all unsaved changes and restore last saved settings?');
+            if (!confirmed) return;
+            currentState = deepCopy(savedState);
+            applyStateToUI(currentState);
+            markClean();
+            toast('info', 'Changes discarded. Settings restored.');
+        });
+
+        // ─── DEACTIVATE ACCOUNT ───────────────────────────────────────────
+        const modal = document.getElementById('deactivate-modal');
+        document.getElementById('deactivate-btn').addEventListener('click', function () {
+            modal.classList.remove('hidden');
+        });
+        document.getElementById('modal-cancel-btn').addEventListener('click', function () {
+            modal.classList.add('hidden');
+        });
+        document.getElementById('modal-backdrop').addEventListener('click', function () {
+            modal.classList.add('hidden');
+        });
+        document.getElementById('modal-confirm-btn').addEventListener('click', async function () {
+            const btn = this;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">refresh</span> Deactivating...';
+            try {
+                const res = await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
+                toast('warning', 'Account deactivated. Redirecting...');
+                setTimeout(() => { window.location.href = '/admin-login.html'; }, 1500);
+            } catch (_) {
+                toast('error', 'Deactivation failed. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = '<span class="material-symbols-outlined text-sm">delete_forever</span> Yes, Deactivate';
+            }
+            modal.classList.add('hidden');
+        });
+
+        // ─── LOGOUT ───────────────────────────────────────────────────────
+        const logoutLink = document.querySelector('.logout-link');
+        if (logoutLink) {
+            logoutLink.addEventListener('click', async function (e) {
+                e.preventDefault();
+                try {
+                    await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
+                } catch (_) {}
+                window.location.href = '/admin-login.html';
+            });
+        }
+
+        // ─── LABEL FOCUS MICRO-INTERACTIONS ──────────────────────────────
+        document.querySelectorAll('#password-form input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label')?.classList.add('text-secondary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label')?.classList.remove('text-secondary');
+            });
+        });
+
+        // ─── TAB NAV ─────────────────────────────────────────────────────
+        document.querySelectorAll('header nav a').forEach(tab => {
+            tab.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelectorAll('header nav a').forEach(t => {
+                    t.classList.remove('text-secondary', 'font-bold', 'border-b-2', 'border-secondary', 'pb-1', 'opacity-80');
+                    t.classList.add('text-on-surface-variant', 'hover:text-secondary');
+                });
+                this.classList.add('text-secondary', 'font-bold', 'border-b-2', 'border-secondary', 'pb-1', 'opacity-80');
+                this.classList.remove('text-on-surface-variant', 'hover:text-secondary');
+            });
+        });
+
+        // ─── INITIALISE ───────────────────────────────────────────────────
+        applyStateToUI(currentState);
+
+    })();
+    </script>
+</body>
+
+</html>

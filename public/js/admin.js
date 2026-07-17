@@ -525,14 +525,58 @@ async function initAddProduct() {
     const fileInput = document.getElementById('product-image-upload');
     const browseBtn = document.getElementById('browse-btn');
     const previewImg = document.getElementById('image-preview');
+    const imagePreviews = document.getElementById('image-previews');
     const uploadPlaceholder = document.getElementById('upload-placeholder');
     const cancelBtn = document.getElementById('cancel-btn');
 
     if (cancelBtn) cancelBtn.addEventListener('click', () => { window.location.href = 'admin-dashboard.html'; });
 
+    // Category management
+    const categorySelect = document.getElementById('product-category');
+    if (categorySelect) {
+        populateCategoryDropdown(categorySelect);
+        categorySelect.addEventListener('change', () => {
+            if (categorySelect.value === '__add_new__') {
+                openAddCategoryModal();
+                categorySelect.value = '';
+            }
+        });
+    }
+
+    const addCategoryCancelBtn = document.getElementById('add-category-cancel-btn');
+    const addCategorySaveBtn = document.getElementById('add-category-save-btn');
+    const addCategoryBackdrop = document.getElementById('add-category-modal-backdrop');
+    if (addCategoryCancelBtn) addCategoryCancelBtn.addEventListener('click', closeAddCategoryModal);
+    if (addCategoryBackdrop) addCategoryBackdrop.addEventListener('click', closeAddCategoryModal);
+    if (addCategorySaveBtn) addCategorySaveBtn.addEventListener('click', handleSaveNewCategory);
+
+    const newCategoryInput = document.getElementById('new-category-input');
+    if (newCategoryInput) {
+        newCategoryInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') handleSaveNewCategory();
+        });
+    }
+
     // Check if editing
     const params = new URLSearchParams(window.location.search);
     const editId = params.get('edit');
+
+    // Populate Pairs Well With multi-select
+    const pairsWithSelect = document.getElementById('pairs-with');
+    if (pairsWithSelect) {
+        try {
+            const prodRes = await adminFetch('/api/products');
+            const allProducts = await prodRes.json();
+            pairsWithSelect.innerHTML = '';
+            allProducts.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.textContent = p.name;
+                pairsWithSelect.appendChild(opt);
+            });
+        } catch (_) {}
+    }
+
     if (editId) {
         try {
                 const res = await adminFetch(`/api/products/${editId}`);
@@ -542,6 +586,50 @@ async function initAddProduct() {
             setInputVal('product-price', p.price);
             setInputVal('product-unit', p.unit);
             setInputVal('product-description', p.description);
+            setInputVal('product-badge', p.badge || '');
+            setInputVal('product-availability', p.availability || 'In Stock');
+            setInputVal('product-stock', p.stock || 0);
+            setInputVal('product-sku', p.sku || '');
+            setInputVal('product-custom-tags', (p.tags || []).filter(t => !['House Special', 'Same-day Available', 'Seasonal', "Chef's Recommendation"].includes(t)).join(', '));
+
+            // Set predefined tag checkboxes
+            const predefinedTags = ['House Special', 'Same-day Available', 'Seasonal', "Chef's Recommendation"];
+            predefinedTags.forEach(tag => {
+                const cb = document.querySelector(`input[type="checkbox"][value="${tag}"]`);
+                if (cb) cb.checked = (p.tags || []).includes(tag);
+            });
+
+            // Load ingredients
+            const ingredientsList = document.getElementById('ingredients-list');
+            if (ingredientsList && (p.ingredients || []).length) {
+                ingredientsList.innerHTML = '';
+                (p.ingredients || []).forEach(ing => addIngredientRow(ing));
+            }
+
+            // Load flavor profile
+            const flavorList = document.getElementById('flavor-list');
+            if (flavorList && (p.flavorProfile || []).length) {
+                flavorList.innerHTML = '';
+                (p.flavorProfile || []).forEach(flavor => addFlavorTag(flavor));
+            }
+
+            // Set pairs with
+            if (pairsWithSelect && (p.pairsWith || []).length) {
+                Array.from(pairsWithSelect.options).forEach(opt => {
+                    opt.selected = (p.pairsWith || []).includes(opt.value);
+                });
+            }
+
+            // Set status checkboxes
+            const featuredCb = document.getElementById('status-featured');
+            const topRatedCb = document.getElementById('status-top-rated');
+            const recommendedCb = document.getElementById('status-recommended');
+            const activeCb = document.getElementById('status-active');
+            if (featuredCb) featuredCb.checked = !!p.featured;
+            if (topRatedCb) topRatedCb.checked = !!p.topRated;
+            if (recommendedCb) recommendedCb.checked = !!p.recommended;
+            if (activeCb) activeCb.checked = p.active !== false;
+
             if (previewImg && p.image) {
                 previewImg.src = p.image;
                 previewImg.classList.remove('hidden');
@@ -563,8 +651,29 @@ async function initAddProduct() {
     // File input change
     if (fileInput) {
         fileInput.addEventListener('change', () => {
-            const file = fileInput.files[0];
-            if (file) previewFile(file, previewImg, uploadPlaceholder);
+            const files = fileInput.files;
+            if (files && files.length > 0) {
+                previewImg.classList.add('hidden');
+                if (imagePreviews) {
+                    imagePreviews.innerHTML = '';
+                    imagePreviews.classList.remove('hidden');
+                    Array.from(files).forEach(file => {
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.className = 'w-24 h-24 object-cover rounded-lg';
+                            imagePreviews.appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+                if (files.length === 1) {
+                    previewFile(files[0], previewImg, uploadPlaceholder);
+                } else {
+                    if (uploadPlaceholder) uploadPlaceholder.classList.add('hidden');
+                }
+            }
         });
     }
 
@@ -574,49 +683,133 @@ async function initAddProduct() {
     if (dropZone && fileInput) dropZone.addEventListener('drop', e => {
         e.preventDefault();
         dropZone.classList.remove('border-secondary', 'bg-white');
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) {
+        const files = e.dataTransfer.files;
+        if (files && files.length > 0) {
             if (fileInput) {
                 const dt = new DataTransfer();
-                dt.items.add(file);
+                Array.from(files).forEach(f => dt.items.add(f));
                 fileInput.files = dt.files;
             }
-            previewFile(file, previewImg, uploadPlaceholder);
+            if (imagePreviews) {
+                imagePreviews.innerHTML = '';
+                imagePreviews.classList.remove('hidden');
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = ev => {
+                        const img = document.createElement('img');
+                        img.src = ev.target.result;
+                        img.className = 'w-24 h-24 object-cover rounded-lg';
+                        imagePreviews.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+            if (files.length === 1) {
+                previewFile(files[0], previewImg, uploadPlaceholder);
+            } else {
+                if (previewImg) previewImg.classList.add('hidden');
+                if (uploadPlaceholder) uploadPlaceholder.classList.add('hidden');
+            }
         }
     });
+
+    // Dynamic ingredients
+    const addIngredientBtn = document.getElementById('add-ingredient-btn');
+    if (addIngredientBtn) {
+        addIngredientBtn.addEventListener('click', () => addIngredientRow());
+    }
+
+    // Dynamic flavor profile
+    const addFlavorBtn = document.getElementById('add-flavor-btn');
+    const flavorSelect = document.getElementById('flavor-select');
+    if (addFlavorBtn && flavorSelect) {
+        addFlavorBtn.addEventListener('click', () => {
+            const val = flavorSelect.value;
+            if (val) {
+                addFlavorTag(val);
+                flavorSelect.value = '';
+            }
+        });
+    }
 
     if (!form) return;
     form.addEventListener('submit', async e => {
         e.preventDefault();
         const name = document.getElementById('product-name')?.value?.trim();
         const category = document.getElementById('product-category')?.value;
-        const price = document.getElementById('product-price')?.value;
+        const price = parseFloat(document.getElementById('product-price')?.value);
         const unit = document.getElementById('product-unit')?.value?.trim();
         const description = document.getElementById('product-description')?.value?.trim();
-        const imageFile = fileInput?.files[0];
 
+        if (!name || !category || isNaN(price) || price < 0 || !unit || !description) {
+            showToast('Please fill in all required fields correctly.', 'error');
+            return;
+        }
+
+        const imageFile = fileInput?.files[0];
         let image = previewImg?.src || '';
         if (imageFile) {
             image = await fileToDataURL(imageFile);
         }
+
+        // Collect tags
+        const tags = [];
+        document.querySelectorAll('input[type="checkbox"][id^="tag-"]:checked').forEach(cb => tags.push(cb.value));
+        const customTagsStr = document.getElementById('product-custom-tags')?.value?.trim() || '';
+        if (customTagsStr) {
+            customTagsStr.split(',').forEach(t => {
+                const trimmed = t.trim();
+                if (trimmed) tags.push(trimmed);
+            });
+        }
+
+        // Collect ingredients
+        const ingredients = [];
+        document.querySelectorAll('#ingredients-list input[type="text"]').forEach(input => {
+            if (input.value.trim()) ingredients.push(input.value.trim());
+        });
+
+        // Collect flavor profile
+        const flavorProfile = [];
+        document.querySelectorAll('#flavor-list .flavor-tag').forEach(tag => {
+            flavorProfile.push(tag.dataset.flavor);
+        });
+
+        // Collect pairs with
+        const pairsWith = [];
+        if (pairsWithSelect) {
+            Array.from(pairsWithSelect.selectedOptions).forEach(opt => pairsWith.push(opt.value));
+        }
+
+        // Collect status
+        const featured = !!document.getElementById('status-featured')?.checked;
+        const topRated = !!document.getElementById('status-top-rated')?.checked;
+        const recommended = !!document.getElementById('status-recommended')?.checked;
+        const active = !!document.getElementById('status-active')?.checked;
+
+        const badge = document.getElementById('product-badge')?.value || '';
+        const stock = document.getElementById('product-stock')?.value || 0;
+        const sku = document.getElementById('product-sku')?.value?.trim() || '';
+        const availability = document.getElementById('product-availability')?.value || 'In Stock';
 
         const submitBtn = form.querySelector('[type="submit"]');
         if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">autorenew</span> Saving...'; }
 
         try {
             let res;
+            const body = { name, category, price, unit, description, image, tags, badge, stock, sku, availability, ingredients, flavorProfile, pairsWith, status: active ? 'active' : 'inactive', featured, topRated, recommended, active };
             if (editId) {
                 res = await adminFetch(`/api/admin/products/${editId}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, category, price, unit, description, image })
+                    body: JSON.stringify(body)
                 });
             } else {
                 const id = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
                 res = await adminFetch('/api/admin/products', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id, name, category, price, unit, description, image })
+                    body: JSON.stringify({ ...body, id })
                 });
             }
             if (res.ok) {
@@ -652,6 +845,32 @@ async function initAddProduct() {
             }
         });
     }
+}
+
+function addIngredientRow(value = '') {
+    const list = document.getElementById('ingredients-list');
+    if (!list) return;
+    const row = document.createElement('div');
+    row.className = 'flex gap-2 items-center';
+    row.innerHTML = `
+        <input type="text" value="${value}" placeholder="e.g. Organic Flour" class="flex-1 bg-background border-outline-variant/30 rounded-xl px-4 py-2 soft-inset font-body-md focus:border-secondary transition-all ingredient-input"/>
+        <button type="button" class="p-2 text-error hover:bg-error/10 rounded-full transition-colors remove-ingredient-btn">
+            <span class="material-symbols-outlined text-sm">remove_circle</span>
+        </button>
+    `;
+    list.appendChild(row);
+    row.querySelector('.remove-ingredient-btn').addEventListener('click', () => row.remove());
+}
+
+function addFlavorTag(flavor) {
+    const list = document.getElementById('flavor-list');
+    if (!list) return;
+    const tag = document.createElement('span');
+    tag.className = 'flavor-tag inline-flex items-center gap-1 px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full font-label-sm text-label-sm';
+    tag.dataset.flavor = flavor;
+    tag.innerHTML = `${flavor} <button type="button" class="hover:text-error transition-colors remove-flavor-btn">&times;</button>`;
+    tag.querySelector('.remove-flavor-btn').addEventListener('click', () => tag.remove());
+    list.appendChild(tag);
 }
 
 function openEditProduct(productId) {
@@ -894,4 +1113,109 @@ function showToast(message, type = 'success') {
     document.body.appendChild(toast);
     requestAnimationFrame(() => { toast.style.transform = 'translateY(0)'; toast.style.opacity = '1'; toast.style.transition = 'all 0.3s ease'; });
     setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateY(10px)'; setTimeout(() => toast.remove(), 400); }, 3000);
+}
+
+/* ─────────────────────────────────────────
+    CATEGORY MANAGEMENT
+    ───────────────────────────────────────── */
+const DEFAULT_CATEGORIES = [
+    { value: 'cookies', label: 'Cookies' },
+    { value: 'cakes', label: 'Cakes' },
+    { value: 'pastries', label: 'Pastries' }
+];
+
+const CATEGORIES_STORAGE_KEY = 'candc_product_categories';
+
+function getDefaultCategories() {
+    return DEFAULT_CATEGORIES.map(c => ({ ...c }));
+}
+
+function loadCategories() {
+    try {
+        const raw = localStorage.getItem(CATEGORIES_STORAGE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+    } catch (_) {}
+    return getDefaultCategories();
+}
+
+function saveCategories(categories) {
+    try {
+        localStorage.setItem(CATEGORIES_STORAGE_KEY, JSON.stringify(categories));
+    } catch (_) {}
+}
+
+function sortCategories(categories) {
+    const defaults = getDefaultCategories();
+    const defaultValues = new Set(defaults.map(c => c.value.toLowerCase()));
+    const defaultItems = categories.filter(c => defaultValues.has((c.value || '').toLowerCase()));
+    const customItems = categories.filter(c => !defaultValues.has((c.value || '').toLowerCase()));
+    customItems.sort((a, b) => (a.label || a.value || '').localeCompare(b.label || b.value || ''));
+    return [...defaultItems, ...customItems];
+}
+
+function populateCategoryDropdown(selectEl, selectedValue) {
+    if (!selectEl) return;
+    const categories = sortCategories(loadCategories());
+    selectEl.innerHTML = '<option value="">Select a category</option>';
+    categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat.value;
+        opt.textContent = cat.label;
+        selectEl.appendChild(opt);
+    });
+    const addOpt = document.createElement('option');
+    addOpt.value = '__add_new__';
+    addOpt.textContent = '+ Add New Category';
+    selectEl.appendChild(addOpt);
+    if (selectedValue) selectEl.value = selectedValue;
+}
+
+function openAddCategoryModal() {
+    const modal = document.getElementById('add-category-modal');
+    const input = document.getElementById('new-category-input');
+    const error = document.getElementById('new-category-error');
+    if (!modal || !input) return;
+    input.value = '';
+    if (error) { error.classList.add('hidden'); error.textContent = ''; }
+    modal.classList.remove('hidden');
+    setTimeout(() => input.focus(), 50);
+}
+
+function closeAddCategoryModal() {
+    const modal = document.getElementById('add-category-modal');
+    if (modal) modal.classList.add('hidden');
+}
+
+function handleSaveNewCategory() {
+    const input = document.getElementById('new-category-input');
+    const error = document.getElementById('new-category-error');
+    const select = document.getElementById('product-category');
+    if (!input || !select) return;
+
+    const raw = input.value || '';
+    const trimmed = raw.trim();
+    if (!trimmed) {
+        if (error) { error.textContent = 'Category name cannot be empty.'; error.classList.remove('hidden'); }
+        showToast('Category name cannot be empty.', 'error');
+        return;
+    }
+
+    const categories = loadCategories();
+    const exists = categories.some(c => (c.value || '').toLowerCase() === trimmed.toLowerCase() || (c.label || '').toLowerCase() === trimmed.toLowerCase());
+    if (exists) {
+        if (error) { error.textContent = 'A category with this name already exists.'; error.classList.remove('hidden'); }
+        showToast('Category already exists.', 'error');
+        return;
+    }
+
+    const slug = trimmed.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || trimmed.toLowerCase();
+    const newCat = { value: slug, label: trimmed };
+    categories.push(newCat);
+    saveCategories(categories);
+    populateCategoryDropdown(select, slug);
+    closeAddCategoryModal();
+    showToast('Category added successfully.', 'success');
 }

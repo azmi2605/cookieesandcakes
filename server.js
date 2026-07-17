@@ -1100,12 +1100,29 @@ app.get('/api/admin/users', requireAdmin, async (req, res) => {
 
 app.put('/api/admin/products/:id', requireAdmin, async (req, res) => {
   const productId = req.params.id;
-  const { name, category, price, unit, description, image, tags } = req.body;
+  const { name, category, price, unit, description, image, tags, badge, stock, sku, availability, ingredients, flavorProfile, pairsWith, status, featured, topRated, recommended, active } = req.body;
   if (!name) return res.status(400).json({ error: 'Name is required' });
   try {
     const existing = await firebaseRequest(`/products/${productId}`);
     if (!existing) return res.status(404).json({ error: 'Product not found' });
-    const updated = { ...existing, name, category, price: parseFloat(price), unit, description, image: image || existing.image, tags: tags || existing.tags || [] };
+    const updated = {
+      ...existing,
+      name, category, price: parseFloat(price), unit, description,
+      image: image || existing.image,
+      tags: tags || existing.tags || [],
+      badge: badge || existing.badge || '',
+      stock: stock !== undefined ? parseInt(stock) : (existing.stock || 0),
+      sku: sku || existing.sku || '',
+      availability: availability || existing.availability || 'In Stock',
+      ingredients: ingredients || existing.ingredients || [],
+      flavorProfile: flavorProfile || existing.flavorProfile || [],
+      pairsWith: pairsWith || existing.pairsWith || [],
+      status: status || existing.status || 'active',
+      featured: featured || existing.featured || false,
+      topRated: topRated || existing.topRated || false,
+      recommended: recommended || existing.recommended || false,
+      active: active !== undefined ? active : (existing.active !== undefined ? existing.active : true),
+    };
     await firebaseRequest(`/products/${productId}`, 'PUT', updated);
     res.json({ message: 'Product updated', product: updated });
   } catch (err) {
@@ -1141,10 +1158,26 @@ app.get('/api/admin/reviews', requireAdmin, async (req, res) => {
 });
 
 app.post('/api/admin/products', requireAdmin, async (req, res) => {
-  const { id, name, category, price, unit, description, image } = req.body;
+  const { id, name, category, price, unit, description, image, tags, badge, stock, sku, availability, ingredients, flavorProfile, pairsWith, status, featured, topRated, recommended, active } = req.body;
   if (!id || !name) return res.status(400).json({ error: 'ID and Name are required' });
   try {
-    const product = { id, name, category, price: parseFloat(price), unit, description, image, tags: [] };
+    const product = {
+      id, name, category, price: parseFloat(price), unit, description,
+      image: image || '',
+      tags: tags || [],
+      badge: badge || '',
+      stock: stock !== undefined ? parseInt(stock) : 0,
+      sku: sku || '',
+      availability: availability || 'In Stock',
+      ingredients: ingredients || [],
+      flavorProfile: flavorProfile || [],
+      pairsWith: pairsWith || [],
+      status: status || 'active',
+      featured: featured || false,
+      topRated: topRated || false,
+      recommended: recommended || false,
+      active: active !== undefined ? active : true,
+    };
     await firebaseRequest(`/products/${id}`, 'PUT', product);
     res.status(201).json({ message: 'Product added', product });
   } catch (err) {

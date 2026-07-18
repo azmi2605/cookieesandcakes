@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Update product price
         if (product.price !== undefined) {
           const priceEl = document.querySelector('main .font-headline-md.text-secondary');
-          if (priceEl) priceEl.textContent = `$${parseFloat(product.price).toFixed(2)}`;
+          if (priceEl) priceEl.textContent = window.App.formatPrice(product.price);
         }
 
         // Update product description
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${pairProduct.image}" alt="${pairProduct.name}"/>
                                 </div>
                                 <h3 class="font-label-md text-label-md text-primary group-hover:text-secondary transition-colors">${pairProduct.name}</h3>
-                                <p class="text-secondary font-label-sm text-label-sm">$${parseFloat(pairProduct.price || 0).toFixed(2)}</p>
+                                <p class="text-secondary font-label-sm text-label-sm">${window.App.formatPrice(pairProduct.price || 0)}</p>
                             `;
                             pairCard.addEventListener('click', () => {
                               window.navigateToProduct(pairId);
@@ -419,7 +419,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                   <p class="text-on-surface-variant font-body-md mb-md">${item.description}</p>
                 </div>
                 <div class="flex items-center justify-between">
-                  <span class="font-headline-md text-primary">$${item.price.toFixed(2)}</span>
+                  <span class="font-headline-md text-primary">${window.App.formatPrice(item.price)}</span>
                   <div class="flex gap-sm">
                     <button class="p-3 rounded-full border border-outline hover:bg-surface-container-high transition-colors text-primary active-scale delete-btn">
                       <span class="material-symbols-outlined">delete</span>
@@ -442,7 +442,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               <h3 class="font-headline-md text-headline-md text-primary mb-xs">${item.name}</h3>
               <p class="text-on-surface-variant font-body-md mb-md">Signature Treat</p>
               <div class="flex items-center justify-between">
-                <span class="font-headline-md text-primary">$${item.price.toFixed(2)}</span>
+                <span class="font-headline-md text-primary">${window.App.formatPrice(item.price)}</span>
                 <div class="flex gap-xs">
                   <button class="p-2 text-on-surface-variant hover:text-error transition-colors delete-btn">
                     <span class="material-symbols-outlined">delete</span>

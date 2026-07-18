@@ -9,7 +9,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&amp;family=Source+Serif+4:wght@400;600;700&amp;display=swap"
         rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <style>
         .material-symbols-outlined {
@@ -256,37 +257,50 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Profile Section -->
             <section class="lg:col-span-12">
-                <div class="bg-surface-container-low p-8 rounded-xl shadow-sm border border-outline-variant/10 relative overflow-hidden">
+                <div
+                    class="bg-surface-container-low p-8 rounded-xl shadow-sm border border-outline-variant/10 relative overflow-hidden">
                     <h3 class="font-headline-md text-headline-md text-primary mb-6 flex items-center gap-2">
                         <span class="material-symbols-outlined">person</span>
                         Profile Identity
                     </h3>
                     <div class="flex flex-col md:flex-row gap-10 items-start">
                         <div class="flex flex-col items-center gap-4">
-                            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-surface ring-2 ring-secondary/30 shadow-lg">
+                            <div
+                                class="w-32 h-32 rounded-full overflow-hidden border-4 border-surface ring-2 ring-secondary/30 shadow-lg">
                                 <img id="profile-avatar-img" class="w-full h-full object-cover"
                                     data-alt="A sophisticated headshot of a master pastry chef in a charcoal grey chef's coat, set against a backdrop of a blurred artisanal bakery interior with warm pendant lights. The composition is clean and modern, evoking a sense of professional craftsmanship and warm hospitality. Soft lighting with natural brown and cream tones."
                                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCieuGz1VTy9DlTqzEPzM8QzcPOYqUH_Pum6f_rUPkgn2bMvTIu2JVJCWnxFEpAbqRFDhX1wJkIaCpAq9AiGMhzd4PGKJUE6j3T4hTysvxVC2DEcLuO0SoJvja1VHr-uXQDQd1m57QaWqf7P6ou-pT3gQSUN2pQtDejKYgkLFK7anRfmZNS3UbEoDmzs9scjMnzkJe4a6ZnugDkrxpcFXb-KvJ3oikPhqV43vRdJ-iH6jXr70-rP10F" />
                             </div>
                             <input id="avatar-file-input" type="file" accept="image/*" class="hidden" />
-                            <button id="change-avatar-btn" class="text-secondary font-label-sm text-label-sm border-b border-secondary/40 hover:border-secondary transition-all">Change Avatar</button>
+                            <button id="change-avatar-btn"
+                                class="text-secondary font-label-sm text-label-sm border-b border-secondary/40 hover:border-secondary transition-all">Change
+                                Avatar</button>
                         </div>
                         <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                             <div class="flex flex-col gap-1.5">
-                                <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Full Name</label>
-                                <input id="profile-full-name" class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md"
+                                <label
+                                    class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Full
+                                    Name</label>
+                                <input id="profile-full-name"
+                                    class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md"
                                     type="text" value="Ayesha Admin" />
                                 <p id="full-name-error" class="text-xs text-error mt-1 hidden"></p>
                             </div>
                             <div class="flex flex-col gap-1.5">
-                                <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Email Address</label>
-                                <input id="profile-email" class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md"
+                                <label
+                                    class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Email
+                                    Address</label>
+                                <input id="profile-email"
+                                    class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md"
                                     type="email" value="ayesha@cookiesandcakes.com" />
                                 <p id="email-error" class="text-xs text-error mt-1 hidden"></p>
                             </div>
                             <div class="flex flex-col gap-1.5 md:col-span-2">
-                                <label class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Professional Bio</label>
-                                <textarea id="profile-bio" class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md resize-none"
+                                <label
+                                    class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Professional
+                                    Bio</label>
+                                <textarea id="profile-bio"
+                                    class="bg-background border border-outline-variant/40 rounded-lg px-4 py-3 focus:ring-1 focus:ring-secondary focus:border-secondary transition-all font-body-md resize-none"
                                     rows="3">Head Baker & Admin at cookiesandcakes. Passionate about artisan baking and bringing joy through sweet treats since 2015.</textarea>
                                 <p id="bio-error" class="text-xs text-error mt-1 hidden"></p>
                             </div>
@@ -307,15 +321,18 @@
                             <div class="flex justify-between items-center mb-4">
                                 <div>
                                     <h4 class="font-label-sm text-on-surface font-bold">New Order Alerts</h4>
-                                    <p class="text-sm text-on-surface-variant">Get notified when a customer places a new batch order.</p>
+                                    <p class="text-sm text-on-surface-variant">Get notified when a customer places a new
+                                        batch order.</p>
                                 </div>
                                 <div class="flex gap-4">
                                     <div class="flex flex-col items-center gap-1">
-                                        <input id="notif-orders-email" checked="" class="toggle-switch" type="checkbox" />
+                                        <input id="notif-orders-email" checked="" class="toggle-switch"
+                                            type="checkbox" />
                                         <span class="text-[10px] text-outline uppercase font-bold">Email</span>
                                     </div>
                                     <div class="flex flex-col items-center gap-1">
-                                        <input id="notif-orders-push" checked="" class="toggle-switch" type="checkbox" />
+                                        <input id="notif-orders-push" checked="" class="toggle-switch"
+                                            type="checkbox" />
                                         <span class="text-[10px] text-outline uppercase font-bold">Push</span>
                                     </div>
                                 </div>
@@ -326,11 +343,13 @@
                             <div class="flex justify-between items-center mb-4">
                                 <div>
                                     <h4 class="font-label-sm text-on-surface font-bold">Inventory Levels</h4>
-                                    <p class="text-sm text-on-surface-variant">Low stock warnings for ingredients and finished goods.</p>
+                                    <p class="text-sm text-on-surface-variant">Low stock warnings for ingredients and
+                                        finished goods.</p>
                                 </div>
                                 <div class="flex gap-4">
                                     <div class="flex flex-col items-center gap-1">
-                                        <input id="notif-inventory-email" checked="" class="toggle-switch" type="checkbox" />
+                                        <input id="notif-inventory-email" checked="" class="toggle-switch"
+                                            type="checkbox" />
                                         <span class="text-[10px] text-outline uppercase font-bold">Email</span>
                                     </div>
                                     <div class="flex flex-col items-center gap-1">
@@ -345,7 +364,8 @@
                             <div class="flex justify-between items-center mb-4">
                                 <div>
                                     <h4 class="font-label-sm text-on-surface font-bold">Customer Reviews</h4>
-                                    <p class="text-sm text-on-surface-variant">Immediate notification for new ratings and feedback.</p>
+                                    <p class="text-sm text-on-surface-variant">Immediate notification for new ratings
+                                        and feedback.</p>
                                 </div>
                                 <div class="flex gap-4">
                                     <div class="flex flex-col items-center gap-1">
@@ -353,7 +373,8 @@
                                         <span class="text-[10px] text-outline uppercase font-bold">Email</span>
                                     </div>
                                     <div class="flex flex-col items-center gap-1">
-                                        <input id="notif-reviews-push" checked="" class="toggle-switch" type="checkbox" />
+                                        <input id="notif-reviews-push" checked="" class="toggle-switch"
+                                            type="checkbox" />
                                         <span class="text-[10px] text-outline uppercase font-bold">Push</span>
                                     </div>
                                 </div>
@@ -371,44 +392,55 @@
                     </h3>
                     <div class="space-y-6">
                         <div class="flex flex-col gap-4">
-                            <h4 class="font-label-sm text-on-surface font-bold uppercase tracking-widest text-xs">Authentication</h4>
-                            <div class="bg-background p-4 rounded-lg border border-outline-variant/30 flex justify-between items-center">
+                            <h4 class="font-label-sm text-on-surface font-bold uppercase tracking-widest text-xs">
+                                Authentication</h4>
+                            <div
+                                class="bg-background p-4 rounded-lg border border-outline-variant/30 flex justify-between items-center">
                                 <div class="flex items-center gap-3">
                                     <span class="material-symbols-outlined text-secondary">phonelink_lock</span>
                                     <div>
                                         <p class="text-sm font-bold">Two-Factor (2FA)</p>
-                                        <p id="twofa-status-text" class="text-xs text-on-surface-variant">Enabled via SMS</p>
+                                        <p id="twofa-status-text" class="text-xs text-on-surface-variant">Enabled via
+                                            SMS</p>
                                     </div>
                                 </div>
                                 <input id="toggle-2fa" checked="" class="toggle-switch" type="checkbox" />
                             </div>
                         </div>
                         <div class="flex flex-col gap-4 pt-4 border-t border-outline-variant/20">
-                            <h4 class="font-label-sm text-on-surface font-bold uppercase tracking-widest text-xs">Change Password</h4>
+                            <h4 class="font-label-sm text-on-surface font-bold uppercase tracking-widest text-xs">Change
+                                Password</h4>
                             <form id="password-form" class="space-y-3" onsubmit="return false;">
                                 <div>
-                                    <input id="current-password" class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
-                                        placeholder="Current Password" type="password" autocomplete="current-password" />
+                                    <input id="current-password"
+                                        class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
+                                        placeholder="Current Password" type="password"
+                                        autocomplete="current-password" />
                                     <p id="current-password-error" class="text-xs text-error mt-1 hidden"></p>
                                 </div>
                                 <div>
-                                    <input id="new-password" class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
+                                    <input id="new-password"
+                                        class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
                                         placeholder="New Password" type="password" autocomplete="new-password" />
                                     <p id="new-password-error" class="text-xs text-error mt-1 hidden"></p>
                                 </div>
                                 <div>
-                                    <input id="confirm-password" class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
-                                        placeholder="Confirm New Password" type="password" autocomplete="new-password" />
+                                    <input id="confirm-password"
+                                        class="w-full bg-background border border-outline-variant/40 rounded-lg px-4 py-2 text-sm focus:ring-1 focus:ring-secondary focus:border-secondary transition-all"
+                                        placeholder="Confirm New Password" type="password"
+                                        autocomplete="new-password" />
                                     <p id="confirm-password-error" class="text-xs text-error mt-1 hidden"></p>
                                 </div>
-                                <button id="update-password-btn" type="submit" class="w-full bg-secondary text-on-secondary font-bold py-2 rounded-lg hover:brightness-110 transition-all shadow-md mt-2 flex items-center justify-center gap-2">
+                                <button id="update-password-btn" type="submit"
+                                    class="w-full bg-secondary text-on-secondary font-bold py-2 rounded-lg hover:brightness-110 transition-all shadow-md mt-2 flex items-center justify-center gap-2">
                                     <span class="material-symbols-outlined text-sm">lock_reset</span>
                                     <span id="update-password-text">Update Password</span>
                                 </button>
                             </form>
                         </div>
                         <div class="pt-6">
-                            <button id="deactivate-btn" class="text-error font-label-sm text-label-sm flex items-center gap-1 hover:underline">
+                            <button id="deactivate-btn"
+                                class="text-error font-label-sm text-label-sm flex items-center gap-1 hover:underline">
                                 <span class="material-symbols-outlined text-sm">delete_forever</span>
                                 Deactivate Account
                             </button>
@@ -419,17 +451,20 @@
 
             <!-- Bottom Action Bar (Fixed on mobile, docked here on desktop) -->
             <div class="lg:col-span-12 flex justify-end gap-4 mt-8 pb-12">
-                <button id="discard-btn" class="px-8 py-3 rounded-full border border-secondary text-secondary font-bold hover:bg-secondary/5 transition-colors">
+                <button id="discard-btn"
+                    class="px-8 py-3 rounded-full border border-secondary text-secondary font-bold hover:bg-secondary/5 transition-colors">
                     Discard Changes
                 </button>
-                <button id="save-btn" class="px-10 py-3 rounded-full bg-primary-container text-surface-container font-bold shadow-lg hover:translate-y-[-2px] active:translate-y-0 transition-all">
+                <button id="save-btn"
+                    class="px-10 py-3 rounded-full bg-primary-container text-surface-container font-bold shadow-lg hover:translate-y-[-2px] active:translate-y-0 transition-all">
                     Save Management Settings
                 </button>
             </div>
         </div>
     </main>
     <!-- FAB for quick actions - only on mobile as per logic -->
-    <button id="fab-save-btn" class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-secondary text-white rounded-full shadow-2xl flex items-center justify-center z-50">
+    <button id="fab-save-btn"
+        class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-secondary text-white rounded-full shadow-2xl flex items-center justify-center z-50">
         <span class="material-symbols-outlined">save</span>
     </button>
     <!-- Deactivation Confirmation Modal -->
@@ -440,10 +475,13 @@
                 <span class="material-symbols-outlined text-error text-3xl">warning</span>
                 <h3 class="text-xl font-bold text-on-surface">Deactivate Account?</h3>
             </div>
-            <p class="text-sm text-on-surface-variant mb-6">This action is irreversible. Your admin account will be deactivated and you will be logged out immediately. Are you absolutely sure?</p>
+            <p class="text-sm text-on-surface-variant mb-6">This action is irreversible. Your admin account will be
+                deactivated and you will be logged out immediately. Are you absolutely sure?</p>
             <div class="flex gap-3 justify-end">
-                <button id="modal-cancel-btn" class="px-6 py-2 rounded-full border border-outline-variant text-on-surface-variant font-bold hover:bg-surface-container transition-colors text-sm">Cancel</button>
-                <button id="modal-confirm-btn" class="px-6 py-2 rounded-full bg-error text-white font-bold hover:brightness-110 transition-all text-sm flex items-center gap-2">
+                <button id="modal-cancel-btn"
+                    class="px-6 py-2 rounded-full border border-outline-variant text-on-surface-variant font-bold hover:bg-surface-container transition-colors text-sm">Cancel</button>
+                <button id="modal-confirm-btn"
+                    class="px-6 py-2 rounded-full bg-error text-white font-bold hover:brightness-110 transition-all text-sm flex items-center gap-2">
                     <span class="material-symbols-outlined text-sm">delete_forever</span>
                     Yes, Deactivate
                 </button>
@@ -453,465 +491,465 @@
 
     <script src="/js/toast.js"></script>
     <script>
-    (function () {
-        'use strict';
+            (function () {
+                'use strict';
 
-        // ─── STORAGE KEY ────────────────────────────────────────────────
-        const STORAGE_KEY = 'candc_admin_settings';
+                // ─── STORAGE KEY ────────────────────────────────────────────────
+                const STORAGE_KEY = 'candc_admin_settings';
 
-        // ─── DEFAULT SETTINGS (single source of truth) ──────────────────
-        const DEFAULTS = {
-            profile: {
-                fullName: 'Ayesha Admin',
-                email: 'ayesha@cookiesandcakes.com',
-                bio: 'Head Baker & Admin at cookiesandcakes. Passionate about artisan baking and bringing joy through sweet treats since 2015.',
-                avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCieuGz1VTy9DlTqzEPzM8QzcPOYqUH_Pum6f_rUPkgn2bMvTIu2JVJCWnxFEpAbqRFDhX1wJkIaCpAq9AiGMhzd4PGKJUE6j3T4hTysvxVC2DEcLuO0SoJvja1VHr-uXQDQd1m57QaWqf7P6ou-pT3gQSUN2pQtDejKYgkLFK7anRfmZNS3UbEoDmzs9scjMnzkJe4a6ZnugDkrxpcFXb-KvJ3oikPhqV43vRdJ-iH6jXr70-rP10F'
-            },
-            notifications: {
-                ordersEmail: true,
-                ordersPush: true,
-                inventoryEmail: true,
-                inventoryPush: false,
-                reviewsEmail: false,
-                reviewsPush: true,
-            },
-            security: {
-                twofa: true,
-            }
-        };
-
-        // ─── STATE ───────────────────────────────────────────────────────
-        let savedState = loadState();
-        let currentState = deepCopy(savedState);
-        let isDirty = false;
-
-        // ─── HELPERS ─────────────────────────────────────────────────────
-        function deepCopy(obj) {
-            return JSON.parse(JSON.stringify(obj));
-        }
-
-        function toast(type, msg) {
-            if (window.Toast && window.Toast[type]) {
-                window.Toast[type](msg);
-            } else {
-                alert(msg);
-            }
-        }
-
-        function loadState() {
-            try {
-                const stored = localStorage.getItem(STORAGE_KEY);
-                if (stored) return normalizeState(JSON.parse(stored));
-            } catch (_) {}
-            return deepCopy(DEFAULTS);
-        }
-
-        function normalizeState(state) {
-            if (!state || typeof state !== 'object') return deepCopy(DEFAULTS);
-            return {
-                profile: Object.assign({}, DEFAULTS.profile, (state.profile && typeof state.profile === 'object') ? state.profile : {}),
-                notifications: Object.assign({}, DEFAULTS.notifications, (state.notifications && typeof state.notifications === 'object') ? state.notifications : {}),
-                security: Object.assign({}, DEFAULTS.security, (state.security && typeof state.security === 'object') ? state.security : {}),
-            };
-        }
-
-        function persistState(state) {
-            try {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-            } catch (_) {}
-        }
-
-        function markDirty() {
-            isDirty = true;
-            document.getElementById('save-btn').classList.add('ring-2', 'ring-secondary/40');
-        }
-
-        function markClean() {
-            isDirty = false;
-            document.getElementById('save-btn').classList.remove('ring-2', 'ring-secondary/40');
-        }
-
-        // ─── APPLY STATE TO UI ────────────────────────────────────────────
-        function applyStateToUI(state) {
-            // Profile
-            const fullNameInput = document.getElementById('profile-full-name');
-            const emailInput = document.getElementById('profile-email');
-            const bioInput = document.getElementById('profile-bio');
-            const avatarImg = document.getElementById('profile-avatar-img');
-            if (fullNameInput && state.profile) fullNameInput.value = state.profile.fullName || '';
-            if (emailInput && state.profile) emailInput.value = state.profile.email || '';
-            if (bioInput && state.profile) bioInput.value = state.profile.bio || '';
-            if (avatarImg && state.profile && state.profile.avatar) avatarImg.src = state.profile.avatar;
-
-            // Notifications & Security
-            setToggle('notif-orders-email',    state.notifications.ordersEmail);
-            setToggle('notif-orders-push',     state.notifications.ordersPush);
-            setToggle('notif-inventory-email', state.notifications.inventoryEmail);
-            setToggle('notif-inventory-push',  state.notifications.inventoryPush);
-            setToggle('notif-reviews-email',   state.notifications.reviewsEmail);
-            setToggle('notif-reviews-push',    state.notifications.reviewsPush);
-            setToggle('toggle-2fa',            state.security.twofa);
-            update2FALabel(state.security.twofa);
-        }
-
-        function setToggle(id, value) {
-            const el = document.getElementById(id);
-            if (el) el.checked = value;
-        }
-
-        function update2FALabel(enabled) {
-            const label = document.getElementById('twofa-status-text');
-            if (label) label.textContent = enabled ? 'Enabled via SMS' : 'Disabled';
-        }
-
-        // ─── NOTIFICATION TOGGLES ─────────────────────────────────────────
-        const notifMap = {
-            'notif-orders-email':    ['notifications', 'ordersEmail'],
-            'notif-orders-push':     ['notifications', 'ordersPush'],
-            'notif-inventory-email': ['notifications', 'inventoryEmail'],
-            'notif-inventory-push':  ['notifications', 'inventoryPush'],
-            'notif-reviews-email':   ['notifications', 'reviewsEmail'],
-            'notif-reviews-push':    ['notifications', 'reviewsPush'],
-        };
-
-        Object.entries(notifMap).forEach(([id, [section, key]]) => {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.addEventListener('change', function () {
-                currentState[section][key] = this.checked;
-                markDirty();
-            });
-        });
-
-        // ─── 2FA TOGGLE ───────────────────────────────────────────────────
-        const toggle2fa = document.getElementById('toggle-2fa');
-        if (toggle2fa) {
-            toggle2fa.addEventListener('change', function () {
-                currentState.security.twofa = this.checked;
-                update2FALabel(this.checked);
-                markDirty();
-                toast('success', this.checked ? '2FA enabled successfully.' : '2FA has been disabled.');
-            });
-        }
-
-        // ─── PASSWORD VALIDATION & SUBMIT ─────────────────────────────────
-        function showError(id, msg) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.textContent = msg;
-            el.classList.remove('hidden');
-            const input = document.getElementById(id.replace('-error', ''));
-            if (input) input.classList.add('border-error', 'focus:ring-error', 'focus:border-error');
-        }
-
-        function clearError(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.textContent = '';
-            el.classList.add('hidden');
-            const input = document.getElementById(id.replace('-error', ''));
-            if (input) input.classList.remove('border-error', 'focus:ring-error', 'focus:border-error');
-        }
-
-        function clearAllErrors() {
-            ['current-password-error', 'new-password-error', 'confirm-password-error'].forEach(clearError);
-        }
-
-        function setPasswordBtnLoading(loading) {
-            const btn = document.getElementById('update-password-btn');
-            const txt = document.getElementById('update-password-text');
-            if (!btn || !txt) return;
-            btn.disabled = loading;
-            btn.style.opacity = loading ? '0.7' : '1';
-            txt.textContent = loading ? 'Updating...' : 'Update Password';
-        }
-
-        const passwordForm = document.getElementById('password-form');
-        if (passwordForm) {
-            passwordForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
-                clearAllErrors();
-
-                const currentPwd = document.getElementById('current-password').value.trim();
-                const newPwd     = document.getElementById('new-password').value;
-                const confirmPwd = document.getElementById('confirm-password').value;
-
-                let valid = true;
-
-                if (!currentPwd) {
-                    showError('current-password-error', 'Current password is required.');
-                    valid = false;
-                }
-                if (!newPwd || newPwd.length < 6) {
-                    showError('new-password-error', 'New password must be at least 6 characters.');
-                    valid = false;
-                }
-                if (newPwd !== confirmPwd) {
-                    showError('confirm-password-error', 'Passwords do not match.');
-                    valid = false;
-                }
-                if (!valid) return;
-
-                setPasswordBtnLoading(true);
-
-                try {
-                    // Try the real API first
-                    const res = await fetch('/api/auth/profile', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        credentials: 'include',
-                        body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd })
-                    });
-
-                    if (res.ok) {
-                        toast('success', 'Password updated successfully!');
-                        document.getElementById('current-password').value = '';
-                        document.getElementById('new-password').value = '';
-                        document.getElementById('confirm-password').value = '';
-                    } else {
-                        const data = await res.json().catch(() => ({}));
-                        showError('current-password-error', data.error || 'Incorrect current password.');
-                    }
-                } catch (_) {
-                    // API unavailable — still clear fields and show success (demo mode)
-                    toast('success', 'Password updated successfully!');
-                    document.getElementById('current-password').value = '';
-                    document.getElementById('new-password').value = '';
-                    document.getElementById('confirm-password').value = '';
-                } finally {
-                    setPasswordBtnLoading(false);
-                }
-            });
-        }
-
-        // ─── PROFILE FIELD TRACKING ───────────────────────────────────────
-        const fullNameInput = document.getElementById('profile-full-name');
-        const emailInput = document.getElementById('profile-email');
-        const bioInput = document.getElementById('profile-bio');
-        const avatarImg = document.getElementById('profile-avatar-img');
-        const changeAvatarBtn = document.getElementById('change-avatar-btn');
-        const avatarFileInput = document.getElementById('avatar-file-input');
-
-        if (changeAvatarBtn && avatarFileInput) {
-            changeAvatarBtn.addEventListener('click', () => avatarFileInput.click());
-        }
-
-        if (avatarFileInput) {
-            avatarFileInput.addEventListener('change', function () {
-                const file = this.files[0];
-                if (!file) return;
-                if (!file.type.startsWith('image/')) {
-                    toast('error', 'Please select a valid image file.');
-                    return;
-                }
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    if (avatarImg) {
-                        avatarImg.src = e.target.result;
-                        currentState.profile.avatar = e.target.result;
-                        markDirty();
+                // ─── DEFAULT SETTINGS (single source of truth) ──────────────────
+                const DEFAULTS = {
+                    profile: {
+                        fullName: 'Ayesha Admin',
+                        email: 'ayesha@cookiesandcakes.com',
+                        bio: 'Head Baker & Admin at cookiesandcakes. Passionate about artisan baking and bringing joy through sweet treats since 2015.',
+                        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCieuGz1VTy9DlTqzEPzM8QzcPOYqUH_Pum6f_rUPkgn2bMvTIu2JVJCWnxFEpAbqRFDhX1wJkIaCpAq9AiGMhzd4PGKJUE6j3T4hTysvxVC2DEcLuO0SoJvja1VHr-uXQDQd1m57QaWqf7P6ou-pT3gQSUN2pQtDejKYgkLFK7anRfmZNS3UbEoDmzs9scjMnzkJe4a6ZnugDkrxpcFXb-KvJ3oikPhqV43vRdJ-iH6jXr70-rP10F'
+                    },
+                    notifications: {
+                        ordersEmail: true,
+                        ordersPush: true,
+                        inventoryEmail: true,
+                        inventoryPush: false,
+                        reviewsEmail: false,
+                        reviewsPush: true,
+                    },
+                    security: {
+                        twofa: true,
                     }
                 };
-                reader.readAsDataURL(file);
-            });
-        }
 
-        function bindProfileField(input, profileKey, errorId, validator) {
-            if (!input) return;
-            input.addEventListener('input', function () {
-                if (!currentState.profile) currentState.profile = {};
-                currentState.profile[profileKey] = this.value;
-                if (validator) validator(this.value);
-                markDirty();
-            });
-            input.addEventListener('change', function () {
-                if (!currentState.profile) currentState.profile = {};
-                currentState.profile[profileKey] = this.value;
-                if (validator) validator(this.value);
-                markDirty();
-            });
-            input.addEventListener('blur', function () {
-                if (validator) validator(this.value);
-            });
-        }
+                // ─── STATE ───────────────────────────────────────────────────────
+                let savedState = loadState();
+                let currentState = deepCopy(savedState);
+                let isDirty = false;
 
-        function validateFullName(value) {
-            const errEl = document.getElementById('full-name-error');
-            if (!errEl) return !value;
-            if (!value.trim()) {
-                errEl.textContent = 'Full Name cannot be empty.';
-                errEl.classList.remove('hidden');
-                return false;
-            }
-            errEl.classList.add('hidden');
-            return true;
-        }
-
-        function validateEmail(value) {
-            const errEl = document.getElementById('email-error');
-            if (!errEl) return true;
-            if (!value.trim()) {
-                errEl.textContent = 'Email Address is required.';
-                errEl.classList.remove('hidden');
-                return false;
-            }
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!re.test(value)) {
-                errEl.textContent = 'Please enter a valid email address.';
-                errEl.classList.remove('hidden');
-                return false;
-            }
-            errEl.classList.add('hidden');
-            return true;
-        }
-
-        const BIO_MAX = 280;
-        function validateBio(value) {
-            const errEl = document.getElementById('bio-error');
-            if (!errEl) return true;
-            if (value.length > BIO_MAX) {
-                errEl.textContent = `Bio must be ${BIO_MAX} characters or fewer. (${value.length}/${BIO_MAX})`;
-                errEl.classList.remove('hidden');
-                return false;
-            }
-            errEl.classList.add('hidden');
-            return true;
-        }
-
-        bindProfileField(fullNameInput, 'fullName', 'full-name-error', validateFullName);
-        bindProfileField(emailInput, 'email', 'email-error', validateEmail);
-        bindProfileField(bioInput, 'bio', 'bio-error', validateBio);
-
-        // ─── SAVE SETTINGS ────────────────────────────────────────────────
-        function setSaveBtnLoading(loading) {
-            const btn = document.getElementById('save-btn');
-            if (!btn) return;
-            btn.disabled = loading;
-            btn.innerHTML = loading
-                ? '<span class="material-symbols-outlined animate-spin text-sm">refresh</span> Saving...'
-                : 'Save Management Settings';
-        }
-
-        async function saveSettings() {
-            if (!isDirty) {
-                toast('info', 'No changes to save.');
-                return;
-            }
-
-            const nameOk = validateFullName(fullNameInput ? fullNameInput.value : '');
-            const emailOk = validateEmail(emailInput ? emailInput.value : '');
-            const bioOk = validateBio(bioInput ? bioInput.value : '');
-            if (!nameOk || !emailOk || !bioOk) {
-                toast('error', 'Please fix the errors before saving.');
-                return;
-            }
-
-            setSaveBtnLoading(true);
-            try {
-                await new Promise(r => setTimeout(r, 500));
-
-                persistState(currentState);
-                savedState = deepCopy(currentState);
-                markClean();
-
-                // Update header avatar in this page's top bar
-                const headerAvatar = document.querySelector('header .h-10.w-10.rounded-full img');
-                if (headerAvatar && currentState.profile && currentState.profile.avatar) {
-                    headerAvatar.src = currentState.profile.avatar;
+                // ─── HELPERS ─────────────────────────────────────────────────────
+                function deepCopy(obj) {
+                    return JSON.parse(JSON.stringify(obj));
                 }
 
-                toast('success', 'Profile updated successfully.');
-            } catch (_) {
-                toast('error', 'Failed to update profile. Please try again.');
-            } finally {
-                setSaveBtnLoading(false);
-            }
-        }
+                function toast(type, msg) {
+                    if (window.Toast && window.Toast[type]) {
+                        window.Toast[type](msg);
+                    } else {
+                        alert(msg);
+                    }
+                }
 
-        document.getElementById('save-btn').addEventListener('click', saveSettings);
-        const fabBtn = document.getElementById('fab-save-btn');
-        if (fabBtn) fabBtn.addEventListener('click', saveSettings);
+                function loadState() {
+                    try {
+                        const stored = localStorage.getItem(STORAGE_KEY);
+                        if (stored) return normalizeState(JSON.parse(stored));
+                    } catch (_) { }
+                    return deepCopy(DEFAULTS);
+                }
 
-        // ─── DISCARD CHANGES ──────────────────────────────────────────────
-        document.getElementById('discard-btn').addEventListener('click', function () {
-            if (!isDirty) {
-                toast('info', 'No unsaved changes to discard.');
-                return;
-            }
-            const confirmed = window.confirm('Discard all unsaved changes and restore last saved settings?');
-            if (!confirmed) return;
-            currentState = deepCopy(savedState);
-            applyStateToUI(currentState);
-            markClean();
-            toast('info', 'Changes discarded. Settings restored.');
-        });
+                function normalizeState(state) {
+                    if (!state || typeof state !== 'object') return deepCopy(DEFAULTS);
+                    return {
+                        profile: Object.assign({}, DEFAULTS.profile, (state.profile && typeof state.profile === 'object') ? state.profile : {}),
+                        notifications: Object.assign({}, DEFAULTS.notifications, (state.notifications && typeof state.notifications === 'object') ? state.notifications : {}),
+                        security: Object.assign({}, DEFAULTS.security, (state.security && typeof state.security === 'object') ? state.security : {}),
+                    };
+                }
 
-        // ─── DEACTIVATE ACCOUNT ───────────────────────────────────────────
-        const modal = document.getElementById('deactivate-modal');
-        document.getElementById('deactivate-btn').addEventListener('click', function () {
-            modal.classList.remove('hidden');
-        });
-        document.getElementById('modal-cancel-btn').addEventListener('click', function () {
-            modal.classList.add('hidden');
-        });
-        document.getElementById('modal-backdrop').addEventListener('click', function () {
-            modal.classList.add('hidden');
-        });
-        document.getElementById('modal-confirm-btn').addEventListener('click', async function () {
-            const btn = this;
-            btn.disabled = true;
-            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">refresh</span> Deactivating...';
-            try {
-                const res = await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
-                toast('warning', 'Account deactivated. Redirecting...');
-                setTimeout(() => { window.location.href = '/admin-login.html'; }, 1500);
-            } catch (_) {
-                toast('error', 'Deactivation failed. Please try again.');
-                btn.disabled = false;
-                btn.innerHTML = '<span class="material-symbols-outlined text-sm">delete_forever</span> Yes, Deactivate';
-            }
-            modal.classList.add('hidden');
-        });
+                function persistState(state) {
+                    try {
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+                    } catch (_) { }
+                }
 
-        // ─── LOGOUT ───────────────────────────────────────────────────────
-        const logoutLink = document.querySelector('.logout-link');
-        if (logoutLink) {
-            logoutLink.addEventListener('click', async function (e) {
-                e.preventDefault();
-                try {
-                    await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
-                } catch (_) {}
-                window.location.href = '/admin-login.html';
-            });
-        }
+                function markDirty() {
+                    isDirty = true;
+                    document.getElementById('save-btn').classList.add('ring-2', 'ring-secondary/40');
+                }
 
-        // ─── LABEL FOCUS MICRO-INTERACTIONS ──────────────────────────────
-        document.querySelectorAll('#password-form input').forEach(input => {
-            input.addEventListener('focus', () => {
-                input.parentElement.querySelector('label')?.classList.add('text-secondary');
-            });
-            input.addEventListener('blur', () => {
-                input.parentElement.querySelector('label')?.classList.remove('text-secondary');
-            });
-        });
+                function markClean() {
+                    isDirty = false;
+                    document.getElementById('save-btn').classList.remove('ring-2', 'ring-secondary/40');
+                }
 
-        // ─── TAB NAV ─────────────────────────────────────────────────────
-        document.querySelectorAll('header nav a').forEach(tab => {
-            tab.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelectorAll('header nav a').forEach(t => {
-                    t.classList.remove('text-secondary', 'font-bold', 'border-b-2', 'border-secondary', 'pb-1', 'opacity-80');
-                    t.classList.add('text-on-surface-variant', 'hover:text-secondary');
+                // ─── APPLY STATE TO UI ────────────────────────────────────────────
+                function applyStateToUI(state) {
+                    // Profile
+                    const fullNameInput = document.getElementById('profile-full-name');
+                    const emailInput = document.getElementById('profile-email');
+                    const bioInput = document.getElementById('profile-bio');
+                    const avatarImg = document.getElementById('profile-avatar-img');
+                    if (fullNameInput && state.profile) fullNameInput.value = state.profile.fullName || '';
+                    if (emailInput && state.profile) emailInput.value = state.profile.email || '';
+                    if (bioInput && state.profile) bioInput.value = state.profile.bio || '';
+                    if (avatarImg && state.profile && state.profile.avatar) avatarImg.src = state.profile.avatar;
+
+                    // Notifications & Security
+                    setToggle('notif-orders-email', state.notifications.ordersEmail);
+                    setToggle('notif-orders-push', state.notifications.ordersPush);
+                    setToggle('notif-inventory-email', state.notifications.inventoryEmail);
+                    setToggle('notif-inventory-push', state.notifications.inventoryPush);
+                    setToggle('notif-reviews-email', state.notifications.reviewsEmail);
+                    setToggle('notif-reviews-push', state.notifications.reviewsPush);
+                    setToggle('toggle-2fa', state.security.twofa);
+                    update2FALabel(state.security.twofa);
+                }
+
+                function setToggle(id, value) {
+                    const el = document.getElementById(id);
+                    if (el) el.checked = value;
+                }
+
+                function update2FALabel(enabled) {
+                    const label = document.getElementById('twofa-status-text');
+                    if (label) label.textContent = enabled ? 'Enabled via SMS' : 'Disabled';
+                }
+
+                // ─── NOTIFICATION TOGGLES ─────────────────────────────────────────
+                const notifMap = {
+                    'notif-orders-email': ['notifications', 'ordersEmail'],
+                    'notif-orders-push': ['notifications', 'ordersPush'],
+                    'notif-inventory-email': ['notifications', 'inventoryEmail'],
+                    'notif-inventory-push': ['notifications', 'inventoryPush'],
+                    'notif-reviews-email': ['notifications', 'reviewsEmail'],
+                    'notif-reviews-push': ['notifications', 'reviewsPush'],
+                };
+
+                Object.entries(notifMap).forEach(([id, [section, key]]) => {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.addEventListener('change', function () {
+                        currentState[section][key] = this.checked;
+                        markDirty();
+                    });
                 });
-                this.classList.add('text-secondary', 'font-bold', 'border-b-2', 'border-secondary', 'pb-1', 'opacity-80');
-                this.classList.remove('text-on-surface-variant', 'hover:text-secondary');
-            });
-        });
 
-        // ─── INITIALISE ───────────────────────────────────────────────────
-        applyStateToUI(currentState);
+                // ─── 2FA TOGGLE ───────────────────────────────────────────────────
+                const toggle2fa = document.getElementById('toggle-2fa');
+                if (toggle2fa) {
+                    toggle2fa.addEventListener('change', function () {
+                        currentState.security.twofa = this.checked;
+                        update2FALabel(this.checked);
+                        markDirty();
+                        toast('success', this.checked ? '2FA enabled successfully.' : '2FA has been disabled.');
+                    });
+                }
 
-    })();
+                // ─── PASSWORD VALIDATION & SUBMIT ─────────────────────────────────
+                function showError(id, msg) {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.textContent = msg;
+                    el.classList.remove('hidden');
+                    const input = document.getElementById(id.replace('-error', ''));
+                    if (input) input.classList.add('border-error', 'focus:ring-error', 'focus:border-error');
+                }
+
+                function clearError(id) {
+                    const el = document.getElementById(id);
+                    if (!el) return;
+                    el.textContent = '';
+                    el.classList.add('hidden');
+                    const input = document.getElementById(id.replace('-error', ''));
+                    if (input) input.classList.remove('border-error', 'focus:ring-error', 'focus:border-error');
+                }
+
+                function clearAllErrors() {
+                    ['current-password-error', 'new-password-error', 'confirm-password-error'].forEach(clearError);
+                }
+
+                function setPasswordBtnLoading(loading) {
+                    const btn = document.getElementById('update-password-btn');
+                    const txt = document.getElementById('update-password-text');
+                    if (!btn || !txt) return;
+                    btn.disabled = loading;
+                    btn.style.opacity = loading ? '0.7' : '1';
+                    txt.textContent = loading ? 'Updating...' : 'Update Password';
+                }
+
+                const passwordForm = document.getElementById('password-form');
+                if (passwordForm) {
+                    passwordForm.addEventListener('submit', async function (e) {
+                        e.preventDefault();
+                        clearAllErrors();
+
+                        const currentPwd = document.getElementById('current-password').value.trim();
+                        const newPwd = document.getElementById('new-password').value;
+                        const confirmPwd = document.getElementById('confirm-password').value;
+
+                        let valid = true;
+
+                        if (!currentPwd) {
+                            showError('current-password-error', 'Current password is required.');
+                            valid = false;
+                        }
+                        if (!newPwd || newPwd.length < 6) {
+                            showError('new-password-error', 'New password must be at least 6 characters.');
+                            valid = false;
+                        }
+                        if (newPwd !== confirmPwd) {
+                            showError('confirm-password-error', 'Passwords do not match.');
+                            valid = false;
+                        }
+                        if (!valid) return;
+
+                        setPasswordBtnLoading(true);
+
+                        try {
+                            // Try the real API first
+                            const res = await fetch('/api/auth/profile', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                credentials: 'include',
+                                body: JSON.stringify({ currentPassword: currentPwd, newPassword: newPwd })
+                            });
+
+                            if (res.ok) {
+                                toast('success', 'Password updated successfully!');
+                                document.getElementById('current-password').value = '';
+                                document.getElementById('new-password').value = '';
+                                document.getElementById('confirm-password').value = '';
+                            } else {
+                                const data = await res.json().catch(() => ({}));
+                                showError('current-password-error', data.error || 'Incorrect current password.');
+                            }
+                        } catch (_) {
+                            // API unavailable — still clear fields and show success (demo mode)
+                            toast('success', 'Password updated successfully!');
+                            document.getElementById('current-password').value = '';
+                            document.getElementById('new-password').value = '';
+                            document.getElementById('confirm-password').value = '';
+                        } finally {
+                            setPasswordBtnLoading(false);
+                        }
+                    });
+                }
+
+                // ─── PROFILE FIELD TRACKING ───────────────────────────────────────
+                const fullNameInput = document.getElementById('profile-full-name');
+                const emailInput = document.getElementById('profile-email');
+                const bioInput = document.getElementById('profile-bio');
+                const avatarImg = document.getElementById('profile-avatar-img');
+                const changeAvatarBtn = document.getElementById('change-avatar-btn');
+                const avatarFileInput = document.getElementById('avatar-file-input');
+
+                if (changeAvatarBtn && avatarFileInput) {
+                    changeAvatarBtn.addEventListener('click', () => avatarFileInput.click());
+                }
+
+                if (avatarFileInput) {
+                    avatarFileInput.addEventListener('change', function () {
+                        const file = this.files[0];
+                        if (!file) return;
+                        if (!file.type.startsWith('image/')) {
+                            toast('error', 'Please select a valid image file.');
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            if (avatarImg) {
+                                avatarImg.src = e.target.result;
+                                currentState.profile.avatar = e.target.result;
+                                markDirty();
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+
+                function bindProfileField(input, profileKey, errorId, validator) {
+                    if (!input) return;
+                    input.addEventListener('input', function () {
+                        if (!currentState.profile) currentState.profile = {};
+                        currentState.profile[profileKey] = this.value;
+                        if (validator) validator(this.value);
+                        markDirty();
+                    });
+                    input.addEventListener('change', function () {
+                        if (!currentState.profile) currentState.profile = {};
+                        currentState.profile[profileKey] = this.value;
+                        if (validator) validator(this.value);
+                        markDirty();
+                    });
+                    input.addEventListener('blur', function () {
+                        if (validator) validator(this.value);
+                    });
+                }
+
+                function validateFullName(value) {
+                    const errEl = document.getElementById('full-name-error');
+                    if (!errEl) return !value;
+                    if (!value.trim()) {
+                        errEl.textContent = 'Full Name cannot be empty.';
+                        errEl.classList.remove('hidden');
+                        return false;
+                    }
+                    errEl.classList.add('hidden');
+                    return true;
+                }
+
+                function validateEmail(value) {
+                    const errEl = document.getElementById('email-error');
+                    if (!errEl) return true;
+                    if (!value.trim()) {
+                        errEl.textContent = 'Email Address is required.';
+                        errEl.classList.remove('hidden');
+                        return false;
+                    }
+                    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!re.test(value)) {
+                        errEl.textContent = 'Please enter a valid email address.';
+                        errEl.classList.remove('hidden');
+                        return false;
+                    }
+                    errEl.classList.add('hidden');
+                    return true;
+                }
+
+                const BIO_MAX = 280;
+                function validateBio(value) {
+                    const errEl = document.getElementById('bio-error');
+                    if (!errEl) return true;
+                    if (value.length > BIO_MAX) {
+                        errEl.textContent = `Bio must be ${BIO_MAX} characters or fewer. (${value.length}/${BIO_MAX})`;
+                        errEl.classList.remove('hidden');
+                        return false;
+                    }
+                    errEl.classList.add('hidden');
+                    return true;
+                }
+
+                bindProfileField(fullNameInput, 'fullName', 'full-name-error', validateFullName);
+                bindProfileField(emailInput, 'email', 'email-error', validateEmail);
+                bindProfileField(bioInput, 'bio', 'bio-error', validateBio);
+
+                // ─── SAVE SETTINGS ────────────────────────────────────────────────
+                function setSaveBtnLoading(loading) {
+                    const btn = document.getElementById('save-btn');
+                    if (!btn) return;
+                    btn.disabled = loading;
+                    btn.innerHTML = loading
+                        ? '<span class="material-symbols-outlined animate-spin text-sm">refresh</span> Saving...'
+                        : 'Save Management Settings';
+                }
+
+                async function saveSettings() {
+                    if (!isDirty) {
+                        toast('info', 'No changes to save.');
+                        return;
+                    }
+
+                    const nameOk = validateFullName(fullNameInput ? fullNameInput.value : '');
+                    const emailOk = validateEmail(emailInput ? emailInput.value : '');
+                    const bioOk = validateBio(bioInput ? bioInput.value : '');
+                    if (!nameOk || !emailOk || !bioOk) {
+                        toast('error', 'Please fix the errors before saving.');
+                        return;
+                    }
+
+                    setSaveBtnLoading(true);
+                    try {
+                        await new Promise(r => setTimeout(r, 500));
+
+                        persistState(currentState);
+                        savedState = deepCopy(currentState);
+                        markClean();
+
+                        // Update header avatar in this page's top bar
+                        const headerAvatar = document.querySelector('header .h-10.w-10.rounded-full img');
+                        if (headerAvatar && currentState.profile && currentState.profile.avatar) {
+                            headerAvatar.src = currentState.profile.avatar;
+                        }
+
+                        toast('success', 'Profile updated successfully.');
+                    } catch (_) {
+                        toast('error', 'Failed to update profile. Please try again.');
+                    } finally {
+                        setSaveBtnLoading(false);
+                    }
+                }
+
+                document.getElementById('save-btn').addEventListener('click', saveSettings);
+                const fabBtn = document.getElementById('fab-save-btn');
+                if (fabBtn) fabBtn.addEventListener('click', saveSettings);
+
+                // ─── DISCARD CHANGES ──────────────────────────────────────────────
+                document.getElementById('discard-btn').addEventListener('click', function () {
+                    if (!isDirty) {
+                        toast('info', 'No unsaved changes to discard.');
+                        return;
+                    }
+                    const confirmed = window.confirm('Discard all unsaved changes and restore last saved settings?');
+                    if (!confirmed) return;
+                    currentState = deepCopy(savedState);
+                    applyStateToUI(currentState);
+                    markClean();
+                    toast('info', 'Changes discarded. Settings restored.');
+                });
+
+                // ─── DEACTIVATE ACCOUNT ───────────────────────────────────────────
+                const modal = document.getElementById('deactivate-modal');
+                document.getElementById('deactivate-btn').addEventListener('click', function () {
+                    modal.classList.remove('hidden');
+                });
+                document.getElementById('modal-cancel-btn').addEventListener('click', function () {
+                    modal.classList.add('hidden');
+                });
+                document.getElementById('modal-backdrop').addEventListener('click', function () {
+                    modal.classList.add('hidden');
+                });
+                document.getElementById('modal-confirm-btn').addEventListener('click', async function () {
+                    const btn = this;
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-sm">refresh</span> Deactivating...';
+                    try {
+                        const res = await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
+                        toast('warning', 'Account deactivated. Redirecting...');
+                        setTimeout(() => { window.location.href = '/admin-login.html'; }, 1500);
+                    } catch (_) {
+                        toast('error', 'Deactivation failed. Please try again.');
+                        btn.disabled = false;
+                        btn.innerHTML = '<span class="material-symbols-outlined text-sm">delete_forever</span> Yes, Deactivate';
+                    }
+                    modal.classList.add('hidden');
+                });
+
+                // ─── LOGOUT ───────────────────────────────────────────────────────
+                const logoutLink = document.querySelector('.logout-link');
+                if (logoutLink) {
+                    logoutLink.addEventListener('click', async function (e) {
+                        e.preventDefault();
+                        try {
+                            await fetch('/api/admin/logout', { method: 'POST', credentials: 'include' });
+                        } catch (_) { }
+                        window.location.href = '/admin-login.html';
+                    });
+                }
+
+                // ─── LABEL FOCUS MICRO-INTERACTIONS ──────────────────────────────
+                document.querySelectorAll('#password-form input').forEach(input => {
+                    input.addEventListener('focus', () => {
+                        input.parentElement.querySelector('label')?.classList.add('text-secondary');
+                    });
+                    input.addEventListener('blur', () => {
+                        input.parentElement.querySelector('label')?.classList.remove('text-secondary');
+                    });
+                });
+
+                // ─── TAB NAV ─────────────────────────────────────────────────────
+                document.querySelectorAll('header nav a').forEach(tab => {
+                    tab.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        document.querySelectorAll('header nav a').forEach(t => {
+                            t.classList.remove('text-secondary', 'font-bold', 'border-b-2', 'border-secondary', 'pb-1', 'opacity-80');
+                            t.classList.add('text-on-surface-variant', 'hover:text-secondary');
+                        });
+                        this.classList.add('text-secondary', 'font-bold', 'border-b-2', 'border-secondary', 'pb-1', 'opacity-80');
+                        this.classList.remove('text-on-surface-variant', 'hover:text-secondary');
+                    });
+                });
+
+                // ─── INITIALISE ───────────────────────────────────────────────────
+                applyStateToUI(currentState);
+
+            })();
     </script>
 </body>
 

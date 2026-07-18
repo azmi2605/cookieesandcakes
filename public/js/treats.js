@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="p-md">
             <div class="flex justify-between items-start mb-base cursor-pointer product-title-link">
               <h3 class="font-headline-md text-headline-md text-primary hover:text-secondary transition-colors">${product.name}</h3>
-              <span class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">$${product.price.toFixed(2)}</span>
+              <span class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">${window.App.formatPrice(product.price)}</span>
             </div>
             <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">${product.description}</p>
             <button class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-on-secondary-container transition-colors active:scale-[0.98] add-to-cart-btn">

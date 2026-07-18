@@ -179,13 +179,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (el('customers-total-2')) el('customers-total-2').textContent = users.length;
         if (el('customers-today')) el('customers-today').textContent = newToday;
         if (el('customers-with-orders')) el('customers-with-orders').textContent = withOrders;
-        if (el('customers-avg-order')) el('customers-avg-order').textContent = '$' + avgOrder.toFixed(2);
+        if (el('customers-avg-order')) el('customers-avg-order').textContent = '₹' + avgOrder.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     } catch(e) { console.error(e); }
 });
 </script>
     <script>
         window.API_BASE_URL = window.API_BASE_URL || '';
     </script>
+    <script src="/js/app.js"></script>
     <script src="/js/admin.js"></script>
 </body>
 </html>

@@ -121,7 +121,90 @@ document.addEventListener('click', async (e) => {
 /* ─────────────────────────────────────────
    DASHBOARD
    ───────────────────────────────────────── */
+
+async function loadAdminProducts() {
+    const grid = document.getElementById('admin-products-grid');
+    if (!grid) return;
+
+    grid.innerHTML = `
+        <div class="col-span-full flex justify-center items-center py-12 text-on-surface-variant">
+            <span class="material-symbols-outlined animate-spin text-secondary/40 mr-2">autorenew</span>
+            <span class="font-body-md">Loading products...</span>
+        </div>
+    `;
+
+    try {
+        const prodRes = await adminFetch('/api/products');
+        const products = await prodRes.json();
+
+        if (!Array.isArray(products)) {
+            throw new Error('Invalid products response from server.');
+        }
+
+        grid.innerHTML = '';
+
+        if (products.length === 0) {
+            grid.innerHTML = `
+                <div class="col-span-full flex flex-col items-center justify-center py-12 text-center">
+                    <span class="material-symbols-outlined text-5xl text-outline-variant mb-3">inventory_2</span>
+                    <p class="font-headline-md text-headline-md text-primary mb-2">No products available</p>
+                    <p class="font-body-md text-on-surface-variant mb-4">Get started by adding your first product.</p>
+                    <a href="/admin-add-product.html" class="bg-secondary text-white px-6 py-2 rounded-full font-bold hover:opacity-90 transition-all">Add New Product</a>
+                </div>
+            `;
+            return;
+        }
+
+        products.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'bg-surface-container rounded-xl shadow-sm overflow-hidden border border-primary/5 flex flex-col hover:shadow-md transition-shadow group';
+            card.innerHTML = `
+                <div class="h-48 w-full overflow-hidden relative">
+                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" src="${p.image || ''}" alt="${p.name || 'Product'}" onclick="window.open('/treat-${p.id}.html','_blank')">
+                    ${p.tags && p.tags.length ? `<div class="absolute top-3 left-3"><span class="bg-white/90 backdrop-blur text-secondary text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">${p.tags[0]}</span></div>` : ''}
+                </div>
+                <div class="p-gutter flex flex-col flex-1">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <span class="text-outline text-label-sm capitalize">${p.category || 'misc'}</span>
+                            <h4 class="font-headline-md text-[20px] text-primary">${p.name}</h4>
+                        </div>
+                        <span class="font-bold text-secondary">${window.App.formatPrice(p.price || 0)}</span>
+                    </div>
+                    <p class="text-on-surface-variant text-sm mb-2 line-clamp-2">${p.description || ''}</p>
+                    <div class="flex flex-wrap gap-2 mb-3 text-xs text-on-surface-variant">
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">inventory</span> Stock: ${p.stock ?? 0}</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> ${p.availability || 'In Stock'}</span>
+                        ${p.sku ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">qr_code</span> SKU: ${p.sku}</span>` : ''}
+                    </div>
+                    <div class="mt-auto flex gap-2">
+                        <button onclick="openEditProduct('${p.id}')" class="flex-1 border border-secondary text-secondary font-bold py-2 rounded-lg hover:bg-secondary hover:text-white transition-all text-sm">Edit</button>
+                        <button onclick="openDeleteProduct('${p.id}')" class="flex-1 border border-error text-error font-bold py-2 rounded-lg hover:bg-error hover:text-white transition-all text-sm">Delete</button>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    } catch (err) {
+        console.error('Failed to load products:', err);
+        grid.innerHTML = `
+            <div class="col-span-full flex flex-col items-center justify-center py-12 text-center">
+                <span class="material-symbols-outlined text-5xl text-error mb-3">error</span>
+                <p class="font-headline-md text-headline-md text-primary mb-2">Failed to load products</p>
+                <p class="font-body-md text-on-surface-variant mb-4">${err.message || 'Please check your connection and try again.'}</p>
+                <button onclick="loadAdminProducts()" class="bg-secondary text-white px-6 py-2 rounded-full font-bold hover:opacity-90 transition-all">Retry</button>
+            </div>
+        `;
+    }
+}
+
 async function initDashboard() {
+    // Check for product refresh signal from add/edit page
+    const refreshFlag = localStorage.getItem('adminProductsRefresh');
+    if (refreshFlag) {
+        localStorage.removeItem('adminProductsRefresh');
+    }
+
     // Stat cards
     try {
             const statsRes = await adminFetch('/api/admin/stats');
@@ -131,7 +214,7 @@ async function initDashboard() {
         animateCounter('stat-total-users', stats.totalUsers || 0);
         const revEl = document.getElementById('stat-total-revenue');
         if (revEl) {
-            animateCounter('stat-total-revenue', Math.round(stats.totalRevenue || 0), '$');
+            animateCounter('stat-total-revenue', Math.round(stats.totalRevenue || 0), '₹');
         }
     } catch (err) {
         console.error('Failed to load stats:', err);
@@ -155,7 +238,7 @@ async function initDashboard() {
                     <td class="px-gutter py-4 font-bold text-secondary">#${(order.id || '').slice(-6).toUpperCase()}</td>
                     <td class="px-gutter py-4">${order.customerName || 'Guest'}</td>
                     <td class="px-gutter py-4">${new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
-                    <td class="px-gutter py-4 font-semibold">$${(order.total || 0).toFixed(2)}</td>
+                    <td class="px-gutter py-4 font-semibold">${window.App.formatPrice(order.total || 0)}</td>
                     <td class="px-gutter py-4">${statusBadge(order.status)}</td>
                     <td class="px-gutter py-4 text-right">
                         <a href="/admin-order-details.html?orderId=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">View Details</a>
@@ -170,38 +253,7 @@ async function initDashboard() {
     }
 
     // Products grid
-    try {
-            const prodRes = await adminFetch('/api/products');
-        const products = await prodRes.json();
-        const grid = document.getElementById('admin-products-grid');
-        if (grid && products.length > 0) {
-            grid.innerHTML = '';
-            products.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'bg-surface-container rounded-xl shadow-sm overflow-hidden border border-primary/5 flex flex-col hover:shadow-md transition-shadow group';
-                div.innerHTML = `
-                    <div class="h-48 w-full overflow-hidden relative">
-                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="${p.image}" alt="${p.name}">
-                        ${p.tags && p.tags.length ? `<div class="absolute top-3 left-3"><span class="bg-white/90 backdrop-blur text-secondary text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">${p.tags[0]}</span></div>` : ''}
-                    </div>
-                    <div class="p-gutter flex flex-col flex-1">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
-                                <span class="text-outline text-label-sm capitalize">${p.category || 'misc'}</span>
-                                <h4 class="font-headline-md text-[20px] text-primary">${p.name}</h4>
-                            </div>
-                            <span class="font-bold text-secondary">$${parseFloat(p.price || 0).toFixed(2)}</span>
-                        </div>
-                        <p class="text-on-surface-variant text-sm mb-gutter line-clamp-2">${p.description || ''}</p>
-                        <button onclick="openEditProduct('${p.id}')" class="mt-auto w-full border border-secondary text-secondary font-bold py-2 rounded-lg hover:bg-secondary hover:text-white transition-all">Edit Product</button>
-                    </div>
-                `;
-                grid.appendChild(div);
-            });
-        }
-    } catch (err) {
-        console.error('Failed to load products:', err);
-    }
+    await loadAdminProducts();
 
     // Recent customers
     try {
@@ -294,7 +346,7 @@ async function initOrdersList() {
                 </td>
                 <td class="px-gutter py-4">${new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
                 <td class="px-gutter py-4">${order.deliveryDate ? new Date(order.deliveryDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}</td>
-                <td class="px-gutter py-4 font-semibold">$${(order.total || 0).toFixed(2)}</td>
+                <td class="px-gutter py-4 font-semibold">${window.App.formatPrice(order.total || 0)}</td>
                 <td class="px-gutter py-4">${statusBadge(order.status)}</td>
                 <td class="px-gutter py-4 text-right">
                     <a href="/admin-order-details.html?orderId=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</a>
@@ -391,11 +443,11 @@ async function initOrderDetails() {
                         </div>
                     </td>
                     <td class="px-md py-4"><span class="font-body-md text-on-surface">${item.quantity}</span></td>
-                    <td class="px-md py-4"><span class="font-body-md text-on-surface">$${parseFloat(item.price || 0).toFixed(2)}</span></td>
+                    <td class="px-md py-4"><span class="font-body-md text-on-surface">${window.App.formatPrice(item.price || 0)}</span></td>
                     <td class="px-md py-4">
                         ${item.personalization ? `<div class="flex items-center gap-2 text-secondary font-body-md italic"><span class="material-symbols-outlined text-sm">edit_note</span> "${item.personalization}"</div>` : '<span class="text-on-surface-variant font-body-md opacity-40">None</span>'}
                     </td>
-                    <td class="px-md py-4 text-right"><span class="font-body-lg font-bold text-primary">$${(parseFloat(item.price || 0) * (item.quantity || 1)).toFixed(2)}</span></td>
+                    <td class="px-md py-4 text-right"><span class="font-body-lg font-bold text-primary">${window.App.formatPrice(parseFloat(item.price || 0) * (item.quantity || 1))}</span></td>
                 `;
                 itemsList.appendChild(tr);
             });
@@ -406,13 +458,13 @@ async function initOrderDetails() {
         const delivery = 5.00;
         const tax = parseFloat((subtotal * 0.11).toFixed(2));
         const total = subtotal + delivery;
-        setEl('order-subtotal', `$${subtotal.toFixed(2)}`);
-        setEl('order-delivery', `$${delivery.toFixed(2)}`);
-        setEl('order-tax', `$${tax.toFixed(2)}`);
-        setEl('order-total', `$${total.toFixed(2)}`);
+        setEl('order-subtotal', window.App.formatPrice(subtotal));
+        setEl('order-delivery', window.App.formatPrice(delivery));
+        setEl('order-tax', window.App.formatPrice(tax));
+        setEl('order-total', window.App.formatPrice(total));
 
         // Status tracker
-        const statusSteps = ['Pending', 'Confirmed', 'Preparing', 'Out for Delivery', 'Delivered'];
+        const statusSteps = ['Pending', 'Confirmed', 'Preparing', 'Shipped', 'Out for Delivery', 'Delivered'];
         updateStatusTracker(order.status || 'Pending', statusSteps);
 
         const statusDisplay = document.getElementById('current-status');
@@ -439,9 +491,24 @@ async function initOrderDetails() {
             saveStatusBtn.addEventListener('click', async () => {
                 if (!statusSelect) return;
                 const newStatus = statusSelect.value;
-                const validStatuses = ['Pending', 'Confirmed', 'Preparing', 'Out for Delivery', 'Delivered', 'Cancelled'];
+                const validStatuses = ['Pending', 'Confirmed', 'Preparing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
                 if (!validStatuses.includes(newStatus)) {
                     showToast('Invalid status selected.', 'error');
+                    return;
+                }
+
+                const validTransitions = {
+                    'Pending': ['Confirmed', 'Cancelled'],
+                    'Confirmed': ['Preparing', 'Cancelled'],
+                    'Preparing': ['Shipped', 'Cancelled'],
+                    'Shipped': ['Out for Delivery', 'Cancelled'],
+                    'Out for Delivery': ['Delivered', 'Cancelled'],
+                    'Delivered': [],
+                    'Cancelled': []
+                };
+                const allowed = validTransitions[order.status] || [];
+                if (!allowed.includes(newStatus)) {
+                    showToast(`Cannot change status from ${order.status} to ${newStatus}.`, 'error');
                     return;
                 }
 
@@ -512,7 +579,7 @@ function updateStatusTracker(currentStatus, steps) {
 }
 
 function stepIcon(status) {
-    const icons = { 'Pending': 'schedule', 'Confirmed': 'thumb_up', 'Preparing': 'chef_hat', 'Out for Delivery': 'local_shipping', 'Delivered': 'check_circle', 'Cancelled': 'cancel' };
+    const icons = { 'Pending': 'schedule', 'Confirmed': 'thumb_up', 'Preparing': 'chef_hat', 'Shipped': 'local_shipping', 'Out for Delivery': 'local_shipping', 'Delivered': 'check_circle', 'Cancelled': 'cancel' };
     return icons[status] || 'circle';
 }
 
@@ -814,6 +881,7 @@ async function initAddProduct() {
             }
             if (res.ok) {
                 showToast(editId ? 'Product updated!' : 'Product added!', 'success');
+                localStorage.setItem('adminProductsRefresh', Date.now());
                 setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 1200);
             } else {
                 const data = await res.json();
@@ -836,6 +904,7 @@ async function initAddProduct() {
                 const res = await adminFetch(`/api/admin/products/${editId}`, { method: 'DELETE' });
                 if (res.ok) {
                     showToast('Product deleted.', 'success');
+                    localStorage.setItem('adminProductsRefresh', Date.now());
                     setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 1200);
                 } else {
                     showToast('Failed to delete product.', 'error');
@@ -875,6 +944,27 @@ function addFlavorTag(flavor) {
 
 function openEditProduct(productId) {
     window.location.href = `/admin-add-product.html?edit=${productId}`;
+}
+
+function openDeleteProduct(productId) {
+    if (!confirm('Are you sure you want to delete this product? This cannot be undone.')) return;
+    const btn = event.target;
+    if (btn) { btn.disabled = true; btn.textContent = 'Deleting...'; }
+    adminFetch(`/api/admin/products/${productId}`, { method: 'DELETE' })
+        .then(res => {
+            if (res.ok) {
+                showToast('Product deleted.', 'success');
+                loadAdminProducts();
+            } else {
+                showToast('Failed to delete product.', 'error');
+            }
+        })
+        .catch(() => {
+            showToast('Failed to delete product.', 'error');
+        })
+        .finally(() => {
+            if (btn) { btn.disabled = false; btn.textContent = 'Delete'; }
+        });
 }
 
 /* ─────────────────────────────────────────
@@ -939,7 +1029,7 @@ async function initCustomers() {
                         <div class="text-[11px] uppercase text-outline tracking-wide">Orders</div>
                     </div>
                     <div class="bg-surface-container-low p-3 rounded-lg text-center">
-                        <div class="text-lg font-bold text-secondary">$${spent.toFixed(2)}</div>
+                        <div class="text-lg font-bold text-secondary">${window.App.formatPrice(spent)}</div>
                         <div class="text-[11px] uppercase text-outline tracking-wide">Spent</div>
                     </div>
                 </div>
@@ -1037,6 +1127,7 @@ function statusBadge(status) {
         'Pending': 'bg-amber-100 text-amber-800 border-amber-200',
         'Confirmed': 'bg-blue-100 text-blue-800 border-blue-200',
         'Preparing': 'bg-orange-100 text-orange-800 border-orange-200',
+        'Shipped': 'bg-indigo-100 text-indigo-800 border-indigo-200',
         'Out for Delivery': 'bg-purple-100 text-purple-800 border-purple-200',
         'Delivered': 'bg-green-100 text-green-800 border-green-200',
         'Cancelled': 'bg-red-100 text-red-800 border-red-200',
@@ -1067,7 +1158,7 @@ function timeAgo(ts) {
     return new Date(ts).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-function animateCounter(id, target, prefix = '') {
+function animateCounter(id, target, prefix = '', locale = 'en-IN') {
     const el = document.getElementById(id);
     if (!el) return;
     const duration = 1000;
@@ -1075,9 +1166,9 @@ function animateCounter(id, target, prefix = '') {
     function step(now) {
         const p = Math.min((now - start) / duration, 1);
         const val = Math.floor(p * target);
-        el.textContent = prefix + val.toLocaleString();
+        el.textContent = prefix + val.toLocaleString(locale);
         if (p < 1) requestAnimationFrame(step);
-        else el.textContent = prefix + target.toLocaleString();
+        else el.textContent = prefix + target.toLocaleString(locale);
     }
     requestAnimationFrame(step);
 }

@@ -87,6 +87,13 @@ window.App = {
   toastWarning(message, opts) { this._queueToast('warning', message, opts); },
   toastInfo(message, opts)    { this._queueToast('info', message, opts); },
 
+  // Format price in Indian Rupees with Indian number grouping
+  formatPrice(amount) {
+    const num = parseFloat(amount);
+    if (Number.isNaN(num)) return '₹0.00';
+    return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  },
+
   // Helper for HTTP requests
   async fetchAPI(url, options = {}) {
     const defaultHeaders = { 'Content-Type': 'application/json' };

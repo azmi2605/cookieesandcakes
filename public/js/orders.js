@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let pulseClass = 'bg-outline';
           if (order.status === 'Pending') {
             statusClass = 'bg-surface-container-high text-primary';
-          } else if (order.status === 'Approved' || order.status === 'Preparing') {
+          } else if (order.status === 'Approved' || order.status === 'Confirmed' || order.status === 'Preparing' || order.status === 'Shipped') {
             statusClass = 'bg-primary-container text-on-primary-container';
             pulseClass = 'bg-primary animate-pulse';
           } else if (order.status === 'Out for Delivery') {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
             <div class="mt-md md:mt-0 text-right flex items-center justify-between md:justify-end gap-md">
-              <p class="font-headline-md text-primary">$${order.total.toFixed(2)}</p>
+              <p class="font-headline-md text-primary">${window.App.formatPrice(order.total)}</p>
               <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
             </div>
           `;
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const order = await window.App.fetchAPI(`/api/orders/${id}`);
         
         // 1. Update Order Header Info
-        const headerP = document.querySelector('main section.mb-xl p');
+        const headerP = document.getElementById('track-order-header');
         if (headerP) {
           const dateStr = new Date(order.createdAt).toLocaleDateString('en-US', {
             month: 'short',
@@ -122,41 +122,86 @@ document.addEventListener('DOMContentLoaded', () => {
           headerP.textContent = `Order #${order.id.substring(1, 8).toUpperCase()} • Placed on ${dateStr}`;
         }
 
-        // 2. Update Status text and delivery date
-        const statusH2 = document.querySelector('h2.font-headline-md');
+        // 2. Update Status text
+        const statusH2 = document.getElementById('track-status');
         if (statusH2) {
           statusH2.textContent = order.status;
         }
 
-        const dateP = document.querySelector('p.font-headline-md.text-primary');
-        if (dateP && order.deliveryDate) {
-          const delivDate = new Date(order.deliveryDate + 'T00:00:00');
-          dateP.textContent = delivDate.toLocaleDateString('en-US', {
-            weekday: 'long',
-            month: 'short',
-            day: 'numeric'
-          });
+        // 3. Update ETA or delivered details
+        const etaLabel = document.getElementById('eta-label');
+        const etaDate = document.getElementById('eta-date');
+        const etaTime = document.getElementById('eta-time');
+
+        if (order.status === 'Delivered') {
+          if (etaLabel) etaLabel.textContent = 'Delivered on';
+          if (etaDate) {
+            const delivDate = order.deliveryDate ? new Date(order.deliveryDate + 'T00:00:00') : new Date(order.createdAt);
+            etaDate.textContent = delivDate.toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'short',
+              day: 'numeric'
+            });
+          }
+          if (etaTime) {
+            if (order.deliveredAt) {
+              const delivTime = new Date(order.deliveredAt);
+              etaTime.textContent = 'at ' + delivTime.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit'
+              });
+            } else {
+              etaTime.textContent = '';
+            }
+          }
+        } else if (order.status === 'Cancelled') {
+          if (etaLabel) etaLabel.textContent = 'Status';
+          if (etaDate) etaDate.textContent = 'Cancelled';
+          if (etaTime) etaTime.textContent = '';
+        } else {
+          if (etaLabel) etaLabel.textContent = 'Estimated Arrival';
+          if (etaDate && order.deliveryDate) {
+            const delivDate = new Date(order.deliveryDate + 'T00:00:00');
+            etaDate.textContent = delivDate.toLocaleDateString('en-US', {
+              weekday: 'long',
+              month: 'short',
+              day: 'numeric'
+            });
+          } else if (etaDate) {
+            etaDate.textContent = 'Calculating...';
+          }
+          if (etaTime) etaTime.textContent = 'by 4:00 PM';
         }
 
-        // 3. Update Visual Status Steps Timeline
+        // 4. Update Visual Status Steps Timeline and Map
         updateTimelineSteps(order.status);
 
-        // 4. Render items in box
+        // 5. Render items in box
         renderItemsBox(order.items);
 
-        // 5. Update Carrier/Tracking Number
-        const trackCode = document.querySelector('code');
+        // 6. Update Carrier/Tracking Number
+        const trackCarrier = document.getElementById('track-carrier');
+        const trackCode = document.getElementById('track-code');
+        if (trackCarrier) {
+          trackCarrier.textContent = order.carrier || 'Sweet Delivery Express';
+        }
         if (trackCode) {
-          trackCode.textContent = `SWEET${id.substring(1, 8).toUpperCase()}`;
+          trackCode.textContent = order.trackingNumber || `SWEET${id.substring(1, 8).toUpperCase()}`;
         }
 
-        // 6. Setup rate traits link
-        const detailBtn = document.querySelector('main button.bg-primary');
-        if (detailBtn) {
-          detailBtn.textContent = "Rate Purchased Treats";
-          detailBtn.addEventListener('click', () => {
+        // 7. Setup rate treats button
+        const rateBtn = document.getElementById('rate-treats-btn');
+        if (rateBtn) {
+          if (order.status === 'Delivered') {
+            rateBtn.disabled = false;
+            rateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+          } else {
+            rateBtn.disabled = true;
+            rateBtn.classList.add('opacity-50', 'cursor-not-allowed');
+          }
+          rateBtn.onclick = () => {
             window.location.href = `/rate-treats.html?orderId=${id}`;
-          });
+          };
         }
 
       } catch (err) {
@@ -165,95 +210,106 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateTimelineSteps(status) {
-      const steps = document.querySelectorAll('.flex.flex-col.md\\:flex-row.justify-between.relative.z-10 > div');
-      const progressLine = document.querySelector('.absolute.top-1\\/2.left-0.h-\\[3px\\].bg-secondary');
+      const steps = document.querySelectorAll('[data-step]');
+      const progressFill = document.getElementById('progress-fill');
+      const statusBadge = document.getElementById('status-badge');
       
-      // Status hierarchy maps to timeline indexes (0-4)
       const statusMap = {
         'Pending': 0,
         'Approved': 1,
         'Confirmed': 1,
-        'Preparing': 2,
+        'Preparing': 1,
+        'Shipped': 2,
         'Out for Delivery': 3,
         'Completed': 4,
         'Delivered': 4,
-        'Cancelled': 0
+        'Cancelled': -1
       };
 
       const activeIndex = statusMap[status] !== undefined ? statusMap[status] : 0;
 
-      // Update progress line length
-      if (progressLine) {
+      if (progressFill) {
         const widths = ['0%', '25%', '50%', '75%', '100%'];
-        progressLine.style.width = widths[activeIndex];
-      }
-
-      // Update truck position on dynamic map based on status
-      const truck = document.getElementById('delivery-truck');
-      const locationText = document.querySelector('.map-container + div + div + div p:last-child');
-
-      if (truck) {
-        if (activeIndex === 0) {
-          truck.style.left = '10%';
-          truck.style.bottom = '15%';
-          if (locationText) locationText.textContent = "Awaiting checkout confirmation";
-        } else if (activeIndex === 1) {
-          truck.style.left = '25%';
-          truck.style.bottom = '25%';
-          if (locationText) locationText.textContent = "Order approved by baking team";
-        } else if (activeIndex === 2) {
-          truck.style.left = '45%';
-          truck.style.bottom = '40%';
-          if (locationText) locationText.textContent = "Treats are in the oven";
-        } else if (activeIndex === 3) {
-          truck.style.left = '70%';
-          truck.style.bottom = '30%';
-          if (locationText) locationText.textContent = "Out for delivery with Sweet Courier";
+        if (activeIndex >= 0 && activeIndex < widths.length) {
+          progressFill.style.width = widths[activeIndex];
         } else {
-          truck.style.left = '85%';
-          truck.style.bottom = '20%';
-          if (locationText) locationText.textContent = "Delivered warm and sweet!";
+          progressFill.style.width = '0%';
         }
       }
 
-      steps.forEach((step, idx) => {
-        const circle = step.querySelector('div');
-        const text = step.querySelector('span');
+      if (statusBadge) {
+        if (status === 'Delivered') {
+          statusBadge.textContent = 'Delivered';
+          statusBadge.className = 'px-3 py-1 rounded-full text-label-sm font-bold bg-green-100 text-green-800 whitespace-nowrap';
+        } else if (status === 'Out for Delivery') {
+          statusBadge.textContent = 'Out for Delivery';
+          statusBadge.className = 'px-3 py-1 rounded-full text-label-sm font-bold bg-secondary-fixed text-on-secondary-fixed-variant whitespace-nowrap';
+        } else if (status === 'Cancelled') {
+          statusBadge.textContent = 'Cancelled';
+          statusBadge.className = 'px-3 py-1 rounded-full text-label-sm font-bold bg-error-container text-on-error-container whitespace-nowrap';
+        } else if (status === 'Shipped') {
+          statusBadge.textContent = 'Shipped';
+          statusBadge.className = 'px-3 py-1 rounded-full text-label-sm font-bold bg-primary-container text-on-primary-container whitespace-nowrap';
+        } else {
+          statusBadge.textContent = status;
+          statusBadge.className = 'px-3 py-1 rounded-full text-label-sm font-bold bg-surface-container-high text-primary whitespace-nowrap';
+        }
+      }
 
-        if (idx < activeIndex) {
-          // Completed steps
+      if (typeof window.updateMapForStatus === 'function') {
+        window.updateMapForStatus(status);
+      }
+
+      steps.forEach((step, idx) => {
+        const circle = step.querySelector('.step-circle');
+        const label = step.querySelector('.step-label');
+
+        if (status === 'Cancelled') {
           step.classList.remove('opacity-40');
-          circle.className = "w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center";
-          if (text) text.className = "font-label-md text-label-md text-primary";
+          if (circle) {
+            circle.className = "step-circle w-10 h-10 rounded-full bg-error text-white flex items-center justify-center";
+          }
+          if (label) {
+            label.className = "step-label font-label-sm md:text-label-md text-on-error-container whitespace-nowrap font-bold";
+          }
+        } else if (idx < activeIndex) {
+          step.classList.remove('opacity-40');
+          if (circle) {
+            circle.className = "step-circle w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center";
+          }
+          if (label) {
+            label.className = "step-label font-label-sm md:text-label-md text-primary whitespace-nowrap";
+          }
         } else if (idx === activeIndex) {
-          // Current step
           step.classList.remove('opacity-40');
-          circle.className = "w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center ring-4 ring-secondary-container/30";
-          if (text) text.className = "font-label-md text-label-md text-secondary font-bold";
-          // If declined, update text to declined
-          if (status === 'Declined' && text) {
-            text.textContent = 'Declined';
-            circle.className = "w-10 h-10 rounded-full bg-error text-white flex items-center justify-center";
+          if (circle) {
+            circle.className = "step-circle w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center ring-4 ring-secondary-container/30";
+          }
+          if (label) {
+            label.className = "step-label font-label-sm md:text-label-md text-secondary font-bold whitespace-nowrap";
           }
         } else {
-          // Inactive steps
           step.classList.add('opacity-40');
-          circle.className = "w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center";
-          if (text) text.className = "font-label-md text-label-md text-on-surface-variant";
+          if (circle) {
+            circle.className = "step-circle w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center";
+          }
+          if (label) {
+            label.className = "step-label font-label-sm md:text-label-md text-on-surface-variant whitespace-nowrap";
+          }
         }
       });
     }
 
     function renderItemsBox(items) {
-      const itemsContainer = document.querySelector('main div.lg\\:col-span-4 section:nth-of-type(2) div.space-y-md');
-      const countLabel = document.querySelector('main div.lg\\:col-span-4 section:nth-of-type(2) div.mt-md span');
+      const itemsContainer = document.getElementById('order-items-list');
+      const countLabel = document.getElementById('items-count');
       
-      if (!itemsContainer) return;
+      if (!itemsContainer || !items) return;
 
       const keys = Object.keys(items);
       if (countLabel) {
-        const totalItems = keys.reduce((sum, k) => sum + items[k].quantity, 0);
-        countLabel.textContent = `${totalItems} Item${totalItems > 1 ? 's' : ''}`;
+        const totalItems = keys.reduce((sum, k) => sum + (items[k].quantity || 0), 0);
+        countLabel.textContent = `${totalItems} Item${totalItems !== 1 ? 's' : ''}`;
       }
 
       itemsContainer.innerHTML = '';
@@ -263,11 +319,11 @@ document.addEventListener('DOMContentLoaded', () => {
         itemRow.className = 'flex items-center gap-md';
         itemRow.innerHTML = `
           <div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-surface-container">
-            <img class="w-full h-full object-cover" src="${item.image}" alt="${item.name}"/>
+            <img class="w-full h-full object-cover" src="${item.image || ''}" alt="${item.name || 'Item'}"/>
           </div>
           <div class="flex-1">
-            <p class="font-body-md text-body-md text-primary font-medium">${item.name}</p>
-            <p class="font-label-sm text-label-sm text-on-surface-variant">Qty: ${item.quantity} • ${item.unit || 'Treat'}</p>
+            <p class="font-body-md text-body-md text-primary font-medium">${item.name || 'Unknown Item'}</p>
+            <p class="font-label-sm text-label-sm text-on-surface-variant">Qty: ${item.quantity || 0} • ${item.unit || 'Treat'}</p>
           </div>
         `;
         itemsContainer.appendChild(itemRow);

@@ -758,13 +758,19 @@ app.post('/api/orders', requireUser, async (req, res) => {
       specialInstructions: specialInstructions || '',
       items,
       total: parseFloat(total) || 0.0,
-      status: 'Pending', // Pending, Approved, Preparing, Out for Delivery, Completed, Declined
+      status: 'Pending', // Pending, Approved, Confirmed, Preparing, Shipped, Out for Delivery, Delivered, Cancelled
       createdAt: Date.now()
     };
 
     // Save order in Firebase (Firebase generates unique ID with POST to a list)
     const result = await firebaseRequest('/orders', 'POST', newOrder);
     const orderId = result.name; // Firebase returns key in 'name'
+
+    // Attach tracking metadata
+    const createdOrder = await firebaseRequest(`/orders/${orderId}`);
+    createdOrder.carrier = 'Sweet Delivery Express';
+    createdOrder.trackingNumber = `SWEET${orderId.substring(1, 8).toUpperCase()}`;
+    await firebaseRequest(`/orders/${orderId}`, 'PUT', createdOrder);
 
     // Clear cart
     await firebaseRequest(`/carts/${userId}`, 'PUT', {});
@@ -1076,8 +1082,31 @@ app.post('/api/admin/orders/:id/status', requireAdmin, async (req, res) => {
   try {
     const order = await firebaseRequest(`/orders/${orderId}`);
     if (!order) return res.status(404).json({ error: 'Order not found' });
-    
+
+    const validStatuses = ['Pending', 'Confirmed', 'Preparing', 'Shipped', 'Out for Delivery', 'Delivered', 'Cancelled'];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ error: 'Invalid status value.' });
+    }
+
+    const validTransitions = {
+      'Pending': ['Confirmed', 'Cancelled'],
+      'Confirmed': ['Preparing', 'Cancelled'],
+      'Preparing': ['Shipped', 'Cancelled'],
+      'Shipped': ['Out for Delivery', 'Cancelled'],
+      'Out for Delivery': ['Delivered', 'Cancelled'],
+      'Delivered': [],
+      'Cancelled': []
+    };
+
+    const allowed = validTransitions[order.status] || [];
+    if (!allowed.includes(status)) {
+      return res.status(400).json({ error: `Cannot transition from ${order.status} to ${status}.` });
+    }
+
     order.status = status;
+    if (status === 'Delivered') {
+      order.deliveredAt = Date.now();
+    }
     await firebaseRequest(`/orders/${orderId}`, 'PUT', order);
     res.json({ message: 'Order status updated', order });
   } catch (err) {
@@ -1161,6 +1190,10 @@ app.post('/api/admin/products', requireAdmin, async (req, res) => {
   const { id, name, category, price, unit, description, image, tags, badge, stock, sku, availability, ingredients, flavorProfile, pairsWith, status, featured, topRated, recommended, active } = req.body;
   if (!id || !name) return res.status(400).json({ error: 'ID and Name are required' });
   try {
+    const existing = await firebaseRequest(`/products/${id}`);
+    if (existing) {
+      return res.status(409).json({ error: 'A product with this ID already exists. Please use a different name or ID.' });
+    }
     const product = {
       id, name, category, price: parseFloat(price), unit, description,
       image: image || '',

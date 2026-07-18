@@ -305,9 +305,15 @@
                                 <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-on-surface-variant flex items-center justify-center ring-4 ring-surface">
                                     <span class="material-symbols-outlined text-sm">local_shipping</span>
                                 </div>
-                                <span class="step-label font-label-sm text-on-surface-variant">Out for Delivery</span>
+                                <span class="step-label font-label-sm text-on-surface-variant">Shipped</span>
                             </div>
                             <div class="flex flex-col items-center gap-2 z-10" data-step="4">
+                                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-on-surface-variant flex items-center justify-center ring-4 ring-surface">
+                                    <span class="material-symbols-outlined text-sm">local_shipping</span>
+                                </div>
+                                <span class="step-label font-label-sm text-on-surface-variant">Out for Delivery</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-2 z-10" data-step="5">
                                 <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-on-surface-variant flex items-center justify-center ring-4 ring-surface">
                                     <span class="material-symbols-outlined text-sm">check_circle</span>
                                 </div>
@@ -327,6 +333,7 @@
                                 <option value="Pending">Pending</option>
                                 <option value="Confirmed">Confirmed</option>
                                 <option value="Preparing">Preparing</option>
+                                <option value="Shipped">Shipped</option>
                                 <option value="Out for Delivery">Out for Delivery</option>
                                 <option value="Delivered">Delivered</option>
                                 <option value="Cancelled">Cancelled</option>
@@ -425,7 +432,7 @@
                         </div>
                         <div class="pt-4 border-t border-on-primary/20 flex justify-between items-end">
                             <span class="font-headline-md font-bold">Total</span>
-                            <span class="text-3xl font-display-lg" id="order-total">$85.00</span>
+                            <span class="text-3xl font-display-lg" id="order-total">₹85.00</span>
                         </div>
                         <div
                             class="mt-md p-3 bg-on-primary/5 rounded-lg border border-on-primary/10 flex items-center gap-3">
@@ -483,7 +490,7 @@
                                     <span class="font-body-md text-on-surface">12</span>
                                 </td>
                                 <td class="px-md py-4">
-                                    <span class="font-body-md text-on-surface">$4.50</span>
+                                    <span class="font-body-md text-on-surface">₹4.50</span>
                                 </td>
                                 <td class="px-md py-4">
                                     <div class="flex items-center gap-2 text-secondary font-body-md italic">
@@ -492,7 +499,7 @@
                                     </div>
                                 </td>
                                 <td class="px-md py-4 text-right">
-                                    <span class="font-body-lg font-bold text-primary">$54.00</span>
+                                    <span class="font-body-lg font-bold text-primary">₹54.00</span>
                                 </td>
                             </tr>
                             <!-- Item 2 -->
@@ -515,13 +522,13 @@
                                     <span class="font-body-md text-on-surface">2</span>
                                 </td>
                                 <td class="px-md py-4">
-                                    <span class="font-body-md text-on-surface">$8.00</span>
+                                    <span class="font-body-md text-on-surface">₹8.00</span>
                                 </td>
                                 <td class="px-md py-4">
                                     <span class="text-on-surface-variant font-body-md opacity-40">None</span>
                                 </td>
                                 <td class="px-md py-4 text-right">
-                                    <span class="font-body-lg font-bold text-primary">$16.00</span>
+                                    <span class="font-body-lg font-bold text-primary">₹16.00</span>
                                 </td>
                             </tr>
                             <!-- Item 3 -->
@@ -544,7 +551,7 @@
                                     <span class="font-body-md text-on-surface">1</span>
                                 </td>
                                 <td class="px-md py-4">
-                                    <span class="font-body-md text-on-surface">$12.00</span>
+                                    <span class="font-body-md text-on-surface">₹12.00</span>
                                 </td>
                                 <td class="px-md py-4">
                                     <div class="flex items-center gap-2 text-secondary font-body-md italic">
@@ -553,7 +560,7 @@
                                     </div>
                                 </td>
                                 <td class="px-md py-4 text-right">
-                                    <span class="font-body-lg font-bold text-primary">$12.00</span>
+                                    <span class="font-body-lg font-bold text-primary">₹12.00</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -586,6 +593,7 @@
     <script>
         window.API_BASE_URL = window.API_BASE_URL || '';
     </script>
+    <script src="/js/app.js"></script>
     <script src="/js/admin.js"></script>
 </body>
 

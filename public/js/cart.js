@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
               </div>
               <div class="text-right">
-                <span class="font-label-md text-label-md text-primary">$${itemTotal.toFixed(2)}</span>
+                <span class="font-label-md text-label-md text-primary">${window.App.formatPrice(itemTotal)}</span>
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateSummary(sub) {
-    const shipping = sub > 40 || sub === 0 ? 0 : shippingCost; // Free shipping over $40 promo
+    const shipping = sub > 40 || sub === 0 ? 0 : shippingCost; // Free shipping over ₹40 promo
     const tax = sub * taxRate;
     const total = sub === 0 ? 0 : sub + shipping + tax;
 
@@ -164,20 +164,20 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="space-y-sm mb-lg pb-lg border-b border-outline-variant/40">
           <div class="flex justify-between text-on-surface-variant">
             <span class="font-body-md">Subtotal</span>
-            <span class="font-label-md">$${sub.toFixed(2)}</span>
+            <span class="font-label-md">${window.App.formatPrice(sub)}</span>
           </div>
           <div class="flex justify-between text-on-surface-variant">
             <span class="font-body-md">Estimated Shipping</span>
-            <span class="font-label-md">${shipping === 0 ? 'Free' : '$' + shipping.toFixed(2)}</span>
+            <span class="font-label-md">${shipping === 0 ? 'Free' : window.App.formatPrice(shipping)}</span>
           </div>
           <div class="flex justify-between text-on-surface-variant">
             <span class="font-body-md">Estimated Tax (8%)</span>
-            <span class="font-label-md">$${tax.toFixed(2)}</span>
+            <span class="font-label-md">${window.App.formatPrice(tax)}</span>
           </div>
         </div>
         <div class="flex justify-between items-center mb-xl">
           <span class="font-headline-md text-headline-md text-primary">Total</span>
-          <span class="font-headline-md text-headline-md text-primary">$${total.toFixed(2)}</span>
+          <span class="font-headline-md text-headline-md text-primary">${window.App.formatPrice(total)}</span>
         </div>
         <div class="space-y-md">
           ${window.App.user ? `
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
               Back to Bag
             </button>
             <button type="submit" class="flex-1 py-md bg-secondary text-white font-label-md rounded-xl hover:opacity-90 active:scale-95 transition-all butter-shadow">
-              Place Order ($${totalAmount.toFixed(2)})
+              Place Order (${window.App.formatPrice(totalAmount)})
             </button>
           </div>
         </form>

@@ -167,15 +167,15 @@
 
 <body class="font-body-md overflow-x-hidden min-h-screen flex flex-col">
     <div data-include-header="/header/header.html"></div>
-    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-lg flex-grow">
+    <main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop pt-20 pb-lg flex-grow">
     <!-- Header Section -->
     <section class="mb-xl text-center md:text-left">
       <h1 class="font-headline-xl text-headline-xl md:text-headline-xl text-primary mb-xs">Track Your Treats</h1>
-      <p class="font-body-lg text-body-lg text-on-surface-variant opacity-80">Order #CS-9402 • Placed on Oct 12, 2024
+      <p class="font-body-lg text-body-lg text-on-surface-variant opacity-80" id="track-order-header">Order #CS-9402 • Placed on Oct 12, 2024
       </p>
     </section>
     <!-- Main Tracking Content (Bento Style Layout) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-md">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-md items-stretch">
       <!-- Tracking Status Card (Left Column) -->
       <div class="lg:col-span-8 flex flex-col gap-md">
         <!-- Timeline Section -->
@@ -183,63 +183,73 @@
           <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-lg">
             <div>
               <span class="font-label-md text-label-md text-secondary uppercase tracking-widest">Status</span>
-              <h2 class="font-headline-md text-headline-md text-primary">Out for Delivery</h2>
+              <div class="flex items-center gap-sm mt-xs">
+                <h2 class="font-headline-md text-headline-md text-primary" id="track-status">Out for Delivery</h2>
+                <span id="status-badge" class="hidden px-3 py-1 rounded-full text-label-sm font-bold bg-secondary-container text-on-secondary-container"></span>
+              </div>
             </div>
             <div class="mt-sm md:mt-0 text-left md:text-right">
-              <p class="font-label-sm text-label-sm text-on-surface-variant">Estimated Arrival</p>
-              <p class="font-headline-md text-headline-md text-primary">Thursday, Oct 17th</p>
-              <p class="font-body-md text-body-md text-on-surface-variant">by 4:00 PM</p>
+              <p class="font-label-sm text-label-sm text-on-surface-variant" id="eta-label">Estimated Arrival</p>
+              <p class="font-headline-md text-headline-md text-primary" id="eta-date">Thursday, Oct 17th</p>
+              <p class="font-body-md text-body-md text-on-surface-variant" id="eta-time">by 4:00 PM</p>
             </div>
           </div>
           <!-- Visual Progress Timeline -->
           <div class="relative py-base">
-            <div class="absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant -translate-y-1/2 hidden md:block">
-            </div>
-            <div class="absolute top-1/2 left-0 w-[80%] h-[3px] bg-secondary -translate-y-1/2 hidden md:block"></div>
-            <div class="flex flex-col md:flex-row justify-between relative z-10 gap-md md:gap-0">
+            <div class="absolute top-7 left-0 w-full h-[3px] bg-outline-variant hidden md:block"></div>
+            <div id="progress-fill" class="absolute top-7 left-0 h-[3px] bg-primary hidden md:block transition-all duration-500" style="width: 0%"></div>
+            <div class="flex flex-col md:flex-row justify-between relative z-10 gap-3 md:gap-0">
               <!-- Step 1: Placed -->
-              <div class="flex md:flex-col items-center gap-md md:gap-xs text-center">
-                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+              <div class="flex md:flex-col items-center gap-2 md:gap-xs text-center md:flex-shrink-0" data-step="0">
+                <div class="step-circle w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
                   <span class="material-symbols-outlined text-[20px]" data-icon="receipt_long">receipt_long</span>
                 </div>
-                <span class="font-label-md text-label-md text-primary">Order Placed</span>
+                <span class="step-label font-label-sm md:text-label-md text-primary whitespace-nowrap">Order Placed</span>
               </div>
               <!-- Step 2: Prepared -->
-              <div class="flex md:flex-col items-center gap-md md:gap-xs text-center">
-                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+              <div class="flex md:flex-col items-center gap-2 md:gap-xs text-center md:flex-shrink-0" data-step="1">
+                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center">
                   <span class="material-symbols-outlined text-[20px]" data-icon="skillet">skillet</span>
                 </div>
-                <span class="font-label-md text-label-md text-primary">Prepared</span>
+                <span class="step-label font-label-sm md:text-label-md text-on-surface-variant whitespace-nowrap">Prepared</span>
               </div>
               <!-- Step 3: Shipped -->
-              <div class="flex md:flex-col items-center gap-md md:gap-xs text-center">
-                <div class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+              <div class="flex md:flex-col items-center gap-2 md:gap-xs text-center md:flex-shrink-0" data-step="2">
+                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center">
                   <span class="material-symbols-outlined text-[20px]" data-icon="package_2">package_2</span>
                 </div>
-                <span class="font-label-md text-label-md text-primary">Shipped</span>
+                <span class="step-label font-label-sm md:text-label-md text-on-surface-variant whitespace-nowrap">Shipped</span>
               </div>
               <!-- Step 4: Out for Delivery -->
-              <div class="flex md:flex-col items-center gap-md md:gap-xs text-center">
+              <div
+                class="flex md:flex-col items-center gap-2 md:gap-xs text-center md:flex-shrink-0" data-step="3">
                 <div
-                  class="w-10 h-10 rounded-full bg-secondary text-white flex items-center justify-center ring-4 ring-secondary-container/30 animate-pulse-slow">
+                  class="step-circle w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center">
                   <span class="material-symbols-outlined text-[20px]" data-icon="local_shipping">local_shipping</span>
                 </div>
-                <span class="font-label-md text-label-md text-secondary font-bold">Out for Delivery</span>
+                <span class="step-label font-label-sm md:text-label-md text-on-surface-variant whitespace-nowrap">Out for Delivery</span>
               </div>
               <!-- Step 5: Delivered -->
-              <div class="flex md:flex-col items-center gap-md md:gap-xs text-center opacity-40">
-                <div class="w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center">
+              <div class="flex md:flex-col items-center gap-2 md:gap-xs text-center md:flex-shrink-0 opacity-40" data-step="4">
+                <div class="step-circle w-10 h-10 rounded-full bg-outline-variant text-white flex items-center justify-center">
                   <span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
                 </div>
-                <span class="font-label-md text-label-md text-on-surface-variant">Delivered</span>
+                <span class="step-label font-label-sm md:text-label-md text-on-surface-variant whitespace-nowrap">Delivered</span>
               </div>
             </div>
           </div>
         </div>
         <!-- Live Map Section -->
         <div
-          class="bg-surface-container rounded-xl overflow-hidden butter-shadow h-[400px] relative border border-outline-variant/30">
+          id="delivery-map"
+          class="bg-surface-container rounded-xl overflow-hidden butter-shadow relative border border-outline-variant/30 h-[400px]">
           <div class="absolute inset-0 map-container flex items-center justify-center opacity-40"></div>
+          <div id="delivered-overlay" class="absolute inset-0 bg-surface-container/90 flex items-center justify-center z-20 hidden">
+            <div class="text-center">
+              <span class="material-symbols-outlined text-6xl text-secondary mb-2">check_circle</span>
+              <p class="font-headline-md text-primary">Delivered</p>
+            </div>
+          </div>
           <!-- Stylized Map UI -->
           <div class="absolute inset-0 p-lg pointer-events-none">
             <!-- House Icon (Destination) -->
@@ -262,15 +272,17 @@
                 <span class="material-symbols-outlined text-white" data-icon="local_shipping">local_shipping</span>
               </div>
               <div
+                id="on-the-way-badge"
                 class="bg-secondary text-white px-base py-xs rounded-full text-[10px] mt-xs font-label-md uppercase tracking-tight">
                 On the way</div>
             </div>
           </div>
           <div
+            id="location-card"
             class="absolute bottom-md left-md bg-white/90 backdrop-blur-md p-md rounded-lg butter-shadow max-w-[250px]">
             <p class="font-label-sm text-label-sm text-on-surface-variant">Current Location</p>
-            <p class="font-body-md text-body-md text-primary font-bold">Passing through Maple Street Bakery Hub</p>
-            <p class="font-label-sm text-label-sm text-on-surface-variant mt-xs italic">3.2 miles away</p>
+            <p class="font-body-md text-body-md text-primary font-bold" id="location-text">Passing through Maple Street Bakery Hub</p>
+            <p class="font-label-sm text-label-sm text-on-surface-variant mt-xs italic" id="location-distance">3.2 miles away</p>
           </div>
         </div>
       </div>
@@ -287,16 +299,16 @@
                   <span class="material-symbols-outlined text-secondary text-[20px]"
                     data-icon="delivery_dining">delivery_dining</span>
                 </div>
-                <p class="font-body-md text-body-md text-primary font-medium">Sweet Delivery Express</p>
+                <p class="font-body-md text-body-md text-primary font-medium" id="track-carrier">Sweet Delivery Express</p>
               </div>
             </div>
             <div>
               <p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">Tracking Number</p>
               <div
                 class="flex items-center justify-between bg-surface-container-lowest p-sm rounded-lg border border-outline-variant">
-                <code class="font-mono text-primary text-body-md">SWEET7739210</code>
+                <code class="font-mono text-primary text-body-md" id="track-code">SWEET7739210</code>
                 <button class="hover:bg-surface-container-high p-xs rounded-full transition-colors group"
-                  title="Copy to clipboard">
+                  title="Copy to clipboard" id="copy-tracking-btn">
                   <span class="material-symbols-outlined text-on-surface-variant group-active:text-secondary"
                     data-icon="content_copy">content_copy</span>
                 </button>
@@ -304,14 +316,16 @@
             </div>
           </div>
           <button
-            class="w-full mt-lg py-md px-lg bg-primary text-white rounded-lg font-label-md uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all duration-200">
-            View Detailed Log
+            id="rate-treats-btn"
+            class="w-full mt-lg py-md px-lg bg-primary text-white rounded-lg font-label-md uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled>
+            Rate Purchased Treats
           </button>
         </div>
         <!-- Order Summary Snippet -->
         <div class="bg-surface-container-low p-md rounded-xl butter-shadow border border-outline-variant/20">
           <h3 class="font-headline-md text-headline-md text-primary mb-md">In This Box</h3>
-          <div class="space-y-md">
+          <div class="space-y-md" id="order-items-list">
             <!-- Item 1 -->
             <div class="flex items-center gap-md">
               <div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
@@ -338,13 +352,13 @@
             </div>
           </div>
           <div class="mt-md pt-md border-t border-outline-variant/40 flex justify-between items-center">
-            <span class="font-body-md text-body-md text-on-surface-variant">2 Items</span>
+            <span class="font-body-md text-body-md text-on-surface-variant" id="items-count">2 Items</span>
             <a class="font-label-md text-label-md text-secondary hover:underline underline-offset-4" href="#">Full Order
               Details</a>
           </div>
         </div>
         <!-- Support Card -->
-        <div class="bg-primary text-white p-md rounded-xl butter-shadow">
+        <div class="bg-primary text-white p-md rounded-xl butter-shadow mt-auto">
           <div class="flex gap-md">
             <span class="material-symbols-outlined text-[32px] text-primary-fixed"
               data-icon="support_agent">support_agent</span>
@@ -367,19 +381,71 @@
     // Micro-interaction for the map truck icon
     document.addEventListener('DOMContentLoaded', () => {
       const truck = document.getElementById('delivery-truck');
-      let position = 40;
-      let direction = 1;
+      const onTheWayBadge = document.getElementById('on-the-way-badge');
+      const deliveredOverlay = document.getElementById('delivered-overlay');
+      const locationCard = document.getElementById('location-card');
+      let truckInterval = null;
 
-      setInterval(() => {
-        position += (0.5 * direction);
-        if (position > 55 || position < 35) {
-          direction *= -1;
+      function startTruckAnimation() {
+        if (truckInterval) return;
+        let position = 40;
+        let direction = 1;
+        truckInterval = setInterval(() => {
+          position += (0.5 * direction);
+          if (position > 55 || position < 35) {
+            direction *= -1;
+          }
+          truck.style.left = position + '%';
+        }, 3000);
+      }
+
+      function stopTruckAnimation() {
+        if (truckInterval) {
+          clearInterval(truckInterval);
+          truckInterval = null;
         }
-        truck.style.left = position + '%';
-      }, 3000);
+      }
 
-      // Copy to clipboard simulation
-      const copyBtn = document.querySelector('.group');
+      window.updateMapForStatus = function(status) {
+        if (status === 'Out for Delivery') {
+          if (truck) truck.style.display = '';
+          if (onTheWayBadge) onTheWayBadge.style.display = '';
+          if (deliveredOverlay) deliveredOverlay.classList.add('hidden');
+          if (locationCard) locationCard.style.display = '';
+          startTruckAnimation();
+        } else if (status === 'Delivered' || status === 'Cancelled') {
+          stopTruckAnimation();
+          if (truck) truck.style.display = 'none';
+          if (onTheWayBadge) onTheWayBadge.style.display = 'none';
+          if (locationCard) locationCard.style.display = 'none';
+          if (status === 'Delivered') {
+            if (deliveredOverlay) {
+              deliveredOverlay.classList.remove('hidden');
+              const overlayText = deliveredOverlay.querySelector('p');
+              const overlayIcon = deliveredOverlay.querySelector('span');
+              if (overlayText) overlayText.textContent = 'Delivered';
+              if (overlayIcon) overlayIcon.textContent = 'check_circle';
+            }
+          } else if (status === 'Cancelled') {
+            if (deliveredOverlay) {
+              deliveredOverlay.classList.remove('hidden');
+              const overlayText = deliveredOverlay.querySelector('p');
+              const overlayIcon = deliveredOverlay.querySelector('span');
+              if (overlayText) overlayText.textContent = 'Cancelled';
+              if (overlayIcon) overlayIcon.textContent = 'cancel';
+            }
+          }
+        } else {
+          stopTruckAnimation();
+          if (truck) truck.style.display = 'none';
+          if (onTheWayBadge) onTheWayBadge.style.display = 'none';
+          if (deliveredOverlay) deliveredOverlay.classList.add('hidden');
+          if (locationCard) locationCard.style.display = '';
+        }
+      };
+
+      // Copy to clipboard
+      const copyBtn = document.getElementById('copy-tracking-btn');
       if (copyBtn) {
         copyBtn.addEventListener('click', () => {
           const icon = copyBtn.querySelector('.material-symbols-outlined');

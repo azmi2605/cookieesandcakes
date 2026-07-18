@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
           let pulseClass = 'bg-outline';
           if (order.status === 'Pending') {
             statusClass = 'bg-surface-container-high text-primary';
-          } else if (order.status === 'Approved' || order.status === 'Confirmed' || order.status === 'Preparing') {
+          } else if (order.status === 'Approved' || order.status === 'Confirmed' || order.status === 'Preparing' || order.status === 'Shipped') {
             statusClass = 'bg-primary-container text-on-primary-container';
             pulseClass = 'bg-primary animate-pulse';
           } else if (order.status === 'Out for Delivery') {
@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h4 class="font-label-md text-label-md text-primary">${item.name}</h4>
                     <p class="font-body-md text-body-md text-on-surface-variant">Signature Treat</p>
                   </div>
-                  <span class="font-label-md text-label-md text-primary">$${item.price.toFixed(2)}</span>
+                  <span class="font-label-md text-label-md text-primary">${window.App.formatPrice(item.price)}</span>
                 </div>
                 <button class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md active:scale-95 transition-all duration-200 add-to-bag-btn">
                   Add to Bag

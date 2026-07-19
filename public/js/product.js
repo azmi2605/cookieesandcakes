@@ -2,15 +2,18 @@
 document.addEventListener('DOMContentLoaded', async () => {
   const path = window.location.pathname;
 
-  // Extract product ID from URL using regex for flexible routing
+  // Extract product ID from URL for both /product-details.html?id= and /treat-{slug}.html
   const productSlugMatch = path.match(/\/treat-([^\/]+)\.html/);
-  let productId = productSlugMatch ? productSlugMatch[1] : '';
+  const urlParams = new URLSearchParams(window.location.search);
+  const productIdParam = urlParams.get('id');
+  let productId = productSlugMatch ? productSlugMatch[1] : (productIdParam || '');
 
   // --- 1. PRODUCT DETAILS PAGE FLOW ---
   if (productId) {
     const qtyInput = document.querySelector('input[type="number"]');
-    const addToBagBtn = document.querySelector('button:has(.material-symbols-outlined[data-icon="shopping_bag"])') || 
-                          document.querySelector('button.flex-1.bg-secondary');
+    let addToBagBtn = document.querySelector('button:has(.material-symbols-outlined[data-icon="shopping_bag"])') || 
+                      document.querySelector('button.flex-1.bg-secondary');
+    if (!addToBagBtn) addToBagBtn = document.getElementById('add-to-cart-btn');
     const messageInput = document.getElementById('message');
 
     window.increment = () => {
@@ -26,8 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Product navigation with History API support
     window.navigateToProduct = function(targetProductId) {
       if (!targetProductId || targetProductId === productId) return;
-      const targetUrl = `/treat-${targetProductId}.html`;
-      if (window.location.pathname !== targetUrl) {
+      const isDetailsPage = path.includes('product-details.html');
+      const targetUrl = isDetailsPage ? `/product-details.html?id=${targetProductId}` : `/treat-${targetProductId}.html`;
+      if (window.location.pathname + window.location.search !== targetUrl) {
         history.pushState({ productId: targetProductId }, '', targetUrl);
       }
       loadProduct(targetProductId);
@@ -65,7 +69,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           await window.App.updateCartBadge();
 
           if (message) {
-            // Redirect to message-added page to show confirmation
             window.location.href = `/message-added.html?productId=${productId}&message=${encodeURIComponent(message)}`;
           } else {
             window.App.toastSuccess('Added to cart!');
@@ -75,13 +78,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       });
     }
+  } else {
+    const notFoundEl = document.getElementById('product-not-found');
+    if (notFoundEl) notFoundEl.classList.remove('hidden');
+    const productContent = document.getElementById('product-content');
+    if (productContent) productContent.classList.add('hidden');
+    document.title = 'Product Not Found | cookieesandcakes';
+  }
 
     async function loadProduct(prodId) {
       productId = prodId;
       
       // Update URL if needed
-      const expectedUrl = `/treat-${prodId}.html`;
-      if (window.location.pathname !== expectedUrl && !history.state?.productId) {
+      const isDetailsPage = path.includes('product-details.html');
+      const expectedUrl = isDetailsPage ? `/product-details.html?id=${prodId}` : `/treat-${prodId}.html`;
+      const currentUrl = window.location.pathname + window.location.search;
+      if (currentUrl !== expectedUrl && !history.state?.productId) {
         history.replaceState({ productId: prodId }, '', expectedUrl);
       }
 
@@ -95,8 +107,37 @@ document.addEventListener('DOMContentLoaded', async () => {
       const existingStockInfo = document.querySelector('.stock-info');
       if (existingStockInfo) existingStockInfo.remove();
 
+      // Show skeleton overlay while loading
+      const productContent = document.getElementById('product-content');
+      if (productContent && !productContent.querySelector('.skeleton-overlay')) {
+        productContent.style.opacity = '0.3';
+        productContent.style.pointerEvents = 'none';
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'skeleton-overlay';
+        overlay.style.cssText = 'position:absolute;top:0;left:0;right:0;z-index:10;pointer-events:none;';
+        
+        const sk = Skeleton.productDetails();
+        overlay.appendChild(sk);
+        
+        const parent = productContent.parentElement;
+        if (parent) {
+          parent.style.position = parent.style.position || 'relative';
+          parent.appendChild(overlay);
+        }
+      }
+
       // Load product data
       await loadProductData(prodId);
+      
+      // Hide skeleton overlay
+      const overlay = document.querySelector('.skeleton-overlay');
+      if (overlay) overlay.remove();
+      if (productContent) {
+        productContent.style.opacity = '1';
+        productContent.style.pointerEvents = 'auto';
+        productContent.style.transition = 'opacity 0.3s ease';
+      }
       
       // Load and render product reviews
       await loadProductReviews(prodId);
@@ -145,20 +186,34 @@ document.addEventListener('DOMContentLoaded', async () => {
         mainContainer.appendChild(reviewsSection);
       }
 
+      const listContainer = document.getElementById('reviews-list-container');
+      if (listContainer) {
+        Skeleton.show(listContainer, Array.from({length: 4}, () => {
+          const card = document.createElement('div');
+          card.className = 'bg-surface-container-low p-md md:p-lg rounded-xl border border-outline-variant/20 butter-shadow space-y-sm';
+          card.appendChild(Skeleton.avatar({size: '32px'}));
+          card.appendChild(Skeleton.textLine({width: '40%', height: '14px', marginTop: '8px'}));
+          card.appendChild(Skeleton.textLine({width: '100%', height: '12px', marginTop: '8px'}));
+          card.appendChild(Skeleton.textLine({width: '90%', height: '12px'}));
+          return card;
+        }));
+      }
+
       try {
         const reviews = await window.App.fetchAPI(`/api/reviews/${prodId}`);
         const avgStarsDisplay = document.getElementById('average-stars-display');
         const reviewsCountDisplay = document.getElementById('reviews-count-display');
-        const listContainer = document.getElementById('reviews-list-container');
+        const reviewsListContainer = document.getElementById('reviews-list-container');
 
         if (reviews.length === 0) {
           reviewsCountDisplay.textContent = 'No reviews yet. Be the first to share your thoughts!';
           avgStarsDisplay.innerHTML = '☆☆☆☆☆';
-          listContainer.innerHTML = `
-            <div class="col-span-full bg-surface-container-low p-lg rounded-xl text-center text-on-surface-variant font-body-md border border-outline-variant/10">
-              No reviews submitted yet for this signature bake.
-            </div>
-          `;
+          Skeleton.hide(reviewsListContainer, () => {
+            const div = document.createElement('div');
+            div.className = 'col-span-full bg-surface-container-low p-lg rounded-xl text-center text-on-surface-variant font-body-md border border-outline-variant/10';
+            div.textContent = 'No reviews submitted yet for this signature bake.';
+            return div;
+          });
           return;
         }
 
@@ -178,34 +233,37 @@ document.addEventListener('DOMContentLoaded', async () => {
         avgStarsDisplay.innerHTML = starsHtml;
 
         // Render reviews list
-        listContainer.innerHTML = '';
-        reviews.forEach(review => {
-          const dateStr = new Date(review.createdAt).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-          });
+        Skeleton.hide(listContainer, () => {
+          const frag = document.createDocumentFragment();
+          reviews.forEach(review => {
+            const dateStr = new Date(review.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            });
 
-          let reviewStars = '';
-          for (let i = 1; i <= 5; i++) {
-            reviewStars += `<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' ${i <= review.rating ? 1 : 0};">star</span>`;
-          }
+            let reviewStars = '';
+            for (let i = 1; i <= 5; i++) {
+              reviewStars += `<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' ${i <= review.rating ? 1 : 0};">star</span>`;
+            }
 
-          const card = document.createElement('div');
-          card.className = 'bg-surface-container-low p-md md:p-lg rounded-xl border border-outline-variant/20 butter-shadow space-y-sm';
-          card.innerHTML = `
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-label-md text-label-md text-primary">${review.userName}</h4>
-                <p class="text-[12px] text-on-surface-variant">${dateStr}</p>
+            const card = document.createElement('div');
+            card.className = 'bg-surface-container-low p-md md:p-lg rounded-xl border border-outline-variant/20 butter-shadow space-y-sm';
+            card.innerHTML = `
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-label-md text-label-md text-primary">${review.userName}</h4>
+                  <p class="text-[12px] text-on-surface-variant">${dateStr}</p>
+                </div>
+                <div class="flex text-secondary">${reviewStars}</div>
               </div>
-              <div class="flex text-secondary">${reviewStars}</div>
-            </div>
-            <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-              “${review.comment}”
-            </p>
-          `;
-          listContainer.appendChild(card);
+              <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                "${review.comment}"
+              </p>
+            `;
+            frag.appendChild(card);
+          });
+          return frag;
         });
       } catch (err) {
         console.error('Failed to load reviews:', err.message);
@@ -236,45 +294,64 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Update hero image
         if (product.image) {
-          const heroImg = document.querySelector('main .grid > div:first-child img');
-          if (heroImg) {
-            heroImg.src = product.image;
-            heroImg.alt = product.name;
-          }
+            let heroImg = document.querySelector('main .grid > div:first-child img');
+            if (!heroImg) heroImg = document.getElementById('product-hero-image');
+            if (heroImg) {
+                heroImg.src = product.image;
+                heroImg.alt = product.name;
+            }
         }
 
         // Update product name
         if (product.name) {
-          const nameEl = document.querySelector('main h1');
-          if (nameEl) nameEl.textContent = product.name;
+            let nameEl = document.querySelector('main h1');
+            if (!nameEl) nameEl = document.getElementById('product-name');
+            if (nameEl) nameEl.textContent = product.name;
+        }
+
+        // Update breadcrumb name
+        if (product.name) {
+            const breadcrumbName = document.getElementById('breadcrumb-name');
+            if (breadcrumbName) breadcrumbName.textContent = product.name;
         }
 
         // Update product price
         if (product.price !== undefined) {
-          const priceEl = document.querySelector('main .font-headline-md.text-secondary');
-          if (priceEl) priceEl.textContent = window.App.formatPrice(product.price);
+            let priceEl = document.querySelector('main .font-headline-md.text-secondary');
+            if (!priceEl) priceEl = document.getElementById('product-price');
+            if (priceEl) priceEl.textContent = window.App.formatPrice(product.price);
         }
 
         // Update product description
         if (product.description) {
-          const descEl = document.querySelector('main .grid > div:last-child .font-body-lg');
-          if (descEl) descEl.textContent = product.description;
+            let descEl = document.querySelector('main .grid > div:last-child .font-body-lg');
+            if (!descEl) descEl = document.getElementById('product-description');
+            if (descEl) descEl.textContent = product.description;
         }
 
         // Update badge if present
         if (product.badge) {
-            const heroSection = document.querySelector('main .grid > div:first-child');
+            let heroSection = document.querySelector('main .grid > div:first-child');
+            if (!heroSection) heroSection = document.querySelector('#product-hero-image')?.closest('.relative');
             if (heroSection && !heroSection.querySelector('.product-badge')) {
-                const badgeEl = document.createElement('div');
-                badgeEl.className = 'product-badge absolute top-4 left-4 bg-surface/90 backdrop-blur-sm px-md py-xs rounded-full border border-primary/10 flex items-center gap-xs z-10';
-                badgeEl.innerHTML = `<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: \'FILL\' 1;">star</span><span class="font-label-md text-label-md text-primary">${product.badge}</span>`;
-                heroSection.appendChild(badgeEl);
+                const badgeContainer = document.getElementById('product-badge-container');
+                if (badgeContainer) {
+                    badgeContainer.classList.remove('hidden');
+                    const badgeText = document.getElementById('product-badge-text');
+                    if (badgeText) badgeText.textContent = product.badge;
+                } else {
+                    const badgeEl = document.createElement('div');
+                    badgeEl.className = 'product-badge absolute top-4 left-4 bg-surface/90 backdrop-blur-sm px-md py-xs rounded-full border border-primary/10 flex items-center gap-xs z-10';
+                    badgeEl.innerHTML = `<span class="material-symbols-outlined text-secondary text-sm" style="font-variation-settings: 'FILL' 1;">star</span><span class="font-label-md text-label-md text-primary">${product.badge}</span>`;
+                    heroSection.appendChild(badgeEl);
+                }
             }
         }
 
         // Update tags if present
         if (product.tags && product.tags.length) {
-            const tagsContainer = document.querySelector('main .grid > div:last-child .flex.flex-wrap.gap-sm');
+            let tagsContainer = document.querySelector('main .grid > div:last-child .flex.flex-wrap.gap-sm');
+            if (!tagsContainer) tagsContainer = document.getElementById('product-tags');
             if (tagsContainer) {
                 tagsContainer.innerHTML = product.tags.map(tag => {
                     const icon = tag.includes('Special') ? 'emoji_nature' : tag.includes('Same-day') ? 'bolt' : tag.includes('Seasonal') ? 'wb_sunny' : tag.includes('Chef') ? 'restaurant' : 'label';
@@ -285,27 +362,52 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Update ingredients accordion if present
         if (product.ingredients && product.ingredients.length) {
-            const ingredientsDetails = document.querySelector('details:has(summary:contains("Ingredients"))');
+            let ingredientsDetails = document.querySelector('details:has(summary:contains("Ingredients"))');
+            if (!ingredientsDetails) {
+                const allDetails = document.querySelectorAll('details');
+                allDetails.forEach(d => {
+                    const summary = d.querySelector('summary');
+                    if (summary && summary.textContent.includes('Ingredients')) {
+                        ingredientsDetails = d;
+                    }
+                });
+            }
             if (ingredientsDetails) {
                 const contentP = ingredientsDetails.querySelector('p');
                 if (contentP) contentP.textContent = product.ingredients.join(', ');
+            } else {
+                const ingredientsEl = document.getElementById('product-ingredients');
+                if (ingredientsEl) ingredientsEl.textContent = product.ingredients.join(', ');
             }
         }
 
         // Update flavor profile accordion if present
         if (product.flavorProfile && product.flavorProfile.length) {
-            const flavorDetails = document.querySelector('details:has(summary:contains("Flavor Profile"))');
+            let flavorDetails = document.querySelector('details:has(summary:contains("Flavor Profile"))');
+            if (!flavorDetails) {
+                const allDetails = document.querySelectorAll('details');
+                allDetails.forEach(d => {
+                    const summary = d.querySelector('summary');
+                    if (summary && summary.textContent.includes('Flavor Profile')) {
+                        flavorDetails = d;
+                    }
+                });
+            }
             if (flavorDetails) {
                 const contentP = flavorDetails.querySelector('p');
                 if (contentP) contentP.textContent = product.flavorProfile.join(', ');
+            } else {
+                const flavorEl = document.getElementById('product-flavor');
+                if (flavorEl) flavorEl.textContent = product.flavorProfile.join(', ');
             }
         }
 
         // Update Pairs Well With section if present
         if (product.pairsWith && product.pairsWith.length) {
-            const pairsSection = document.querySelector('section.mt-xl');
-            if (pairsSection && pairsSection.querySelector('h2')?.textContent.includes('Pairs Well With')) {
-                const trayContainer = pairsSection.querySelector('.flex.overflow-x-auto');
+            let pairsSection = document.querySelector('section.mt-xl');
+            let trayContainer = document.getElementById('pairs-well-with');
+            if (!pairsSection && trayContainer) pairsSection = trayContainer.closest('section');
+            if (pairsSection && (pairsSection.querySelector('h2')?.textContent.includes('Pairs Well With') || trayContainer)) {
                 if (trayContainer) {
                     trayContainer.innerHTML = '';
                     const pairPromises = product.pairsWith.map(async pairId => {
@@ -334,7 +436,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Add availability/stock info if present
         if (product.availability || product.stock !== undefined) {
-            const selectorsSection = document.querySelector('.bg-surface-container-lowest');
+            let selectorsSection = document.querySelector('.bg-surface-container-lowest');
+            if (!selectorsSection) {
+                const addToCartBtn = document.getElementById('add-to-cart-btn');
+                if (addToCartBtn) {
+                    selectorsSection = addToCartBtn.closest('.bg-surface-container-lowest');
+                }
+            }
             if (selectorsSection) {
                 // Remove existing stock info
                 const existingStock = selectorsSection.querySelector('.stock-info');

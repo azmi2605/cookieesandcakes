@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>My Account | cookieesandcakes</title>
+    <title>Personal Information | cookieesandcakes</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap"
@@ -157,8 +157,8 @@
     <main class="max-w-[1200px] mx-auto px-md py-xl flex-grow">
         <!-- Welcome Section -->
         <section class="mb-xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-            <h1 class="font-headline-xl text-headline-xl text-primary mb-xs">Welcome Back, <span id="account-user-name">...</span>.</h1>
-            <p class="font-body-lg text-body-lg text-on-surface-variant">It’s a lovely day for something sweet.</p>
+            <h1 class="font-headline-xl text-headline-xl text-primary mb-xs">Personal Information</h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant">Update your profile details and preferences.</p>
         </section>
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
             <!-- Sidebar Navigation -->
@@ -183,7 +183,7 @@
                             <span class="font-label-md text-label-md">Password &amp; Security</span>
                         </a>
                         <a class="flex items-center gap-sm p-md rounded-xl text-secondary hover:bg-secondary-fixed transition-all duration-200 mt-lg cursor-pointer"
-                            href="/login.html" id="account-signout-link">
+                            href="/login.html">
                             <span class="material-symbols-outlined" data-icon="logout">logout</span>
                             <span class="font-label-md text-label-md">Sign Out</span>
                         </a>
@@ -192,55 +192,34 @@
             </aside>
             <!-- Main Content Area -->
             <div class="lg:col-span-9 space-y-xl">
-                <!-- Order History -->
                 <section>
-                    <div class="flex justify-between items-end mb-md">
-                        <h3 class="font-headline-lg text-headline-lg text-primary">Order History</h3>
-                        <a class="font-label-md text-label-md text-secondary border-b border-secondary/30 hover:border-secondary transition-colors"
-                            href="/order-history.html">View All</a>
-                    </div>
-                    <div class="space-y-md" id="account-orders-container">
-                        <div class="text-on-surface-variant">Loading your orders...</div>
-                    </div>
-                </section>
-                <!-- My Wishlist - Horizontal Scrolling Carousel -->
-                <section>
-                    <div class="flex justify-between items-end mb-md">
-                        <h3 class="font-headline-lg text-headline-lg text-primary">My Wishlist</h3>
-                        <div class="flex gap-xs">
-                            <button
-                                class="p-xs rounded-full border border-outline hover:bg-primary-container hover:text-white transition-colors">
-                                <span class="material-symbols-outlined text-[18px]"
-                                    data-icon="arrow_back">arrow_back</span>
-                            </button>
-                            <button
-                                class="p-xs rounded-full border border-outline hover:bg-primary-container hover:text-white transition-colors">
-                                <span class="material-symbols-outlined text-[18px]"
-                                    data-icon="arrow_forward">arrow_forward</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="flex overflow-x-auto pb-lg gap-md snap-x -mx-xs px-xs hide-scrollbar"
-                        style="scrollbar-width: none;" id="account-wishlist-container">
-                        <div class="text-on-surface-variant">Loading your wishlist...</div>
-                    </div>
-                </section>
-                <!-- Loyalty / Rewards Teaser -->
-                <section class="bg-primary-container p-lg rounded-xl text-white overflow-hidden relative">
-                    <div class="relative z-10">
-                        <h3 class="font-headline-md text-headline-md mb-xs">Crumbs Rewards</h3>
-                        <p class="font-body-md text-body-md text-on-primary-container mb-md">You're just 250 crumbs away
-                            from a free Baker's Dozen!</p>
-                        <div class="w-full h-2 bg-primary/30 rounded-full mb-md overflow-hidden">
-                            <div class="w-3/4 h-full bg-secondary-container"></div>
-                        </div>
-                        <button
-                            class="font-label-md text-label-md text-secondary-container hover:underline transition-all">View
-                            Reward Details</button>
-                    </div>
-                    <!-- Decorative Element -->
-                    <div class="absolute -right-12 -bottom-12 opacity-10">
-                        <span class="material-symbols-outlined text-[200px]" data-icon="cookie">cookie</span>
+                    <div class="bg-surface-container-lowest p-lg rounded-xl butter-shadow border border-outline-variant/20">
+                        <h3 class="font-headline-lg text-headline-lg text-primary mb-lg">Profile Details</h3>
+                        <form class="space-y-lg" id="profile-form">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+                                <div>
+                                    <label class="block font-label-md text-label-md text-on-surface mb-xs">Full Name</label>
+                                    <input id="profile-name" type="text" class="w-full p-md rounded-xl border border-outline-variant bg-surface-container-low focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all" />
+                                </div>
+                                <div>
+                                    <label class="block font-label-md text-label-md text-on-surface mb-xs">Username</label>
+                                    <input id="profile-username" type="text" disabled class="w-full p-md rounded-xl border border-outline-variant bg-surface-container-low text-on-surface-variant cursor-not-allowed" />
+                                    <p class="text-label-sm text-outline mt-xs">Username cannot be changed.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block font-label-md text-label-md text-on-surface mb-xs">Email Address</label>
+                                <input id="profile-email" type="email" disabled class="w-full p-md rounded-xl border border-outline-variant bg-surface-container-low text-on-surface-variant cursor-not-allowed" />
+                                <p class="text-label-sm text-outline mt-xs">Email is used for login and cannot be changed.</p>
+                            </div>
+                            <div>
+                                <label class="block font-label-md text-label-md text-on-surface mb-xs">Phone Number</label>
+                                <input id="profile-phone" type="tel" class="w-full p-md rounded-xl border border-outline-variant bg-surface-container-low focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 transition-all" />
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-secondary text-white px-lg py-md rounded-xl font-label-md text-label-md hover:opacity-90 active:scale-95 transition-all">Save Changes</button>
+                            </div>
+                        </form>
                     </div>
                 </section>
             </div>
@@ -249,7 +228,6 @@
     <!-- Footer Shell -->
     <div data-include-footer="/footer/footer.html"></div>
     <script>
-        // Micro-interactions and smooth revealing
         document.addEventListener('DOMContentLoaded', () => {
             const cards = document.querySelectorAll('.snap-start');
             const observer = new IntersectionObserver((entries) => {
@@ -267,7 +245,6 @@
             });
         });
 
-        // Simple button active state visual
         const buttons = document.querySelectorAll('button');
         buttons.forEach(btn => {
             btn.addEventListener('mousedown', () => btn.classList.add('scale-95'));
@@ -297,6 +274,52 @@
                     } else {
                         link.classList.remove('bg-surface-container-highest', 'text-primary', 'font-bold');
                         link.classList.add('text-on-surface-variant', 'hover:bg-surface-container-low', 'hover:text-primary');
+                    }
+                });
+            }
+        })();
+
+        (async function loadProfile() {
+            const nameInput = document.getElementById('profile-name');
+            const usernameInput = document.getElementById('profile-username');
+            const emailInput = document.getElementById('profile-email');
+            const phoneInput = document.getElementById('profile-phone');
+            const form = document.getElementById('profile-form');
+
+            try {
+                const data = await window.App.fetchAPI('/api/auth/session');
+                if (!data.loggedIn || !data.user) return;
+                const user = data.user;
+
+                if (nameInput) nameInput.value = user.name || '';
+                if (usernameInput) usernameInput.value = user.username || (user.email ? user.email.split('@')[0] : '');
+                if (emailInput) emailInput.value = user.email || '';
+                if (phoneInput) phoneInput.value = user.phone || '';
+
+                window.App.user = user;
+            } catch (err) {
+                console.error('Failed to load profile:', err.message);
+            }
+
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const name = nameInput ? nameInput.value.trim() : '';
+                    const phone = phoneInput ? phoneInput.value.trim() : '';
+
+                    try {
+                        const result = await window.App.fetchAPI('/api/auth/profile', {
+                            method: 'POST',
+                            body: { name, phone }
+                        });
+
+                        if (result.user) {
+                            window.App.user = result.user;
+                        }
+
+                        window.App.toastSuccess('Profile updated successfully!');
+                    } catch (err) {
+                        window.App.toastError(err.message || 'Failed to update profile.');
                     }
                 });
             }

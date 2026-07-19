@@ -1,0 +1,151 @@
+/* ============================================
+   SKELETON LOADING SYSTEM
+   Bakery-themed shimmer placeholders
+   ============================================ */
+
+/* Base skeleton */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Skeleton text lines */
+.skeleton-text {
+  height: 14px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-text-sm { height: 10px; }
+.skeleton-text-lg { height: 18px; }
+.skeleton-text-xl { height: 24px; }
+
+.skeleton-text.short { width: 40%; }
+.skeleton-text.medium { width: 65%; }
+.skeleton-text.long { width: 90%; }
+
+/* Skeleton image */
+.skeleton-image {
+  width: 100%;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Skeleton button */
+.skeleton-button {
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Skeleton badge/tag */
+.skeleton-badge {
+  height: 24px;
+  width: 80px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Skeleton card */
+.skeleton-card {
+  background: #fff8f6;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Skeleton avatar */
+.skeleton-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Skeleton table row */
+.skeleton-table-row {
+  height: 56px;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+/* Skeleton input */
+.skeleton-input {
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Skeleton textarea */
+.skeleton-textarea {
+  height: 100px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Skeleton thumbnail */
+.skeleton-thumbnail {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Skeleton circle (for icons/avatars) */
+.skeleton-circle {
+  border-radius: 50%;
+  background: linear-gradient(90deg, #fbdcd1 0%, #fff1ec 50%, #fbdcd1 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+/* Utility: hide/show skeletons */
+.skeleton-wrapper {
+  position: relative;
+}
+
+.skeleton-wrapper .skeleton-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.skeleton-wrapper.loaded .skeleton-placeholder {
+  display: none;
+}
+
+.skeleton-wrapper.loaded .skeleton-content {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .skeleton-text { height: 12px; }
+  .skeleton-text-lg { height: 16px; }
+  .skeleton-button { height: 40px; }
+}

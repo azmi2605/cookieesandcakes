@@ -126,12 +126,7 @@ async function loadAdminProducts() {
     const grid = document.getElementById('admin-products-grid');
     if (!grid) return;
 
-    grid.innerHTML = `
-        <div class="col-span-full flex justify-center items-center py-12 text-on-surface-variant">
-            <span class="material-symbols-outlined animate-spin text-secondary/40 mr-2">autorenew</span>
-            <span class="font-body-md">Loading products...</span>
-        </div>
-    `;
+    Skeleton.show(grid, Array.from({length: 6}, () => Skeleton.productCard()));
 
     try {
         const prodRes = await adminFetch('/api/products');
@@ -141,60 +136,68 @@ async function loadAdminProducts() {
             throw new Error('Invalid products response from server.');
         }
 
-        grid.innerHTML = '';
-
         if (products.length === 0) {
-            grid.innerHTML = `
-                <div class="col-span-full flex flex-col items-center justify-center py-12 text-center">
+            Skeleton.hide(grid, () => {
+                const div = document.createElement('div');
+                div.className = 'col-span-full flex flex-col items-center justify-center py-12 text-center';
+                div.innerHTML = `
                     <span class="material-symbols-outlined text-5xl text-outline-variant mb-3">inventory_2</span>
                     <p class="font-headline-md text-headline-md text-primary mb-2">No products available</p>
                     <p class="font-body-md text-on-surface-variant mb-4">Get started by adding your first product.</p>
                     <a href="/admin-add-product.html" class="bg-secondary text-white px-6 py-2 rounded-full font-bold hover:opacity-90 transition-all">Add New Product</a>
-                </div>
-            `;
+                `;
+                return div;
+            });
             return;
         }
 
-        products.forEach(p => {
-            const card = document.createElement('div');
-            card.className = 'bg-surface-container rounded-xl shadow-sm overflow-hidden border border-primary/5 flex flex-col hover:shadow-md transition-shadow group';
-            card.innerHTML = `
-                <div class="h-48 w-full overflow-hidden relative">
-                    <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" src="${p.image || ''}" alt="${p.name || 'Product'}" onclick="window.open('/treat-${p.id}.html','_blank')">
-                    ${p.tags && p.tags.length ? `<div class="absolute top-3 left-3"><span class="bg-white/90 backdrop-blur text-secondary text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">${p.tags[0]}</span></div>` : ''}
-                </div>
-                <div class="p-gutter flex flex-col flex-1">
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <span class="text-outline text-label-sm capitalize">${p.category || 'misc'}</span>
-                            <h4 class="font-headline-md text-[20px] text-primary">${p.name}</h4>
+        Skeleton.hide(grid, () => {
+            const frag = document.createDocumentFragment();
+            products.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'bg-surface-container rounded-xl shadow-sm overflow-hidden border border-primary/5 flex flex-col hover:shadow-md transition-shadow group';
+                card.innerHTML = `
+                    <div class="h-48 w-full overflow-hidden relative">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer" src="${p.image || ''}" alt="${p.name || 'Product'}" onclick="window.open('/treat-${p.id}.html','_blank')">
+                        ${p.tags && p.tags.length ? `<div class="absolute top-3 left-3"><span class="bg-white/90 backdrop-blur text-secondary text-[10px] uppercase font-bold px-3 py-1 rounded-full shadow-sm">${p.tags[0]}</span></div>` : ''}
+                    </div>
+                    <div class="p-gutter flex flex-col flex-1">
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <span class="text-outline text-label-sm capitalize">${p.category || 'misc'}</span>
+                                <h4 class="font-headline-md text-[20px] text-primary">${p.name}</h4>
+                            </div>
+                            <span class="font-bold text-secondary">${window.App.formatPrice(p.price || 0)}</span>
                         </div>
-                        <span class="font-bold text-secondary">${window.App.formatPrice(p.price || 0)}</span>
+                        <p class="text-on-surface-variant text-sm mb-2 line-clamp-2">${p.description || ''}</p>
+                        <div class="flex flex-wrap gap-2 mb-3 text-xs text-on-surface-variant">
+                            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">inventory</span> Stock: ${p.stock ?? 0}</span>
+                            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> ${p.availability || 'In Stock'}</span>
+                            ${p.sku ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">qr_code</span> SKU: ${p.sku}</span>` : ''}
+                        </div>
+                        <div class="mt-auto flex gap-2">
+                            <button onclick="openEditProduct('${p.id}')" class="flex-1 border border-secondary text-secondary font-bold py-2 rounded-lg hover:bg-secondary hover:text-white transition-all text-sm">Edit</button>
+                            <button onclick="openDeleteProduct('${p.id}')" class="flex-1 border border-error text-error font-bold py-2 rounded-lg hover:bg-error hover:text-white transition-all text-sm">Delete</button>
+                        </div>
                     </div>
-                    <p class="text-on-surface-variant text-sm mb-2 line-clamp-2">${p.description || ''}</p>
-                    <div class="flex flex-wrap gap-2 mb-3 text-xs text-on-surface-variant">
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">inventory</span> Stock: ${p.stock ?? 0}</span>
-                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">check_circle</span> ${p.availability || 'In Stock'}</span>
-                        ${p.sku ? `<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">qr_code</span> SKU: ${p.sku}</span>` : ''}
-                    </div>
-                    <div class="mt-auto flex gap-2">
-                        <button onclick="openEditProduct('${p.id}')" class="flex-1 border border-secondary text-secondary font-bold py-2 rounded-lg hover:bg-secondary hover:text-white transition-all text-sm">Edit</button>
-                        <button onclick="openDeleteProduct('${p.id}')" class="flex-1 border border-error text-error font-bold py-2 rounded-lg hover:bg-error hover:text-white transition-all text-sm">Delete</button>
-                    </div>
-                </div>
-            `;
-            grid.appendChild(card);
+                `;
+                frag.appendChild(card);
+            });
+            return frag;
         });
     } catch (err) {
         console.error('Failed to load products:', err);
-        grid.innerHTML = `
-            <div class="col-span-full flex flex-col items-center justify-center py-12 text-center">
+        Skeleton.hide(grid, () => {
+            const div = document.createElement('div');
+            div.className = 'col-span-full flex flex-col items-center justify-center py-12 text-center';
+            div.innerHTML = `
                 <span class="material-symbols-outlined text-5xl text-error mb-3">error</span>
                 <p class="font-headline-md text-headline-md text-primary mb-2">Failed to load products</p>
                 <p class="font-body-md text-on-surface-variant mb-4">${err.message || 'Please check your connection and try again.'}</p>
                 <button onclick="loadAdminProducts()" class="bg-secondary text-white px-6 py-2 rounded-full font-bold hover:opacity-90 transition-all">Retry</button>
-            </div>
-        `;
+            `;
+            return div;
+        });
     }
 }
 
@@ -206,6 +209,12 @@ async function initDashboard() {
     }
 
     // Stat cards
+    const statCards = document.querySelectorAll('[id^="stat-"]');
+    if (statCards.length) {
+        Skeleton.show(document.getElementById('admin-stats-row') || statCards[0].parentElement.parentElement, 
+            Array.from({length: 4}, () => Skeleton.statsCard()));
+    }
+
     try {
             const statsRes = await adminFetch('/api/admin/stats');
         const stats = await statsRes.json();
@@ -222,30 +231,36 @@ async function initDashboard() {
 
     // Recent orders table
     const tbody = document.getElementById('admin-orders-table');
-    if (tbody) tbody.innerHTML = '';
+    if (tbody) {
+        Skeleton.show(tbody, Skeleton.table({ rows: 5, columns: 6 }));
+    }
 
     try {
             const ordersRes = await adminFetch('/api/admin/orders');
         const orders = await ordersRes.json();
         if (tbody && orders.length > 0) {
-            orders.slice(0, 5).forEach((order, idx) => {
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-surface-container-low transition-colors';
-                tr.style.opacity = '0';
-                tr.style.transform = 'translateY(10px)';
-                tr.style.transition = `opacity 0.4s ease ${idx * 80}ms, transform 0.4s ease ${idx * 80}ms`;
-                tr.innerHTML = `
-                    <td class="px-gutter py-4 font-bold text-secondary">#${(order.id || '').slice(-6).toUpperCase()}</td>
-                    <td class="px-gutter py-4">${order.customerName || 'Guest'}</td>
-                    <td class="px-gutter py-4">${new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
-                    <td class="px-gutter py-4 font-semibold">${window.App.formatPrice(order.total || 0)}</td>
-                    <td class="px-gutter py-4">${statusBadge(order.status)}</td>
-                    <td class="px-gutter py-4 text-right">
-                        <a href="/admin-order-details.html?orderId=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">View Details</a>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-                setTimeout(() => { tr.style.opacity = '1'; tr.style.transform = 'translateY(0)'; }, 50 + idx * 80);
+            Skeleton.hide(tbody, () => {
+                const frag = document.createDocumentFragment();
+                orders.slice(0, 5).forEach((order, idx) => {
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-surface-container-low transition-colors';
+                    tr.style.opacity = '0';
+                    tr.style.transform = 'translateY(10px)';
+                    tr.style.transition = `opacity 0.4s ease ${idx * 80}ms, transform 0.4s ease ${idx * 80}ms`;
+                    tr.innerHTML = `
+                        <td class="px-gutter py-4 font-bold text-secondary">#${(order.id || '').slice(-6).toUpperCase()}</td>
+                        <td class="px-gutter py-4">${order.customerName || 'Guest'}</td>
+                        <td class="px-gutter py-4">${new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                        <td class="px-gutter py-4 font-semibold">${window.App.formatPrice(order.total || 0)}</td>
+                        <td class="px-gutter py-4">${statusBadge(order.status)}</td>
+                        <td class="px-gutter py-4 text-right">
+                            <a href="/admin-order-details.html?orderId=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">View Details</a>
+                        </td>
+                    `;
+                    frag.appendChild(tr);
+                    setTimeout(() => { tr.style.opacity = '1'; tr.style.transform = 'translateY(0)'; }, 50 + idx * 80);
+                });
+                return frag;
             });
         }
     } catch (err) {
@@ -253,37 +268,66 @@ async function initDashboard() {
     }
 
     // Products grid
+    const grid = document.getElementById('admin-products-grid');
+    if (grid) {
+        Skeleton.show(grid, Array.from({length: 6}, () => Skeleton.productCard()));
+    }
     await loadAdminProducts();
 
     // Recent customers
+    const customersList = document.getElementById('admin-customers-list');
+    if (customersList) {
+        Skeleton.show(customersList, Array.from({length: 4}, () => {
+            const sk = Skeleton.avatar({size: '48px'});
+            const wrapper = document.createElement('div');
+            wrapper.style.display = 'flex';
+            wrapper.style.alignItems = 'center';
+            wrapper.style.gap = '12px';
+            wrapper.style.padding = '12px';
+            wrapper.appendChild(sk);
+            const lines = document.createElement('div');
+            lines.style.display = 'flex';
+            lines.style.flexDirection = 'column';
+            lines.style.gap = '8px';
+            lines.style.flex = '1';
+            lines.appendChild(Skeleton.textLine({width: '60%', height: '16px'}));
+            lines.appendChild(Skeleton.textLine({width: '40%', height: '12px'}));
+            wrapper.appendChild(lines);
+            return wrapper;
+        }));
+    }
+
     try {
             const usersRes = await adminFetch('/api/admin/users');
         const users = await usersRes.json();
-        const container = document.getElementById('admin-customers-list');
-        if (container && users.length > 0) {
-            container.innerHTML = '';
-            const colors = ['bg-primary/10 text-primary border-primary/10', 'bg-secondary/10 text-secondary border-secondary/10', 'bg-tertiary-fixed-dim/30 text-on-tertiary-fixed-variant border-tertiary-fixed-dim/40'];
-            users.slice(0, 4).forEach((u, i) => {
-                const initials = (u.name || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-                const ago = timeAgo(u.createdAt);
-                const colorClass = colors[i % colors.length];
-                container.insertAdjacentHTML('beforeend', `
-                    <div class="flex items-center gap-4 p-3 hover:bg-surface-container-high/50 rounded-lg transition-colors group">
-                        <div class="w-12 h-12 rounded-full ${colorClass} flex items-center justify-center font-bold border">${initials}</div>
-                        <div class="flex-1 min-w-0">
-                            <h5 class="font-bold text-on-surface truncate">${u.name || u.email}</h5>
-                            <p class="text-label-sm text-outline">Joined ${ago}</p>
+        if (customersList && users.length > 0) {
+            Skeleton.hide(customersList, () => {
+                const frag = document.createDocumentFragment();
+                const colors = ['bg-primary/10 text-primary border-primary/10', 'bg-secondary/10 text-secondary border-secondary/10', 'bg-tertiary-fixed-dim/30 text-on-tertiary-fixed-variant border-tertiary-fixed-dim/40'];
+                users.slice(0, 4).forEach((u, i) => {
+                    const initials = (u.name || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                    const ago = timeAgo(u.createdAt);
+                    const colorClass = colors[i % colors.length];
+                    const div = document.createElement('div');
+                    div.innerHTML = `
+                        <div class="flex items-center gap-4 p-3 hover:bg-surface-container-high/50 rounded-lg transition-colors group">
+                            <div class="w-12 h-12 rounded-full ${colorClass} flex items-center justify-center font-bold border">${initials}</div>
+                            <div class="flex-1 min-w-0">
+                                <h5 class="font-bold text-on-surface truncate">${u.name || u.email}</h5>
+                                <p class="text-label-sm text-outline">Joined ${ago}</p>
+                            </div>
+                            <button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-white">
+                                <span class="material-symbols-outlined text-outline">more_vert</span>
+                            </button>
                         </div>
-                        <button class="opacity-0 group-hover:opacity-100 transition-opacity p-2 rounded-full hover:bg-white">
-                            <span class="material-symbols-outlined text-outline">more_vert</span>
-                        </button>
-                    </div>
-                    <div class="dotted-line"></div>
-                `);
+                        <div class="dotted-line"></div>
+                    `;
+                    frag.appendChild(div);
+                });
+                const lines = frag.querySelectorAll('.dotted-line');
+                if (lines.length) lines[lines.length - 1].remove();
+                return frag;
             });
-            // Remove last dotted line
-            const lines = container.querySelectorAll('.dotted-line');
-            if (lines.length) lines[lines.length - 1].remove();
         }
     } catch (err) {
         console.error('Failed to load customers:', err);
@@ -298,6 +342,13 @@ async function initOrdersList() {
     let currentFilter = 'all';
     let searchQuery = '';
 
+    const tbody = document.getElementById('orders-table-body');
+    const emptyState = document.getElementById('orders-empty');
+
+    if (tbody) {
+        Skeleton.show(tbody, Skeleton.table({ rows: 6, columns: 7, showHeader: false }));
+    }
+
     try {
             const res = await adminFetch('/api/admin/orders');
         allOrders = await res.json();
@@ -306,9 +357,6 @@ async function initOrdersList() {
     }
 
     function renderOrders() {
-        const tbody = document.getElementById('orders-table-body');
-        const emptyState = document.getElementById('orders-empty');
-        const countEl = document.getElementById('orders-count');
         if (!tbody) return;
 
         const statusAlias = (s) => s === 'Approved' ? 'Confirmed' : s === 'Completed' ? 'Delivered' : s === 'Declined' ? 'Cancelled' : s;
@@ -325,35 +373,38 @@ async function initOrdersList() {
 
         if (countEl) countEl.textContent = `${filtered.length} order${filtered.length !== 1 ? 's' : ''}`;
 
-        tbody.innerHTML = '';
         if (filtered.length === 0) {
             if (emptyState) emptyState.classList.remove('hidden');
             return;
         }
         if (emptyState) emptyState.classList.add('hidden');
 
-        filtered.forEach((order, idx) => {
-            const tr = document.createElement('tr');
-            tr.className = 'hover:bg-surface-container-low transition-colors';
-            tr.style.opacity = '0';
-            tr.style.transform = 'translateY(8px)';
-            tr.style.transition = `opacity 0.35s ease ${idx * 50}ms, transform 0.35s ease ${idx * 50}ms`;
-            tr.innerHTML = `
-                <td class="px-gutter py-4 font-bold text-secondary">#${(order.id || '').slice(-6).toUpperCase()}</td>
-                <td class="px-gutter py-4">
-                    <div class="font-semibold text-on-surface">${order.customerName || 'Guest'}</div>
-                    <div class="text-label-sm text-outline">${order.customerEmail || ''}</div>
-                </td>
-                <td class="px-gutter py-4">${new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
-                <td class="px-gutter py-4">${order.deliveryDate ? new Date(order.deliveryDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}</td>
-                <td class="px-gutter py-4 font-semibold">${window.App.formatPrice(order.total || 0)}</td>
-                <td class="px-gutter py-4">${statusBadge(order.status)}</td>
-                <td class="px-gutter py-4 text-right">
-                    <a href="/admin-order-details.html?orderId=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</a>
-                </td>
-            `;
-            tbody.appendChild(tr);
-            setTimeout(() => { tr.style.opacity = '1'; tr.style.transform = 'translateY(0)'; }, 30 + idx * 50);
+        Skeleton.hide(tbody, () => {
+            const frag = document.createDocumentFragment();
+            filtered.forEach((order, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-surface-container-low transition-colors';
+                tr.style.opacity = '0';
+                tr.style.transform = 'translateY(8px)';
+                tr.style.transition = `opacity 0.35s ease ${idx * 50}ms, transform 0.35s ease ${idx * 50}ms`;
+                tr.innerHTML = `
+                    <td class="px-gutter py-4 font-bold text-secondary">#${(order.id || '').slice(-6).toUpperCase()}</td>
+                    <td class="px-gutter py-4">
+                        <div class="font-semibold text-on-surface">${order.customerName || 'Guest'}</div>
+                        <div class="text-label-sm text-outline">${order.customerEmail || ''}</div>
+                    </td>
+                    <td class="px-gutter py-4">${new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                    <td class="px-gutter py-4">${order.deliveryDate ? new Date(order.deliveryDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—'}</td>
+                    <td class="px-gutter py-4 font-semibold">${window.App.formatPrice(order.total || 0)}</td>
+                    <td class="px-gutter py-4">${statusBadge(order.status)}</td>
+                    <td class="px-gutter py-4 text-right">
+                        <a href="/admin-order-details.html?orderId=${order.id}" class="bg-secondary/10 text-secondary hover:bg-secondary hover:text-white px-4 py-2 rounded-lg text-label-sm font-bold transition-all">Update Status</a>
+                    </td>
+                `;
+                frag.appendChild(tr);
+                setTimeout(() => { tr.style.opacity = '1'; tr.style.transform = 'translateY(0)'; }, 30 + idx * 50);
+            });
+            return frag;
         });
     }
 
@@ -369,6 +420,7 @@ async function initOrdersList() {
 
     // Search
     const searchInput = document.getElementById('orders-search');
+    const countEl = document.getElementById('orders-count');
     if (searchInput) {
         searchInput.addEventListener('input', e => { searchQuery = e.target.value; renderOrders(); });
     }
@@ -974,6 +1026,42 @@ async function initCustomers() {
     let users = [];
     let orders = [];
 
+    const grid = document.getElementById('customers-grid');
+    if (grid) {
+        Skeleton.show(grid, Array.from({length: 6}, () => {
+            const sk = Skeleton.avatar({size: '56px'});
+            const wrapper = document.createElement('div');
+            wrapper.className = 'bg-surface-container rounded-xl p-gutter border border-primary/5';
+            wrapper.style.display = 'flex';
+            wrapper.style.flexDirection = 'column';
+            wrapper.style.gap = '12px';
+            const top = document.createElement('div');
+            top.style.display = 'flex';
+            top.style.alignItems = 'center';
+            top.style.gap = '12px';
+            top.appendChild(sk);
+            const lines = document.createElement('div');
+            lines.style.display = 'flex';
+            lines.style.flexDirection = 'column';
+            lines.style.gap = '8px';
+            lines.style.flex = '1';
+            lines.appendChild(Skeleton.textLine({width: '70%', height: '16px'}));
+            lines.appendChild(Skeleton.textLine({width: '50%', height: '12px'}));
+            top.appendChild(lines);
+            wrapper.appendChild(top);
+            const stats = document.createElement('div');
+            stats.style.display = 'grid';
+            stats.style.gridTemplateColumns = '1fr 1fr';
+            stats.style.gap = '12px';
+            stats.appendChild(Skeleton.statsCard());
+            const sk2 = Skeleton.statsCard();
+            sk2.querySelector('.skeleton').style.height = '60px';
+            stats.appendChild(sk2);
+            wrapper.appendChild(stats);
+            return wrapper;
+        }));
+    }
+
     try {
         const [usersRes, ordersRes] = await Promise.all([adminFetch('/api/admin/users'), adminFetch('/api/admin/orders')]);
         users = await usersRes.json();
@@ -997,45 +1085,54 @@ async function initCustomers() {
     if (totalEl) totalEl.textContent = users.length;
 
     function renderCustomers() {
-        const grid = document.getElementById('customers-grid');
         if (!grid) return;
         const q = searchQuery.toLowerCase();
         const filtered = users.filter(u => !q || (u.name || '').toLowerCase().includes(q) || (u.email || '').toLowerCase().includes(q));
-        grid.innerHTML = '';
+        
         if (filtered.length === 0) {
-            grid.innerHTML = '<p class="text-on-surface-variant col-span-full text-center py-12">No customers found.</p>';
+            Skeleton.hide(grid, () => {
+                const p = document.createElement('p');
+                p.className = 'text-on-surface-variant col-span-full text-center py-12';
+                p.textContent = 'No customers found.';
+                return p;
+            });
             return;
         }
-        const colors = ['bg-primary/10 text-primary', 'bg-secondary/10 text-secondary', 'bg-tertiary-fixed-dim/30 text-on-tertiary-fixed-variant'];
-        filtered.forEach((u, i) => {
-            const initials = (u.name || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-            const oCount = orderCountMap[u.id] || 0;
-            const spent = totalSpentMap[u.id] || 0;
-            const colorClass = colors[i % colors.length];
-            const card = document.createElement('div');
-            card.className = 'bg-surface-container rounded-xl p-gutter border border-primary/5 hover:shadow-md transition-all';
-            card.innerHTML = `
-                <div class="flex items-start gap-4 mb-4">
-                    <div class="w-14 h-14 rounded-full ${colorClass} flex items-center justify-center font-bold text-lg border border-current/20 shrink-0">${initials}</div>
-                    <div class="flex-1 min-w-0">
-                        <h4 class="font-bold text-on-surface truncate">${u.name || 'Unknown'}</h4>
-                        <p class="text-label-sm text-outline truncate">${u.email || ''}</p>
-                        <p class="text-label-sm text-on-surface-variant mt-1">Joined ${timeAgo(u.createdAt)}</p>
+
+        Skeleton.hide(grid, () => {
+            const frag = document.createDocumentFragment();
+            const colors = ['bg-primary/10 text-primary', 'bg-secondary/10 text-secondary', 'bg-tertiary-fixed-dim/30 text-on-tertiary-fixed-variant'];
+            filtered.forEach((u, i) => {
+                const initials = (u.name || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                const oCount = orderCountMap[u.id] || 0;
+                const spent = totalSpentMap[u.id] || 0;
+                const colorClass = colors[i % colors.length];
+                const card = document.createElement('div');
+                card.className = 'bg-surface-container rounded-xl p-gutter border border-primary/5 hover:shadow-md transition-all';
+                card.innerHTML = `
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="w-14 h-14 rounded-full ${colorClass} flex items-center justify-center font-bold text-lg border border-current/20 shrink-0">${initials}</div>
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-on-surface truncate">${u.name || 'Unknown'}</h4>
+                            <p class="text-label-sm text-outline truncate">${u.email || ''}</p>
+                            <p class="text-label-sm text-on-surface-variant mt-1">Joined ${timeAgo(u.createdAt)}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-surface-container-low p-3 rounded-lg text-center">
-                        <div class="text-lg font-bold text-primary">${oCount}</div>
-                        <div class="text-[11px] uppercase text-outline tracking-wide">Orders</div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-surface-container-low p-3 rounded-lg text-center">
+                            <div class="text-lg font-bold text-primary">${oCount}</div>
+                            <div class="text-[11px] uppercase text-outline tracking-wide">Orders</div>
+                        </div>
+                        <div class="bg-surface-container-low p-3 rounded-lg text-center">
+                            <div class="text-lg font-bold text-secondary">${window.App.formatPrice(spent)}</div>
+                            <div class="text-[11px] uppercase text-outline tracking-wide">Spent</div>
+                        </div>
                     </div>
-                    <div class="bg-surface-container-low p-3 rounded-lg text-center">
-                        <div class="text-lg font-bold text-secondary">${window.App.formatPrice(spent)}</div>
-                        <div class="text-[11px] uppercase text-outline tracking-wide">Spent</div>
-                    </div>
-                </div>
-                ${u.phone ? `<p class="mt-3 text-label-sm text-outline flex items-center gap-2"><span class="material-symbols-outlined text-sm">call</span>${u.phone}</p>` : ''}
-            `;
-            grid.appendChild(card);
+                    ${u.phone ? `<p class="mt-3 text-label-sm text-outline flex items-center gap-2"><span class="material-symbols-outlined text-sm">call</span>${u.phone}</p>` : ''}
+                `;
+                frag.appendChild(card);
+            });
+            return frag;
         });
     }
 
@@ -1053,6 +1150,29 @@ async function initCustomers() {
    ───────────────────────────────────────── */
 async function initReviews() {
     let reviews = [];
+    const list = document.getElementById('reviews-list');
+    
+    if (list) {
+        Skeleton.show(list, Array.from({length: 5}, () => {
+            const card = document.createElement('div');
+            card.className = 'bg-surface-container rounded-xl p-gutter border border-primary/5';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.gap = '12px';
+            card.appendChild(Skeleton.textLine({width: '40%', height: '14px'}));
+            card.appendChild(Skeleton.textLine({width: '100%', height: '12px'}));
+            card.appendChild(Skeleton.textLine({width: '90%', height: '12px'}));
+            const bottom = document.createElement('div');
+            bottom.style.display = 'flex';
+            bottom.style.alignItems = 'center';
+            bottom.style.gap = '8px';
+            bottom.appendChild(Skeleton.avatar({size: '28px'}));
+            bottom.appendChild(Skeleton.textLine({width: '30%', height: '12px'}));
+            card.appendChild(bottom);
+            return card;
+        }));
+    }
+
     try {
             const res = await adminFetch('/api/admin/reviews');
         reviews = await res.json();
@@ -1069,41 +1189,50 @@ async function initReviews() {
     }
 
     function renderReviews(filter = 'all') {
-        const list = document.getElementById('reviews-list');
         if (!list) return;
         const filtered = filter === 'all' ? reviews : reviews.filter(r => String(r.rating) === filter);
-        list.innerHTML = '';
+        
         if (filtered.length === 0) {
-            list.innerHTML = '<p class="text-on-surface-variant text-center py-12 col-span-full">No reviews found.</p>';
+            Skeleton.hide(list, () => {
+                const p = document.createElement('p');
+                p.className = 'text-on-surface-variant text-center py-12 col-span-full';
+                p.textContent = 'No reviews found.';
+                return p;
+            });
             return;
         }
-        filtered.forEach((r, idx) => {
-            const stars = Array.from({ length: 5 }, (_, i) =>
-                `<span class="material-symbols-outlined text-[18px] text-secondary" style="font-variation-settings: 'FILL' ${i < r.rating ? 1 : 0};">star</span>`
-            ).join('');
-            const card = document.createElement('div');
-            card.className = 'bg-surface-container rounded-xl p-gutter border border-primary/5 hover:shadow-md transition-shadow';
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(8px)';
-            card.style.transition = `opacity 0.35s ease ${idx * 50}ms, transform 0.35s ease ${idx * 50}ms`;
-            card.innerHTML = `
-                <div class="flex justify-between items-start mb-3">
-                    <div class="flex gap-0.5">${stars}</div>
-                    <span class="text-[11px] text-outline italic">${timeAgo(r.createdAt)}</span>
-                </div>
-                <p class="text-body-md italic text-on-surface-variant mb-4">"${r.comment}"</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold flex items-center justify-center">
-                            ${(r.userName || 'A').slice(0, 2).toUpperCase()}
-                        </div>
-                        <span class="font-bold text-label-sm">${r.userName || 'Anonymous'}</span>
+
+        Skeleton.hide(list, () => {
+            const frag = document.createDocumentFragment();
+            filtered.forEach((r, idx) => {
+                const stars = Array.from({ length: 5 }, (_, i) =>
+                    `<span class="material-symbols-outlined text-[18px] text-secondary" style="font-variation-settings: 'FILL' ${i < r.rating ? 1 : 0};">star</span>`
+                ).join('');
+                const card = document.createElement('div');
+                card.className = 'bg-surface-container rounded-xl p-gutter border border-primary/5 hover:shadow-md transition-shadow';
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(8px)';
+                card.style.transition = `opacity 0.35s ease ${idx * 50}ms, transform 0.35s ease ${idx * 50}ms`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex gap-0.5">${stars}</div>
+                        <span class="text-[11px] text-outline italic">${timeAgo(r.createdAt)}</span>
                     </div>
-                    <span class="text-label-sm text-outline capitalize">${r.productId?.replace(/-/g, ' ') || ''}</span>
-                </div>
-            `;
-            list.appendChild(card);
-            setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 30 + idx * 50);
+                    <p class="text-body-md italic text-on-surface-variant mb-4">"${r.comment}"</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold flex items-center justify-center">
+                                ${(r.userName || 'A').slice(0, 2).toUpperCase()}
+                            </div>
+                            <span class="font-bold text-label-sm">${r.userName || 'Anonymous'}</span>
+                        </div>
+                        <span class="text-label-sm text-outline capitalize">${r.productId?.replace(/-/g, ' ') || ''}</span>
+                    </div>
+                `;
+                frag.appendChild(card);
+                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 30 + idx * 50);
+            });
+            return frag;
         });
     }
 

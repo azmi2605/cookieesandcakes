@@ -478,6 +478,46 @@ app.post('/api/auth/logout', (req, res) => {
   });
 });
 
+// UPDATE PASSWORD
+app.post('/api/auth/password', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Unauthorized. Please login.' });
+  }
+
+  const { currentPassword, newPassword } = req.body;
+  const userId = req.session.user.userId;
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'Current password and new password are required.' });
+  }
+
+  if (newPassword.length < 6) {
+    return res.status(400).json({ error: 'New password must be at least 6 characters.' });
+  }
+
+  try {
+    const user = await firebaseRequest(`/users/${userId}`);
+    if (!user || !user.passwordHash) {
+      return res.status(404).json({ error: 'User profile not found.' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, user.passwordHash);
+    if (!isMatch) {
+      return res.status(400).json({ error: 'Current password is incorrect.' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const newPasswordHash = await bcrypt.hash(newPassword, salt);
+    user.passwordHash = newPasswordHash;
+
+    await firebaseRequest(`/users/${userId}`, 'PUT', user);
+
+    res.json({ message: 'Password updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Password update failed: ' + err.message });
+  }
+});
+
 // 2. Products API
 
 // GET ALL PRODUCTS OR FILTER

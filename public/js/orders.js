@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (path.includes('order-history.html')) {
     const listContainer = document.querySelector('main .grid.gap-gutter');
     if (listContainer) {
+      Skeleton.show(listContainer, Array.from({length: 6}, () => Skeleton.orderRow({columns: 5})));
       loadOrderHistoryList();
     }
 
@@ -16,72 +17,73 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const orders = await window.App.fetchAPI('/api/orders');
         if (orders.length === 0) {
-          listContainer.innerHTML = `
-            <div class="bg-surface-container-lowest p-lg rounded-xl butter-shadow text-center text-on-surface-variant font-body-md border border-outline-variant/20 py-xl">
-              No orders placed yet. <br/>
-              <a href="/treats.html" class="inline-block mt-md bg-secondary text-white font-label-md px-lg py-md rounded-xl hover:opacity-90 active:scale-95 transition-all">
-                Order Fresh Treats
-              </a>
-            </div>
-          `;
+          Skeleton.hide(listContainer, () => {
+            const div = document.createElement('div');
+            div.className = 'bg-surface-container-lowest p-lg rounded-xl butter-shadow text-center text-on-surface-variant font-body-md border border-outline-variant/20 py-xl';
+            div.innerHTML = `No orders placed yet. <br/><a href="/treats.html" class="inline-block mt-md bg-secondary text-white font-label-md px-lg py-md rounded-xl hover:opacity-90 active:scale-95 transition-all">Order Fresh Treats</a>`;
+            return div;
+          });
           return;
         }
 
-        listContainer.innerHTML = '';
-        orders.forEach(order => {
-          let statusClass = 'bg-surface-container text-on-surface-variant';
-          let pulseClass = 'bg-outline';
-          if (order.status === 'Pending') {
-            statusClass = 'bg-surface-container-high text-primary';
-          } else if (order.status === 'Approved' || order.status === 'Confirmed' || order.status === 'Preparing' || order.status === 'Shipped') {
-            statusClass = 'bg-primary-container text-on-primary-container';
-            pulseClass = 'bg-primary animate-pulse';
-          } else if (order.status === 'Out for Delivery') {
-            statusClass = 'bg-secondary-fixed text-on-secondary-fixed-variant';
-            pulseClass = 'bg-secondary animate-pulse';
-          } else if (order.status === 'Completed') {
-            statusClass = 'bg-green-100 text-green-800';
-            pulseClass = 'bg-green-500';
-          } else if (order.status === 'Declined') {
-            statusClass = 'bg-error-container text-on-error-container';
-            pulseClass = 'bg-error';
-          }
+        Skeleton.hide(listContainer, () => {
+          const frag = document.createDocumentFragment();
+          orders.forEach(order => {
+            let statusClass = 'bg-surface-container text-on-surface-variant';
+            let pulseClass = 'bg-outline';
+            if (order.status === 'Pending') {
+              statusClass = 'bg-surface-container-high text-primary';
+            } else if (order.status === 'Approved' || order.status === 'Confirmed' || order.status === 'Preparing' || order.status === 'Shipped') {
+              statusClass = 'bg-primary-container text-on-primary-container';
+              pulseClass = 'bg-primary animate-pulse';
+            } else if (order.status === 'Out for Delivery') {
+              statusClass = 'bg-secondary-fixed text-on-secondary-fixed-variant';
+              pulseClass = 'bg-secondary animate-pulse';
+            } else if (order.status === 'Completed') {
+              statusClass = 'bg-green-100 text-green-800';
+              pulseClass = 'bg-green-500';
+            } else if (order.status === 'Declined') {
+              statusClass = 'bg-error-container text-on-error-container';
+              pulseClass = 'bg-error';
+            }
 
-          const itemKeys = Object.keys(order.items);
-          const firstItem = order.items[itemKeys[0]];
-          const displayImg = firstItem.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuApEIdkB-VaVSLK-mnO9JqwXd5-BayuEGJVFDgyujM68DQi9AILfk9phepo58zgqVu0muQRXFvPOFi51wvuh1gFiS-BNEw0kXfS0nNNJmRyRmctg_iBtIqUfITyzplg70n4iZlV906ezK17YdnP6ARx4kBhlKGBlWaRC_P5EpXwyJkj_4JTP8Ihre4A9TuDXbGtRs3wJACJ_31jUM-cpDoOoCpKrZLQM5YTJ2-SqUMMyOta8SX8G7lQuA23_O0l2B1ecURGs9WUJ54';
+            const itemKeys = Object.keys(order.items);
+            const firstItem = order.items[itemKeys[0]];
+            const displayImg = firstItem.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuApEIdkB-VaVSLK-mnO9JqwXd5-BayuEGJVFDgyujM68DQi9AILfk9phepo58zgqVu0muQRXFvPOFi51wvuh1gFiS-BNEw0kXfS0nNNJmRyRmctg_iBtIqUfITyzplg70n4iZlV906ezK17YdnP6ARx4kBhlKGBlWaRC_P5EpXwyJkj_4JTP8Ihre4A9TuDXbGtRs3wJACJ_31jUM-cpDoOoCpKrZLQM5YTJ2-SqUMMyOta8SX8G7lQuA23_O0l2B1ecURGs9WUJ54';
 
-          const dateStr = new Date(order.createdAt).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-          });
+            const dateStr = new Date(order.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            });
 
-          const orderRow = document.createElement('div');
-          orderRow.className = 'flex flex-col md:flex-row md:items-center justify-between p-md border border-outline-variant rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors group cursor-pointer butter-shadow';
-          orderRow.innerHTML = `
-            <div class="flex gap-md items-center">
-              <div class="w-16 h-16 rounded-lg bg-cover bg-center" style="background-image: url('${displayImg}')"></div>
-              <div>
-                <p class="font-label-md text-primary">Order #${order.id.substring(1, 8).toUpperCase()}</p>
-                <p class="text-label-sm text-on-surface-variant">Placed on ${dateStr}</p>
-                <div class="flex items-center gap-xs mt-xs px-2 py-0.5 rounded-full text-label-sm ${statusClass} inline-flex">
-                  <span class="w-1.5 h-1.5 rounded-full ${pulseClass}"></span>
-                  <span>${order.status}</span>
+            const orderRow = document.createElement('div');
+            orderRow.className = 'flex flex-col md:flex-row md:items-center justify-between p-md border border-outline-variant rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors group cursor-pointer butter-shadow';
+            orderRow.innerHTML = `
+              <div class="flex gap-md items-center">
+                <div class="w-16 h-16 rounded-lg bg-cover bg-center" style="background-image: url('${displayImg}')"></div>
+                <div>
+                  <p class="font-label-md text-primary">Order #${order.id.substring(1, 8).toUpperCase()}</p>
+                  <p class="text-label-sm text-on-surface-variant">Placed on ${dateStr}</p>
+                  <div class="flex items-center gap-xs mt-xs px-2 py-0.5 rounded-full text-label-sm ${statusClass} inline-flex">
+                    <span class="w-1.5 h-1.5 rounded-full ${pulseClass}"></span>
+                    <span>${order.status}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="mt-md md:mt-0 text-right flex items-center justify-between md:justify-end gap-md">
-              <p class="font-headline-md text-primary">${window.App.formatPrice(order.total)}</p>
-              <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
-            </div>
-          `;
+              <div class="mt-md md:mt-0 text-right flex items-center justify-between md:justify-end gap-md">
+                <p class="font-headline-md text-primary">${window.App.formatPrice(order.total)}</p>
+                <span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+              </div>
+            `;
 
-          orderRow.addEventListener('click', () => {
-            window.location.href = `/track-order.html?orderId=${order.id}`;
+            orderRow.addEventListener('click', () => {
+              window.location.href = `/track-order.html?orderId=${order.id}`;
+            });
+
+            frag.appendChild(orderRow);
           });
-
-          listContainer.appendChild(orderRow);
+          return frag;
         });
       } catch (err) {
         console.error('Failed to load order history list:', err.message);
@@ -95,6 +97,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderId = params.get('orderId');
 
     if (orderId) {
+      // Show skeleton while loading
+      const headerP = document.getElementById('track-order-header');
+      const statusH2 = document.getElementById('track-status');
+      const itemsList = document.getElementById('order-items-list');
+      
+      if (headerP) headerP.textContent = 'Loading...';
+      if (statusH2) {
+        Skeleton.show(statusH2.parentElement, Skeleton.badge());
+      }
+      
+      const mapContainer = document.getElementById('track-map-container');
+      if (mapContainer) {
+        Skeleton.show(mapContainer, Skeleton.image({height: '400px'}));
+      }
+      
+      if (itemsList) {
+        Skeleton.show(itemsList, Array.from({length: 3}, () => {
+          const row = document.createElement('div');
+          row.className = 'flex items-center gap-md p-md';
+          row.appendChild(Skeleton.thumbnail({width: '64px', height: '64px'}));
+          const details = document.createElement('div');
+          details.style.flex = '1';
+          details.style.display = 'flex';
+          details.style.flexDirection = 'column';
+          details.style.gap = '8px';
+          details.appendChild(Skeleton.textLine({width: '60%', height: '16px'}));
+          details.appendChild(Skeleton.textLine({width: '40%', height: '12px'}));
+          row.appendChild(details);
+          return row;
+        }));
+      }
+      
       loadOrderTracking(orderId);
     } else {
       document.querySelector('main').innerHTML = `
@@ -349,21 +383,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadProductHeader(prodId) {
       try {
-        const product = await window.App.fetchAPI(`/api/products/${prodId}`);
-        
-        // Update product image and details on review card
-        const img = document.querySelector('main img');
-        if (img) {
-          img.src = product.image;
-          img.alt = product.name;
+        const mainEl = document.querySelector('main');
+        if (mainEl) {
+          Skeleton.show(mainEl, () => {
+            const sk = document.createElement('div');
+            sk.style.maxWidth = '800px';
+            sk.style.margin = '0 auto';
+            sk.style.padding = '24px';
+            sk.appendChild(Skeleton.image({height: '300px', borderRadius: '12px'}));
+            sk.appendChild(Skeleton.textLine({width: '60%', height: '32px', marginTop: '16px'}));
+            sk.appendChild(Skeleton.textLine({width: '40%', height: '24px', marginTop: '8px'}));
+            sk.appendChild(Skeleton.textLine({width: '100%', height: '16px', marginTop: '8px'}));
+            sk.appendChild(Skeleton.textLine({width: '90%', height: '16px'}));
+            sk.appendChild(Skeleton.textarea({height: '120px', marginTop: '16px'}));
+            sk.appendChild(Skeleton.button({height: '48px', marginTop: '16px'}));
+            return sk;
+          });
         }
 
-        const title = document.querySelector('main h1');
-        if (title) {
-          title.textContent = product.name;
+        const product = await window.App.fetchAPI(`/api/products/${prodId}`);
+        
+        const mainContent = document.querySelector('main');
+        if (mainContent) {
+          Skeleton.hide(mainContent, () => {
+            const img = document.querySelector('main img');
+            const title = document.querySelector('main h1');
+            if (img) {
+              img.src = product.image;
+              img.alt = product.name;
+            }
+            if (title) {
+              title.textContent = product.name;
+            }
+            return mainContent;
+          });
         }
       } catch (err) {
         console.error('Failed to load product for review header:', err.message);
+        const mainContent = document.querySelector('main');
+        if (mainContent) {
+          Skeleton.hide(mainContent, () => {
+            const errorEl = document.createElement('div');
+            errorEl.className = 'py-xl text-center text-on-surface-variant font-body-lg';
+            errorEl.textContent = 'Failed to load product. Please try again.';
+            return errorEl;
+          });
+        }
       }
     }
 
@@ -460,6 +525,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadOrderItemsForRating(id) {
       try {
+        if (itemsSection) {
+          Skeleton.show(itemsSection, Array.from({length: 3}, () => {
+            const row = document.createElement('div');
+            row.className = 'flex flex-col md:flex-row items-center md:items-start gap-md bg-surface rounded-lg p-sm border border-outline-variant/10';
+            row.appendChild(Skeleton.thumbnail({width: '96px', height: '96px'}));
+            const details = document.createElement('div');
+            details.style.flex = '1';
+            details.style.display = 'flex';
+            details.style.flexDirection = 'column';
+            details.style.alignItems = 'center';
+            details.style.gap = '8px';
+            if (window.innerWidth >= 768) {
+              details.style.alignItems = 'flex-start';
+            }
+            details.appendChild(Skeleton.textLine({width: '60%', height: '20px'}));
+            details.appendChild(Skeleton.textLine({width: '80%', height: '24px'}));
+            row.appendChild(details);
+            return row;
+          }));
+        }
+
         const order = await window.App.fetchAPI(`/api/orders/${id}`);
         if (!itemsSection) return;
 

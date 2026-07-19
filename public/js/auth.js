@@ -143,19 +143,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 4. ACCOUNT DASHBOARD LOGIC
+  // 2. ACCOUNT SUBPAGES AUTH GUARD + GLOBAL NAV
+  if (path.includes('account-profile.html') || path.includes('shipping-addresses.html') || path.includes('security-settings.html')) {
+    (async () => {
+      const returnUrl = encodeURIComponent(window.location.pathname);
+      const allowed = await window.App.requireAuth({ returnUrl: `/?returnUrl=${returnUrl}`, message: 'Your session has expired. Please log in again to continue.' });
+      if (!allowed) return;
+      await window.App.checkSession();
+    })();
+
+    const navLinks = document.querySelectorAll('aside nav a');
+    navLinks.forEach(link => {
+      const span = link.querySelector('span:last-child');
+      if (span && span.textContent.trim() === 'Sign Out') {
+        link.addEventListener('click', async (e) => {
+          e.preventDefault();
+          await window.App.logout();
+        });
+      }
+    });
+  }
+
+  // 3. ACCOUNT DASHBOARD LOGIC
   if (path.includes('account.html')) {
     (async () => {
       const allowed = await window.App.requireAuth({ returnUrl: '/account.html', message: 'Your session has expired. Please log in again to continue.' });
       if (!allowed) return;
       updateDashboard();
     })();
+  }
 
     function updateDashboard() {
       // 1. Update Welcome Heading
-      const welcomeH1 = document.querySelector('h1');
-      if (welcomeH1) {
-        welcomeH1.textContent = `Welcome Back, ${window.App.user.name}.`;
+      const userNameSpan = document.getElementById('account-user-name');
+      if (userNameSpan && window.App.user && window.App.user.name) {
+        userNameSpan.textContent = window.App.user.name;
       }
 
       // 2. Setup Sign Out Button in Sidebar
@@ -179,80 +201,102 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function loadOrderHistory() {
-      const orderHistoryContainer = document.querySelector('main section:first-of-type div.space-y-md');
+      const orderHistoryContainer = document.getElementById('account-orders-container');
       if (!orderHistoryContainer) return;
+
+      Skeleton.show(orderHistoryContainer, Array.from({length: 3}, () => {
+        const row = document.createElement('div');
+        row.className = 'bg-surface-container-lowest p-lg rounded-xl butter-shadow flex flex-col md:flex-row md:items-center justify-between gap-md border border-outline-variant/20';
+        row.appendChild(Skeleton.thumbnail({width: '64px', height: '64px'}));
+        const details = document.createElement('div');
+        details.style.flex = '1';
+        details.style.display = 'flex';
+        details.style.flexDirection = 'column';
+        details.style.gap = '8px';
+        details.appendChild(Skeleton.textLine({width: '60%', height: '16px'}));
+        details.appendChild(Skeleton.textLine({width: '40%', height: '12px'}));
+        row.appendChild(details);
+        const status = document.createElement('div');
+        status.appendChild(Skeleton.badge({width: '100px', height: '28px'}));
+        row.appendChild(status);
+        return row;
+      }));
 
       try {
         const orders = await window.App.fetchAPI('/api/orders');
         if (orders.length === 0) {
-          orderHistoryContainer.innerHTML = `
-            <div class="bg-surface-container-lowest p-lg rounded-xl butter-shadow text-center text-on-surface-variant font-body-md border border-outline-variant/20">
-              No orders placed yet. <a href="/treats.html" class="text-secondary font-bold hover:underline">Browse our menu!</a>
-            </div>
-          `;
+          Skeleton.hide(orderHistoryContainer, () => {
+            const div = document.createElement('div');
+            div.className = 'bg-surface-container-lowest p-lg rounded-xl butter-shadow text-center text-on-surface-variant font-body-md border border-outline-variant/20';
+            div.innerHTML = `No orders placed yet. <a href="/treats.html" class="text-secondary font-bold hover:underline">Browse our menu!</a>`;
+            return div;
+          });
           return;
         }
 
-        orderHistoryContainer.innerHTML = '';
-        
-        // Show up to 3 orders on dashboard
-        orders.slice(0, 3).forEach(order => {
-          // Determine status color
-          let statusClass = 'bg-surface-container text-on-surface-variant';
-          let pulseClass = 'bg-outline';
-          if (order.status === 'Pending') {
-            statusClass = 'bg-surface-container-high text-primary';
-          } else if (order.status === 'Approved' || order.status === 'Confirmed' || order.status === 'Preparing' || order.status === 'Shipped') {
-            statusClass = 'bg-primary-container text-on-primary-container';
-            pulseClass = 'bg-primary animate-pulse';
-          } else if (order.status === 'Out for Delivery') {
-            statusClass = 'bg-secondary-fixed text-on-secondary-fixed-variant';
-            pulseClass = 'bg-secondary animate-pulse';
-          } else if (order.status === 'Completed' || order.status === 'Delivered') {
-            statusClass = 'bg-green-100 text-green-800';
-            pulseClass = 'bg-green-500';
-          } else if (order.status === 'Declined' || order.status === 'Cancelled') {
-            statusClass = 'bg-error-container text-on-error-container';
-            pulseClass = 'bg-error';
-          }
-
-          // Get first item image/name as placeholder for order row
-          const itemKeys = Object.keys(order.items);
-          const firstItem = order.items[itemKeys[0]];
-          const displayImg = firstItem.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuApEIdkB-VaVSLK-mnO9JqwXd5-BayuEGJVFDgyujM68DQi9AILfk9phepo58zgqVu0muQRXFvPOFi51wvuh1gFiS-BNEw0kXfS0nNNJmRyRmctg_iBtIqUfITyzplg70n4iZlV906ezK17YdnP6ARx4kBhlKGBlWaRC_P5EpXwyJkj_4JTP8Ihre4A9TuDXbGtRs3wJACJ_31jUM-cpDoOoCpKrZLQM5YTJ2-SqUMMyOta8SX8G7lQuA23_O0l2B1ecURGs9WUJ54';
-
-          const dateStr = new Date(order.createdAt).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-          });
-
-          const orderRow = document.createElement('div');
-          orderRow.className = 'bg-surface-container-lowest p-lg rounded-xl butter-shadow flex flex-col md:flex-row md:items-center justify-between gap-md border border-outline-variant/20 hover:scale-[1.01] transition-transform duration-300 cursor-pointer';
-          orderRow.innerHTML = `
-            <div class="flex gap-md items-center">
-              <div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
-                <img class="w-full h-full object-cover" src="${displayImg}" alt="${firstItem.name}"/>
-              </div>
-              <div>
-                <p class="font-label-md text-label-md text-primary">Order #${order.id.substring(1, 8).toUpperCase()}</p>
-                <p class="font-body-md text-body-md text-on-surface-variant">Placed on ${dateStr}</p>
-              </div>
-            </div>
-            <div class="flex items-center justify-between md:justify-end gap-lg">
-              <div class="flex items-center gap-xs px-md py-xs ${statusClass} rounded-full text-label-sm font-label-sm">
-                <span class="w-2 h-2 rounded-full ${pulseClass}"></span>
-                ${order.status}
-              </div>
-              <span class="material-symbols-outlined text-outline">chevron_right</span>
-            </div>
-          `;
+        Skeleton.hide(orderHistoryContainer, () => {
+          const frag = document.createDocumentFragment();
           
-          orderRow.addEventListener('click', () => {
-            window.location.href = `/track-order.html?orderId=${order.id}`;
-          });
+          // Show up to 3 orders on dashboard
+          orders.slice(0, 3).forEach(order => {
+            // Determine status color
+            let statusClass = 'bg-surface-container text-on-surface-variant';
+            let pulseClass = 'bg-outline';
+            if (order.status === 'Pending') {
+              statusClass = 'bg-surface-container-high text-primary';
+            } else if (order.status === 'Approved' || order.status === 'Confirmed' || order.status === 'Preparing' || order.status === 'Shipped') {
+              statusClass = 'bg-primary-container text-on-primary-container';
+              pulseClass = 'bg-primary animate-pulse';
+            } else if (order.status === 'Out for Delivery') {
+              statusClass = 'bg-secondary-fixed text-on-secondary-fixed-variant';
+              pulseClass = 'bg-secondary animate-pulse';
+            } else if (order.status === 'Completed' || order.status === 'Delivered') {
+              statusClass = 'bg-green-100 text-green-800';
+              pulseClass = 'bg-green-500';
+            } else if (order.status === 'Declined' || order.status === 'Cancelled') {
+              statusClass = 'bg-error-container text-on-error-container';
+              pulseClass = 'bg-error';
+            }
 
-          orderHistoryContainer.appendChild(orderRow);
+            // Get first item image/name as placeholder for order row
+            const itemKeys = Object.keys(order.items);
+            const firstItem = order.items[itemKeys[0]];
+            const displayImg = firstItem.image || 'https://lh3.googleusercontent.com/aida-public/AB6AXuApEIdkB-VaVSLK-mnO9JqwXd5-BayuEGJVFDgyujM68DQi9AILfk9phepo58zgqVu0muQRXFvPOFi51wvuh1gFiS-BNEw0kXfS0nNNJmRyRmctg_iBtIqUfITyzplg70n4iZlV906ezK17YdnP6ARx4kBhlKGBlWaRC_P5EpXwyJkj_4JTP8Ihre4A9TuDXbGtRs3wJACJ_31jUM-cpDoOoCpKrZLQM5YTJ2-SqUMMyOta8SX8G7lQuA23_O0l2B1ecURGs9WUJ54';
+
+            const dateStr = new Date(order.createdAt).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric'
+            });
+
+            const orderRow = document.createElement('div');
+            orderRow.className = 'bg-surface-container-lowest p-lg rounded-xl butter-shadow flex flex-col md:flex-row md:items-center justify-between gap-md border border-outline-variant/20 hover:scale-[1.01] transition-transform duration-300 cursor-pointer';
+            orderRow.innerHTML = `
+              <div class="flex gap-md items-center">
+                <div class="w-16 h-16 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+                  <img class="w-full h-full object-cover" src="${displayImg}" alt="${firstItem.name}"/>
+                </div>
+                <div>
+                  <p class="font-label-md text-label-md text-primary">Order #${order.id.substring(1, 8).toUpperCase()}</p>
+                  <p class="font-body-md text-body-md text-on-surface-variant">Placed on ${dateStr}</p>
+                </div>
+              </div>
+              <div class="flex items-center justify-between md:justify-end gap-lg">
+                <div class="flex items-center gap-xs px-md py-xs ${statusClass} rounded-full text-label-sm font-label-sm">
+                  <span class="w-2 h-2 rounded-full ${pulseClass}"></span>
+                  ${order.status}
+                </div>
+                <span class="material-symbols-outlined text-outline">chevron_right</span>
+              </div>
+            `;
+            
+            orderRow.addEventListener('click', () => {
+              window.location.href = `/track-order.html?orderId=${order.id}`;
+            });
+
+            frag.appendChild(orderRow);
+          });
+          return frag;
         });
       } catch (err) {
         console.error('Failed to load dashboard orders:', err.message);
@@ -260,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function loadWishlistItems() {
-      const wishlistContainer = document.querySelector('main section:nth-of-type(2) div.flex.overflow-x-auto');
+      const wishlistContainer = document.getElementById('account-wishlist-container');
       if (!wishlistContainer) return;
 
       function renderDashboardWishlist() {
@@ -268,82 +312,94 @@ document.addEventListener('DOMContentLoaded', () => {
         const itemIds = Object.keys(wishlist);
 
         if (itemIds.length === 0) {
-          wishlistContainer.innerHTML = `
-            <div class="w-full p-lg bg-surface-container-lowest rounded-xl text-center text-on-surface-variant font-body-md border border-outline-variant/20">
-              Your wishlist is empty. Explore our catalog to save your favorites!
-            </div>
-          `;
+          Skeleton.hide(wishlistContainer, () => {
+            const div = document.createElement('div');
+            div.className = 'w-full p-lg bg-surface-container-lowest rounded-xl text-center text-on-surface-variant font-body-md border border-outline-variant/20';
+            div.textContent = 'Your wishlist is empty. Explore our catalog to save your favorites!';
+            return div;
+          });
           return;
         }
 
-        wishlistContainer.innerHTML = '';
-        
-        itemIds.forEach(id => {
-          const item = wishlist[id];
-          const card = document.createElement('div');
-          card.className = 'min-w-[280px] md:min-w-[320px] snap-start group';
-          card.setAttribute('data-product-id', id);
-          card.innerHTML = `
-            <div class="bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden group-hover:-translate-y-2 transition-transform duration-500">
-              <div class="h-48 overflow-hidden relative">
-                <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="${item.image}" alt="${item.name}"/>
-                <button class="absolute top-md right-md bg-white/80 cream-blur p-xs rounded-full text-secondary wishlist-toggle-btn">
-                  <span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">favorite</span>
-                </button>
-              </div>
-              <div class="p-md space-y-sm">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <h4 class="font-label-md text-label-md text-primary">${item.name}</h4>
-                    <p class="font-body-md text-body-md text-on-surface-variant">Signature Treat</p>
-                  </div>
-                  <span class="font-label-md text-label-md text-primary">${window.App.formatPrice(item.price)}</span>
+        Skeleton.hide(wishlistContainer, () => {
+          const frag = document.createDocumentFragment();
+          
+          itemIds.forEach(id => {
+            const item = wishlist[id];
+            const card = document.createElement('div');
+            card.className = 'min-w-[280px] md:min-w-[320px] snap-start group';
+            card.setAttribute('data-product-id', id);
+            card.innerHTML = `
+              <div class="bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden group-hover:-translate-y-2 transition-transform duration-500">
+                <div class="h-48 overflow-hidden relative">
+                  <img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" src="${item.image}" alt="${item.name}"/>
+                  <button class="absolute top-md right-md bg-white/80 cream-blur p-xs rounded-full text-secondary wishlist-toggle-btn">
+                    <span class="material-symbols-outlined fill-icon" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                  </button>
                 </div>
-                <button class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md active:scale-95 transition-all duration-200 add-to-bag-btn">
-                  Add to Bag
-                </button>
+                <div class="p-md space-y-sm">
+                  <div class="flex justify-between items-start">
+                    <div>
+                      <h4 class="font-label-md text-label-md text-primary">${item.name}</h4>
+                      <p class="font-body-md text-body-md text-on-surface-variant">Signature Treat</p>
+                    </div>
+                    <span class="font-label-md text-label-md text-primary">${window.App.formatPrice(item.price)}</span>
+                  </div>
+                  <button class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md active:scale-95 transition-all duration-200 add-to-bag-btn">
+                    Add to Bag
+                  </button>
+                </div>
               </div>
-            </div>
-          `;
+            `;
 
-          // Bind wishlist remove
-          card.querySelector('.wishlist-toggle-btn').addEventListener('click', async (e) => {
-            e.stopPropagation();
-            try {
-              const data = await window.App.fetchAPI('/api/wishlist/toggle', {
-                method: 'POST',
-                body: { productId: id }
-              });
-              await window.App.loadWishlist();
-              if (data.status === 'removed') {
-                window.App.toastSuccess('Removed from Wishlist 💔');
+            // Bind wishlist remove
+            card.querySelector('.wishlist-toggle-btn').addEventListener('click', async (e) => {
+              e.stopPropagation();
+              try {
+                const data = await window.App.fetchAPI('/api/wishlist/toggle', {
+                  method: 'POST',
+                  body: { productId: id }
+                });
+                await window.App.loadWishlist();
+                if (data.status === 'removed') {
+                  window.App.toastSuccess('Removed from Wishlist 💔');
+                }
+              } catch (err) {
+                window.App.toastError('Failed to update wishlist. Please try again.');
               }
-            } catch (err) {
-              window.App.toastError('Failed to update wishlist. Please try again.');
-            }
-          });
+            });
 
-          // Bind add to bag
-          card.querySelector('.add-to-bag-btn').addEventListener('click', async (e) => {
-            e.stopPropagation();
-            try {
-              await window.App.fetchAPI('/api/cart', {
-                method: 'POST',
-                body: { productId: id, quantity: 1 }
-              });
-              await window.App.updateCartBadge();
-              window.App.toastSuccess(`${item.name} added to cart!`);
-            } catch (err) {
-              window.App.toastError(err.message);
-            }
-          });
+            // Bind add to bag
+            card.querySelector('.add-to-bag-btn').addEventListener('click', async (e) => {
+              e.stopPropagation();
+              try {
+                await window.App.fetchAPI('/api/cart', {
+                  method: 'POST',
+                  body: { productId: id, quantity: 1 }
+                });
+                await window.App.updateCartBadge();
+                window.App.toastSuccess(`${item.name} added to cart!`);
+              } catch (err) {
+                window.App.toastError(err.message);
+              }
+            });
 
-          wishlistContainer.appendChild(card);
+            frag.appendChild(card);
+          });
+          return frag;
         });
       }
 
-      // Use the shared wishlist state directly
-      renderDashboardWishlist();
+      // Show initial skeletons while wishlist loads
+      Skeleton.show(wishlistContainer, Array.from({length: 4}, () => Skeleton.productCard({imageHeight: '180px', showBadge: false})));
+
+      // Wait for wishlist then render
+      try {
+        await window.App.loadWishlist();
+        renderDashboardWishlist();
+      } catch (err) {
+        console.error('Failed to load wishlist:', err);
+      }
 
       // Re-render whenever the shared wishlist changes
       window.App.onWishlistChange(() => renderDashboardWishlist());

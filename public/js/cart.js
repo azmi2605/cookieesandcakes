@@ -17,6 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!allowed) return;
       
       await window.App.checkSession();
+      
+      // Show skeleton while loading
+      Skeleton.show(cartContainer, Array.from({length: 3}, () => Skeleton.cartItem()));
+      Skeleton.show(summaryBox, () => {
+        const sk = document.createElement('div');
+        sk.className = 'sticky top-24 bg-surface-container rounded-xl p-lg butter-shadow border border-surface-variant';
+        sk.style.display = 'flex';
+        sk.style.flexDirection = 'column';
+        sk.style.gap = '16px';
+        sk.appendChild(Skeleton.textLine({width: '50%', height: '16px'}));
+        sk.appendChild(Skeleton.textLine({width: '100%', height: '12px'}));
+        sk.appendChild(Skeleton.textLine({width: '80%', height: '12px'}));
+        sk.appendChild(Skeleton.textLine({width: '60%', height: '28px'}));
+        sk.appendChild(Skeleton.button({height: '48px'}));
+        return sk;
+      });
+      
       cartData = await window.App.fetchAPI('/api/cart');
       renderCart();
     } catch (err) {

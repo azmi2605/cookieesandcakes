@@ -76,137 +76,137 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 4. Load Products from Backend API
   async function loadProducts() {
-    productGrid.innerHTML = `
-      <div class="col-span-full py-xl text-center">
-        <span class="font-body-lg text-on-surface-variant">Gathering treats from the oven...</span>
-      </div>
-    `;
+    if (!productGrid) return;
+    
+    Skeleton.show(productGrid, Array.from({length: 6}, () => Skeleton.productCard()));
 
     try {
       let url = `/api/products?category=${activeCategory}`;
       if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
       
-      // Map sort string to API query params
       if (sortBy.includes('Low to High')) url += '&sort=low-high';
       else if (sortBy.includes('High to Low')) url += '&sort=high-low';
 
       const products = await window.App.fetchAPI(url);
       
       if (products.length === 0) {
-        productGrid.innerHTML = `
-          <div class="col-span-full py-xl text-center text-on-surface-variant font-body-lg">
-            No treats found. Try another search or filter!
-          </div>
-        `;
+        Skeleton.hide(productGrid, () => {
+          const div = document.createElement('div');
+          div.className = 'col-span-full py-xl text-center text-on-surface-variant font-body-lg';
+          div.textContent = 'No treats found. Try another search or filter!';
+          return div;
+        });
         return;
       }
 
-      productGrid.innerHTML = '';
+      Skeleton.hide(productGrid, () => {
+        const frag = document.createDocumentFragment();
+        products.forEach(product => {
+          const isWishlisted = !!window.App.wishlist[product.id];
+          const heartFill = isWishlisted ? 'fill-icon' : '';
+          const heartFillSettings = isWishlisted ? "'FILL' 1" : "'FILL' 0";
 
-      products.forEach(product => {
-        const isWishlisted = !!window.App.wishlist[product.id];
-        const heartFill = isWishlisted ? 'fill-icon' : '';
-        const heartFillSettings = isWishlisted ? "'FILL' 1" : "'FILL' 0";
+          const card = document.createElement('div');
+          card.className = 'group relative bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1';
+          card.setAttribute('data-product-id', product.id);
+          
+          let productUrl = `/treat-${product.id}.html`;
 
-        const card = document.createElement('div');
-        card.className = 'group relative bg-surface-container-lowest rounded-xl butter-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1';
-        card.setAttribute('data-product-id', product.id);
-        
-        // Setup direct product link (all treats have details pages now)
-        let productUrl = `/treat-${product.id}.html`;
+          let buttonText = 'Add to Bag';
+          let buttonIcon = 'shopping_bag';
+          if (product.category === 'cakes' && product.price > 25) {
+            buttonText = 'Pre-order';
+            buttonIcon = 'calendar_today';
+          }
 
-        // Action button details
-        let buttonText = 'Add to Bag';
-        let buttonIcon = 'shopping_bag';
-        if (product.category === 'cakes' && product.price > 25) {
-          buttonText = 'Pre-order';
-          buttonIcon = 'calendar_today';
-        }
-
-        card.innerHTML = `
-          <div class="aspect-square relative overflow-hidden cursor-pointer product-img-link">
-            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${product.image}" alt="${product.name}"/>
-            <button class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-secondary wishlist-btn butter-shadow active:scale-95 transition-all">
-              <span class="material-symbols-outlined ${heartFill}" style="font-variation-settings: ${heartFillSettings};">favorite</span>
-            </button>
-            ${product.tags && product.tags[0] ? `
-              <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                <span class="bg-secondary text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">${product.tags[0]}</span>
-              </div>
-            ` : ''}
-          </div>
-          <div class="p-md">
-            <div class="flex justify-between items-start mb-base cursor-pointer product-title-link">
-              <h3 class="font-headline-md text-headline-md text-primary hover:text-secondary transition-colors">${product.name}</h3>
-              <span class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">${window.App.formatPrice(product.price)}</span>
+          card.innerHTML = `
+            <div class="aspect-square relative overflow-hidden cursor-pointer product-img-link">
+              <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${product.image}" alt="${product.name}"/>
+              <button class="absolute top-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-secondary wishlist-btn butter-shadow active:scale-95 transition-all">
+                <span class="material-symbols-outlined ${heartFill}" style="font-variation-settings: ${heartFillSettings};">favorite</span>
+              </button>
+              ${product.tags && product.tags[0] ? `
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span class="bg-secondary text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">${product.tags[0]}</span>
+                </div>
+              ` : ''}
             </div>
-            <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">${product.description}</p>
-            <button class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-on-secondary-container transition-colors active:scale-[0.98] add-to-cart-btn">
-              <span class="material-symbols-outlined text-[20px]">${buttonIcon}</span>
-              ${buttonText}
-            </button>
-          </div>
-        `;
+            <div class="p-md">
+              <div class="flex justify-between items-start mb-base cursor-pointer product-title-link">
+                <h3 class="font-headline-md text-headline-md text-primary hover:text-secondary transition-colors">${product.name}</h3>
+                <span class="font-label-md text-label-md text-secondary-container bg-primary-container px-2 py-0.5 rounded text-[12px]">${window.App.formatPrice(product.price)}</span>
+              </div>
+              <p class="font-body-md text-body-md text-on-surface-variant line-clamp-2 mb-md">${product.description}</p>
+              <button class="w-full py-sm bg-secondary text-white rounded-lg font-label-md text-label-md flex items-center justify-center gap-xs hover:bg-on-secondary-container transition-colors active:scale-[0.98] add-to-cart-btn">
+                <span class="material-symbols-outlined text-[20px]">${buttonIcon}</span>
+                ${buttonText}
+              </button>
+            </div>
+          `;
 
-        // Redirect when clicking image or title
-        card.querySelectorAll('.product-img-link, .product-title-link').forEach(elem => {
-          elem.addEventListener('click', (e) => {
-            if (e.target.closest('.wishlist-btn')) return;
-            window.location.href = productUrl;
+          card.querySelectorAll('.product-img-link, .product-title-link').forEach(elem => {
+            elem.addEventListener('click', (e) => {
+              if (e.target.closest('.wishlist-btn')) return;
+              window.location.href = productUrl;
+            });
           });
-        });
 
-        // Add to Wishlist Toggle
-        card.querySelector('.wishlist-btn').addEventListener('click', async (e) => {
-          e.stopPropagation();
-          try {
-            const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to manage your wishlist.' });
+          card.querySelector('.wishlist-btn').addEventListener('click', async (e) => {
+            e.stopPropagation();
+            try {
+              const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to manage your wishlist.' });
+              if (!allowed) return;
+              
+              const data = await window.App.fetchAPI('/api/wishlist/toggle', {
+                method: 'POST',
+                body: { productId: product.id }
+              });
+              await window.App.loadWishlist();
+              const span = card.querySelector('.wishlist-btn span');
+              if (data.status === 'added') {
+                span.classList.add('fill-icon');
+                span.style.fontVariationSettings = "'FILL' 1";
+                window.App.toastSuccess('Added to Wishlist ❤️');
+              } else {
+                span.classList.remove('fill-icon');
+                span.style.fontVariationSettings = "'FILL' 0";
+                window.App.toastSuccess('Removed from Wishlist 💔');
+              }
+            } catch (err) {
+              window.App.toastError('Failed to update wishlist. Please try again.');
+            }
+          });
+
+          card.querySelector('.add-to-cart-btn').addEventListener('click', async (e) => {
+            e.stopPropagation();
+            
+            const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to add items to your cart.' });
             if (!allowed) return;
             
-            const data = await window.App.fetchAPI('/api/wishlist/toggle', {
-              method: 'POST',
-              body: { productId: product.id }
-            });
-            await window.App.loadWishlist();
-            // Toggle visual state locally immediately
-            const span = card.querySelector('.wishlist-btn span');
-            if (data.status === 'added') {
-              span.classList.add('fill-icon');
-              span.style.fontVariationSettings = "'FILL' 1";
-              window.App.toastSuccess('Added to Wishlist ❤️');
-            } else {
-              span.classList.remove('fill-icon');
-              span.style.fontVariationSettings = "'FILL' 0";
-              window.App.toastSuccess('Removed from Wishlist 💔');
+            try {
+              await window.App.fetchAPI('/api/cart', {
+                method: 'POST',
+                body: { productId: product.id, quantity: 1 }
+              });
+              await window.App.updateCartBadge();
+              window.App.toastSuccess(`${product.name} added to cart!`);
+            } catch (err) {
+              window.App.toastError(err.message);
             }
-          } catch (err) {
-            window.App.toastError('Failed to update wishlist. Please try again.');
-          }
-        });
+          });
 
-        // Add to Cart
-        card.querySelector('.add-to-cart-btn').addEventListener('click', async (e) => {
-          e.stopPropagation();
-          
-          const allowed = await window.App.requireAuth({ returnUrl: window.location.pathname + window.location.search, message: 'Please log in to add items to your cart.' });
-          if (!allowed) return;
-          
-          try {
-            await window.App.fetchAPI('/api/cart', {
-              method: 'POST',
-              body: { productId: product.id, quantity: 1 }
-            });
-            await window.App.updateCartBadge();
-            window.App.toastSuccess(`${product.name} added to cart!`);
-          } catch (err) {
-            window.App.toastError(err.message);
-          }
+          frag.appendChild(card);
         });
-
-        productGrid.appendChild(card);
+        return frag;
       });
     } catch (err) {
       console.error('Failed to load catalog products:', err.message);
+      Skeleton.hide(productGrid, () => {
+        const div = document.createElement('div');
+        div.className = 'col-span-full py-xl text-center text-on-surface-variant font-body-lg';
+        div.textContent = 'Failed to load treats. Please try again later.';
+        return div;
+      });
     }
   }
 
